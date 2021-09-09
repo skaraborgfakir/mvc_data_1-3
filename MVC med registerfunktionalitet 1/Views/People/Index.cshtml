@@ -1,0 +1,72 @@
+<!-- Time-stamp: <2021-09-09 00:53:10 stefan> -*-web-*- -->
+
+@using Kartotek.Modeller
+@model Kartotek.Modeller.PeopleViewModell
+
+@{
+    ViewData["Title"] = "Ett personkartotek";
+}
+
+<div class="text-center">
+    <h3 class="display-4">Ett kartotek över personer</h3>
+    <div>
+	<div>
+	    <div>
+		Sökning igenom poster
+	    </div>
+	    <div>
+		<form method="post" asp-controller="People">
+		    <label asp-for="sökkriterier.Namn">Namn:</label>             <input asp-for="sökkriterier.Namn"/>
+		    <label asp-for="sökkriterier.Bostadsort">Bostadsort:</label> <input asp-for="sökkriterier.Bostadsort"/>
+		    <label asp-for="sökkriterier.Telefon">Telefon:</label>       <input asp-for="sökkriterier.Telefon"/>
+
+		    <button type="reset"  asp-controller="People" asp-action="Rensa">Rensa fälten</button> <!-- rensa fälten -->
+		    <button type="submit" asp-controller="People" asp-action="Filtrera">Filtrera</button>
+		</form>
+	    </div>
+	</div>
+
+	<hr>
+
+	<!-- funktion för inläggning av en person i taget  -->
+	<div>
+	    <div>
+	    </div>
+	    <div>
+		<form>
+		    <label asp-for="personAttLäggaIn.Namn">Namn:</label>             <input asp-for="personAttLäggaIn.Namn"/><br>
+		    <label asp-for="personAttLäggaIn.Bostadsort">Bostadsort:</label> <input asp-for="personAttLäggaIn.Bostadsort"/><br>
+		    <label asp-for="personAttLäggaIn.Telefon">Telefonnummer:</label> <input type="tel" asp-for="personAttLäggaIn.Telefon"/><br>
+
+		    <button type="reset"  asp-controller="People" asp-action="Rensa">Rensa fälten</button> <!-- rensa fälten -->
+		    <button type="submit" asp-controller="People" asp-action="Skapa_kort">Skapa kortet</button>
+		</form>
+	    </div>
+	</div>
+	<hr>
+    </div>
+    <div>
+	<!-- tabell med existerande kort -->
+	<table class="table">
+	    <tr>
+		<th>Namn</th>
+		<th>Ort</th>
+		<th>Telefonnummer</th>
+		<th>Rensa</th>
+	    </tr>
+	    @foreach (Person item in Model._personkartotek) {
+		<tr>
+		<td>
+		@item.Namn
+		</td>
+		<td>
+		@item.Bostadsort
+		</td>
+		<td>
+		@item.Telefon
+		</td>
+		</tr>
+	    }
+	</table>
+    </div>
+</div>
