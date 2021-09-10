@@ -1,4 +1,4 @@
-// Time-stamp: <2021-09-08 23:01:45 stefan>
+// Time-stamp: <2021-09-09 09:34:01 stefan>
 //
 
 using System.Collections.Generic;
@@ -10,13 +10,13 @@ namespace Kartotek.Modeller
 	//
 	// för sökkriterier
 	//
-	[DisplayFormat(ConvertEmptyStringToNull = true)]
+	// [DisplayFormat(ConvertEmptyStringToNull = true)]
 	public Person sökkriterier;
 
 	//
 	// addera person
 	//
-	[DisplayFormat(ConvertEmptyStringToNull = true)]
+	// [DisplayFormat(ConvertEmptyStringToNull = true)]
 	public Person personAttLäggaIn;
 
 	//

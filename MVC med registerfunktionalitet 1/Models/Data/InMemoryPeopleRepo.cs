@@ -1,4 +1,4 @@
-// Time-stamp: <2021-09-08 20:49:24 stefan>
+// Time-stamp: <2021-09-09 11:32:08 stefan>
 //
 
 using System;
@@ -60,11 +60,11 @@ namespace Kartotek.Modeller {
 			      string bostadsort,
 			      string telefon)
 	{
-	    personregister.Add( new Item( id: idCounter++,
-					  person: new Person( namn: namn,
-							      bostadsort: bostadsort,
-							      telefon: telefon)));
-	    return Read( idCounter-1);
+	    personregister.Add( item: new Item( id: idCounter++,
+						person: new Person( namn: namn,
+								    bostadsort: bostadsort,
+								    telefon: telefon)));
+	    return Read( id: idCounter-1);
 	}
 
 	//
@@ -78,14 +78,14 @@ namespace Kartotek.Modeller {
 
 	    foreach (Item item in personregister)
 	    {
-		sökresultat.Add( item.Personen);
+		sökresultat.Add( item: item.Personen);
 	    }
 
 	    return sökresultat;
 	}
 
 	//
-	// används från vyn
+	// används från PeopleService
 	//
 	public Person Read( int id)
 	{
@@ -97,7 +97,7 @@ namespace Kartotek.Modeller {
 		}
 	    }
 
-	    // Not developed yet.
+	    // borde vara omöjligt att komma hit
 	    throw new NotImplementedException();
 	}
 
@@ -105,6 +105,7 @@ namespace Kartotek.Modeller {
 	// hur ??
 	//
 	public Person Update( Person person) {
+
 	    // Not developed yet.
 	    throw new NotImplementedException();
 	}
@@ -116,6 +117,7 @@ namespace Kartotek.Modeller {
 	{
 	    bool status = false;
 
+	    //
 	    // använd en iterator som räknas ner
 	    //
 	    // fördelen är att remove kommer enbart påverka tupler

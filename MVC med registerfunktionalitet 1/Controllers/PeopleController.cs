@@ -1,4 +1,4 @@
-// Time-stamp: <2021-09-08 22:56:13 stefan>
+// Time-stamp: <2021-09-10 10:09:17 stefan>
 //
 
 //
@@ -19,13 +19,19 @@ namespace Kartotek.Controllers {
     public class People : Controller {
 	private readonly ILogger<People> _loggdest;
 	private readonly IConfiguration  _configurationsrc;
-	private static InMemoryPeopleRepo repo = new InMemoryPeopleRepo();
 
 	public People( ILogger<People> loggdest,
 		       IConfiguration  configurationsrc) {
 	    _configurationsrc=configurationsrc;
 	    _loggdest=loggdest;
 	}
+
+	//
+	// kontroller-klassen knyter ihop affärs-/process-logik (serviceenhten) med UI
+	//
+	// kontroller implementeras utgående från serviceenhetens termer
+	//
+	private PeopleService serviceenheten = new PeopleService();
 
 	//
 	// bilden med:
@@ -35,19 +41,32 @@ namespace Kartotek.Controllers {
 	//
 	[HttpGet]
 	public IActionResult Index() {
-	    Console.WriteLine( "count "+ repo.Read().Count.ToString() );
+	    // Console.WriteLine( "count "+ serviceEnhet.Read().Count.ToString() );
 
-	    PeopleViewModell vyn = new PeopleViewModell( repo.Read());
-
-	    return View( vyn);
+	    return View( serviceenheten.All());
 	}
 
+	//
+	// skicka söktermer till serviceenheten i form av en PeopleViewModell
+	// och vidarebefordra till formuläret som en sådan
+	//
 	[HttpPost]
-	public Filtrera( PeopleViewModell filtertermer) {
+	public IActionResult Filtrera( PeopleViewModell filtertermer) {
+	    Console.WriteLine( "public IActionResult Filtrera( PeopleViewModell");
+
+	    return RedirectToAction("Index", serviceenheten.FindBy(filtertermer));
 	}
 
+	//
+	// skicka en CreatePersonViewModel till serviceenheten
+	//
 	[HttpPost]
-	public Skapa_kort( PeopleViewModell filtertermer) {
+	public IActionResult Skapa_kort( CreatePersonViewModel nyttKort) {
+	    Console.WriteLine( "public IActionResult Skapa_kort( PeopleViewModell");
+
+	    serviceenheten.Add( nyttKort);
+
+	    return RedirectToAction("Index");
 	}
     }
 }
