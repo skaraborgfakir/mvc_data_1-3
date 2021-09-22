@@ -1,0 +1,99 @@
+<!-- Time-stamp: <2021-09-22 08:58:14 stefan> -*-web-*- -->
+
+@using System
+@using System.Collections.Generic
+@using System.Linq
+
+@using Kartotek.Modeller.Vyer
+@using Kartotek.Modeller.Entiteter
+
+@model Kartotek.Modeller.Vyer.HopslagenmodellVymodell
+
+@{
+    ViewData["Title"] = "Ett personkartotek";
+}
+
+<div class="text-center">
+    <h3 class="display-4">Ett kartotek över personer</h3>
+    <div>
+	<div>
+	    <div>
+		Sökning igenom poster
+	    </div>
+	    <div>
+		<form method="post" asp-controller="People" asp-action="filtrering">
+		    <label asp-for="Filtertermer.Namn">Namn:</label>             <input asp-for="Filtertermer.Namn"/>
+		    <label asp-for="Filtertermer.Bostadsort">Bostadsort:</label> <input asp-for="Filtertermer.Bostadsort"/>
+
+		    <button class="btn btn-secondary" type="reset">Rensa fälten</button> <!-- rensa fälten -->
+		    <button class="btn btn-success" type="submit">Filtrera</button>
+		</form>
+	    </div>
+	</div>
+
+	<hr>
+
+	<!-- funktion för inläggning av en person i taget  -->
+	<div>
+	    <div>
+	    </div>
+	    <div>
+		<form method="post" asp-controller="People" asp-action="nyttkort">
+		    <label asp-for="NyttKort.Namn">Namn:</label>             <input asp-for="NyttKort.Namn"/><br>
+		    <label asp-for="NyttKort.Bostadsort">Bostadsort:</label> <input asp-for="NyttKort.Bostadsort"/><br>
+		    <label asp-for="NyttKort.Telefonnummer">Telefonnummer:</label> <input asp-for="NyttKort.Telefonnummer"/><br>
+
+		    <button class="btn btn-secondary" type="reset">Rensa fälten</button> <!-- rensa fälten -->
+		    <button class="btn btn-success" type="submit">Skapa kortet</button>
+		</form>
+	    </div>
+	</div>
+	<hr>
+    </div>
+    <div class="table-responsive">
+	<!-- tabell med existerande kort -->
+	<table id="personindex" class="table dataTable table-striped table-bordered table-hover">
+	    <thead class="thead-dark sorting text-light">
+		<tr>
+		    <th class="th-sm">Namn</th>
+	    <th class="th-sm">Ort</th>
+		    <th class="th-sm">Telefonnummer</th>
+		    <th class="th-sm">Id</th>
+		    <th class="th-sm">Aktion</th>
+		</tr>
+	    </thead>
+	    <tbody>
+		<tr>
+		    @foreach (Person item in Model.Personlistan.Utdraget) {
+			<tr class="clickable-row">
+			<td data-namn="@item.Namn">
+			@Html.DisplayFor(model => item.Namn)
+			</td>
+			<td>
+			@Html.DisplayFor(model => item.Bostadsort)
+			</td>
+			<td>
+			@Html.DisplayFor(model => item.Telefonnummer)
+			</td>
+			<td>
+			@Html.DisplayFor(model => item.Id)
+			</td>
+			<td>
+			<a asp-controller="People" asp-action="radering" asp-route-id="@item.Id" class="btn btn-sm btn-warning btn-link">radering</a>
+			</td>
+			</tr>
+		    }
+		</tr>
+	    </tbody>
+	</table>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+$(document).ready(function () {
+$('#personindex').DataTable();
+$('.dataTables_length').addClass('bs-select');
+});
+</script>
+}
