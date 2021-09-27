@@ -1,4 +1,4 @@
-<!-- Time-stamp: <2021-09-24 16:35:08 stefan> -*-web-*- -->
+<!-- Time-stamp: <2021-09-27 15:04:42 stefan> -*-web-*- -->
 
 @using System
 @using System.Collections.Generic
@@ -53,23 +53,23 @@
     <div class="table-responsive">
 	<!-- tabell med existerande kort -->
 	<table id="personindex" class="table dataTable table-striped table-bordered table-hover">
-	    <thead class="thead-dark sorting text-light">
+	    <thead class="thead-dark">
 		<tr>
-		    <th class="th-sm">Namn</th>
-	    <th class="th-sm">Ort</th>
-		    <th class="th-sm">Telefonnummer</th>
-		    <th class="th-sm">Id</th>
-		    <th class="th-sm">Aktion</th>
+		    <th onclick="sorteraTabell(0)">Namn</th>
+		    <th onclick="sorteraTabell(1)">Ort</th>
+		    <th>Telefonnummer</th>
+		    <th>Id</th>
+		    <th>Aktion</th>
 		</tr>
 	    </thead>
 	    <tbody>
 		<tr>
 		    @foreach (Person item in Model.Personlistan.Utdraget) {
 			<tr class="clickable-row">
-			<td data-namn="@item.Namn">
+			<td onclick="alert('You are clicking on the cell namn')">
 			@Html.DisplayFor(model => item.Namn)
 			</td>
-			<td>
+			<td onclick="alert('You are clicking on the cell bostadsort')">
 			@Html.DisplayFor(model => item.Bostadsort)
 			</td>
 			<td>
