@@ -22,7 +22,7 @@
 //       Bengt Micke Ulf   Wei   Simon
 // 5 3                     ^           Ingen ändring men vi kan ha ett ord som är större ?
 //       Bengt Micke Ulf   Wei   Simon
-// 5 4                           ^     Wei o Simon växlar - ja det var större
+// 5 4                           ^     Wei o Simon växlar - ja, Wei ska vara efter Simon
 //       Bengt Micke Ulf   Simon Wei
 //
 // 5 5   slut på inre loop och ett ord mindre att bry sig om - dekrement för antalet aktuella ord
@@ -58,18 +58,17 @@
 function sorteraTabellStigande( sorteringsterm)
 {
     var tabellen = document.getElementById( "personindex");
-    var posterna = tabellen.rows;   // varje rad i tabellen
-    var i;    // antalet poster
-    var x, y;   // de två posterna som det ska beslutas om
+    var posterna = tabellen.rows;                           // varje rad i tabellen
+    var i = posterna.length;                                // antalet poster
 
-    for ( i = posterna.length ; i >= 1 ; i-- ) {
+    for (  ; i >= 1 ; i-- ) {
 	for ( let j = 1; j < i ; j++) {
-	    x = posterna[j-1].getElementsByTagName("TD")[sorteringsterm];
-	    y = posterna[j].getElementsByTagName("TD")[sorteringsterm];
+	    let x = posterna[j-1].getElementsByTagName("TD")[sorteringsterm]; // de två posterna som det ska beslutas om
+	    let y = posterna[j].getElementsByTagName("TD")[sorteringsterm];
 
 	    if ( x!=undefined && y != undefined)
 		if ( x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase() )
-		    posterna[j].parentNode.insertBefore( posterna[j], posterna[j-1] );
+		    posterna[j].parentNode.insertBefore( posterna[j], posterna[j-1] ); // klistra in y före x
 	}
     }
 }
@@ -80,18 +79,20 @@ function sorteraTabellStigande( sorteringsterm)
 function sorteraTabellSjunkande( sorteringsterm) {
     var tabellen = document.getElementById( "personindex");
     var posterna = tabellen.rows;   // varje rad i tabellen
-    var i = posterna.length;
-    var j;
+    var i;
     var x, y;   // de två posterna som det ska beslutas om
 
-    for ( i = posterna.length ; i >= 1 ; i++ )
+    for ( i = posterna.length = posterna.length ; i >= 1 ; i++ )
 	for ( j = 2; j <= i ; j--) {
 	    x = posterna[j-i].getElementsByTagName("TD")[sorteringsterm];
 	    y = posterna[j].getElementsByTagName("TD")[sorteringsterm];
 
-	    // if () {
-	    //	posterna[i].parentNode.insertBefore( posterna[i+1], posterna[i]);
-	    // }
+	    if ( x!=undefined && y != undefined)
+	    {
+		// if () {
+		//	posterna[i].parentNode.insertBefore( posterna[i+1], posterna[i]);
+		// }
+	    }
 	}
 }
 
