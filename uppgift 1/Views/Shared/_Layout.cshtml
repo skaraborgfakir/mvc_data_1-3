@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html> <!-- Time-stamp: <2021-09-29 12:19:57 stefan> -*-web-*- -->
+﻿<!DOCTYPE html> <!-- Time-stamp: <2021-09-29 14:59:35 stefan> -*-web-*- -->
   <!-- _Layout.cshtml -->
   <!-- inkluderar via RenderBody() de olika fragmenten -->
   <!--   fragment ? Exv: -->
@@ -17,6 +17,8 @@
       <meta charset="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>@ViewData["Title"] - MVC_med_registerfunktionalitet_1</title>
+
+      <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
       <link rel="stylesheet" href="~/css/mdb5/mdb.min.css" />
       <link rel="stylesheet" href="~/css/site.css" />
 
@@ -53,21 +55,29 @@
       </div>
 
       <footer class="border-top footer text-muted">
-	<div class="container">
-	    &copy; MVC_med_registerfunktionalitet_1 - Stefan Skoglund @DateTime.Now.ToString("D") - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-	</div>
-	<div class="container">
-	    <!-- https://dotnettutorials.net/lesson/asp-net-core-appsettings-json-file/ -->
-	    <!-- https://stackoverflow.com/questions/47296541/access-configuration-from-a-view-in-asp-net-core/47297327 -->
-	    via appsettings*.json @Configuration["app_run_miljö"]
-	</div>
+	  <div>
+	      &copy; MVC_med_registerfunktionalitet_1 - Stefan Skoglund @DateTime.Now.ToString("D") - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+	  </div>
+	  <div>
+	      <!-- https://dotnettutorials.net/lesson/asp-net-core-appsettings-json-file/ -->
+	      <!-- https://stackoverflow.com/questions/47296541/access-configuration-from-a-view-in-asp-net-core/47297327 -->
+	      via appsettings*.json @Configuration["app_run_miljö"]
+	  </div>
       </footer>
-      <!-- en liten svårighet:
+      <!--
+	   en liten svårighet:
 	   vad bör placeras i wwwroot/lib vs wwwroot/js ?
 	   min läsning av skillnaden är att wwwroot/lib ska kunna genereras automatiskt igenom direkt hämtning och expansion
 	   av olika moduler (bootstrap, jquery etc) medans js kan ha samma innehåll men får vara statiskt dvs
 	   garanteras från git
+
+	   innehåll i wwwroot/js/ först, därefter wwwroot/lib/etc
       -->
+      <!-- //<script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script> -->
+      <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.js"></script>
+      <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+      <script type="text/javascript" src="~/js/mdb5/mdb.min.js"></script>
+
       <!-- möjlighet att från exv People/Index.cshtml få med ett eget script ( section Scripts ) -->
       @RenderSection("Scripts", required: false)
       <!-- specfikt för den här applikationen -->
