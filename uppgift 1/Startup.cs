@@ -1,4 +1,4 @@
-// Time-stamp: <2021-09-22 08:58:12 stefan>
+// Time-stamp: <2021-09-24 09:57:10 stefan>
 
 using System;
 using System.Collections.Generic;
@@ -56,8 +56,8 @@ namespace Kartotek
 
 	    app.UseEndpoints(endpoints =>
 	    {
-		endpoints.MapControllerRoute( name:     "people-radering",
-					      pattern:  "People/"});
+		// endpoints.MapControllerRoute( name:     "people-radering",
+		//			      pattern:  "People/"});
 		endpoints.MapControllerRoute( name:     "people",
 					      pattern:  "People",
 					      defaults: new { controller = "PeopleController", action = "Index"});

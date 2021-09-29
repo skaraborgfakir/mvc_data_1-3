@@ -1,4 +1,8 @@
-<!-- Time-stamp: <2021-09-22 08:58:14 stefan> -*-web-*- -->
+<!-- Time-stamp: <2021-09-29 00:20:14 stefan> -*-web-*- -->
+<!-- https://www.educba.com/bootstrap-sort-table/
+     här använder jag metod 1 för att sortera tabellen
+     beroende av jQuery
+-->
 
 @using System
 @using System.Collections.Generic
@@ -52,11 +56,11 @@
     </div>
     <div class="table-responsive">
 	<!-- tabell med existerande kort -->
-	<table id="personindex" class="table dataTable table-striped table-bordered table-hover">
+	<table id="personindex" class="table display dataTable table-striped table-bordered table-hover">
 	    <thead class="thead-dark sorting text-light">
 		<tr>
-		    <th class="th-sm">Namn</th>
-	    <th class="th-sm">Ort</th>
+		    <th class="sorting th-sm" tabindex="0" aria-controls="peronindex" aria-sort="descending">Namn</th>
+		    <th class="sorting th-sm" tabindex="0" aria-controls="peronindex" aria-sort="descending">Ort</th>
 		    <th class="th-sm">Telefonnummer</th>
 		    <th class="th-sm">Id</th>
 		    <th class="th-sm">Aktion</th>
@@ -89,11 +93,8 @@
     </div>
 </div>
 
-@section Scripts {
-<script>
-$(document).ready(function () {
-$('#personindex').DataTable();
-$('.dataTables_length').addClass('bs-select');
-});
+<script type="javascript">
+ $(document).ready( function () {
+     $('#personindex').DataTable();
+ })
 </script>
-}
