@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html> <!-- Time-stamp: <2021-09-20 18:03:19 stefan> -*-web-*- -->
+﻿<!DOCTYPE html> <!-- Time-stamp: <2021-09-29 12:19:57 stefan> -*-web-*- -->
   <!-- _Layout.cshtml -->
   <!-- inkluderar via RenderBody() de olika fragmenten -->
   <!--   fragment ? Exv: -->
@@ -17,7 +17,7 @@
       <meta charset="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>@ViewData["Title"] - MVC_med_registerfunktionalitet_1</title>
-      <link rel="stylesheet" href="~/css/bootstrap/bootstrap.css" />
+      <link rel="stylesheet" href="~/css/mdb5/mdb.min.css" />
       <link rel="stylesheet" href="~/css/site.css" />
 
     </head>
@@ -54,7 +54,7 @@
 
       <footer class="border-top footer text-muted">
 	<div class="container">
-	  &copy; MVC_med_registerfunktionalitet_1 - Stefan Skoglund @DateTime.Now.ToString("D") - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+	    &copy; MVC_med_registerfunktionalitet_1 - Stefan Skoglund @DateTime.Now.ToString("D") - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
 	</div>
 	<div class="container">
 	    <!-- https://dotnettutorials.net/lesson/asp-net-core-appsettings-json-file/ -->
@@ -62,9 +62,15 @@
 	    via appsettings*.json @Configuration["app_run_miljö"]
 	</div>
       </footer>
+      <!-- en liten svårighet:
+	   vad bör placeras i wwwroot/lib vs wwwroot/js ?
+	   min läsning av skillnaden är att wwwroot/lib ska kunna genereras automatiskt igenom direkt hämtning och expansion
+	   av olika moduler (bootstrap, jquery etc) medans js kan ha samma innehåll men får vara statiskt dvs
+	   garanteras från git
+      -->
+      <!-- möjlighet att från exv People/Index.cshtml få med ett eget script ( section Scripts ) -->
       @RenderSection("Scripts", required: false)
-      <script src="/lib/jquery/dist/jquery.js"></script>
-      <script src="/lib/bootstrap/bootstrap.bundle.js"></script>
+      <!-- specfikt för den här applikationen -->
       <script src="/js/site.js"></script>
     </body>
   </html>
