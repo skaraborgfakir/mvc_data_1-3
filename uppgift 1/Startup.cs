@@ -56,8 +56,8 @@ namespace Kartotek
 
 	    app.UseEndpoints(endpoints =>
 	    {
-		endpoints.MapControllerRoute( name:     "people-radering",
-					      pattern:  "People/"});
+		// endpoints.MapControllerRoute( name:     "people-radering",
+		//			      pattern:  "People/"});
 		endpoints.MapControllerRoute( name:     "people",
 					      pattern:  "People",
 					      defaults: new { controller = "PeopleController", action = "Index"});

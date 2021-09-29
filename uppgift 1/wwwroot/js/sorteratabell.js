@@ -1,3 +1,6 @@
+// https://www.educba.com/bootstrap-sort-table/
+// här använder jag metod 2 för att sortera tabellen
+//
 // direkt från Sedgewicks Algorithms: bubble-sort
 //
 // void bubble(itemType a[], int N) {
