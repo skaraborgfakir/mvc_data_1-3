@@ -1,4 +1,4 @@
-<!-- Time-stamp: <2021-10-05 10:14:07 stefan> -*-web-*- -->
+<!-- Time-stamp: <2021-10-05 11:21:39 stefan> -*-web-*- -->
 <!-- https://www.educba.com/bootstrap-sort-table/
      här använder jag metod 1 för att sortera tabellen
 
@@ -85,48 +85,55 @@
     </div>
     <div class="table-responsive">
 	<!-- tabell med existerande kort -->
-	<table id="personindex" class="table table-dark table-striped table-bordered table-hover">
-	    <thead class="sorting">
+	<table id="personindex" class="table table-striped table-hover table-bordered table-sm" data-order='[[ 0, "asc"]]'>
+	    <thead>
 		<tr>
-		    <th tabindex="0" aria-controls="personindex" aria-sort="descending">Namn</th>
-		    <th tabindex="0" aria-controls="personindex" aria-sort="descending">Ort</th>
-		    <th >Telefonnummer</th>
-		    <th >Id</th>
-		    <th>Aktion</th>
+		    <th class="th-sm" scope="col" tabindex="0">Namn</th>
+		    <th class="th-sm" scope="col" tabindex="1">Ort</th>
+		    <th class="th-sm" scope="col" >Telefonnummer</th>
+		    <th class="th-sm" scope="col" >Id</th>
+		    <th class="th-sm no-sort" scope="col" >Aktion</th>
 		</tr>
 	    </thead>
 	    <tbody>
-		<tr>
-		    @foreach (Person item in Model.Personlistan.Utdraget) {
-			<tr class="clickable-row">
-			<td data-namn="@item.Namn">
-			@Html.DisplayFor(model => item.Namn)
-			</td>
-			<td>
-			@Html.DisplayFor(model => item.Bostadsort)
-			</td>
-			<td>
-			@Html.DisplayFor(model => item.Telefonnummer)
-			</td>
-			<td>
-			@Html.DisplayFor(model => item.Id)
-			</td>
-			<td>
-			<a asp-controller="People" asp-action="radering" asp-route-id="@item.Id" class="btn btn-warning btn-link">radering</a>
-			<a asp-controller="People" asp-action="modifiera" asp-route-id="@item.Id" class="btn btn-warning btn-link">modifiera</a>
-			</td>
+		@foreach (Person item in Model.Personlistan.Utdraget) {
+		    <tr class="clickable-row">
+
+		    <td>
+		    @Html.DisplayFor(model => item.Namn)
+		    </td>
+
+		    <td>
+		    @Html.DisplayFor(model => item.Bostadsort)
+		    </td>
+
+		    <td>
+		    @Html.DisplayFor(model => item.Telefonnummer)
+		    </td>
+
+		    <td>
+		    @Html.DisplayFor(model => item.Id)
+		    </td>
+
+		    <td>
+		    <a asp-controller="People" asp-action="radering" asp-route-id="@item.Id" class="btn btn-warning btn-link">radering</a>
+		    <a asp-controller="People" asp-action="modifiera" asp-route-id="@item.Id" class="btn btn-warning btn-link">modifiera</a>
+		    </td>
+
 			</tr>
 		    }
-		</tr>
 	    </tbody>
 	</table>
     </div>
 </div>
 
 @section Scripts {
-<script type="text/javascript">
-   $(document).ready( function () {
-       $('#personindex').DataTable();
-    })
-</script>
-}
+    <script type="text/javascript">
+     $(document).ready(function () {
+	 $('#personindex').DataTable({
+	     "ordering": true // false to disable sorting (or any other option)
+	 });
+	 $('.dataTables_length').addClass('bs-select');
+     });
+    </script>
+    }
