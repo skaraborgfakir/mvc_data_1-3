@@ -1,70 +1,77 @@
-﻿<!DOCTYPE html> <!-- Time-stamp: <2021-09-20 18:03:19 stefan> -*-web-*- -->
-  <!-- _Layout.cshtml -->
-  <!-- inkluderar via RenderBody() de olika fragmenten -->
-  <!--   fragment ? Exv: -->
-  <!--   Views/_ViewStart.cshtml (ett fragment) innan -->
-  <!--   Views/_ViewImports.cshtml -->
-
-  <!-- https://dotnettutorials.net/lesson/asp-net-core-appsettings-json-file/ -->
-  <!-- https://stackoverflow.com/questions/47296541/access-configuration-from-a-view-in-asp-net-core/47297327 -->
-
-  <!-- // via appsettings*.json i foot -->
-  @using Microsoft.Extensions.Configuration
-  @inject IConfiguration Configuration
-
-  <html lang="sv">
+﻿<!DOCTYPE html>
+<!-- Time-stamp: <2021-10-05 10:03:59 stefan> -*-web-*- -->
+<!-- _Layout.cshtml -->
+<!-- inkluderar via RenderBody() de olika fragmenten -->
+<!--   fragment ? Exv: -->
+<!--   Views/_ViewStart.cshtml (ett fragment) innan -->
+<!--   Views/_ViewImports.cshtml -->
+<!-- https://dotnettutorials.net/lesson/asp-net-core-appsettings-json-file/ -->
+<!-- https://stackoverflow.com/questions/47296541/access-configuration-from-a-view-in-asp-net-core/47297327 -->
+<!-- // via appsettings*.json i foot -->
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+<html lang="sv">
     <head>
-      <meta charset="utf-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>@ViewData["Title"] - MVC_med_registerfunktionalitet_1</title>
-      <link rel="stylesheet" href="~/css/bootstrap/bootstrap.css" />
-      <link rel="stylesheet" href="~/css/site.css" />
-
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - MVC_med_registerfunktionalitet_1</title>
+	<link rel="stylesheet" href="/css/site.css" />
+	<link rel="stylesheet" href="/lib/bootstrap-5.1.1/css/bootstrap.css">
     </head>
     <body>
-      <header>
-	<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
-	  <div class="container">
-	    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MVC_med_registerfunktionalitet_1</a>
-	    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-		    aria-expanded="false" aria-label="Toggle navigation">
-	      <span class="navbar-toggler-icon"></span>
-	    </button>
-	    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-	      <ul class="navbar-nav flex-grow-1">
-		<li class="nav-item">
-		  <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-		</li>
-		<li class="nav-item">
-		    <a class="nav-link text-light" asp-area="" asp-controller="People" asp-action="Index">Kartoteket</a>
-		</li>
-		<li class="nav-item">
-		    <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-		</li>
-	      </ul>
+	<header>
+	    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark  bg-dark  border-bottom box-shadow mb-3">
+		<div class="container">
+		    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MVC_med_registerfunktionalitet_1</a>
+		    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		    </button>
+		    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+			<ul class="navbar-nav flex-grow-1">
+			    <li class="nav-item">
+				<a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+			    </li>
+			    <li class="nav-item">
+				<a class="nav-link text-light" asp-area="" asp-controller="People" asp-action="Index">Kartoteket</a>
+			    </li>
+			    <li class="nav-item">
+				<a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+			    </li>
+			</ul>
+		    </div>
+		</div>
+	    </nav>
+	</header>
+	<div class="container">
+	    <main role="main" class="pb-3">
+		@RenderBody()
+	    </main>
+	</div>
+	<footer class="border-top footer text-muted">
+	    <div class="container">
+		&copy; MVC_med_registerfunktionalitet_1 - Stefan Skoglund @DateTime.Now.ToString("D") - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
 	    </div>
-	  </div>
-	</nav>
-      </header>
-      <div class="container">
-	<main role="main" class="pb-3">
-	  @RenderBody()
-	</main>
-      </div>
+	    <div class="container">
+		<!-- https://dotnettutorials.net/lesson/asp-net-core-appsettings-json-file/ -->
+		<!-- https://stackoverflow.com/questions/47296541/access-configuration-from-a-view-in-asp-net-core/47297327 -->
+		via appsettings*.json @Configuration["app_run_miljö"]
+	    </div>
+	</footer>
+	<!--
+	     en liten svårighet:
+	     vad bör placeras i wwwroot/lib vs wwwroot/js ?
+	     min läsning av skillnaden är att wwwroot/lib ska kunna genereras automatiskt igenom direkt hämtning och expansion
+	     av olika moduler (bootstrap, jquery etc) medans js kan ha samma innehåll men får vara statiskt dvs
+	     garanteras från git
 
-      <footer class="border-top footer text-muted">
-	<div class="container">
-	  &copy; MVC_med_registerfunktionalitet_1 - Stefan Skoglund @DateTime.Now.ToString("D") - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-	</div>
-	<div class="container">
-	    <!-- https://dotnettutorials.net/lesson/asp-net-core-appsettings-json-file/ -->
-	    <!-- https://stackoverflow.com/questions/47296541/access-configuration-from-a-view-in-asp-net-core/47297327 -->
-	    via appsettings*.json @Configuration["app_run_miljö"]
-	</div>
-      </footer>
-      @RenderSection("Scripts", required: false)
-      <script src="/lib/jquery/dist/jquery.js"></script>
-      <script src="/lib/bootstrap/bootstrap.bundle.js"></script>
-      <script src="/js/site.js"></script>
+	     innehåll i wwwroot/js/ först, därefter wwwroot/lib/etc
+	-->
+	<script type="text/javascript" src="~/lib/jquery/dist/jquery.js"></script>
+	<script type="text/javascript" src="~/lib/popper/popper.min.js"></script>
+	<script type="text/javascript" src="~/lib/bootstrap-5.1.1/js/bootstrap.min.js"></script>
+	<!-- allmänt för den här applikationen -->
+	<script type="text/javascript" src="~/js/site.js"></script>
+	<!-- möjlighet att från exv People/Index.cshtml få med ett eget script ( section Scripts ) -->
+	@await RenderSectionAsync("Scripts", required: false)
     </body>
-  </html>
+</html>

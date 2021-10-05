@@ -1,6 +1,34 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+
+/* .col-form-label::after { */
+/*     content: ":"; */
+/* } */
+
+.form-label::after {
+    content: ":";
+}
+
+/* #filtrering label::after { */
+/*     content: ":"; */
+/* } */
+
+/* #nya_aktiva > div > label::after { */
+/*     content: ":"; */
+/* } */
+
+/* .nya_aktiva_label::after { */
+/*     content: ":"; */
+/* } */
+
+/* .nya_aktiva_label::after { */
+/* } */
+
+.col-form-label::after {
+    content: ":";
+}
+
 a.navbar-brand {
   white-space: normal;
   text-align: center;
@@ -70,6 +98,9 @@ body {
   line-height: 60px; /* Vertically center the text there */
 }
 
+/*
+ * dataTable sortering
+ */
 table.dataTable thead .sorting:after,
 table.dataTable thead .sorting:before,
 table.dataTable thead .sorting_asc:after,

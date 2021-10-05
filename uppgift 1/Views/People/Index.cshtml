@@ -1,7 +1,10 @@
-<!-- Time-stamp: <2021-09-29 00:20:14 stefan> -*-web-*- -->
+<!-- Time-stamp: <2021-10-05 10:14:07 stefan> -*-web-*- -->
 <!-- https://www.educba.com/bootstrap-sort-table/
      här använder jag metod 1 för att sortera tabellen
-     beroende av jQuery
+
+     tabellen sorteras via funktioner i jQuery och datatable
+
+     bootstrap 5.1 används
 -->
 
 @using System
@@ -18,52 +21,78 @@
 }
 
 <div class="text-center">
-    <h3 class="display-4">Ett kartotek över personer</h3>
+    <h3 class="display-4">Ett kartotek över aktiva medlemmar</h3>
     <div>
-	<div>
-	    <div>
+	<div class="container">
+	    <h4 class="text-start">
 		Sökning igenom poster
-	    </div>
-	    <div>
-		<form method="post" asp-controller="People" asp-action="filtrering">
-		    <label asp-for="Filtertermer.Namn">Namn:</label>             <input asp-for="Filtertermer.Namn"/>
-		    <label asp-for="Filtertermer.Bostadsort">Bostadsort:</label> <input asp-for="Filtertermer.Bostadsort"/>
+	    </h4>
+	    <form id="filtrering" method="post" asp-controller="People" asp-action="filtrering">
+		<div class="mb-1 text-start">
+		    <label class="filtertermer_label col-sm-1 col-form-label" asp-for="Filtertermer.Namn">
+			Namn
+		    </label>
+		    <input class="col-sm-4" asp-for="Filtertermer.Namn"/>
+
+		    <label class="filtertermer_label col-sm-1 col-form-label" asp-for="Filtertermer.Bostadsort">
+			Bostadsort
+		    </label>
+		    <input class="col-sm-3" asp-for="Filtertermer.Bostadsort"/>
 
 		    <button class="btn btn-secondary" type="reset">Rensa fälten</button> <!-- rensa fälten -->
 		    <button class="btn btn-success" type="submit">Filtrera</button>
-		</form>
-	    </div>
+		</div>
+	    </form>
 	</div>
 
 	<hr>
 
 	<!-- funktion för inläggning av en person i taget  -->
-	<div>
-	    <div>
-	    </div>
-	    <div>
-		<form method="post" asp-controller="People" asp-action="nyttkort">
-		    <label asp-for="NyttKort.Namn">Namn:</label>             <input asp-for="NyttKort.Namn"/><br>
-		    <label asp-for="NyttKort.Bostadsort">Bostadsort:</label> <input asp-for="NyttKort.Bostadsort"/><br>
-		    <label asp-for="NyttKort.Telefonnummer">Telefonnummer:</label> <input asp-for="NyttKort.Telefonnummer"/><br>
-
-		    <button class="btn btn-secondary" type="reset">Rensa fälten</button> <!-- rensa fälten -->
-		    <button class="btn btn-success" type="submit">Skapa kortet</button>
-		</form>
-	    </div>
+	<div class="container">
+	    <h4 class="text-start">
+		Inrapportering av nya aktiva
+	    </h4>
+	    <form id="nya_aktiva" method="post" asp-controller="People" asp-action="nyttkort">
+		<div class="row mb-1">
+		    <label class="nya_aktiva_label text-start col-sm-2 col-form-label" asp-for="NyttKort.Namn">
+			Namn
+		    </label>
+		    <div class="col-sm-4">
+			<input id="nyttkort_namn" class="form-control" asp-for="NyttKort.Namn"/>
+		    </div>
+		</div>
+		<div class="row mb-1">
+		    <label class="nya_aktiva_label text-start col-sm-2 col-form-label" asp-for="NyttKort.Namn">
+			Bostadsort
+		    </label>
+		    <div class="col-sm-3">
+			<input id="nyttkort_bostadsort" class="form-control asp-for="NyttKort.Bostadsort"/>
+		    </div>
+		</div>
+		<div class="row mb-1">
+		    <label class="nya_aktiva_label text-start col-sm-2 col-form-label">
+			Telefonnummer
+		    </label>
+		    <div class="col-sm-2">
+			<input id="nyttkort_telefonnummer" class="form-control col-sm-6" asp-for="NyttKort.Telefonnummer"/>
+		    </div>
+		</div>
+		<button class="btn btn-secondary" type="reset">Rensa fälten</button>
+		<button class="btn btn-success" type="submit">Skapa kortet</button>
+	    </form>
 	</div>
 	<hr>
     </div>
     <div class="table-responsive">
 	<!-- tabell med existerande kort -->
-	<table id="personindex" class="table display dataTable table-striped table-bordered table-hover">
-	    <thead class="thead-dark sorting text-light">
+	<table id="personindex" class="table table-dark table-striped table-bordered table-hover">
+	    <thead class="sorting">
 		<tr>
-		    <th class="sorting th-sm" tabindex="0" aria-controls="peronindex" aria-sort="descending">Namn</th>
-		    <th class="sorting th-sm" tabindex="0" aria-controls="peronindex" aria-sort="descending">Ort</th>
-		    <th class="th-sm">Telefonnummer</th>
-		    <th class="th-sm">Id</th>
-		    <th class="th-sm">Aktion</th>
+		    <th tabindex="0" aria-controls="personindex" aria-sort="descending">Namn</th>
+		    <th tabindex="0" aria-controls="personindex" aria-sort="descending">Ort</th>
+		    <th >Telefonnummer</th>
+		    <th >Id</th>
+		    <th>Aktion</th>
 		</tr>
 	    </thead>
 	    <tbody>
@@ -83,7 +112,8 @@
 			@Html.DisplayFor(model => item.Id)
 			</td>
 			<td>
-			<a asp-controller="People" asp-action="radering" asp-route-id="@item.Id" class="btn btn-sm btn-warning btn-link">radering</a>
+			<a asp-controller="People" asp-action="radering" asp-route-id="@item.Id" class="btn btn-warning btn-link">radering</a>
+			<a asp-controller="People" asp-action="modifiera" asp-route-id="@item.Id" class="btn btn-warning btn-link">modifiera</a>
 			</td>
 			</tr>
 		    }
@@ -93,8 +123,10 @@
     </div>
 </div>
 
-<script type="javascript">
- $(document).ready( function () {
-     $('#personindex').DataTable();
- })
+@section Scripts {
+<script type="text/javascript">
+   $(document).ready( function () {
+       $('#personindex').DataTable();
+    })
 </script>
+}
