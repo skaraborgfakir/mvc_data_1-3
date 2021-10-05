@@ -1,4 +1,4 @@
-<!-- Time-stamp: <2021-10-05 12:24:24 stefan> -*-web-*- -->
+<!-- Time-stamp: <2021-10-05 13:35:23 stefan> -*-web-*- -->
 <!-- https://www.educba.com/bootstrap-sort-table/
 här använder jag metod 1 för att sortera tabellen
 
@@ -16,27 +16,15 @@ bootstrap 5.1 används
 
 @model Kartotek.Modeller.Entiteter.Person
 
-<div class="table-row clickable-row">
+<tr class="clickable-row">
 
-<td>
-@Html.DisplayFor(model => Model.Namn)
+<td tabindex="0">@Html.DisplayFor(model => Model.Namn)</td>
+<td tabindex="1">@Html.DisplayFor(model => Model.Bostadsort)</td>
+<td             >@Html.DisplayFor(model => Model.Telefonnummer)</td>
+<td             >@Html.DisplayFor(model => Model.Id)</td>
+<td >
+     <a asp-controller="People" asp-action="radering" asp-route-id="@Model.Id" class="btn btn-warning btn-link">radering</a>
+     <a asp-controller="People" asp-action="modifiera" asp-route-id="@Model.Id" class="btn btn-warning btn-link">modifiera</a>
 </td>
 
-<td>
-@Html.DisplayFor(model => Model.Bostadsort)
-</td>
-
-<td>
-@Html.DisplayFor(model => Model.Telefonnummer)
-</td>
-
-<td>
-@Html.DisplayFor(model => Model.Id)
-</td>
-
-<td>
-<a asp-controller="People" asp-action="radering" asp-route-id="@Model.Id" class="btn btn-warning btn-link">radering</a>
-<a asp-controller="People" asp-action="modifiera" asp-route-id="@Model.Id" class="btn btn-warning btn-link">modifiera</a>
-</td>
-
-</div>
+</tr>
