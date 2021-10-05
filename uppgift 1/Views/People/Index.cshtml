@@ -1,4 +1,4 @@
-<!-- Time-stamp: <2021-10-05 11:21:39 stefan> -*-web-*- -->
+<!-- Time-stamp: <2021-10-05 11:54:01 stefan> -*-web-*- -->
 <!-- https://www.educba.com/bootstrap-sort-table/
      här använder jag metod 1 för att sortera tabellen
 
@@ -97,31 +97,8 @@
 	    </thead>
 	    <tbody>
 		@foreach (Person item in Model.Personlistan.Utdraget) {
-		    <tr class="clickable-row">
-
-		    <td>
-		    @Html.DisplayFor(model => item.Namn)
-		    </td>
-
-		    <td>
-		    @Html.DisplayFor(model => item.Bostadsort)
-		    </td>
-
-		    <td>
-		    @Html.DisplayFor(model => item.Telefonnummer)
-		    </td>
-
-		    <td>
-		    @Html.DisplayFor(model => item.Id)
-		    </td>
-
-		    <td>
-		    <a asp-controller="People" asp-action="radering" asp-route-id="@item.Id" class="btn btn-warning btn-link">radering</a>
-		    <a asp-controller="People" asp-action="modifiera" asp-route-id="@item.Id" class="btn btn-warning btn-link">modifiera</a>
-		    </td>
-
-			</tr>
-		    }
+		    @Html.Partial( "aktiva", item)
+		}
 	    </tbody>
 	</table>
     </div>
