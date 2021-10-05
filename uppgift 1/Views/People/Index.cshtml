@@ -1,4 +1,4 @@
-<!-- Time-stamp: <2021-10-05 11:54:01 stefan> -*-web-*- -->
+<!-- Time-stamp: <2021-10-05 12:02:42 stefan> -*-web-*- -->
 <!-- https://www.educba.com/bootstrap-sort-table/
      här använder jag metod 1 för att sortera tabellen
 
@@ -97,7 +97,7 @@
 	    </thead>
 	    <tbody>
 		@foreach (Person item in Model.Personlistan.Utdraget) {
-		    @Html.Partial( "aktiva", item)
+		    @await Html.PartialAsync( "aktiva", item)
 		}
 	    </tbody>
 	</table>
