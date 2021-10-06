@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<!-- Time-stamp: <2021-10-05 12:06:00 stefan> -*-web-*- -->
+<!-- Time-stamp: <2021-10-05 15:21:22 stefan> -*-web-*- -->
 <!-- _Layout.cshtml -->
 <!-- inkluderar via RenderBody() de olika fragmenten -->
 <!--   fragment ? Exv: -->
@@ -74,6 +74,7 @@
 	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
 
 	<!-- allmänt för den här applikationen -->
+	<script type="text/javascript" src="~/js/sorteratabell.js"></script>
 	<script type="text/javascript" src="~/js/site.js"></script>
 	<!-- möjlighet att från exv People/Index.cshtml få med ett eget script ( section Scripts ) -->
 	@await RenderSectionAsync("Scripts", required: false)
