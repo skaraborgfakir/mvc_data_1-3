@@ -17,125 +17,131 @@
 @model Kartotek.Modeller.Vyer.HopslagenmodellVymodell
 
 @{
-    ViewData["Title"] = "Ett personkartotek";
+	ViewData["Title"] = "Ett personkartotek";
 }
 
 <div class="text-center">
-    <h3 class="display-4">Ett kartotek över aktiva medlemmar</h3>
-    <div>
-	<div class="container">
-	    <h4 class="text-start">
-		Sökning igenom poster
-	    </h4>
-	    <form id="filtrering" method="post" asp-controller="People">
-		<div class="mb-1 text-start">
-		    <label class="filtertermer_label col-sm-1 col-form-label" asp-for="Filtertermer.Namn">
-			Namn
-		    </label>
-		    <input class="col-sm-3" asp-for="Filtertermer.Namn"/>
+	<h3 class="display-4">Ett kartotek över aktiva medlemmar</h3>
+	<div>
+		<div class="container">
+			<h4 class="text-start">
+				Sökning igenom poster
+			</h4>
+			<form id="filtrering" method="post" asp-controller="People">
+				<div class="mb-1 text-start">
+					<label class="filtertermer_label col-sm-1 col-form-label" asp-for="Filtertermer.Namn">
+						Namn
+					</label>
+					<input class="col-sm-3" asp-for="Filtertermer.Namn" />
 
-		    <label class="filtertermer_label col-sm-1 col-form-label" asp-for="Filtertermer.Bostadsort">
-			Bostadsort
-		    </label>
-		    <input class="col-sm-2" asp-for="Filtertermer.Bostadsort"/>
+					<label class="filtertermer_label col-sm-1 col-form-label" asp-for="Filtertermer.Bostadsort">
+						Bostadsort
+					</label>
+					<input class="col-sm-2" asp-for="Filtertermer.Bostadsort" />
 
-		    <button class="btn btn-secondary" type="reset">Rensa fälten</button> <!-- rensa fälten -->
-		    <button class="btn btn-success" type="submit" asp-action="filtrering">Filtrera</button>
-			<button class="btn btn-success" type="submit" asp-action="ingenfiltrering">Ingen filtrering</button>
+					<button class="btn btn-secondary" type="reset">Rensa fälten</button> <!-- rensa fälten -->
+					<button class="btn btn-success" type="submit" asp-action="filtrering">Filtrera</button>
+					<button class="btn btn-success" type="submit" asp-action="ingenfiltrering">Ingen filtrering</button>
+				</div>
+			</form>
 		</div>
-	    </form>
-	</div>
 
-	<hr>
+		<hr>
 
-	<!-- funktion för inläggning av en person i taget  -->
-	<div class="container">
-	    <h4 class="text-start">
-		Inrapportering av nya aktiva
-	    </h4>
-	    <form id="nya_aktiva" method="post" asp-controller="People" asp-action="nyttkort">
-		<div class="row mb-1">
-		    <label class="nya_aktiva_label text-start col-sm-2 col-form-label" asp-for="NyttKort.Namn">
-			Namn
-		    </label>
-		    <div class="col-sm-4">
-			<input id="nyttkort_namn" class="form-control" asp-for="NyttKort.Namn"/>
-		    </div>
+		<!-- funktion för inläggning av en person i taget  -->
+		<div class="container">
+			<h4 class="text-start">
+				Inrapportering av nya aktiva
+			</h4>
+			<form id="nya_aktiva" method="post" asp-controller="People" asp-action="nyttkort">
+				<div class="row mb-1">
+					<label class="nya_aktiva_label text-start col-sm-2 col-form-label" asp-for="NyttKort.Namn">
+						Namn
+					</label>
+					<div class="col-sm-4">
+						<input id="nyttkort_namn" class="form-control" asp-for="NyttKort.Namn" />
+					</div>
+				</div>
+				<div class="row mb-1">
+					<label class="nya_aktiva_label text-start col-sm-2 col-form-label" asp-for="NyttKort.Namn">
+						Bostadsort
+					</label>
+					<div class="col-sm-3">
+						<input id="nyttkort_bostadsort" class="form-control asp-for=" NyttKort.Bostadsort" />
+					</div>
+				</div>
+				<div class="row mb-1">
+					<label class="nya_aktiva_label text-start col-sm-2 col-form-label">
+						Telefonnummer
+					</label>
+					<div class="col-sm-2">
+						<input id="nyttkort_telefonnummer" class="form-control col-sm-6"
+							asp-for="NyttKort.Telefonnummer" />
+					</div>
+				</div>
+				<button class="btn btn-secondary" type="reset">Rensa fälten</button>
+				<button class="btn btn-success" type="submit">Skapa kortet</button>
+			</form>
 		</div>
-		<div class="row mb-1">
-		    <label class="nya_aktiva_label text-start col-sm-2 col-form-label" asp-for="NyttKort.Namn">
-			Bostadsort
-		    </label>
-		    <div class="col-sm-3">
-			<input id="nyttkort_bostadsort" class="form-control asp-for="NyttKort.Bostadsort"/>
-		    </div>
-		</div>
-		<div class="row mb-1">
-		    <label class="nya_aktiva_label text-start col-sm-2 col-form-label">
-			Telefonnummer
-		    </label>
-		    <div class="col-sm-2">
-			<input id="nyttkort_telefonnummer" class="form-control col-sm-6" asp-for="NyttKort.Telefonnummer"/>
-		    </div>
-		</div>
-		<button class="btn btn-secondary" type="reset">Rensa fälten</button>
-		<button class="btn btn-success" type="submit">Skapa kortet</button>
-	    </form>
+		<hr>
 	</div>
-	<hr>
-    </div>
-    <div class="table-responsive">
-	<!-- tabell med existerande kort -->
-	<table id="personindex" class="table table-striped table-hover table-bordered table-sm" data-order='[[ 0, "asc"]]'>
-	    <thead>
-		<tr>
-		    <th class="th-sm" scope="col" tabindex="0">Namn</th>
-		    <th class="th-sm" scope="col" tabindex="1">Ort</th>
-		    <th class="th-sm" scope="col" tabindex="2">Telefonnummer</th>
-		    <th class="th-sm" scope="col" tabindex="3">Id</th>
-		    <th class="th-sm no-sort" scope="col" tabindex="4">Aktion</th>
-		</tr>
-	    </thead>
-	    <tbody>
-		@foreach (Person item in Model.Personlistan.Utdraget) {
-		    <partial name="aktiva" model="item"/>
-		}
-	    </tbody>
-	</table>
-    </div>
+	<!--
+	<div class="table-responsive">
+		<!-- tabell med existerande kort -->
+		<!-- <table id="personindex" class="table table-striped table-hover table-bordered table-sm"
+			data-order='[[ 0, "asc"]]'>
+			<thead>
+				<tr>
+					<th class="th-sm" scope="col" tabindex="0">Namn</th>
+					<th class="th-sm" scope="col" tabindex="1">Ort</th>
+					<th class="th-sm" scope="col" tabindex="2">Telefonnummer</th>
+					<th class="th-sm" scope="col" tabindex="3">Id</th>
+					<th class="th-sm no-sort" scope="col" tabindex="4">Aktion</th>
+				</tr>
+			</thead>
+			<tbody>
+o				 {
+					// 	<partial name="aktiva" model="item" /> 
+				 }
+			 </tbody>
+		 </table>
+	/* </div> */-->
 
-    <div id="personindex_div" class="container">
-	<!-- tabell med existerande kort -->
-	<div class="row">
-	    <div class="col-3 text-start" onclick="sorteraTabell(0)">Namn</div>
-	    <div class="col-3 text-start" onclick="sorteraTabell(1)">Bostadsort</div>
-	    <div class="col-2 text-start">Telefonnummer</div>
-	    <div class="col text-start">Id</div>
-	    <div class="col-3">Aktioner</div>
+	<div id="personindex_div" class="table-responsive container">
+		<!-- tabell med existerande kort -->
+		<div class="row">
+			<div class="col-3 text-start" onclick="sorteraTabell(0)">Namn</div>
+			<div class="col-3 text-start" onclick="sorteraTabell(1)">Bostadsort</div>
+			<div class="col-2 text-start">Telefonnummer</div>
+			<div class="col text-start">Id</div>
+			<div class="col-3">Aktioner</div>
+		</div>
+		<div id="personindex_div_inner" class="container">
+			@foreach (Person item in Model.Personlistan.Utdraget)
+			{
+				<partial name="aktiva_div" model="item" />
+			}
+		</div>
 	</div>
-	<div id="personindex_div_inner" class="container">
-	    @foreach (Person item in Model.Personlistan.Utdraget) {
-		<partial name="aktiva_div" model="item"/>
-	    }
-	</div>
-    </div>
 </div>
 
 @section Scripts {
-    <script type="text/javascript">
-     $(document).ready(function () {
-	 $('#personindex').DataTable({
-	     "ordering": true, // false to disable sorting (or any other option)
-	     "paging":   false,
-	     "columns":  [ { "searchable": true },
-			   { "searchable": true },
-			   { "searchable": true },
-			   { "searchable": false },
-			   { "searchable": false,
-			     "orderable":  false }
-	     ]
-	 });
-	 $('.dataTables_length').addClass('bs-select');
-     });
-    </script>
-    }
+<script type="text/javascript">
+	$(document).ready(function () {
+		$('#personindex').DataTable({
+			"ordering": true, // false to disable sorting (or any other option)
+			"paging": false,
+			"columns": [{ "searchable": true },
+			{ "searchable": true },
+			{ "searchable": true },
+			{ "searchable": false },
+			{
+				"searchable": false,
+				"orderable": false
+			}
+			]
+		});
+		$('.dataTables_length').addClass('bs-select');
+	});
+</script>
+}

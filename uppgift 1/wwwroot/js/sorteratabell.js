@@ -58,54 +58,41 @@
 //
 // 1 1   slut på inre loop
 
-function sorteraTabellStigande( sorteringsterm)
-{
-    var posterna = tabellen.getElementById( "personindex_div_inner").children; // varje rad i tabellen
-    var i = posterna.length;                                // antalet poster
+function sorteraTabellStigande(sorteringsterm) {
+	var tabellen = document.getElementById("personindex_div_inner");
+	var posterna = tabellen.children; // varje rad i tabellen - htmlcollection
+	var i = posterna.length;                                // antalet poster
 
-    for (  ; i >= 1 ; i-- ) {
-	for ( let j = 1; j < i ; j++) {
-	    let x = posterna[j-1].innerHTML getElementsByTagName("TD")[sorteringsterm]; // de två posterna som det ska beslutas om
-	    let y = posterna[j].getElementsByTagName("TD")[sorteringsterm];
-
-	    if ( x!=undefined && y != undefined)
-		if ( x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase() )
-		    posterna[j].parentNode.insertBefore( posterna[j], posterna[j-1] ); // klistra in y före x
-	}
-    }
+	for (; i >= 1; i--)
+		for (let j = 1; j < i; j++)
+			if (posterna.item(j - 1) != undefined && posterna.item(j) != undefined &&
+				posterna.item(j - 1).children.item(sorteringsterm).innerHTML > posterna.item(j).children.item(sorteringsterm).innerHTML)
+				tabellen.insertBefore(posterna.item(j), posterna.item(j - 1));
 }
 
 //
-// samma från början men man börjar i andra ändan (sort-of)
+// samma men annat villkor för beslut - vi vill knuffa det minsta framför oss !
 //
-function sorteraTabellSjunkande( sorteringsterm) {
-    var tabellen = document.getElementById( "personindex_div_inner");
-    var posterna = tabellen.children;   // varje rad i tabellen
-    var i;
-    var x, y;   // de två posterna som det ska beslutas om
+function sorteraTabellSjunkande(sorteringsterm) {
+	var tabellen = document.getElementById("personindex_div_inner");
+	var posterna = tabellen.children;   // varje rad i tabellen
+	var i = posterna.length;                                // antalet poster
 
-    for ( i = posterna.length = posterna.length ; i >= 1 ; i++ )
-	for ( j = 2; j <= i ; j--) {
-	    x = posterna[j-i].getElementsByTagName("TD")[sorteringsterm];
-	    y = posterna[j].getElementsByTagName("TD")[sorteringsterm];
-
-	    if ( x!=undefined && y != undefined)
-	    {
-		// if () {
-		//	posterna[i].parentNode.insertBefore( posterna[i+1], posterna[i]);
-		// }
-	    }
-	}
+	for (; i >= 1; i--)
+		for (let j = 1; j < i; j++)
+			if (posterna.item(j - 1) != undefined && posterna.item(j) != undefined &&
+				posterna.item(j - 1).children.item(sorteringsterm).innerHTML < posterna.item(j).children.item(sorteringsterm).innerHTML)
+				tabellen.insertBefore(posterna.item(j), posterna.item(j - 1));  // post (j) framför posten i j-1
 }
 
 //
 // begränsad - den sorterar enbart på namn eller bostadsort (sorteringsterm) i stigande ordning
 //
-function sorteraTabell( sorteringsterm) {
-    var sorteringsordning = "stigande";  // sorteringsordning
+function sorteraTabell(sorteringsterm) {
+	var sorteringsordning = "stigande";  // sorteringsordning
 
-    if ( sorteringsordning == "stigande")
-	sorteraTabellStigande( sorteringsterm);
-    // else if ( sorteringsordning == "sjunkande")
-    //	sorteraTabellSjunkande( sorteringsterm);
+	if (sorteringsordning == "stigande")
+		sorteraTabellStigande(sorteringsterm);
+	else if (sorteringsordning == "sjunkande")
+		sorteraTabellSjunkande(sorteringsterm);
 }
