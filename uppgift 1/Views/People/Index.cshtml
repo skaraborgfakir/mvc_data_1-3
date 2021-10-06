@@ -1,4 +1,4 @@
-<!-- Time-stamp: <2021-10-05 11:21:39 stefan> -*-web-*- -->
+<!-- Time-stamp: <2021-10-06 14:47:02 stefan> -*-web-*- -->
 <!-- https://www.educba.com/bootstrap-sort-table/
      här använder jag metod 1 för att sortera tabellen
 
@@ -27,20 +27,21 @@
 	    <h4 class="text-start">
 		Sökning igenom poster
 	    </h4>
-	    <form id="filtrering" method="post" asp-controller="People" asp-action="filtrering">
+	    <form id="filtrering" method="post" asp-controller="People">
 		<div class="mb-1 text-start">
 		    <label class="filtertermer_label col-sm-1 col-form-label" asp-for="Filtertermer.Namn">
 			Namn
 		    </label>
-		    <input class="col-sm-4" asp-for="Filtertermer.Namn"/>
+		    <input class="col-sm-3" asp-for="Filtertermer.Namn"/>
 
 		    <label class="filtertermer_label col-sm-1 col-form-label" asp-for="Filtertermer.Bostadsort">
 			Bostadsort
 		    </label>
-		    <input class="col-sm-3" asp-for="Filtertermer.Bostadsort"/>
+		    <input class="col-sm-2" asp-for="Filtertermer.Bostadsort"/>
 
 		    <button class="btn btn-secondary" type="reset">Rensa fälten</button> <!-- rensa fälten -->
-		    <button class="btn btn-success" type="submit">Filtrera</button>
+		    <button class="btn btn-success" type="submit" asp-action="filtrering">Filtrera</button>
+			<button class="btn btn-success" type="submit" asp-action="ingenfiltrering">Ingen filtrering</button>
 		</div>
 	    </form>
 	</div>

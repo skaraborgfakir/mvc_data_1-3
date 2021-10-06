@@ -40,7 +40,7 @@ namespace Kartotek.Modeller {
 					     PeopleViewModell vyn ) {
 	    Console.WriteLine( "public PeopleViewModell FindByNamn( String namn,");
 	    foreach (Person item in poster) {
-		if (item.Namn == namn) {
+		if (namn.Equals( item.Namn, StringComparison.OrdinalIgnoreCase)) {
 		    vyn.Utdraget.Add( item);
 		}
 	    }
@@ -56,7 +56,7 @@ namespace Kartotek.Modeller {
 	    Console.WriteLine( "public PeopleViewModell FindByBostadsort( String bostadsort");
 
 	    foreach (Person item in poster) {
-		if (item.Bostadsort == bostadsort ) {
+		if ( bostadsort.Equals( item.Bostadsort, StringComparison.OrdinalIgnoreCase)) {
 		    vyn.Utdraget.Add( item);
 		}
 	    }
