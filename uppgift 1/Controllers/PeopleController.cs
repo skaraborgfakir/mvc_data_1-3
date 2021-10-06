@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-09-20 16:13:18 stefan>
+// Time-stamp: <2021-10-06 12:12:03 stefan>
 //
 
 //
@@ -9,7 +9,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
-//
+// https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.http?view=aspnetcore-3.1
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
@@ -54,58 +55,48 @@ namespace Kartotek.Controllers {
 	    Console.WriteLine( "public IActionResult Index");
 
 	    //_loggdest.Test();
-	    // Console.WriteLine( "public IActionResult Index - sökterm: " + sökterm);
-	    // Console.WriteLine( "public IActionResult Index - sökstatus: " + sökstatus.ToString() );
+
+	    if ( HttpContext.Session.GetString( "namn.kartotek.netcore3.1.fakirenstenstorp.st") == null) {
+		HttpContext.Session.SetInt32( "valdterm.kartotek.netcore3.1.fakirenstenstorp.st", 0);
+		HttpContext.Session.SetString( "namn.kartotek.netcore3.1.fakirenstenstorp.st",  "");
+		HttpContext.Session.SetString( "bostadsort.kartotek.netcore3.1.fakirenstenstorp.st",  "");
+	    }
 
 	    Sökläge sökstatus = Sökläge.Ingen;
+
 	    HopslagenmodellVymodell nyVymodell = new HopslagenmodellVymodell();
+	    nyVymodell.Filtertermer = new PeopleViewModell();
 
-	    //
-	    // eventuell sökning ?
-	    //
-	    if ( vymodell == null ) {
-		//
-		// eventuellt första anrop
-		//
-		Console.WriteLine( "public IActionResult Index - if ( vymodell == null");
-	    } else {
-		if ( vymodell.Filtertermer == null) {
-		    //
-		    // okänd filtrering
-		    //
-		    Console.WriteLine( "if ( vymodell.Filtertermer == null)");
-		} else {
-		    nyVymodell.Filtertermer = new PeopleViewModell();
-
-		    if ( ! String.IsNullOrEmpty( vymodell.Filtertermer.Namn)) {
-			Console.WriteLine( "public IActionResult Index - sökning på namn");
-			Console.WriteLine( "public IActionResult Index - if ( " + vymodell.Filtertermer.Namn);
-			sökstatus = Sökläge.Namn;
-			nyVymodell.Filtertermer.Namn = vymodell.Filtertermer.Namn;
-			nyVymodell.Filtertermer.Bostadsort= "";
-		    } else if ( ! String.IsNullOrEmpty( vymodell.Filtertermer.Bostadsort)) {
-			Console.WriteLine( "public IActionResult Index - bostadsort");
-			Console.WriteLine( "public IActionResult Index - if ( " + vymodell.Filtertermer.Bostadsort);
-			sökstatus = Sökläge.Bostadsort;
-			nyVymodell.Filtertermer.Namn = "";
-			nyVymodell.Filtertermer.Bostadsort = vymodell.Filtertermer.Bostadsort;
-		    }
-		}
+	    switch ( HttpContext.Session.GetInt32( "valdterm.kartotek.netcore3.1.fakirenstenstorp.st")) {
+		case 1:
+		    // Console.WriteLine( "public IActionResult Index - Sökläge sökstatus = Sökläge.Namn");
+		    sökstatus = Sökläge.Namn;
+		    break;
+		case 2:
+		    sökstatus = Sökläge.Bostadsort;
+		    // Console.WriteLine( "public IActionResult Index - Sökläge sökstatus = Sökläge.Bostadsort");
+		    break;
+		default:
+		    sökstatus = Sökläge.Ingen;
+		    // Console.WriteLine( "public IActionResult Index - Sökläge sökstatus = inget speciellt");
+		    break;
 	    }
 
 	    switch (sökstatus) {
 		case Sökläge.Namn:
-		    Console.WriteLine( "public IActionResult Index sålla på namn");
+		    // Console.WriteLine( "public IActionResult Index sålla på namn");
+		    nyVymodell.Filtertermer.Namn = HttpContext.Session.GetString( "namn.kartotek.netcore3.1.fakirenstenstorp.st");
 		    nyVymodell.Personlistan = serviceenheten.FindBy( nyVymodell.Filtertermer);
 		    break;
 
 		case Sökläge.Bostadsort:
-		    Console.WriteLine( "public IActionResult Index sålla på bostadsort");
+		    // Console.WriteLine( "public IActionResult Index sålla på bostadsort");
+		    nyVymodell.Filtertermer.Bostadsort = HttpContext.Session.GetString( "bostadsort.kartotek.netcore3.1.fakirenstenstorp.st");
 		    nyVymodell.Personlistan = serviceenheten.FindBy( nyVymodell.Filtertermer);
 		    break;
 
 		default:
-		    Console.WriteLine( "public IActionResult Index ingen sållning");
+		    // Console.WriteLine( "public IActionResult Index ingen sållning");
 		    nyVymodell.Personlistan = serviceenheten.All();
 		    break;
 	    }
@@ -121,13 +112,14 @@ namespace Kartotek.Controllers {
 	public IActionResult Filtrera( HopslagenmodellVymodell vymodell) {
 	    Console.WriteLine( "public IActionResult Filtrera( PeopleViewModell");
 
-	    HopslagenmodellVymodell nyVymodell = new HopslagenmodellVymodell();
-	    nyVymodell.NyttKort = new CreatePersonViewModell();
+	    // HopslagenmodellVymodell nyVymodell = new HopslagenmodellVymodell();
+	    // nyVymodell.NyttKort = new CreatePersonViewModell();
 
 	    if ( ModelState.IsValid ) {
 		if ( vymodell == null ) {
 		    Console.WriteLine( "public IActionResult Filtrera vymodell == null");
 		} else {
+		    Console.WriteLine( "public IActionResult Filtrera - if ( vymodell != null ");
 		    //
 		    // hur kommer man hit ? tanken är att man skulle ha sökning efter data på
 		    // enbart ett ställe och filtrering då enbart ska ändra kriterierna
@@ -135,26 +127,59 @@ namespace Kartotek.Controllers {
 		    // sökkriterier (namn/bostadsort) i session ?
 		    //
 		    if ( vymodell.Filtertermer != null ) {
-			nyVymodell.Filtertermer = new PeopleViewModell();
+			// nyVymodell.Filtertermer = new PeopleViewModell();
 
 			if ( ! String.IsNullOrEmpty( vymodell.Filtertermer.Namn)) {
-			    Console.WriteLine( "public IActionResult Filtrera på namn -- " + vymodell.Filtertermer.Namn + " --");
-			    nyVymodell.Filtertermer.Namn = vymodell.Filtertermer.Namn;
-			    nyVymodell.Filtertermer.Bostadsort = "";
+			    // Console.WriteLine( "public IActionResult Filtrera på namn -- " + vymodell.Filtertermer.Namn + " --");
+
+			    HttpContext.Session.SetInt32( "valdterm.kartotek.netcore3.1.fakirenstenstorp.st", 1);
+			    HttpContext.Session.SetString( "namn.kartotek.netcore3.1.fakirenstenstorp.st",  vymodell.Filtertermer.Namn);
+			    HttpContext.Session.SetString( "bostadsort.kartotek.netcore3.1.fakirenstenstorp.st", "");
 			} else if ( ! String.IsNullOrEmpty( vymodell.Filtertermer.Bostadsort)) {
-			    Console.WriteLine( "public IActionResult Filtrera på bostadsort -- " + vymodell.Filtertermer.Bostadsort + " --");
-			    nyVymodell.Filtertermer.Namn = "";
-			    nyVymodell.Filtertermer.Bostadsort = vymodell.Filtertermer.Bostadsort;
+			    // Console.WriteLine( "public IActionResult Filtrera på bostadsort -- " + vymodell.Filtertermer.Bostadsort + " --");
+
+			    HttpContext.Session.SetInt32( "valdterm.kartotek.netcore3.1.fakirenstenstorp.st", 2);
+			    HttpContext.Session.SetString( "namn.kartotek.netcore3.1.fakirenstenstorp.st", "");
+			    HttpContext.Session.SetString( "bostadsort.kartotek.netcore3.1.fakirenstenstorp.st", vymodell.Filtertermer.Bostadsort);
 			}
 
-			nyVymodell.Personlistan = serviceenheten.FindBy( nyVymodell.Filtertermer);
+			if  ( vymodell.Filtertermer.Namn== null &&
+			      vymodell.Filtertermer.Bostadsort == null) {// &&
+			    // Console.WriteLine( "public IActionResult Filtrera -- vymodell.Filtertermer.Namn != null &&");
+
+			    HttpContext.Session.SetInt32( "valdterm.kartotek.netcore3.1.fakirenstenstorp.st", 0);
+			    HttpContext.Session.SetString( "namn.kartotek.netcore3.1.fakirenstenstorp.st", "");
+			    HttpContext.Session.SetString( "bostadsort.kartotek.netcore3.1.fakirenstenstorp.st", "");
+			}
+
 		    } else {
-			nyVymodell.Personlistan = serviceenheten.All();
+			Console.WriteLine( "public IActionResult - if ( vymodell.Filtertermer == null )  ");
 		    }
 		}
+	    } else {
+		// Console.WriteLine( "public IActionResult - if ( ! ModelState.IsValid ) {");
+
+		HttpContext.Session.SetInt32( "valdterm.kartotek.netcore3.1.fakirenstenstorp.st", 0);
+		HttpContext.Session.SetString( "namn.kartotek.netcore3.1.fakirenstenstorp.st", "");
+		HttpContext.Session.SetString( "bostadsort.kartotek.netcore3.1.fakirenstenstorp.st", "");
 	    }
 
-	    return View( "Index", nyVymodell); // använder Views/People/Index.cshtml
+	    return RedirectToAction( "Index");
+	}
+
+	//
+	// återställ sökning
+	//
+	[HttpPost]
+	[ActionName("ingenfiltrering")]
+	public IActionResult IngenFiltrering( HopslagenmodellVymodell vymodell) {
+	    // Console.WriteLine( "public IActionResult Filtrera( PeopleViewModell");
+
+		HttpContext.Session.SetInt32( "valdterm.kartotek.netcore3.1.fakirenstenstorp.st", 0);
+		HttpContext.Session.SetString( "namn.kartotek.netcore3.1.fakirenstenstorp.st", "");
+		HttpContext.Session.SetString( "bostadsort.kartotek.netcore3.1.fakirenstenstorp.st", "");
+
+	    return RedirectToAction( "Index");
 	}
 
 	//
@@ -233,8 +258,8 @@ namespace Kartotek.Controllers {
 	[HttpGet]
 	[ActionName("radering")]
 	public IActionResult TagBortKort( int id) {
-	    Console.WriteLine( "public IActionResult TagBortKort( int id");
-	    Console.WriteLine( "public IActionResult TagBortKort id = " + id.ToString());
+	    // Console.WriteLine( "public IActionResult TagBortKort( int id");
+	    // Console.WriteLine( "public IActionResult TagBortKort id = " + id.ToString());
 
 	    HopslagenmodellVymodell nyVymodell = new HopslagenmodellVymodell();
 
