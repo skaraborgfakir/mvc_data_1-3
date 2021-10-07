@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 // https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.http?view=aspnetcore-3.1
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 
@@ -22,11 +23,14 @@ namespace Kartotek.Controllers {
    public class PeopleController : Controller {
       private readonly ILogger<PeopleController> _loggdest;
       private readonly IConfiguration _configurationsrc;
+      private readonly IWebHostEnvironment _webHostEnvironment;
 
       public PeopleController ( ILogger<PeopleController> loggdest,
-                   IConfiguration configurationsrc ) {
+                        IConfiguration configurationsrc,
+                        IWebHostEnvironment webHostEnvironment ) {
          _configurationsrc = configurationsrc;
          _loggdest = loggdest;
+         _webHostEnvironment = webHostEnvironment;
       }
 
       //
@@ -253,21 +257,25 @@ namespace Kartotek.Controllers {
       //
       // funktioner/aktioner i labb 3 - AJAX
       //
-      [HttpPost]
+      [HttpGet]
       [ActionName( "uppdateralistan" )]
+      [Produces("application/json")]
       public IActionResult uppdateraListanUrDatabasen () {
-         throw new NotImplementedException( "public IActionResult uppdateraListanUrDatabase())" );
+         string filePath = _webHostEnvironment.ContentRootPath + "/App_Data/test.json"
+         
+         return  System.IO.File.ReadAllText( filePath);              
       }
 
-      [HttpPost]
+      [HttpGet("{id}")]
       [ActionName( "tagUppKortet" )]
-      public IActionResult tagFramKortet () {
+      [Produces("application/json")]
+      public IActionResult tagFramKortet ( int id) {
          throw new NotImplementedException( "public IActionResult tagFramKortet())" );
       }
 
-      [HttpPost]
+      [HttpDelete("{id}")]
       [ActionName( "rensaBortKortet" )]
-      public IActionResult rensaUrKortet () {
+      public IActionResult rensaUrKortet (int id) {
          throw new NotImplementedException( "public IActionResult rensaUrKortet())" );
       }      
    }

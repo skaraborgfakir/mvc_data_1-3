@@ -88,19 +88,19 @@
 		<hr>
 
 		<div class="container">
-			<form id="specifiktKort" method="post" asp-controller="People">
+			<form id="specifiktKort" >
 				<fieldset class="mb-1 text-start">
-					<label class="filtertermer_label col-sm-1 col-form-label" asp-for="specifiktKort.KortetsId">
+					<label class="filtertermer_label col-sm-1 col-form-label">
 						ID
 					</label>
-					<input class="col-sm" id="valtkortsid" asp-for="specifiktKort.KortetsId" />
-					<button class="btn btn-primary" asp-action="uppdateralistan" type="submit">Uppdatera
-						listan</button>
-					<button class="btn btn-primary" asp-action="tagUppKortet" type="submit">Visa kort</button>
-					<button class="btn btn-warning" asp-action="rensaBortKortet" type="submit">Radera valt
-						kort</button>
+					<input class="col-sm" type="number" min="0" id="valtkortsid"/>
+					<button class="btn btn-primary" onclick="uppdateralistan()">Uppdatera listan</button>
+					<button class="btn btn-primary" onclick="plockaFramKortet()">Visa kort</button>
+					<button class="btn btn-warning" onclick="rensaBortKortet()">Radera valt kort</button>
 				</fieldset>
 			</form>
+			<div id="kortvy">
+			</div>
 		</div>
 
 		<hr>
@@ -126,6 +126,29 @@
 
 
 @section Scripts {
+<script type="text/javascript">
+	$(document.ready( function()
+	{
+		function uppdateralistan() {
+			document.getElementsById('kortvy').innerHTML = "test;"
+			// req = new XMLHttpRequest();
+			// request.open( "GET", "People/uppdateraListan",true);
+			// request.send(null);
+			
+		}
+
+		function plockaFramKortet(){
+			// req = new XMLHttpRequest();
+			
+		}
+
+		function rensaBortKortet() {
+
+		}
+	}
+	});
+</script>
+
 <script type="text/javascript">
 	$(document).ready(function () {
 		$('#specifiktKort').validate();
