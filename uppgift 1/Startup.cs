@@ -49,16 +49,23 @@ namespace Kartotek {
          }
          );
 
+         // Convert JSON from Camel Case to Pascal Case
+         services.AddControllers().AddJsonOptions( options => {
+            // Use the default property (Pascal) casing.
+            options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+         } );
+
          // services.AddScoped<IPeopleService, PeopleService>();
          // services.AddScoped<IPeopleRepo,InMemoryPeopleRepo>();
 
          services.AddControllersWithViews();
+         services.AddHttpContextAccessor();
          services.AddMvc();
       }
 
       // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
       public void Configure ( IApplicationBuilder app,
-                   IWebHostEnvironment env ) {
+                     IWebHostEnvironment env ) {
          //
          // klistra in olika funktioner i ramverkets avveckling av jobb (inkommande trafik via http och returnerade svar)
          //
