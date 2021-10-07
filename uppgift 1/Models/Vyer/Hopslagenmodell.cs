@@ -24,43 +24,34 @@ using Microsoft.AspNetCore.Mvc;
 
 using Kartotek.Modeller.Vyer;
 
-namespace Kartotek.Modeller.Vyer {
-    public class HopslagenmodellVymodell {
-	//
-	// medlemmar som motsvarar PeopleService API
-	//
-	// public PeopleViewModell personlistan; // från PeopleService - en eventuellt filtrerad lista av kort
-	public PeopleViewModell Personlistan {
-	    get; // { return personlistan;}
-	    set; // { personlistan = value; }
-	}
+namespace Kartotek.Modeller.Vyer
+{
+    public class HopslagenmodellVymodell
+    {
+        //
+        // medlemmar som motsvarar PeopleService API
+        //
+        // public PeopleViewModell personlistan; // från PeopleService - en eventuellt filtrerad lista av kort
+        public PeopleViewModell Personlistan
+        {
+            get;
+            set;
+        }
 
-	public PeopleViewModell Filtertermer { // till PeopleService - // innehåller sökkriterier
-	    get; set;
-	}
-	// public string FilterTermNamn { get; set; }
-	// public string FilterTermBostadsort  { get; set; }
+        public PeopleViewModell Filtertermer
+        { // till PeopleService - // innehåller sökkriterier
+            get; set;
+        }
 
-	// public CreatePersonViewModell nyttPersonkort;  // från formulär till PeopleService
-	// public string nyttKortNamn;
-	// public string nyttKortBostadsort;
-	// public string nyttKortTelefonnummer;
-	// public string NyttKortNamn   { get; set; }
-	// public string NyttKortBostadsort   { get; set; }
-	// public string NyttKortTelefonnummer   { get; set; }
+        public CreatePersonViewModell NyttKort
+        {
+            get; set;
+        }
 
-	public CreatePersonViewModell NyttKort {
-	    get; set;
-	}
+        public AktionSpecifiktkort specifiktKort
+        {
+            get; set;
+        }
 
-	// public HopslagenmodellVymodell() {
-	//     filtertermer   = new PeopleViewModell( new List<Person>() );
-	//     nyttPersonkort = new CreatePersonViewModell();
-	// }
-	//public HopslagenmodellVymodell( PeopleViewModell utdraget ) {
-	//  personlistan   = utdraget;
-	// filtertermer   = new PeopleViewModell( new List<Person>() );
-	// nyttPersonkort = new CreatePersonViewModell();
-	//}
     }
 }

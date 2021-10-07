@@ -28,21 +28,20 @@
 				Sökning igenom poster
 			</h4>
 			<form id="filtrering" method="post" asp-controller="People">
-				<div class="mb-1 text-start">
+				<fieldset class="mb-1 text-start">
 					<label class="filtertermer_label col-sm-1 col-form-label" asp-for="Filtertermer.Namn">
 						Namn
 					</label>
 					<input class="col-sm-3" asp-for="Filtertermer.Namn" />
-
 					<label class="filtertermer_label col-sm-1 col-form-label" asp-for="Filtertermer.Bostadsort">
 						Bostadsort
 					</label>
 					<input class="col-sm-2" asp-for="Filtertermer.Bostadsort" />
-
 					<button class="btn btn-secondary" type="reset">Rensa fälten</button> <!-- rensa fälten -->
 					<button class="btn btn-success" type="submit" asp-action="filtrering">Filtrera</button>
 					<button class="btn btn-success" type="submit" asp-action="ingenfiltrering">Ingen filtrering</button>
-				</div>
+
+				</fieldset>
 			</form>
 		</div>
 
@@ -54,78 +53,85 @@
 				Inrapportering av nya aktiva
 			</h4>
 			<form id="nya_aktiva" method="post" asp-controller="People" asp-action="nyttkort">
-				<div class="row mb-1">
-					<label class="nya_aktiva_label text-start col-sm-2 col-form-label" asp-for="NyttKort.Namn">
-						Namn
-					</label>
-					<div class="col-sm-4">
-						<input id="nyttkort_namn" class="form-control" asp-for="NyttKort.Namn" />
+				<fieldset>
+					<div class="row mb-1">
+						<label class="nya_aktiva_label text-start col-sm-2 col-form-label" asp-for="NyttKort.Namn">
+							Namn
+						</label>
+						<div class="col-sm-4">
+							<input id="nyttkort_namn" class="form-control" asp-for="NyttKort.Namn" />
+						</div>
 					</div>
-				</div>
-				<div class="row mb-1">
-					<label class="nya_aktiva_label text-start col-sm-2 col-form-label" asp-for="NyttKort.Namn">
-						Bostadsort
-					</label>
-					<div class="col-sm-3">
-						<input id="nyttkort_bostadsort" class="form-control asp-for=" NyttKort.Bostadsort" />
+					<div class="row mb-1">
+						<label class="nya_aktiva_label text-start col-sm-2 col-form-label" asp-for="NyttKort.Namn">
+							Bostadsort
+						</label>
+						<div class="col-sm-3">
+							<input id="nyttkort_bostadsort" class="form-control asp-for=" NyttKort.Bostadsort" />
+						</div>
 					</div>
-				</div>
-				<div class="row mb-1">
-					<label class="nya_aktiva_label text-start col-sm-2 col-form-label">
-						Telefonnummer
-					</label>
-					<div class="col-sm-2">
-						<input id="nyttkort_telefonnummer" class="form-control col-sm-6"
-							asp-for="NyttKort.Telefonnummer" />
+					<div class="row mb-1">
+						<label class="nya_aktiva_label text-start col-sm-2 col-form-label">
+							Telefonnummer
+						</label>
+						<div class="col-sm-2">
+							<input id="nyttkort_telefonnummer" class="form-control col-sm-6"
+								asp-for="NyttKort.Telefonnummer" />
+						</div>
 					</div>
-				</div>
-				<button class="btn btn-secondary" type="reset">Rensa fälten</button>
-				<button class="btn btn-success" type="submit">Skapa kortet</button>
+					<button class="btn btn-secondary" type="reset">Rensa fälten</button>
+					<button class="btn btn-success" type="submit">Skapa kortet</button>
+				</fieldset>
 			</form>
 		</div>
-		<hr>
-	</div>
-	<!--
-	<div class="table-responsive">
-		<!-- tabell med existerande kort -->
-		<!-- <table id="personindex" class="table table-striped table-hover table-bordered table-sm"
-			data-order='[[ 0, "asc"]]'>
-			<thead>
-				<tr>
-					<th class="th-sm" scope="col" tabindex="0">Namn</th>
-					<th class="th-sm" scope="col" tabindex="1">Ort</th>
-					<th class="th-sm" scope="col" tabindex="2">Telefonnummer</th>
-					<th class="th-sm" scope="col" tabindex="3">Id</th>
-					<th class="th-sm no-sort" scope="col" tabindex="4">Aktion</th>
-				</tr>
-			</thead>
-			<tbody>
-o				 {
-					// 	<partial name="aktiva" model="item" /> 
-				 }
-			 </tbody>
-		 </table>
-	/* </div> */-->
 
-	<div id="personindex_div" class="table-responsive container">
-		<!-- tabell med existerande kort -->
-		<div class="row">
-			<div class="col-3 text-start" onclick="sorteraTabell(0)">Namn</div>
-			<div class="col-3 text-start" onclick="sorteraTabell(1)">Bostadsort</div>
-			<div class="col-2 text-start">Telefonnummer</div>
-			<div class="col text-start">Id</div>
-			<div class="col-3">Aktioner</div>
+		<hr>
+
+		<div class="container">
+			<form id="specifiktKort" method="post" asp-controller="People">
+				<fieldset class="mb-1 text-start">
+					<label class="filtertermer_label col-sm-1 col-form-label" asp-for="specifiktKort.KortetsId">
+						ID
+					</label>
+					<input class="col-sm" id="valtkortsid" asp-for="specifiktKort.KortetsId" />
+					<button class="btn btn-primary" asp-action="uppdateralistan" type="submit">Uppdatera
+						listan</button>
+					<button class="btn btn-primary" asp-action="tagUppKortet" type="submit">Visa kort</button>
+					<button class="btn btn-warning" asp-action="rensaBortKortet" type="submit">Radera valt
+						kort</button>
+				</fieldset>
+			</form>
 		</div>
-		<div id="personindex_div_inner" class="container">
-			@foreach (Person item in Model.Personlistan.Utdraget)
-			{
-				<partial name="aktiva_div" model="item" />
-			}
+
+		<hr>
+
+		<div id="personindex_div" class="table-responsive container">
+			<!-- tabell med existerande kort -->
+			<div class="row">
+				<div class="col-3 text-start" onclick="sorteraTabell(0)">Namn</div>
+				<div class="col-3 text-start" onclick="sorteraTabell(1)">Bostadsort</div>
+				<div class="col-2 text-start">Telefonnummer</div>
+				<div class="col text-start">Id</div>
+				<div class="col-3">Aktioner</div>
+			</div>
+			<div id="personindex_div_inner" class="container">
+				@foreach (Person item in Model.Personlistan.Utdraget)
+				{
+					<partial name="aktiva_div" model="item" />
+				}
+			</div>
 		</div>
 	</div>
 </div>
 
+
 @section Scripts {
+<script type="text/javascript">
+	$(document).ready(function () {
+		$('#specifiktKort').validate();
+	});
+</script>
+
 <script type="text/javascript">
 	$(document).ready(function () {
 		$('#personindex').DataTable({
