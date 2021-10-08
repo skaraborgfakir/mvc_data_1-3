@@ -7,15 +7,14 @@ using System.Collections.Generic;
 
 using Kartotek.Modeller.Entiteter;
 
-namespace Kartotek.Modeller.Interfaces
-{
-    interface IPeopleRepo {
-	Person Create( string namn,           // inläggning av ett kort
-		       string bostadsort,
-		       string telefonnummer);
-	List<Person> Read();		      // ett totalutdrag från registret
-	Person Read( int id);                 // utdrag av ett specifikt kort
-	Person Update( Person person);        // modifiering
-	bool Delete( Person person);          // borttagning
-    }
+namespace Kartotek.Modeller.Interfaces {
+   public interface IPeopleRepo {
+      Person Create ( string namn,           // inläggning av ett kort
+                string bostadsort,
+                string telefonnummer );
+      List<Person> Read ();            // ett totalutdrag från registret
+      Person Read ( int id );                 // utdrag av ett specifikt kort
+      Person Update ( Person person );        // modifiering
+      bool Delete ( Person person );          // borttagning
+   }
 }

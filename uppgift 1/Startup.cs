@@ -50,8 +50,10 @@ namespace Kartotek {
             options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;    // Use the default property (Pascal) casing.
          } );
 
-         // services.AddScoped<IPeopleService, PeopleService>();
-         // services.AddScoped<IPeopleRepo,InMemoryPeopleRepo>();
+         // services.AddSingleton
+         // services.AddTransient
+         services.AddScoped<IPeopleService, PeopleService>();
+         services.AddScoped<IPeopleRepo, InMemoryPeopleRepo>();
 
          services.AddControllersWithViews();
          services.AddHttpContextAccessor();

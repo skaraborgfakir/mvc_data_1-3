@@ -16,6 +16,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 
 using Kartotek.Modeller;
+using Kartotek.Modeller.Interfaces;
 using Kartotek.Modeller.Entiteter;
 using Kartotek.Modeller.Vyer;
 
@@ -27,10 +28,13 @@ namespace Kartotek.Controllers {
 
       public PeopleController ( ILogger<PeopleController> loggdest,
                         IConfiguration configurationsrc,
-                        IWebHostEnvironment webHostEnvironment ) {
+                        IWebHostEnvironment webHostEnvironment,
+                        IPeopleService serviceenheten ) {
          _configurationsrc = configurationsrc;
          _loggdest = loggdest;
          _webHostEnvironment = webHostEnvironment;
+         _serviceenheten = serviceenheten;
+         
       }
 
       //
@@ -38,13 +42,14 @@ namespace Kartotek.Controllers {
       //
       // påverkar Index-funktionen
       //
-      enum Sökläge { Ingen, Namn, Bostadsort };
+      private enum Sökläge { Ingen, Namn, Bostadsort };
       //
       // kontroller-klassen knyter ihop affärs-/process-logik (serviceenhten) med UI
       //
       // kontroller implementeras utgående från serviceenhetens termer
       //
-      private PeopleService serviceenheten = new PeopleService();
+      //   private  PeopleService serviceenheten = new PeopleService();
+      private readonly IPeopleService _serviceenheten;
 
       //
       // bilden med:
@@ -89,18 +94,18 @@ namespace Kartotek.Controllers {
             case Sökläge.Namn:
                // Console.WriteLine( "public IActionResult Index sålla på namn");
                nyVymodell.Filtertermer.Namn = HttpContext.Session.GetString( "namn.kartotek.netcore3.1.fakirenstenstorp.st" );
-               nyVymodell.Personlistan = serviceenheten.FindBy( nyVymodell.Filtertermer );
+               nyVymodell.Personlistan = _serviceenheten.FindBy( nyVymodell.Filtertermer );
                break;
 
             case Sökläge.Bostadsort:
                // Console.WriteLine( "public IActionResult Index sålla på bostadsort");
                nyVymodell.Filtertermer.Bostadsort = HttpContext.Session.GetString( "bostadsort.kartotek.netcore3.1.fakirenstenstorp.st" );
-               nyVymodell.Personlistan = serviceenheten.FindBy( nyVymodell.Filtertermer );
+               nyVymodell.Personlistan = _serviceenheten.FindBy( nyVymodell.Filtertermer );
                break;
 
             default:
                // Console.WriteLine( "public IActionResult Index ingen sållning");
-               nyVymodell.Personlistan = serviceenheten.All();
+               nyVymodell.Personlistan = _serviceenheten.All();
                break;
          }
 
@@ -200,23 +205,17 @@ namespace Kartotek.Controllers {
             if (!String.IsNullOrEmpty( vymodell.NyttKort.Namn ) &&
                  !String.IsNullOrEmpty( vymodell.NyttKort.Bostadsort ) &&
                  !String.IsNullOrEmpty( vymodell.NyttKort.Telefonnummer )) {
-               // Console.WriteLine( "  " + vymodell.NyttKort.Namn );
-               // Console.WriteLine( "  " + vymodell.NyttKort.Bostadsort );
-               // Console.WriteLine( "  " + vymodell.NyttKort.Telefonnummer );
 
                CreatePersonViewModell nyttKort = new CreatePersonViewModell();
                nyttKort = vymodell.NyttKort;
-               // nyttKort.Namn = vymodell.NyttKortNyttKortNamn;
-               // nyttKort.Bostadsort = vymodell.NyttKortBostadsort;
-               // nyttKort.Telefonnummer = vymodell.NyttKortTelefonnummer;
 
-               serviceenheten.Add( nyttKort );
+               _serviceenheten.Add( nyttKort );
             }
          } else {
             Console.WriteLine( "public IActionResult Skapa_kort( PeopleViewModell not if ( ModelState.IsValid ) {" );
          }
 
-         nyVymodell.Personlistan = serviceenheten.All();
+         nyVymodell.Personlistan = _serviceenheten.All();
 
          return View( "Index", nyVymodell ); // använder Views/People/Index.cshtml
                                              // return RedirectToAction( "Index", nyVymodell);
@@ -247,36 +246,13 @@ namespace Kartotek.Controllers {
 
          HopslagenmodellVymodell nyVymodell = new HopslagenmodellVymodell();
 
-         serviceenheten.Remove( id );
-         nyVymodell.Personlistan = serviceenheten.All();
+         _serviceenheten.Remove( id );
+         nyVymodell.Personlistan = _serviceenheten.All();
 
          // throw new NotImplementedException( "public IActionResult TagBortKort( int id)");
          return View( "Index", nyVymodell ); // använder Views/People/Index.cshtml
       }
 
-      //
-      // funktioner/aktioner i labb 3 - AJAX
-      //
-      [HttpGet]
-      [ActionName( "uppdateralistan" )]
-      [Produces("application/json")]
-      public IActionResult uppdateraListanUrDatabasen () {
-         string filePath = _webHostEnvironment.ContentRootPath + "/App_Data/test.json"
-         
-         return  System.IO.File.ReadAllText( filePath);              
-      }
 
-      [HttpGet("{id}")]
-      [ActionName( "tagUppKortet" )]
-      [Produces("application/json")]
-      public IActionResult tagFramKortet ( int id) {
-         throw new NotImplementedException( "public IActionResult tagFramKortet())" );
-      }
-
-      [HttpDelete("{id}")]
-      [ActionName( "rensaBortKortet" )]
-      public IActionResult rensaUrKortet (int id) {
-         throw new NotImplementedException( "public IActionResult rensaUrKortet())" );
-      }      
    }
 }
