@@ -2,12 +2,10 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text.Json;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -46,13 +44,10 @@ namespace Kartotek {
             options.IdleTimeout = TimeSpan.FromSeconds( 40 );
             options.Cookie.HttpOnly = true;
             options.Cookie.IsEssential = true;
-         }
-         );
+         } );
 
-         // Convert JSON from Camel Case to Pascal Case
-         services.AddControllers().AddJsonOptions( options => {
-            // Use the default property (Pascal) casing.
-            options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+         services.AddControllers().AddJsonOptions( options => {                                          // Convert JSON from Camel Case to Pascal Case
+            options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;    // Use the default property (Pascal) casing.
          } );
 
          // services.AddScoped<IPeopleService, PeopleService>();
@@ -60,7 +55,7 @@ namespace Kartotek {
 
          services.AddControllersWithViews();
          services.AddHttpContextAccessor();
-         services.AddMvc();
+         // services.AddMvc(); implicit iom AddControllersWithViews();
       }
 
       // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,15 +66,15 @@ namespace Kartotek {
          //
          // gaffling i flödet beroende på programmets startmiljö
          if (env.IsDevelopment()) {
-            app.UseDeveloperExceptionPage();
+            app.UseDeveloperExceptionPage();  // plockar upp händelser (exceptions) i aktiverade moduler (exv en kontrollant) för att ge meddelandestatus till användaren
          } else {
             app.UseExceptionHandler( "/Home/Error" );
             // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
             app.UseHsts();
          }
          app.UseHttpsRedirection();
-         app.UseStatusCodePages();
-         app.UseStaticFiles();
+         app.UseStatusCodePages();  // mer förklarande beskrivning av fel (http status 400-599) som saknar en beskrivning
+         app.UseStaticFiles();              // get av statisk filer exv script/css etc
 
          //
          // aktivera vidarebefordran av frågor till olika kontrollanter
@@ -87,8 +82,8 @@ namespace Kartotek {
          app.UseRouting();
 
          //
-         // sessions-kakan - det här anropet måste vara placerad för de moduler (exv aktion-metoder)
-         // som ska ha tillgång till kakan.
+         // sessions-kakan - det här anropet måste vara placerad innan de moduler (exv 
+         // aktion-metoder) måste ha tillgång till kakan.
          //
          app.UseSession();
 

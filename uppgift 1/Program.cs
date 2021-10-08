@@ -13,10 +13,10 @@ using Microsoft.Extensions.Logging;
 namespace Kartotek {
    public class Program {
       public static void Main ( string[] args ) {
-	 CreateHostBuilder( args ).Build().Run();
+         CreateHostBuilder( args ).Build().Run();
       }
 
       public static IHostBuilder CreateHostBuilder ( string[] args ) =>
-	  Host.CreateDefaultBuilder( args ).ConfigureWebHostDefaults( webBuilder => {webBuilder.UseStartup<REVELJ>();} );
+     Host.CreateDefaultBuilder( args: args ).ConfigureWebHostDefaults( configure: webBuilder => { webBuilder.UseStartup<REVELJ>(); } );
    }
 }
