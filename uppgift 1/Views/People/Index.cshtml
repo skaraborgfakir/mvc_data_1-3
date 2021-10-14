@@ -1,4 +1,4 @@
-<!-- Time-stamp: <2021-10-14 17:44:01 stefan> -*-web-*- -->
+<!-- Time-stamp: <2021-10-14 18:02:08 stefan> -*-web-*- -->
 <!-- https://www.educba.com/bootstrap-sort-table/
      här använder jag metod 1 för att sortera tabellen
 
@@ -75,8 +75,7 @@
 			Telefonnummer
 		    </label>
 		    <div class="col-sm-2">
-			<input id="nyttkort_telefonnummer" class="form-control col-sm-6"
-				   asp-for="NyttKort.Telefonnummer" />
+			<input id="nyttkort_telefonnummer" class="form-control col-sm-6" asp-for="NyttKort.Telefonnummer" />
 		    </div>
 		</div>
 		<button class="btn btn-secondary" type="reset">Rensa fälten</button>
@@ -85,30 +84,8 @@
 	</div>
 	<hr>
     </div>
-    <!--
-	 <div class="table-responsive">
-	 <!-- tabell med existerande kort -->
-    <!-- <table id="personindex" class="table table-striped table-hover table-bordered table-sm"
-	 data-order='[[ 0, "asc"]]'>
-	 <thead>
-	 <tr>
-	 <th class="th-sm" scope="col" tabindex="0">Namn</th>
-	 <th class="th-sm" scope="col" tabindex="1">Ort</th>
-	 <th class="th-sm" scope="col" tabindex="2">Telefonnummer</th>
-	 <th class="th-sm" scope="col" tabindex="3">Id</th>
-	 <th class="th-sm no-sort" scope="col" tabindex="4">Aktion</th>
-	 </tr>
-	 </thead>
-	 <tbody>
-	 o				 {
-	 //	<partial name="aktiva" model="item" />
-	 }
-	 </tbody>
-	 </table>
-	 /* </div> */-->
-
+    <!-- dataTable använder INTE något annat än table, så fixa sortering själv via jquery/javaScript  -->
     <div id="personindex_div" class="table-responsive container">
-	<!-- tabell med existerande kort -->
 	<div class="row">
 	    <div class="col-3 text-start" onclick="sorteraTabell(0)">Namn</div>
 	    <div class="col-3 text-start" onclick="sorteraTabell(1)">Bostadsort</div>
@@ -126,6 +103,7 @@
 </div>
 
 @section Scripts {
+    <!-- används inte för en rät-och-slät div -->
     <script type="text/javascript">
      $(document).ready(function () {
 	 $('#personindex').DataTable({
