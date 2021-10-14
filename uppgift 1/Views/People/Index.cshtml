@@ -1,7 +1,10 @@
-<!-- Time-stamp: <2021-09-29 00:02:25 stefan> -*-web-*- -->
+<!-- Time-stamp: <2021-10-01 15:32:48 stefan> -*-web-*- -->
 <!-- https://www.educba.com/bootstrap-sort-table/
      här använder jag metod 2 för att sortera tabellen
-     ett javascript som sorterar (bubblesort) tabellen
+
+     tabellen sorteras i ett javascript (bubblesort)
+
+     bootstrap 5.1 används
 -->
 
 @using System
@@ -24,15 +27,16 @@
 	    <div>
 		Sökning igenom poster
 	    </div>
-	    <div>
-		<form method="post" asp-controller="People" asp-action="filtrering">
-		    <label asp-for="Filtertermer.Namn">Namn:</label>             <input asp-for="Filtertermer.Namn"/>
-		    <label asp-for="Filtertermer.Bostadsort">Bostadsort:</label> <input asp-for="Filtertermer.Bostadsort"/>
+	    <form method="post" asp-controller="People" asp-action="filtrering">
+		<label asp-for="Filtertermer.Namn" for="filterterm_namn">Namn</label>
+		<input asp-for="Filtertermer.Namn"  id="filterterm_namn"/>
 
-		    <button class="btn btn-secondary" type="reset">Rensa fälten</button> <!-- rensa fälten -->
-		    <button class="btn btn-success" type="submit">Filtrera</button>
-		</form>
-	    </div>
+		<label asp-for="Filtertermer.Bostadsort" for="filterterm_bostadsort">Bostadsort</label>
+		<input asp-for="Filtertermer.Bostadsort"  id="filterterm_bostadsort"/>
+
+		<button class="btn btn-secondary" type="reset">Rensa fälten</button>
+		<button class="btn btn-success" type="submit">Filtrera</button>
+	    </form>
 	</div>
 
 	<hr>
@@ -40,14 +44,18 @@
 	<!-- funktion för inläggning av en person i taget  -->
 	<div>
 	    <div>
+		Inrapportering av nya aktiva
 	    </div>
 	    <div>
 		<form method="post" asp-controller="People" asp-action="nyttkort">
-		    <label asp-for="NyttKort.Namn">Namn:</label>             <input asp-for="NyttKort.Namn"/><br>
-		    <label asp-for="NyttKort.Bostadsort">Bostadsort:</label> <input asp-for="NyttKort.Bostadsort"/><br>
-		    <label asp-for="NyttKort.Telefonnummer">Telefonnummer:</label> <input asp-for="NyttKort.Telefonnummer"/><br>
+		    <label asp-for="NyttKort.Namn">Namn:</label>
+		    <input asp-for="NyttKort.Namn"/><br>
+		    <label asp-for="NyttKort.Bostadsort">Bostadsort:</label>
+		    <input asp-for="NyttKort.Bostadsort"/><br>
+		    <label asp-for="NyttKort.Telefonnummer">Telefonnummer:</label>
+		    <input asp-for="NyttKort.Telefonnummer"/><br>
 
-		    <button class="btn btn-secondary" type="reset">Rensa fälten</button> <!-- rensa fälten -->
+		    <button class="btn btn-secondary" type="reset">Rensa fälten</button>
 		    <button class="btn btn-success" type="submit">Skapa kortet</button>
 		</form>
 	    </div>
@@ -57,13 +65,13 @@
     <div class="table-responsive">
 	<!-- tabell med existerande kort -->
 	<table id="personindex" class="table dataTable table-striped table-bordered table-hover">
-	    <thead class="thead-dark">
+	    <thead class="thead-dark text-light">
 		<tr>
-		    <th onclick="sorteraTabell(0)">Namn</th>
-		    <th onclick="sorteraTabell(1)">Ort</th>
-		    <th>Telefonnummer</th>
-		    <th>Id</th>
-		    <th>Aktion</th>
+		    <th class="th-sm" onclick="sorteraTabell(0)">Namn</th>
+		    <th class="th-sm" onclick="sorteraTabell(1)">Ort</th>
+		    <th class="th-sm">Telefonnummer</th>
+		    <th class="th-sm">Id</th>
+		    <th class="th-sm">Aktion</th>
 		</tr>
 	    </thead>
 	    <tbody>
