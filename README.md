@@ -6,3 +6,6 @@ Den här versionen har:
   sortering av listan av aktiva mha jquery och datatable
 
 den använder bootstrap 5.1
+
+
+inlämnad 5/10 för uppgift 1 i MVC Data
