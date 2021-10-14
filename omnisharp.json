@@ -2,8 +2,8 @@
     "FormattingOptions": {
 	"newLine": "\n",
 	"useTabs": false,
-	"tabSize": 3,
-	"indentationSize": 3,
+	"tabSize": 4,
+	"indentationSize": 4,
 
 	"SpacingAfterMethodDeclarationName": true,
 	"NewLinesForBracesInProperties": false,
