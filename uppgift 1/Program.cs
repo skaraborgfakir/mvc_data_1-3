@@ -17,6 +17,11 @@ namespace Kartotek {
       }
 
       public static IHostBuilder CreateHostBuilder ( string[] args ) =>
-     Host.CreateDefaultBuilder( args: args ).ConfigureWebHostDefaults( configure: webBuilder => { webBuilder.UseStartup<REVELJ>(); } );
+     Host.CreateDefaultBuilder( args: args )
+        .ConfigureLogging( logging => {
+           logging.ClearProviders();
+           logging.AddConsole();
+        } )
+     .ConfigureWebHostDefaults( configure: webBuilder => { webBuilder.UseStartup<REVELJ>(); } );
    }
 }

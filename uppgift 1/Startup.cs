@@ -74,7 +74,7 @@ namespace Kartotek {
             // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
             app.UseHsts();
          }
-         app.UseHttpsRedirection();
+         //app.UseHttpsRedirection();
          app.UseStatusCodePages();  // mer förklarande beskrivning av fel (http status 400-599) som saknar en beskrivning
          app.UseStaticFiles();              // get av statisk filer exv script/css etc
 
@@ -105,12 +105,17 @@ namespace Kartotek {
          //
          // för varje fördelning ska det finnas ett unikt namn (id)
          //
+         // mer specifika  rutter ska vara före mer generella ( more specific patterns before less  specific ones.)
+         //
          // UseEndpoints är en utökning av samma typ som de tidigare UseStaticFiles (middleware component)
          // men den är speciell i att den är final dvs slutdestination
          //
          app.UseEndpoints( endpoints => {
             // endpoints.MapControllerRoute( name:     "people-radering",
             //			      pattern:  "People/"});
+            endpoints.MapControllerRoute( name: "ajax",
+                           pattern: "{controller=PeopleAjax}/{action=uppdateralistan}/{id?}");
+                           // defaults: new { controller = "PeopleAjaxController",  action = "{uppdateraListan}" }); 
             endpoints.MapControllerRoute( name: "people",
                            pattern: "People",
                            defaults: new { controller = "PeopleController", action = "Index" } );

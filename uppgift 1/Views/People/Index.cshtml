@@ -40,7 +40,6 @@
 					<button class="btn btn-secondary" type="reset">Rensa fälten</button> <!-- rensa fälten -->
 					<button class="btn btn-success" type="submit" asp-action="filtrering">Filtrera</button>
 					<button class="btn btn-success" type="submit" asp-action="ingenfiltrering">Ingen filtrering</button>
-
 				</fieldset>
 			</form>
 		</div>
@@ -59,7 +58,7 @@
 							Namn
 						</label>
 						<div class="col-sm-4">
-							<input id="nyttkort_namn" class="form-control" asp-for="NyttKort.Namn" />
+							<input id="nyttkort_namn" data-rule-required="true" class="form-control" asp-for="NyttKort.Namn" />
 						</div>
 					</div>
 					<div class="row mb-1">
@@ -67,7 +66,7 @@
 							Bostadsort
 						</label>
 						<div class="col-sm-3">
-							<input id="nyttkort_bostadsort" class="form-control asp-for=" NyttKort.Bostadsort" />
+							<input id="nyttkort_bostadsort" data-rule-required="true" class="form-control asp-for=" NyttKort.Bostadsort" />
 						</div>
 					</div>
 					<div class="row mb-1">
@@ -94,9 +93,9 @@
 						ID
 					</label>
 					<input class="col-sm" type="number" min="0" id="valtkortsid"/>
-					<button class="btn btn-primary" onclick="uppdateralistan()">Uppdatera listan</button>
-					<button class="btn btn-primary" onclick="plockaFramKortet()">Visa kort</button>
-					<button class="btn btn-warning" onclick="rensaBortKortet()">Radera valt kort</button>
+					<button id="uppdateralistan"    class="btn btn-primary">Uppdatera listan</button>
+					<button id="plockaFramKortet" class="btn btn-primary">Visa kort</button>
+					<button id="rensaBortKortet"    class="btn btn-warning">Radera valt kort</button>
 				</fieldset>
 			</form>
 			<div id="kortvy">
@@ -126,32 +125,51 @@
 
 
 @section Scripts {
+<script type="text/javascript" src="/lib/jquery-validation/dist/jquery.validate.js"></script>
+
 <script type="text/javascript">
-	$(document.ready( function()
-	{
-		function uppdateralistan() {
-			document.getElementsById('kortvy').innerHTML = "test;"
-			// req = new XMLHttpRequest();
-			// request.open( "GET", "People/uppdateraListan",true);
-			// request.send(null);
-			
-		}
-
-		function plockaFramKortet(){
-			// req = new XMLHttpRequest();
-			
-		}
-
-		function rensaBortKortet() {
-
-		}
-	}
+	$(document).ready(function () {
+		$('#nya_aktiva').validate( {
+			debug: false,
+			onkeyup: true,
+			rules: {				
+			}
+		})
 	});
 </script>
 
 <script type="text/javascript">
+$(document).ready(function() {
+	const url = "http://localhost:5006/PeopleAjax/uppdateralistan";
+
+    $('#uppdateralistan').click(function( event) {        
+		$('#kortvy').append( "2test");
+		event.preventDefault();
+		
+		@* 
+		req.onreadystatechange = function() {
+				if (this.readyState==XMLHttpRequest.DONE && 
+					this.status==200) {
+					document.getElementsById('kortvy').innerHTML = "test;"
+				}
+			}
+			req.open( "GET", url);
+			req.send();
+		let req = new XMLHttpRequest();
+ *@
+		
+    });
+});
+</script>
+
+<script type="text/javascript">
 	$(document).ready(function () {
-		$('#specifiktKort').validate();
+		$('#specifiktKort').validate( {
+			debug: false,
+			onkeyup: true,
+			rules: {
+			}
+		});
 	});
 </script>
 

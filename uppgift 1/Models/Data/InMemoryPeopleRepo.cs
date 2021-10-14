@@ -29,7 +29,7 @@ namespace Kartotek.Modeller.Data {
       //     }
       // }
 
-      private static List<Person> kartoteket = new List<Person>();
+      private static List<Person> kartoteket = new List<Person> ();
       private static int idCounter; // nästa tillgänglig id. Används som nyckel in i
                                     // personregistret
 
@@ -75,11 +75,12 @@ namespace Kartotek.Modeller.Data {
       // används från PeopleService
       //
       public Person Read ( int id ) {
-         foreach (Person item in kartoteket) {
+		  return kartoteket.FirstOrDefault( predicate => predicate.Id == id);
+         /* foreach (Person item in kartoteket) {
             if (item.Id == id) {
                return item;
             }
-         }
+         } */
 
          // borde vara omöjligt att komma hit
          throw new ArgumentException( "felaktigt id i InMemoryPeopleRepo:Read" );
