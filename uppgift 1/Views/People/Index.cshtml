@@ -1,4 +1,4 @@
-<!-- Time-stamp: <2021-10-14 17:28:04 stefan> -*-web-*- -->
+<!-- Time-stamp: <2021-10-14 17:43:53 stefan> -*-web-*- -->
 <!-- https://www.educba.com/bootstrap-sort-table/
      här använder jag metod 1 för att sortera tabellen
 
@@ -41,7 +41,7 @@
 
 		    <button class="btn btn-secondary" type="reset">Rensa fälten</button> <!-- rensa fälten -->
 		    <button class="btn btn-success" type="submit" asp-action="filtrering">Filtrera</button>
-			<button class="btn btn-success" type="submit" asp-action="ingenfiltrering">Ingen filtrering</button>
+		    <button class="btn btn-success" type="submit" asp-action="ingenfiltrering">Ingen filtrering</button>
 		</div>
 	    </form>
 	</div>
@@ -121,8 +121,8 @@
 		    <a asp-controller="People" asp-action="modifiera" asp-route-id="@item.Id" class="btn btn-warning btn-link">modifiera</a>
 		    </td>
 
-			</tr>
-		    }
+		    </tr>
+		}
 	    </tbody>
 	</table>
     </div>
@@ -132,7 +132,16 @@
     <script type="text/javascript">
      $(document).ready(function () {
 	 $('#personindex').DataTable({
-	     "ordering": true // false to disable sorting (or any other option)
+	     "ordering": true, // false to disable sorting (or any other option)
+	     "paging":   true,
+	     "columns": [{ "searchable": true },
+			 { "searchable": true },
+			 { "searchable": true },
+			 { "searchable": false },
+			 { "searchable": false,
+			   "orderable": false
+			 }
+	     ]
 	 });
 	 $('.dataTables_length').addClass('bs-select');
      });
