@@ -2,6 +2,9 @@ Inlämningsuppgifter till Lexicon i MVC delen
 
 I huvudsak uppgifter med olika repo som datalager
 
+Uppgift 2:
+
+Feature-branch:
 Partial View som itererar igenom listan från Person-service:modellen används
 Hela listan är gjord som ett träd av div
 
