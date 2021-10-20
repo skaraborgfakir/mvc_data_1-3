@@ -77,12 +77,13 @@ namespace Kartotek.Modeller.Data {
 	// används från PeopleService
 	//
 	public Person Read( int id) {
-	    foreach ( Person item in kartoteket) {
-		if ( item.Id == id)
-		{
-		    return item;
-		}
-	    }
+			return kartoteket.Find(person => person.Id == id);
+	 //   foreach ( Person item in kartoteket) {
+		//if ( item.Id == id)
+		//{
+		//    return item;
+		//}
+	 //   }
 
 	    // borde vara omöjligt att komma hit
 	    throw new ArgumentException( "felaktigt id i InMemoryPeopleRepo:Read");
