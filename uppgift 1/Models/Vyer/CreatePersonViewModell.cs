@@ -1,4 +1,4 @@
-// Time-stamp: <2021-10-21 00:25:57 stefan>
+// Time-stamp: <2021-10-21 00:27:53 stefan>
 //
 
 //
@@ -34,6 +34,5 @@ namespace Kartotek.Modeller.Vyer {
 	[DisplayName("telefonnummer")]
 	[DataType(DataType.PhoneNumber)]
 	public string Telefonnummer { get; set; }
-	}
     }
 }
