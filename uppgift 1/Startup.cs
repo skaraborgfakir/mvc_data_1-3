@@ -1,8 +1,9 @@
 //
-// Time-stamp: <2021-10-21 00:18:30 stefan>
+// Time-stamp: <2021-10-21 01:33:56 stefan>
 //
 
 using System;
+using System.Text.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -48,17 +49,17 @@ namespace Kartotek
 	    //
 	    services.AddSession( options => {
 		options.Cookie.Name = Configuration["session_kakans_namn"];
-		options.IdleTimeout = TimeSpan.FromSeconds(40);
+		options.IdleTimeout = TimeSpan.FromSeconds( 40 );
 		options.Cookie.HttpOnly = true;
 		options.Cookie.IsEssential = true;
 	    }
 	    );
 
 	    // services.AddScoped<IPeopleService, PeopleService>();
-	    // services.AddScoped<IPeopleRepo,InMemoryPeopleRepo>();
+	    // services.AddScoped<IPeopleRepo, InMemoryPeopleRepo>();
 
 	    services.AddControllersWithViews();
-	    services.AddMvc();
+	    services.AddHttpContextAccessor();
 	}
 
 	// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,7 +72,7 @@ namespace Kartotek
 	    // gaffling i flödet beroende på programmets startmiljö
 	    if (env.IsDevelopment())
 	    {
-		app.UseDeveloperExceptionPage();
+		app.UseDeveloperExceptionPage();  // plockar upp händelser (exceptions) i aktiverade moduler (exv en kontrollant) för att ge meddelandestatus till användaren
 	    }
 	    else
 	    {
@@ -80,8 +81,8 @@ namespace Kartotek
 		app.UseHsts();
 	    }
 	    app.UseHttpsRedirection();
-	    app.UseStatusCodePages();
-	    app.UseStaticFiles();
+	    app.UseStatusCodePages();  // mer förklarande beskrivning av fel (http status 400-599) som saknar en beskrivning
+	    app.UseStaticFiles();//get av statisk filer exv script/css etc
 
 	    //
 	    // aktivera vidarebefordran av frågor till olika kontrollanter
@@ -109,6 +110,8 @@ namespace Kartotek
 	    //   och som option en aktion som eventuellt kan använda ett Id
 	    //
 	    // för varje fördelning ska det finnas ett unikt namn (id)
+	    //
+	    // mer specifika  rutter ska vara före mer generella ( more specific patterns before less  specific ones.)
 	    //
 	    // UseEndpoints är en utökning av samma typ som de tidigare UseStaticFiles (middleware component)
 	    // men den är speciell i att den är final dvs slutdestination
