@@ -1,4 +1,4 @@
-// Time-stamp: <2021-09-15 19:06:30 stefan>
+// Time-stamp: <2021-10-20 23:54:44 stefan>
 
 using System;
 using System.Collections.Generic;
@@ -13,16 +13,19 @@ namespace Kartotek
 {
     public class Program
     {
-	public static void Main(string[] args)
+	public static void Main ( string[] args )
 	{
-	    CreateHostBuilder(args).Build().Run();
+	    CreateHostBuilder( args ).Build().Run();
 	}
 
-	public static IHostBuilder CreateHostBuilder(string[] args) =>
-	    Host.CreateDefaultBuilder(args)
-		.ConfigureWebHostDefaults(webBuilder =>
-		{
-		    webBuilder.UseStartup<REVELJ>();
-		});
+	public static IHostBuilder CreateHostBuilder ( string[] args ) => Host
+	    .CreateDefaultBuilder( args: args )
+	    .ConfigureLogging( logging => {
+		logging.ClearProviders();
+		logging.AddConsole();
+	    } )
+	    // här skulle man kunna lägga till en modifierad konfiguration-module
+	    .ConfigureWebHostDefaults( configure: webBuilder => {
+		webBuilder.UseStartup<REVELJ>(); } );
     }
 }
