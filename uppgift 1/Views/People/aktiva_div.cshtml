@@ -13,7 +13,7 @@
      <div class="col-2 text-start">@Html.DisplayFor(model => Model.Telefonnummer)</div>
      <div class="col   text-start">@Html.DisplayFor(model => Model.Id)</div>
      <div class="col-3">
-          <a asp-controller="People" asp-action="radering"  asp-route-id="@Model.Id" class="btn btn-warning btn-link">radering</a>
-          <a asp-controller="People" asp-action="modifiera" asp-route-id="@Model.Id" class="btn btn-primary btn-link">modifiera</a>
+	  <a class="btn btn-warning btn-link" asp-controller="People" asp-action="radering"  asp-route-id="@Model.Id">radering</a>
+	  <a class="btn btn-primary btn-link" asp-controller="People" asp-action="modifiera" asp-route-id="@Model.Id">modifiera</a>
      </div>
 </div>
