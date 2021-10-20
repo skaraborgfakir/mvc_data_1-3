@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-10-06 12:12:03 stefan>
+// Time-stamp: <2021-10-21 00:03:18 stefan>
 //
 
 //
@@ -52,9 +52,9 @@ namespace Kartotek.Controllers {
 	[HttpGet]
 	[ActionName("Index")]
 	public IActionResult Index( HopslagenmodellVymodell vymodell) {
-	    Console.WriteLine( "public IActionResult Index");
+	    // Console.WriteLine( "public IActionResult Index");
 
-	    //_loggdest.Test();
+	    _loggdest.LogInformation( "public IActionResult Index");
 
 	    if ( HttpContext.Session.GetString( "namn.kartotek.netcore3.1.fakirenstenstorp.st") == null) {
 		HttpContext.Session.SetInt32( "valdterm.kartotek.netcore3.1.fakirenstenstorp.st", 0);
