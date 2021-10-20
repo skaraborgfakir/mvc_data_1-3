@@ -1,4 +1,4 @@
-<!-- Time-stamp: <2021-10-05 13:35:23 stefan> -*-web-*- -->
+<!-- Time-stamp: <2021-10-20 23:15:03 stefan> -*-web-*- -->
 <!-- https://www.educba.com/bootstrap-sort-table/
 här använder jag metod 1 för att sortera tabellen
 
@@ -23,10 +23,7 @@ bootstrap 5.1 används
      <td>@Html.DisplayFor(model => Model.Telefonnummer)</td>
      <td>@Html.DisplayFor(model => Model.Id)</td>
      <td>
-          <a asp-controller="People" asp-action="radering" asp-route-id="@Model.Id"
-               class="btn btn-warning btn-link">radering</a>
-          <a asp-controller="People" asp-action="modifiera" asp-route-id="@Model.Id"
-               class="btn btn-warning btn-link">modifiera</a>
+	 <a class="btn btn-warning btn-link" asp-controller="People" asp-action="radering"  asp-route-id="@Model.Id">radering</a>
+	 <a class="btn btn-warning btn-link" asp-controller="People" asp-action="modifiera" asp-route-id="@Model.Id">modifiera</a>
      </td>
-
 </tr>
