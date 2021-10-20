@@ -264,16 +264,14 @@ namespace Kartotek.Controllers {
 	[HttpGet]
 	[ActionName("radering")]
 	public IActionResult TagBortKort( int id) {
-	    // Console.WriteLine( "public IActionResult TagBortKort( int id");
-	    // Console.WriteLine( "public IActionResult TagBortKort id = " + id.ToString());
-
+		_loggdest.LogInformation("public IActionResult TagBortKort( int id id:" + id.ToString());
+	    	    
 	    HopslagenmodellVymodell nyVymodell = new HopslagenmodellVymodell();
 
 	    serviceenheten.Remove( id);
 	    nyVymodell.Personlistan = serviceenheten.All();
-
-	    // throw new NotImplementedException( "public IActionResult TagBortKort( int id)");
-	    return View( "Index", nyVymodell); // använder Views/People/Index.cshtml
+	  
+		return View( "Index", nyVymodell);
 	}
     }
 }
