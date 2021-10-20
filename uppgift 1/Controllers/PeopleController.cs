@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-10-21 00:03:18 stefan>
+// Time-stamp: <2021-10-21 00:10:15 stefan>
 //
 
 //
@@ -188,12 +188,14 @@ namespace Kartotek.Controllers {
 	[HttpPost]
 	[ActionName("nyttkort")]
 	public IActionResult SkapaNyttKort( HopslagenmodellVymodell vymodell) {
-	    Console.WriteLine( "public IActionResult Skapa_kort( PeopleViewModell");
+	    _loggdest.LogInformation( "public IActionResult Skapa_kort( PeopleViewModell");
 
 	    HopslagenmodellVymodell nyVymodell = new HopslagenmodellVymodell();
 
 	    if ( ModelState.IsValid ) {
-		Console.WriteLine( "public IActionResult Skapa_kort( PeopleViewModell if ( ModelState.IsValid ) {");
+		_loggdest.LogInformation( "public IActionResult Skapa_kort( PeopleViewModell if ( ModelState.IsValid ) {");
+		// Console.WriteLine( "public IActionResult Skapa_kort( PeopleViewModell if ( ModelState.IsValid ) {");
+
 		if ( ! String.IsNullOrEmpty(vymodell.NyttKort.Namn) &&
 		     ! String.IsNullOrEmpty(vymodell.NyttKort.Bostadsort) &&
 		     ! String.IsNullOrEmpty(vymodell.NyttKort.Telefonnummer)) {
