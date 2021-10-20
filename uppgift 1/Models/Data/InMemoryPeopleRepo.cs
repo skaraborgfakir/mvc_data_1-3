@@ -75,13 +75,8 @@ namespace Kartotek.Modeller.Data {
       // används från PeopleService
       //
       public Person Read ( int id ) {
-		  return kartoteket.FirstOrDefault( predicate => predicate.Id == id);
-         /* foreach (Person item in kartoteket) {
-            if (item.Id == id) {
-               return item;
-            }
-         } */
-
+            return kartoteket.FirstOrDefault(person => person.Id == id);
+         
          // borde vara omöjligt att komma hit
          throw new ArgumentException( "felaktigt id i InMemoryPeopleRepo:Read" );
       }
