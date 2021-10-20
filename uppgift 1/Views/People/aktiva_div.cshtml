@@ -1,3 +1,7 @@
+<!-- Time-stamp: <2021-10-20 23:41:30 stefan> -*-web-*- -->
+
+@using Kartotek.Modeller.Entiteter
+
 @model Kartotek.Modeller.Entiteter.Person
 
 <div class="row headline">
@@ -6,10 +10,7 @@
      <div class="col-2 text-start">@Html.DisplayFor(model => Model.Telefonnummer)</div>
      <div class="col   text-start">@Html.DisplayFor(model => Model.Id)</div>
      <div class="col-3">
-	  <a class="btn btn-warning btn-link" asp-controller="People" asp-action="radering"  asp-route-id="@Model.id" >radering</a>
-	  <a class="btn btn-primary btn-link" asp-controller="People" asp-action="modifiera" asp-route-id="@Model.id">modifiera</a>
+	  <a class="btn btn-warning btn-link" asp-controller="People" asp-action="radering"  asp-route-id="@Model.Id" >radering</a>
+	  <a class="btn btn-primary btn-link" asp-controller="People" asp-action="modifiera" asp-route-id="@Model.Id">modifiera</a>
      </div>
 </div>
-@foreach(Person person in @Model) {
-   @Html.Partial( ./aktiv_rad.cshtml, @person)
-}

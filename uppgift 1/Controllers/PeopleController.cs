@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-10-21 00:10:15 stefan>
+// Time-stamp: <2021-10-21 00:20:55 stefan>
 //
 
 //
@@ -194,11 +194,13 @@ namespace Kartotek.Controllers {
 
 	    if ( ModelState.IsValid ) {
 		_loggdest.LogInformation( "public IActionResult Skapa_kort( PeopleViewModell if ( ModelState.IsValid ) {");
-		// Console.WriteLine( "public IActionResult Skapa_kort( PeopleViewModell if ( ModelState.IsValid ) {");
 
 		if ( ! String.IsNullOrEmpty(vymodell.NyttKort.Namn) &&
 		     ! String.IsNullOrEmpty(vymodell.NyttKort.Bostadsort) &&
 		     ! String.IsNullOrEmpty(vymodell.NyttKort.Telefonnummer)) {
+
+		    _loggdest.LogInformation( "public IActionResult Skapa_kort( PeopleViewModell if ( ModelState.IsValid ) {");
+
 		    Console.WriteLine( "  " + vymodell.NyttKort.Namn);
 		    Console.WriteLine( "  " + vymodell.NyttKort.Bostadsort);
 		    Console.WriteLine( "  " + vymodell.NyttKort.Telefonnummer);
@@ -210,6 +212,8 @@ namespace Kartotek.Controllers {
 		    // nyttKort.Telefonnummer = vymodell.NyttKortTelefonnummer;
 
 		    serviceenheten.Add( nyttKort);
+		} else {
+		    _loggdest.LogInformation( "public IActionResult Skapa_kort( något test gick inte igenom");
 		}
 	    } else {
 		Console.WriteLine( "public IActionResult Skapa_kort( PeopleViewModell not if ( ModelState.IsValid ) {");

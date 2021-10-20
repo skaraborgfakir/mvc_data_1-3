@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-10-14 16:02:50 stefan>
+// Time-stamp: <2021-10-21 00:18:30 stefan>
 //
 
 using System;
@@ -115,11 +115,9 @@ namespace Kartotek
 	    //
 	    app.UseEndpoints(endpoints =>
 	    {
-		// endpoints.MapControllerRoute( name:     "people-radering",
-		//			      pattern:  "People/"});
-		endpoints.MapControllerRoute( name:     "people",
-					      pattern:  "People",
-					      defaults: new { controller = "PeopleController", action = "Index"});
+		endpoints.MapControllerRoute( name:     "people-nyttkort",
+					      pattern:  "People/nyttkort",
+					      defaults: new { controller = "People", action = "nyttkort"});
 		endpoints.MapControllerRoute( name:     "default",
 					      pattern:  "{controller=Home}/{action=Index}/{id?}");
 	    });
