@@ -21,14 +21,6 @@
     {
       "library": "jQuery-Validation-Engine@2.6.4",
       "destination": "wwwroot/lib/jQuery-Validation-Engine"
-    },
-    {
-      "library": "datatables.net@2.1.1",
-      "destination": "wwwroot/lib/datatables.net"
-    },
-    {
-      "library": "datatables@1.10.21",
-      "destination": "wwwroot/lib/datatables"
     }
   ]
 }
