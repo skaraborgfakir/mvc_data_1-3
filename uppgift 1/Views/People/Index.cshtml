@@ -1,4 +1,4 @@
-<!-- Time-stamp: <2021-10-25 21:06:26 stefan> -*-web-*- -->
+<!-- Time-stamp: <2021-10-25 21:20:00 stefan> -*-web-*- -->
 <!-- https://www.educba.com/bootstrap-sort-table/
      här använder jag metod 1 för att sortera tabellen
 
@@ -31,25 +31,3 @@
     </div>
     <partial name="aktivlistan.cshtml" for="Personlistan"/>
 </div>
-
-@section Scripts {
-    <!-- används inte för en rät-och-slät div -->
-    <script type="text/javascript">
-     $(document).ready(function () {
-	 $('#personindex').DataTable({
-	     "ordering": true, // false to disable sorting (or any other option)
-	     "paging": false,
-	     "columns": [{ "searchable": true },
-			 { "searchable": true },
-			 { "searchable": true },
-			 { "searchable": false },
-			 {
-			     "searchable": false,
-			     "orderable": false
-			 }
-	     ]
-	 });
-	 $('.dataTables_length').addClass('bs-select');
-     });
-    </script>
-    }
