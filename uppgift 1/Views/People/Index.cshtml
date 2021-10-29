@@ -1,8 +1,8 @@
-<!-- Time-stamp: <2021-10-29 11:55:21 stefan> -*-web-*- -->
+<!-- Time-stamp: <2021-10-29 13:12:08 stefan> -*-web-*- -->
 <!-- https://www.educba.com/bootstrap-sort-table/
      här använder jag metod 1 för att sortera tabellen
 
-     tabellen sorteras via funktioner i jQuery och datatable
+     tabellen sorteras mha funktioner i jQuery
 
      bootstrap 5.1 används
 -->
@@ -28,13 +28,17 @@
 	<!-- funktion för inläggning av en person i taget  -->
 	<partial name="nya_aktiva" for="NyttKort"/>
 	<hr>
+	<partial name="aktivlistan" for="Personlistan"/>
     </div>
-    <partial name="aktivlistan" for="Personlistan"/>
 </div>
 
 @section Scripts {
+    <!-- https://stackoverflow.com/questions/7556400/injecting-content-into-specific-sections-from-a-partial-view-asp-net-mvc-3-with -->
+    <!-- varför kan man inte inkludera script via script:sektionen direkt inuti en partial view. -->
+    <!-- Därför att asp.net (mer specifikt Razor) fungerar så. -->
+
     <script type="text/javascript" src="~/js/site.js"></script>
+    <script type="text/javascript" src="~/js/sorteratabell.js"></script>
     <script type="text/javascript" src="~/lib/jquery-validate/jquery.validate.js"></script>
     <script type="text/javascript" src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
-    <script type="text/javascript" src="~/js/sorteratabell.js"></script>
     }
