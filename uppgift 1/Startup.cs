@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-10-21 01:33:56 stefan>
+// Time-stamp: <2021-10-27 13:54:52 stefan>
 //
 
 using System;
@@ -55,7 +55,7 @@ namespace Kartotek
 	    }
 	    );
 
-	    // services.AddScoped<IPeopleService, PeopleService>();
+	    services.AddScoped<IPeopleService, PeopleService>();
 	    // services.AddScoped<IPeopleRepo, InMemoryPeopleRepo>();
 
 	    services.AddControllersWithViews();

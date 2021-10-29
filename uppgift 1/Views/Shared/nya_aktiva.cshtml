@@ -1,0 +1,42 @@
+<!-- Time-stamp: <2021-10-28 18:03:18 stefan> -*-web-*- -->
+
+@model Kartotek.Modeller.Vyer.CreatePersonViewModell
+
+<div class="container">
+    <h4 class="text-start">
+	Inrapportering av nya aktiva
+    </h4>
+    <form id="nya_aktiva" method="post" asp-controller="People" asp-action="nyttkort">
+	<div class="row mb-1">
+	    <label class="nya_aktiva_label text-start col-sm-2 col-form-label" asp-for="Namn">
+		Namn
+	    </label>
+	    <div class="col-sm-4">
+		<input id="nyttkort_namn" class="form-control" asp-for="Namn" />
+	    </div>
+	</div>
+	<div class="row mb-1">
+	    <label class="nya_aktiva_label text-start col-sm-2 col-form-label" asp-for="Namn">
+		Bostadsort
+	    </label>
+	    <div class="col-sm-3">
+		<input id="nyttkort_bostadsort" class="form-control" asp-for="Bostadsort" />
+	    </div>
+	</div>
+	<div class="row mb-1">
+	    <label class="nya_aktiva_label text-start col-sm-2 col-form-label">
+		Telefonnummer
+	    </label>
+	    <div class="col-sm-2">
+		<input id="nyttkort_telefonnummer" class="form-control col-sm-6" asp-for="Telefonnummer" />
+	    </div>
+	</div>
+	<button class="btn btn-secondary" type="reset">Rensa fälten</button>
+	<button class="btn btn-success"   type="submit">Skapa kortet</button>
+    </form>
+</div>
+
+@section Scripts
+{
+      <partial name="_ValidationScriptsPartial" />
+}
