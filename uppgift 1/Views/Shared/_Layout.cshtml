@@ -1,5 +1,6 @@
-﻿<!DOCTYPE html>
-<!-- Time-stamp: <2021-10-14 16:43:36 stefan> -*-web-*- -->
+﻿<!-- -*-web-*- -->
+<!DOCTYPE html>
+<!-- Time-stamp: <2021-10-29 12:07:28 stefan> -*-web-*- -->
 <!-- _Layout.cshtml -->
 <!-- inkluderar via RenderBody() de olika fragmenten -->
 <!--   fragment ? Exv: -->
@@ -16,7 +17,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>@ViewData["Title"] - MVC_med_registerfunktionalitet_1</title>
 	<link rel="stylesheet" href="/css/site.css" />
+	<!-- bootstrap 5 -->
 	<link rel="stylesheet" href="/lib/bootstrap-5.1.1/css/bootstrap.css">
+	<!-- nödvändigt för dataTables dekoration av bland annat tabelhuvdet -->
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
     </head>
     <body>
 	<header>
@@ -70,6 +74,7 @@
 	-->
 	<script type="text/javascript" src="~/lib/jquery/dist/jquery.js"></script>
 	<script type="text/javascript" src="~/lib/popper/popper.min.js"></script>
+	<!-- bootstrap 5 -->
 	<script type="text/javascript" src="~/lib/bootstrap-5.1.1/js/bootstrap.min.js"></script>
 
 	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
