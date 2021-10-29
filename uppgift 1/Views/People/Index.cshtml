@@ -1,4 +1,4 @@
-<!-- Time-stamp: <2021-10-29 13:13:05 stefan> -*-web-*- -->
+<!-- Time-stamp: <2021-10-29 14:01:38 stefan> -*-web-*- -->
 <!-- https://www.educba.com/bootstrap-sort-table/
      här använder jag metod 1 för att sortera tabellen
 
@@ -46,68 +46,11 @@
     <script type="text/javascript" src="~/lib/jquery-validate/jquery.validate.js"></script>
     <script type="text/javascript" src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
 
-    <script type="text/javascript">
-     $(document).ready(function () {
-	 $('#nya_aktiva').validate( {
-	     debug: false,
-	     onkeyup: true,
-	     rules: {
-	     }
-	 })
-     });
-    </script>
+    <!-- validering för partial view Shared/nya_aktiva.cshtml -->
+    <script type="text/javascript" src="~/js/nyakort.js"></script>
 
-    <script type="text/javascript">
-     $(document).ready(function() {
-	 const url = "http://localhost:5006/PeopleAjax/uppdateralistan";
-
-	 $('#uppdateralistan').click(function( event) {
-	     $('#kortvy').append( "2test");
-	     event.preventDefault();
-
-	     @*
-		req.onreadystatechange = function() {
-		if (this.readyState==XMLHttpRequest.DONE &&
-		this.status==200) {
-		document.getElementsById('kortvy').innerHTML = "test;"
-		}
-		}
-		req.open( "GET", url);
-		req.send();
-		let req = new XMLHttpRequest();
-	      *@
-
-	 });
-     });
-    </script>
-
-    <script type="text/javascript">
-     $(document).ready(function () {
-	 $('#specifiktKort').validate( {
-	     debug: false,
-	     onkeyup: true,
-	     rules: {
-	     }
-	 });
-     });
-    </script>
-
-    <script type="text/javascript">
-     $(document).ready(function () {
-	 $('#personindex').DataTable({
-	     "ordering": true, // false to disable sorting (or any other option)
-	     "paging": false,
-	     "columns": [{ "searchable": true },
-			 { "searchable": true },
-			 { "searchable": true },
-			 { "searchable": false },
-			 {
-			     "searchable": false,
-			     "orderable": false
-			 }
-	     ]
-	 });
-	 $('.dataTables_length').addClass('bs-select');
-     });
-    </script>
+    <!-- aktörer efter förändringar i vad som ska hämtas mha AJAX och visas -->
+    <!-- PeopleAjax ska vara rent webAPI -->
+    <!-- funktion i paket hanterar validering av input -->
+    <script type="text/javascript" src="~/js/ajaxkortfunktioner.js"></script>
     }
