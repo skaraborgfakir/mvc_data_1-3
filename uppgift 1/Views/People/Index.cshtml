@@ -1,4 +1,4 @@
-<!-- Time-stamp: <2021-10-25 21:20:00 stefan> -*-web-*- -->
+<!-- Time-stamp: <2021-10-29 11:55:21 stefan> -*-web-*- -->
 <!-- https://www.educba.com/bootstrap-sort-table/
      här använder jag metod 1 för att sortera tabellen
 
@@ -23,11 +23,18 @@
 <div class="text-center">
     <h3 class="display-6">Ett kartotek över aktiva medlemmar</h3>
     <div>
-	<partial name="filtrering.cshtml" for="Filtertermer" />
+	<partial name="filtrering" for="Filtertermer" />
 	<hr>
 	<!-- funktion för inläggning av en person i taget  -->
-	<partial name="nya_aktiva.cshtml" for="NyttKort"/>
+	<partial name="nya_aktiva" for="NyttKort"/>
 	<hr>
     </div>
-    <partial name="aktivlistan.cshtml" for="Personlistan"/>
+    <partial name="aktivlistan" for="Personlistan"/>
 </div>
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/site.js"></script>
+    <script type="text/javascript" src="~/lib/jquery-validate/jquery.validate.js"></script>
+    <script type="text/javascript" src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script type="text/javascript" src="~/js/sorteratabell.js"></script>
+    }
