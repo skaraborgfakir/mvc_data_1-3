@@ -1,0 +1,25 @@
+<!-- Time-stamp: <2021-10-29 12:44:47 stefan> -*-web-*- -->
+
+@using Kartotek.Modeller.Vyer
+@using Kartotek.Modeller.Entiteter
+
+@model Kartotek.Modeller.Vyer.PeopleViewModell
+
+<div class="container">
+    <h4 class="text-start">
+	Sökning igenom poster
+    </h4>
+    <form id="filtrering" method="post" asp-controller="People">
+	<fieldset class="mb-1 text-start">
+	    <label class="filtertermer_label col-sm-1 col-form-label" asp-for="Namn">Namn</label>
+	    <input class="col-sm-3" asp-for="Namn" />
+
+	    <label class="filtertermer_label col-sm-1 col-form-label" asp-for="Bostadsort">Bostadsort</label>
+	    <input class="col-sm-2" asp-for="Bostadsort" />
+
+	    <button class="btn btn-secondary" type="reset">Rensa fälten</button> <!-- rensa fälten -->
+	    <button class="btn btn-success" type="submit" asp-action="filtrering">Filtrera</button>
+	    <button class="btn btn-success" type="submit" asp-action="ingenfiltrering">Ingen filtrering</button>
+	</fieldset>
+    </form>
+</div>

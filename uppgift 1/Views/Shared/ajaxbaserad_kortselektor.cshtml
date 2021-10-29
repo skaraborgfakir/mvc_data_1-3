@@ -1,0 +1,31 @@
+<!-- Time-stamp: <2021-10-29 13:11:14 stefan> -*-web-*- -->
+<!-- https://www.educba.com/bootstrap-sort-table/
+     här använder jag metod 1 för att sortera tabellen
+
+     tabellen sorteras mha funktioner i jQuery
+
+     bootstrap 5.1 används
+-->
+
+@using System
+@using System.Collections.Generic
+@using System.Linq
+
+@using Kartotek.Modeller.Vyer
+@using Kartotek.Modeller.Entiteter
+
+@model Kartotek.Modeller.Vyer.HopslagenmodellVymodell
+
+<div class="container">
+    <form id="specifiktKort" >
+	<fieldset class="mb-1 text-start">
+	    <label class="filtertermer_label col-sm-1 col-form-label">ID</label>
+	    <input class="col-sm" type="number" min="0" id="valtkortsid"/>
+	    <button id="uppdateralistan"  class="btn btn-primary">Uppdatera listan</button>
+	    <button id="plockaFramKortet" class="btn btn-primary">Visa kort</button>
+	    <button id="rensaBortKortet"  class="btn btn-warning">Radera valt kort</button>
+	</fieldset>
+    </form>
+    <div id="kortvy">
+    </div>
+</div>

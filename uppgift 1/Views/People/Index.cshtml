@@ -1,8 +1,8 @@
-<!-- Time-stamp: <2021-10-29 11:35:51 stefan> -*-web-*- -->
+<!-- Time-stamp: <2021-10-29 13:13:05 stefan> -*-web-*- -->
 <!-- https://www.educba.com/bootstrap-sort-table/
      här använder jag metod 1 för att sortera tabellen
 
-     tabellen sorteras via funktioner i jQuery och datatable
+     tabellen sorteras mha funktioner i jQuery
 
      bootstrap 5.1 används
 -->
@@ -23,110 +23,26 @@
 <div class="text-center">
     <h3 class="display-4">Ett kartotek över aktiva medlemmar</h3>
     <div>
-	<div class="container">
-	    <h4 class="text-start">
-		Sökning igenom poster
-	    </h4>
-	    <form id="filtrering" method="post" asp-controller="People">
-		<fieldset class="mb-1 text-start">
-		    <label class="filtertermer_label col-sm-1 col-form-label" asp-for="Filtertermer.Namn">
-			Namn
-		    </label>
-		    <input class="col-sm-3" asp-for="Filtertermer.Namn" />
-		    <label class="filtertermer_label col-sm-1 col-form-label" asp-for="Filtertermer.Bostadsort">
-			Bostadsort
-		    </label>
-		    <input class="col-sm-2" asp-for="Filtertermer.Bostadsort" />
-		    <button class="btn btn-secondary" type="reset">Rensa fälten</button> <!-- rensa fälten -->
-		    <button class="btn btn-success" type="submit" asp-action="filtrering">Filtrera</button>
-		    <button class="btn btn-success" type="submit" asp-action="ingenfiltrering">Ingen filtrering</button>
-		</fieldset>
-	    </form>
-	</div>
-
+	<partial name="filtrering" for="Filtertermer" />
 	<hr>
-
 	<!-- funktion för inläggning av en person i taget  -->
-	<div class="container">
-	    <h4 class="text-start">
-		Inrapportering av nya aktiva
-	    </h4>
-	    <form id="nya_aktiva" method="post" asp-controller="People" asp-action="nyttkort">
-		<fieldset>
-		    <div class="row mb-1">
-			<label class="nya_aktiva_label text-start col-sm-2 col-form-label" asp-for="NyttKort.Namn">
-			    Namn
-			</label>
-			<div class="col-sm-4">
-			    <input id="nyttkort_namn" data-rule-required="true" class="form-control" asp-for="NyttKort.Namn" />
-			</div>
-		    </div>
-		    <div class="row mb-1">
-			<label class="nya_aktiva_label text-start col-sm-2 col-form-label" asp-for="NyttKort.Namn">
-			    Bostadsort
-			</label>
-			<div class="col-sm-3">
-			    <input id="nyttkort_bostadsort" data-rule-required="true" class="form-control" asp-for="NyttKort.Bostadsort" />
-			</div>
-		    </div>
-		    <div class="row mb-1">
-			<label class="nya_aktiva_label text-start col-sm-2 col-form-label">
-			    Telefonnummer
-			</label>
-			<div class="col-sm-2">
-			    <input id="nyttkort_telefonnummer" class="form-control col-sm-6"
-				       asp-for="NyttKort.Telefonnummer" />
-			</div>
-		    </div>
-		    <button class="btn btn-secondary" type="reset">Rensa fälten</button>
-		    <button class="btn btn-success" type="submit">Skapa kortet</button>
-		</fieldset>
-	    </form>
-	</div>
-
+	<partial name="nya_aktiva" for="NyttKort"/>
 	<hr>
-
-	<div class="container">
-	    <form id="specifiktKort" >
-		<fieldset class="mb-1 text-start">
-		    <label class="filtertermer_label col-sm-1 col-form-label">
-			ID
-		    </label>
-		    <input class="col-sm" type="number" min="0" id="valtkortsid"/>
-		    <button id="uppdateralistan"  class="btn btn-primary">Uppdatera listan</button>
-		    <button id="plockaFramKortet" class="btn btn-primary">Visa kort</button>
-		    <button id="rensaBortKortet"  class="btn btn-warning">Radera valt kort</button>
-		</fieldset>
-	    </form>
-	    <div id="kortvy">
-	    </div>
-	</div>
-
+	<!-- via ajax se och förändra en databas  -->
+	<partial name="ajaxbaserad_kortselektor"/>
 	<hr>
-
-	<div id="personindex_div" class="table-responsive container">
-	    <!-- tabell med existerande kort -->
-	    <div class="row">
-		<div class="col-md-2 text-start" onclick="sorteraTabell(0)">Namn</div>
-		<div class="col-md-2 text-start" onclick="sorteraTabell(1)">Bostadsort</div>
-		<div class="col-md-1 text-start">Telefon</div>
-		<div class="col-md-1 text-start">Id</div>
-		<div class="col-md-2">Aktioner</div>
-	    </div>
-	    <div id="personindex_div_inner" class="container">
-		@foreach (Person item in Model.Personlistan.Utdraget)
-		{
-		<partial name="aktiva_div" model="item" />
-		}
-	    </div>
-	</div>
+	<partial name="aktivlistan" for="Personlistan"/>
     </div>
 </div>
 
 
 @section Scripts {
-    <script type="text/javascript" src="~/js/sorteratabell.js"></script>
+    <!-- https://stackoverflow.com/questions/7556400/injecting-content-into-specific-sections-from-a-partial-view-asp-net-mvc-3-with -->
+    <!-- varför kan man inte inkludera script via script:sektionen direkt inuti en partial view. -->
+    <!-- Därför att asp.net (mer specifikt Razor) fungerar så. -->
+
     <script type="text/javascript" src="~/js/site.js"></script>
+    <script type="text/javascript" src="~/js/sorteratabell.js"></script>
     <script type="text/javascript" src="~/lib/jquery-validate/jquery.validate.js"></script>
     <script type="text/javascript" src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
 
