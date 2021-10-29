@@ -1,23 +1,31 @@
-﻿<!DOCTYPE html>
-<!-- Time-stamp: <2021-10-20 23:17:39 stefan> -*-web-*- -->
-<!-- _Layout.cshtml -->
+﻿nnp<!-- Time-stamp: <2021-10-29 10:54:42 stefan> -*-web-*- -->
+<!DOCTYPE html>
+
+<!-- https://docs.microsoft.com/en-us/aspnet/core/mvc/views/layout?view=aspnetcore-5.0  -->
+<!-- https://docs.microsoft.com/en-us/aspnet/core/mvc/views/partial?view=aspnetcore-5.0 -->
+
+<!-- Mallen.cshtml -->
 <!-- inkluderar via RenderBody() de olika fragmenten -->
 <!--   fragment ? Exv: -->
 <!--   Views/_ViewStart.cshtml (ett fragment) innan -->
 <!--   Views/_ViewImports.cshtml -->
+<!-- de olika skript-sektionerna som olika sidor vill länka fin -->
+<!-- däräv kanelbulle-await RenderSectionAsync("Scripts", required: false) i slutet -->
+
 <!-- https://dotnettutorials.net/lesson/asp-net-core-appsettings-json-file/ -->
 <!-- https://stackoverflow.com/questions/47296541/access-configuration-from-a-view-in-asp-net-core/47297327 -->
 <!-- // via appsettings*.json i foot -->
 @using Microsoft.Extensions.Configuration
 @inject IConfiguration Configuration
+
 <html lang="sv">
     <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>@ViewData["Title"] - MVC_med_registerfunktionalitet_1</title>
-	<link rel="stylesheet" href="/lib/bootstrap-5.1.1/css/bootstrap.css">
-	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
-	<link rel="stylesheet" href="/css/site.css" />
+	<title>@ViewData["Title"] - MVC med registerfunktionalitet</title>
+	<link rel="stylesheet" type="text/css" href="@Url.Content("~/lib/bootstrap/css/bootstrap.css")" />
+	<link rel="stylesheet" type="text/css" href="@Url.Content("~/lib/datatables/css/dataTables.bootstrap.css")" />
+	<link rel="stylesheet" type="text/css" href="@Url.Content("~/css/site.css")" />
     </head>
     <body>
 	<header>
@@ -44,6 +52,7 @@
 	    </nav>
 	</header>
 	<div class="container">
+	    <!-- dags för själva jobbet. Härifrån inkluderas en kontrollants vyer  -->
 	    <main role="main" class="pb-3">
 		@RenderBody()
 	    </main>
@@ -56,9 +65,11 @@
 		<!-- https://dotnettutorials.net/lesson/asp-net-core-appsettings-json-file/ -->
 		<!-- https://stackoverflow.com/questions/47296541/access-configuration-from-a-view-in-asp-net-core/47297327 -->
 		<div>
-		    via appsettings*.json: version av programmet: @Configuration["programversion"] dess  driftmiljö: @Configuration["app_run_miljö"]
+		    uppgifter fån appsettings*.json: version av programmet: @Configuration["programversion"]
 		</div>
-	    </div>
+		<div>
+		    och dess  driftmiljö: @Configuration["app_run_miljö"]
+		</div>
 	</footer>
 	<!--
 	     en liten svårighet:
@@ -69,15 +80,10 @@
 
 	     innehåll i wwwroot/js/ först, därefter wwwroot/lib/etc
 	-->
-	<script type="text/javascript" src="~/lib/jquery/dist/jquery.js"></script>
-	<script type="text/javascript" src="~/lib/popper/popper.min.js"></script>
-	<script type="text/javascript" src="~/lib/bootstrap-5.1.1/js/bootstrap.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="@Url.Content("/lib/jquery/jquery.js")"></script>
+	<script type="text/javascript" charset="utf8" src="@Url.Content("/lib/popper.js/umd/popper.js")"></script>
+	<script type="text/javascript" charset="utf8" src="@Url.Content("/lib/bootstrap/js/bootstrap.js")"></script>
 
-	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
-
-	<!-- allmänt för den här applikationen -->
-	<script type="text/javascript" src="~/js/sorteratabell.js"></script>
-	<script type="text/javascript" src="~/js/site.js"></script>
 	<!-- möjlighet att från exv People/Index.cshtml få med ett eget script ( section Scripts ) -->
 	@await RenderSectionAsync("Scripts", required: false)
     </body>
