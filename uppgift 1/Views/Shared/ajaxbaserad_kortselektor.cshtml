@@ -1,4 +1,4 @@
-<!-- Time-stamp: <2021-10-29 13:11:14 stefan> -*-web-*- -->
+<!-- Time-stamp: <2021-10-29 14:02:06 stefan> -*-web-*- -->
 <!-- https://www.educba.com/bootstrap-sort-table/
      här använder jag metod 1 för att sortera tabellen
 
@@ -16,8 +16,12 @@
 
 @model Kartotek.Modeller.Vyer.HopslagenmodellVymodell
 
+<!-- aktörer efter förändringar i vad som ska hämtas mha AJAX och visas -->
+<!-- PeopleAjax ska vara rent webAPI -->
+<!-- funktion i paket hanterar validering av input -->
+
 <div class="container">
-    <form id="specifiktKort" >
+    <form id="specifiktKort" >  <!-- validering! -->
 	<fieldset class="mb-1 text-start">
 	    <label class="filtertermer_label col-sm-1 col-form-label">ID</label>
 	    <input class="col-sm" type="number" min="0" id="valtkortsid"/>
