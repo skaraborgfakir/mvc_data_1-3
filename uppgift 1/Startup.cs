@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-10-21 01:34:11 stefan>
+// Time-stamp: <2021-10-29 15:20:09 stefan>
 //
 
 using System;
@@ -124,12 +124,12 @@ namespace Kartotek
 	    app.UseEndpoints( endpoints => {
 // endpoints.MapControllerRoute( name:     "people-radering",
 //			      pattern:  "People/"});
-		endpoints.MapControllerRoute( name: "ajax",
-					      pattern: "{controller=PeopleAjax}/{action=uppdateralistan}/{id?}");
-		// defaults: new { controller = "PeopleAjaxController",  action = "{uppdateraListan}" });
-		endpoints.MapControllerRoute( name: "people",
-					      pattern: "People",
-					      defaults: new { controller = "People", action = "Index" } );
+// endpoints.MapControllerRoute( name: "ajax",
+//			      pattern: "Ajax/{action=uppdateralistan}",
+//			      defaults: new { controller = "PeopleAjax" });
+// endpoints.MapControllerRoute( name: "people",
+//			      pattern: "People",
+//			      defaults: new { controller = "People", action = "Index" } );
 		endpoints.MapControllerRoute( name: "default",
 					      pattern: "{controller=Home}/{action=Index}/{id?}" );
 	    } );
