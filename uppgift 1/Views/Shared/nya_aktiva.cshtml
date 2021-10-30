@@ -1,4 +1,4 @@
-<!-- Time-stamp: <2021-10-29 12:50:52 stefan> -*-web-*- -->
+<!-- Time-stamp: <2021-10-29 14:03:09 stefan> -*-web-*- -->
 
 @using Kartotek.Modeller.Vyer
 @using Kartotek.Modeller.Entiteter
@@ -9,7 +9,8 @@
     <h4 class="text-start">
 	Inrapportering av nya aktiva
     </h4>
-    <form id="nya_aktiva" method="post" asp-controller="People" asp-action="nyttkort">
+    <!-- js/nyakort.js ansvarar för validering -->
+    <form id="nya_aktiva" method="post" asp-controller="People" asp-action="nyttkort"> <!-- validering ! -->
 	<fieldset>
 
 	    <div class="row mb-1">

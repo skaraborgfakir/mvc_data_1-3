@@ -1,4 +1,4 @@
-<!-- Time-stamp: <2021-10-29 12:55:27 stefan> -*-web-*- -->
+<!-- Time-stamp: <2021-10-29 14:08:11 stefan> -*-web-*- -->
 
 @using System
 @using System.Collections.Generic
@@ -8,6 +8,9 @@
 @using Kartotek.Modeller.Entiteter
 
 @model Kartotek.Modeller.Entiteter.Person
+
+<!-- sorteras av js/sorteratabell.js function sorteraTabellStigande(sorteringsterm) { -->
+<!-- därav sorteraTabell för namn och bostadsort -->
 
 <div class="row headline" style="display: flex; flex-wrap: wrap;">
      <div class="col-md-2 text-start">@Html.DisplayFor(model => Model.Namn)</div>
