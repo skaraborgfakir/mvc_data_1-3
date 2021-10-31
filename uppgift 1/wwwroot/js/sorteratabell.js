@@ -58,41 +58,50 @@
 //
 // 1 1   slut på inre loop
 
-function sorteraTabellStigande(sorteringsterm) {
-	var tabellen = document.getElementById("personindex_div_inner");
-	var posterna = tabellen.children; // varje rad i tabellen - htmlcollection
-	var i = posterna.length;                                // antalet poster
+/// <summary>
+/// samma men annat villkor för beslut - vi vill knuffa det större framåt !
+///
+/// API: under vilken div finns uppräkningen
+///      sorteringsterm : vilken av värdena (de har index 0 .... n) ska användas för sorteringen
+/// </summary>
+function sorteraTabellStigande(listansid, sorteringsterm) {
+    var tabellen = document.getElementById( listansid);
+    var posterna = tabellen.children; // varje rad i tabellen - htmlcollection
+    var i = posterna.length;                                // antalet poster
 
-	for (; i >= 1; i--)
-		for (let j = 1; j < i; j++)
-			if (posterna.item(j - 1) != undefined && posterna.item(j) != undefined &&
-				posterna.item(j - 1).children.item(sorteringsterm).innerHTML > posterna.item(j).children.item(sorteringsterm).innerHTML)
-				tabellen.insertBefore(posterna.item(j), posterna.item(j - 1));
+    for (; i >= 1; i--)
+	for (let j = 1; j < i; j++)
+	    if (posterna.item(j - 1) != undefined && posterna.item(j) != undefined &&
+		posterna.item(j - 1).children.item(sorteringsterm).innerHTML > posterna.item(j).children.item(sorteringsterm).innerHTML)
+		tabellen.insertBefore(posterna.item(j), posterna.item(j - 1));
 }
 
-//
-// samma men annat villkor för beslut - vi vill knuffa det minsta framför oss !
-//
-function sorteraTabellSjunkande(sorteringsterm) {
-	var tabellen = document.getElementById("personindex_div_inner");
-	var posterna = tabellen.children;   // varje rad i tabellen
-	var i = posterna.length;                                // antalet poster
+/// <summary>
+/// samma men annat villkor för beslut - vi vill knuffa det minsta framför oss !
+///
+/// API: under vilken div finns uppräkningen
+///      sorteringsterm : vilken av värdena (de har index 0 .... n) ska användas för sorteringen
+/// </summary>
+function sorteraTabellSjunkande( listansid, sorteringsterm) {
+    var tabellen = document.getElementById( listansid);
+    var posterna = tabellen.children;   // varje rad i tabellen
+    var i = posterna.length;                                // antalet poster
 
-	for (; i >= 1; i--)
-		for (let j = 1; j < i; j++)
-			if (posterna.item(j - 1) != undefined && posterna.item(j) != undefined &&
-				posterna.item(j - 1).children.item(sorteringsterm).innerHTML < posterna.item(j).children.item(sorteringsterm).innerHTML)
-				tabellen.insertBefore(posterna.item(j), posterna.item(j - 1));  // post (j) framför posten i j-1
+    for (; i >= 1; i--)
+	for (let j = 1; j < i; j++)
+	    if (posterna.item(j - 1) != undefined && posterna.item(j) != undefined &&
+		posterna.item(j - 1).children.item(sorteringsterm).innerHTML < posterna.item(j).children.item(sorteringsterm).innerHTML)
+		tabellen.insertBefore(posterna.item(j), posterna.item(j - 1));  // post (j) framför posten i j-1
 }
 
-//
-// begränsad - den sorterar enbart på namn eller bostadsort (sorteringsterm) i stigande ordning
-//
-function sorteraTabell(sorteringsterm) {
-	var sorteringsordning = "stigande";  // sorteringsordning
+/// <summary>
+/// begränsad - den sorterar enbart på namn eller bostadsort (sorteringsterm) i stigande ordning
+/// </summary>
+function sorteraTabell( listansid, sorteringsterm) {
+    var sorteringsordning = "stigande";  // sorteringsordning
 
-	if (sorteringsordning == "stigande")
-		sorteraTabellStigande(sorteringsterm);
-	else if (sorteringsordning == "sjunkande")
-		sorteraTabellSjunkande(sorteringsterm);
+    if (sorteringsordning == "stigande")
+	sorteraTabellStigande( listansid, sorteringsterm);
+    else if (sorteringsordning == "sjunkande")
+	sorteraTabellSjunkande( listansid, sorteringsterm);
 }

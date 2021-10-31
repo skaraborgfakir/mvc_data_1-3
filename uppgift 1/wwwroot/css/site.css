@@ -1,4 +1,4 @@
-﻿/* Time-stamp: <2021-10-28 22:10:50 stefan>
+﻿/* Time-stamp: <2021-10-31 11:45:01 stefan>
  * Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
  * for details on configuring this project to bundle and minify static web assets.
  */
@@ -92,6 +92,7 @@ body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
 }
+
 footer {
   position: fixed;
   bottom: 0;
@@ -116,4 +117,22 @@ table.dataTable thead .sorting_desc:before,
 table.dataTable thead .sorting_desc_disabled:after,
 table.dataTable thead .sorting_desc_disabled:before {
     bottom: .5em;
+}
+
+
+.sorting {
+    background-repeat: no-repeat;
+    background-position-x: right;
+    background-position-y: centre;
+}
+
+.sorting {
+    background-image: url("../images/sort_both.png") !important;
+}
+
+.sorting.sorting_asc {
+    background-image: url("../images/sort_asc.png") !important;
+}
+.sorting.sorting_desc {
+    background-image: url("../images/sort_asc.png") !important;
 }
