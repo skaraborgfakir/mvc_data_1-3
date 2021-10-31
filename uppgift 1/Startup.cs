@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-10-29 15:20:09 stefan>
+// Time-stamp: <2021-10-31 12:07:07 stefan>
 //
 
 using System;
@@ -20,7 +20,13 @@ using Kartotek.Modeller.Interfaces;
 
 namespace Kartotek
 {
-    // kan egentligen heta vad som helst exv REVELJ !
+
+    ///<summary>
+    /// används av webbuilder som definition av appen
+    ///<remark>
+    /// kan egentligen heta vad som helst exv REVELJ !
+    ///</remark>
+    ///</summary>
     public class REVELJ
     {
 	public REVELJ(IConfiguration configuration)

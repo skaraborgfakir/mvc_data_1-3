@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-10-20 23:54:28 stefan>
+// Time-stamp: <2021-10-31 11:59:56 stefan>
 //
 
 using System;
@@ -15,11 +15,19 @@ namespace Kartotek
 {
     public class Program
     {
+	///<summary>
+	/// Kartotekprogrammets huvudrutin
+	/// Inte något annat än ett omslag runt CreateHostBuilder
+	///</summary>
 	public static void Main ( string[] args )
 	{
 	    CreateHostBuilder( args ).Build().Run();
 	}
 
+	/// <summary>
+	/// startrutin för asp.net
+	/// inkluderar logging mot konsoll och får webBuilder att aktivera klassen REVELJ
+	/// </summary>
 	public static IHostBuilder CreateHostBuilder ( string[] args ) => Host
 	    .CreateDefaultBuilder( args: args )
 	    .ConfigureLogging( logging => {
