@@ -1,5 +1,5 @@
 # -*-shell-script-*-
-# Time-stamp: <2021-10-30 22:25:01 stefan>
+# Time-stamp: <2021-10-31 00:41:00 stefan>
 #
 # Doxyfile 1.9.1
 
@@ -941,7 +941,7 @@ FILE_PATTERNS          = *.c \
 			 *.ucf \
 			 *.qsf \
 			 *.ice \
-			 .js
+			 *.js
 
 # The RECURSIVE tag can be used to specify whether or not subdirectories should
 # be searched for input files as well.
