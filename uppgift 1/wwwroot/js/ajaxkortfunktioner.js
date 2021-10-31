@@ -1,4 +1,4 @@
-// - Time-stamp: <2021-10-31 02:36:22 stefan>
+// - Time-stamp: <2021-10-31 12:17:42 stefan>
 
 //
 // validering för Shared/ajaxbaserad_kortselektor.cshtml
@@ -32,12 +32,15 @@ $(document).ready(function() {
     $("#tabell_kartotek_ajax").append( "<div class=\"row\"> " +
 				       "<div class=\"col-md-2 text-start sorting\" id=\"sorteraefternamn\">Namn</div>" +
 				       "<div class=\"col-md-2 text-start sorting\" id=\"sorteraefterbostadsort\">Bostadsort</div>"+
-				       "<div class=\"col-md-1 text-start\">Telefon</div>"+
+				       "<div class=\"col-md-2 text-start\">Telefon</div>"+
 				       "<div class=\"col-md-1 text-start\">Id</div>"+
 				       "<div class=\"col-md-2\">Aktioner</div>" +
 				       "</div>" +
 				       "<div id=\"enumreringajax\">" +
 				       "</div>");
+
+    /// få in en aktuell vy direkt
+    uppdateraVy();
 
     /// <summary>
     /// insättning av uppgifter om en viss person i uppräkningen
@@ -55,11 +58,11 @@ $(document).ready(function() {
 				     "</div>");
     }
 
-
     /// <summary>
-    /// aktiveras via knapptryck i vyn (Uppdatera listan)
+    /// aktiveras en gång efter inläsning av sidan för att få den första bilden
+    /// kan sedan aktiveras via knapptryck i vyn (Uppdatera listan)
     /// </summary>
-    function aktuellVy() {
+    function uppdateraVy() {
 	$("#enumreringajax").empty();
 	$.ajax({
 	    url: url_listan,
@@ -96,13 +99,12 @@ $(document).ready(function() {
 	sorteraTabellStigande( 'enumreringajax', 1);
     });
 
-
     /// <summary>
     /// aktiveras via knapptryck i vyn (Uppdatera listan)
     /// </summary>
     $('#uppdateralistan').click(function( event) {
 	event.preventDefault();
-	aktuellVy();
+	uppdateraVy();
     });
 
     /// <summary>
