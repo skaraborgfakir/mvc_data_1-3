@@ -7,9 +7,10 @@ Uppgift 3:
 Feature-branch:
   - AJAX
       partial view ska hämta data från service-modulen gradvis
-  - Javscript för att modifiera listan så inga mer reload efter ändrad sållning
+  - JavaScript för att modifiera listan så att reload efter exv ändrad sållning inte behövs
   - Ett formulär som om Id anges ger några uppgifter (namn, bostadsort, telefon)
   - Använd samma formulär för att radera
+  - XML-baserad dokumentation av koden och doxygen för att få ut LaTeX (och i förlängning PDF)
 
 Sedan tidigare:
 
@@ -19,5 +20,7 @@ Hela listan är gjord som ett träd av div
 
 Den här versionen har:
   sortering av listan med ett eget javascript (bubbelsort)
+  markering av vilka delar i tabellhuvudet som kan användas för sortering
+  markering av sorteringsriktning
 
 den använder bootstrap 5.1
