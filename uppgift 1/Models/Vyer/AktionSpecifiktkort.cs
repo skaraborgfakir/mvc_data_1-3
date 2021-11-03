@@ -1,4 +1,4 @@
-// Time-stamp: <2021-09-20 14:04:52 stefan>
+// Time-stamp: <2021-11-02 14:43:07 stefan>
 //
 
 using System;
@@ -9,9 +9,15 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Kartotek.Modeller.Vyer
 {
+    /// <summary>
+    /// to be done
+    /// </summary>
     public class AktionSpecifiktkort
     {
-        [BindProperty]
-        public int KortetsId { get; set; }                
+	/// <summary>
+	/// to be done
+	/// </summary>
+	[BindProperty]
+	public int KortetsId { get; set; }
     }
 }

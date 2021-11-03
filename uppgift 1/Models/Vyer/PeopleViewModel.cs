@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-09-20 09:44:25 stefan>
+// Time-stamp: <2021-11-03 15:40:08 stefan>
 //
 
 using System;
@@ -13,21 +13,22 @@ using Microsoft.AspNetCore.Mvc;
 using Kartotek.Modeller.Entiteter;
 
 namespace Kartotek.Modeller.Vyer {
-    public class PeopleViewModell {
-	//
-	// listan av personer
-	//
-	// public List<Person> utdraget;
-	// public List<Tuple<int,Person>> utdrag;
+    /// <summary>
+    /// to be done
+    /// </summary>
+    public class PeopleViewModel {
+	/// <summary>
+	/// innehåller listan på de kort som ska synas i vyn
+	/// </summary>
 	public List<Person> Utdraget {
 	    get;
 	    set;
 	}
 
-	//
-	// sökkriterier
-	//
-	// private string namn;
+	/// <summary>
+	/// sökkriterier
+	/// private string namn;
+	/// </summary>
 	[BindProperty]
 	[DisplayName("personens namn")]
 	[DataType(DataType.Text)]
@@ -35,7 +36,10 @@ namespace Kartotek.Modeller.Vyer {
 	    get;
 	    set;
 	}
-	// private string bostadsort;
+	/// <summary>
+	/// sökkriterier
+	/// string bostadsort;
+	/// </summary>
 	[BindProperty]
 	[DisplayName("bostadsort")]
 	[DataType(DataType.Text)]

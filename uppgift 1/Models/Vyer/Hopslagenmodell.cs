@@ -1,19 +1,6 @@
 //
-// Time-stamp: <2021-09-20 09:44:24 stefan>
+// Time-stamp: <2021-11-03 15:40:53 stefan>
 //
-// Hopslagning av de klasser som är del av definitionerna i IPeopleService
-// iom att razor-filerna enbart vill hantera en modell, alltså måste klasserna
-// slås ihop till en gemensam modell i kontroller
-//
-// garantera att:
-//   att användarna inte försöker skapa flera kort med samma innehåll
-//   kontroll av uppgifterna
-//      att följande är satta dvs ej NULL
-//        namn
-//        bostadsort
-//        telefonnummer
-//
-// slås isär i kontroller innan delarna lämnas över till Peopleservice
 //
 
 using System.Collections.Generic;
@@ -26,32 +13,48 @@ using Kartotek.Modeller.Vyer;
 
 namespace Kartotek.Modeller.Vyer
 {
+    /// <summary>
+    /// används i PeopleController:s egen index.html som datakälla - blir model
+    ///
+    /// Hopslagning av de klasser som är del av definitionerna i IPeopleService
+    /// iom att razor-filerna enbart vill hantera en modell, alltså måste klasserna
+    /// slås ihop till en gemensam modell i kontroller
+    ///
+    /// garantera att:
+    ///   att användarna inte försöker skapa flera kort med samma innehåll
+    ///   kontroll av uppgifterna
+    ///      att följande är satta dvs ej NULL
+    ///        namn
+    ///        bostadsort
+    ///        telefonnummer
+    ///
+    /// slås isär i kontroller innan delarna lämnas över till Peopleservice
+    /// </summary>
     public class HopslagenmodellVymodell
     {
-        //
-        // medlemmar som motsvarar PeopleService API
-        //
-        // public PeopleViewModell personlistan; // från PeopleService - en eventuellt filtrerad lista av kort
-        public PeopleViewModell Personlistan
-        {
-            get;
-            set;
-        }
+	/// <summary>
+	/// de personer som ska synas i den vybaserade sidans lista
+	/// </summary>
+	public PeopleViewModel Personlistan { get; set; }
 
-        public PeopleViewModell Filtertermer
-        { // till PeopleService - // innehåller sökkriterier
-            get; set;
-        }
+	/// <summary>
+	/// söktermer från filterdialogen
+	/// kan innehålla namn eller bostadsort
+	/// </summary>
+	/// <see cref="PeopleService">PeopleService</see>
+	public PeopleViewModel Filtertermer { get; set; }
 
-        public CreatePersonViewModell NyttKort
-        {
-            get; set;
-        }
+	/// <summary>
+	/// Skriv ut ett nytt kort - nytt-kort delen i fönstret
+	/// </summary>
+	public CreatePersonViewModel NyttKort { get; set; }
 
-        public AktionSpecifiktkort specifiktKort
-        {
-            get; set;
-        }
-
+	/// <summary>
+	/// skrollistan i den ajaxbaserade kort-väljaren
+	/// </summary>
+	// public  AktionSpecifiktkort specifiktKort
+	// {
+	//     get; set;
+	// }
     }
 }

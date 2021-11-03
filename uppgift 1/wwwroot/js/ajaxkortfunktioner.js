@@ -1,4 +1,6 @@
-// - Time-stamp: <2021-10-31 12:17:42 stefan>
+//
+// - Time-stamp: <2021-11-03 12:06:49 stefan>
+//
 
 //
 // validering för Shared/ajaxbaserad_kortselektor.cshtml
@@ -19,12 +21,9 @@ $(document).ready(function () {
 // funktioner för hämtning och visning av kort ur kartoteket
 //
 $(document).ready(function() {
-    // json-kodad lista
-    const url_listan =         "https://localhost:5009/api/PeopleAjax/uppdateralistan";
-    // uppgifter om ett specifikt kort
-    const url_specifikt_kort = "https://localhost:5009/api/PeopleAjax/tagUppKortet";
-    // kasta kortet
-    const url_kasera_kort =    "https://localhost:5009/api/PeopleAjax/kaseraKortet";
+    const url_samtliga_kort =  "https://localhost:5009/api/PeopleAjax/uppdateralistan"; // json-kodad lista
+    const url_specifikt_kort = "https://localhost:5009/api/PeopleAjax/tagUppKortet";    // uppgifter om ett specifikt kort
+    const url_kasera_kort =    "https://localhost:5009/api/PeopleAjax/kaseraKortet";    // kasera kortet
 
     /// <summary>
     /// inklistring av tabellhuvud med början på tabellen
@@ -63,9 +62,9 @@ $(document).ready(function() {
     /// kan sedan aktiveras via knapptryck i vyn (Uppdatera listan)
     /// </summary>
     function uppdateraVy() {
-	$("#enumreringajax").empty();
+	$("#enumreringajax").empty();  // töm ur listan helt och bygg upp den på nytt
 	$.ajax({
-	    url: url_listan,
+	    url: url_samtliga_kort,
 	    type: 'GET',
 	    datatype: 'json',
 	    success: function(res) {
@@ -77,12 +76,31 @@ $(document).ready(function() {
 
     /// <summary>
     /// sortera listan enligt en term
+    /// se till att markeringarna i tabellhuvudet är korrekta
+    ///
+    /// koden börjar alltid med sortera i sjunkande ordning
+    /// därefter med vidare tryck i tabellhuvudet i stigande ordning för att vid nästa
+    /// tryck nolla sorteringen
+    ///
+    /// sorteraTabellStigande/sorteraTabellSjunkande sorterar listan  om den får id för tabell och indexet för den
+    /// kolumn som ska användas för sorteringen
     /// </summary>
     $('#sorteraefternamn').click( function( event) {
 	event.preventDefault();
 
-	$('#sorteraefternamn').addClass( "sorting_asc");
-	$('#sorteraefterbostadsort').removeClass( "sorting_asc");
+	$('#sorteraefterbostadsort.sorting_asc').removeClass( "sorting_asc");
+	$('#sorteraefterbostadsort.sorting_desc').removeClass( "sorting_desc");
+
+	if ( !$('#sorteraefternamn').hasClass( "sorting_asc") &&
+	     !$('#sorteraefternamn').hasClass( "sorting_desc")) {
+	    $('#sorteraefternamn').addClass( "sorting_desc");
+	} else {
+	    $('#sorteraefternamn.sorting_asc').removeClass( "sorting_asc");
+	    if ( $('#sorteraefternamn').hasClass( "sorting_desc")) {
+		$('#sorteraefternamn').removeClass( "sorting_desc");
+		$('#sorteraefternamn').addClass( "sorting_asc");
+	    }
+	}
 
 	sorteraTabellStigande( 'enumreringajax', 0);
     });
@@ -93,8 +111,20 @@ $(document).ready(function() {
     $('#sorteraefterbostadsort').click( function(event) {
 	event.preventDefault();
 
-	$('#sorteraefternamn').removeClass( "sorting_asc");
-	$('#sorteraefterbostadsort').addClass( "sorting_asc");
+	$('#sorteraefternamn.sorting_asc').removeClass( "sorting_asc");
+	$('#sorteraefternamn.sorting_desc').removeClass( "sorting_desc");
+
+	if (! $('#sorteraefterbostadsort').hasClass( "sorting_asc") &&
+	    ! $('#sorteraefterbostadsort').hasClass( "sorting_desc")) {
+	    $('#sorteraefterbostadsort').addClass( "sorting_desc");
+	} else {
+	    $('#sorteraefterbostadsort.sorting_asc').removeClass( "sorting_asc");
+
+	    if ( $('#sorteraefterbostadsort').hasClass( "sorting_desc")) {
+		$('#sorteraefterbostadsort').removeClass( "sorting_desc");
+		$('#sorteraefterbostadsort').addClass( "sorting_asc");
+	    }
+	}
 
 	sorteraTabellStigande( 'enumreringajax', 1);
     });
@@ -112,6 +142,15 @@ $(document).ready(function() {
     /// </summary>
     $('#plockaframkortet').click(function( event) {
 	event.preventDefault();
+	$.ajax({
+	    url: url_specifikt_kort,
+	    type: 'GET',
+	    datatype: 'json',
+	    success: function(res) {
+		let utdraget = Object( res );
+		/// $.each( utdraget, function( index, item) { enumeration( index, item); });
+	    }
+	});
     });
 
     /// <summary>

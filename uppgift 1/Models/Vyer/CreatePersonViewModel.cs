@@ -1,4 +1,5 @@
-// Time-stamp: <2021-09-20 14:04:52 stefan>
+//
+// Time-stamp: <2021-11-03 15:40:52 stefan>
 //
 
 //
@@ -18,21 +19,29 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Kartotek.Modeller.Vyer {
-    public class CreatePersonViewModell {
-	// private string namn;
-
+    /// <summary>
+    /// to be done
+    /// </summary>
+    public class CreatePersonViewModel {
+	/// <summary>
+	/// Namnet på den person som det nya kortet upptar
+	/// </summary>
 	[BindProperty]
 	[StringLength(60,MinimumLength=8)]
 	[DisplayName("personens namn")]
 	public string Namn { get; set; }
 
-	// private string bostadsort;
+	/// <summary>
+	/// Personens bostadsort
+	/// </summary>
 	[BindProperty]
 	[StringLength(60,MinimumLength=2)]
 	[DisplayName("bostadsort")]
 	public string Bostadsort { get; set; }
 
-	//	private string telefonnummer;
+	/// <summary>
+	/// Personens telefonnummer - kontaktuppgifter
+	/// </summary>
 	[BindProperty]
 	[DisplayName("telefonnummer")]
 	[DataType(DataType.PhoneNumber)]

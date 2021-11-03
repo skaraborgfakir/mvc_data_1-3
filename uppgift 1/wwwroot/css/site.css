@@ -1,4 +1,4 @@
-﻿/* Time-stamp: <2021-10-31 11:45:01 stefan>
+﻿/* Time-stamp: <2021-11-02 17:45:16 stefan>
  * Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
  * for details on configuring this project to bundle and minify static web assets.
  */
@@ -134,5 +134,5 @@ table.dataTable thead .sorting_desc_disabled:before {
     background-image: url("../images/sort_asc.png") !important;
 }
 .sorting.sorting_desc {
-    background-image: url("../images/sort_asc.png") !important;
+    background-image: url("../images/sort_desc.png") !important;
 }

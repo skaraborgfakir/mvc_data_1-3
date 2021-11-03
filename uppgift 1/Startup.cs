@@ -1,5 +1,9 @@
 //
-// Time-stamp: <2021-10-31 12:07:07 stefan>
+// Time-stamp: <2021-11-02 23:54:58 stefan>
+//
+// dokumentationstaggning
+//   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
+//   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/recommended-tags#seealso
 //
 
 using System;
@@ -7,9 +11,12 @@ using System.Text.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Http;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -21,24 +28,30 @@ using Kartotek.Modeller.Interfaces;
 namespace Kartotek
 {
 
-    ///<summary>
+    /// <summary>
     /// används av webbuilder som definition av appen
-    ///<remark>
+    /// </summary>
+    /// <remarks>
     /// kan egentligen heta vad som helst exv REVELJ !
-    ///</remark>
-    ///</summary>
+    /// </remarks>
     public class REVELJ
     {
+	/// <summary>
+	/// https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
+	/// </summary>
 	public REVELJ(IConfiguration configuration)
 	{
 	    Configuration = configuration;
 	}
 
+	/// <summary>
+	/// https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
+	/// </summary>
 	public IConfiguration Configuration { get; }
 
-	//
-	// https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
-	//
+	/// <summary>
+	/// https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
+	/// </summary>
 	public void ConfigureServices(IServiceCollection services)
 	{
 	    services.AddDistributedMemoryCache();
@@ -61,20 +74,22 @@ namespace Kartotek
 	    }
 	    );
 
-	    services.AddControllers().AddJsonOptions( options => {                                          // Convert JSON from Camel Case to Pascal Case
-		options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;    // Use the default property (Pascal) casing.
+	    services.AddControllers().AddJsonOptions( options => {                               // Convert JSON from Camel Case to Pascal Case
+		options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase; // Use the default property (Pascal) casing.
 	    } );
 
 	    // services.AddSingleton
 	    // services.AddTransient
 	    services.AddScoped<IPeopleService, PeopleService>();
-	    services.AddScoped<IPeopleRepo, InMemoryPeopleRepo>();
+	    services.AddScoped<IPeopleRepo, InMemoryPeopleRepo>(); // används av PeopleService
 
 	    services.AddControllersWithViews();
 	    services.AddHttpContextAccessor();
 	}
 
-	// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+	/// <summary>
+	/// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+	/// </summary>
 	public void Configure ( IApplicationBuilder app,
 				IWebHostEnvironment env ) {
 	    //
@@ -99,6 +114,13 @@ namespace Kartotek
 	    // aktivera vidarebefordran av frågor till olika kontrollanter
 	    // MapControllerRoute är beroende
 	    app.UseRouting();
+
+	    if (env.IsDevelopment())
+		app.Use(next => context =>
+		{
+		    Console.WriteLine($"Found: {context.GetEndpoint()?.DisplayName}");
+		    return next(context);
+		});
 
 	    //
 	    // sessions-kakan - det här anropet måste vara placerad innan de moduler (exv
