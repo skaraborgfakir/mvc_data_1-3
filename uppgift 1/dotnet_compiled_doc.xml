@@ -1,0 +1,552 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>registerfunktionalitet</name>
+    </assembly>
+    <members>
+        <member name="T:Kartotek.Controllers.HomeController">
+            <summary>
+            grundklass från mallen för en MVC:applikation
+            </summary>
+        </member>
+        <member name="M:Kartotek.Controllers.HomeController.#ctor(Microsoft.Extensions.Logging.ILogger{Kartotek.Controllers.HomeController})">
+            <summary>
+             kreator för HomeController
+            </summary>
+        </member>
+        <member name="M:Kartotek.Controllers.HomeController.Index">
+            <summary>
+             Hämta ut index.html
+            </summary>
+        </member>
+        <member name="M:Kartotek.Controllers.HomeController.Privacy">
+            <summary>
+            Uppgifter om personuppgiftskyddet
+            </summary>
+        </member>
+        <member name="M:Kartotek.Controllers.HomeController.Error">
+            <summary>
+            Något är fel, en felvy
+            </summary>
+        </member>
+        <member name="T:Kartotek.Controllers.PeopleAjaxController">
+             <summary>
+             ett personkartotek
+            
+             kontrollant för ett MVC-program som förutom vyer, använder AJAX:teknik inklusive att
+             sidan/sidorna delvis byggs upp helt via JavaScript/jQuery
+            
+             Data transporteras som JSON/XML mellan programmet i webläsaren
+             och bakliggande system/program
+            
+             En AJAX:anpassad kontrollklass <c>PeopleAjaxController</c> för medlemskartoteket.
+             </summary>
+             <remark>
+             kontroller-klassen knyter ihop affärs-/process-logik (serviceenhten) med UI.
+             En kontroller implementeras utgående från serviceenhetens termer
+             </remark>
+        </member>
+        <member name="M:Kartotek.Controllers.PeopleAjaxController.#ctor(Microsoft.Extensions.Logging.ILogger{Kartotek.Controllers.PeopleAjaxController},Microsoft.Extensions.Configuration.IConfiguration,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,Kartotek.Modeller.Interfaces.IPeopleService)">
+            <summary>
+            kreator för PeopleAjaxController
+            </summary>
+        </member>
+        <member name="M:Kartotek.Controllers.PeopleAjaxController.uppdateraListanUrDatabasen">
+            <summary>
+            komplett kartotek, utan någon filtrering
+            </summary>
+        </member>
+        <member name="M:Kartotek.Controllers.PeopleAjaxController.uppdateraListanVissaKort">
+            <summary>
+            ett utdrag av vissa kort från kartoteket
+            </summary>
+        </member>
+        <member name="M:Kartotek.Controllers.PeopleAjaxController.tagFramKortet(System.Int32)">
+            <summary>
+            tag fram ett specifikt kort
+            </summary>
+        </member>
+        <member name="M:Kartotek.Controllers.PeopleAjaxController.rensaUrKortet(System.Int32)">
+            <summary>
+            kassera ett specifikt kort
+            </summary>
+        </member>
+        <member name="T:Kartotek.Controllers.PeopleController">
+             <summary>
+             ett personkartotek
+            
+             kontrollant för ett MVC-baserat program.
+            
+             Den kontrollklass som enbart är skriven enligt MVC:konceptet och
+             där sidan/sidorna i huvudsak formas som partial view - komponentbaserade vyer ?
+             </summary>
+             <remark>
+             kontroller-klassen knyter ihop affärs-/process-logik (serviceenhten) med UI.
+             En kontroller implementeras utgående från serviceenhetens termer
+             </remark>
+        </member>
+        <member name="M:Kartotek.Controllers.PeopleController.#ctor(Microsoft.Extensions.Logging.ILogger{Kartotek.Controllers.PeopleController},Microsoft.Extensions.Configuration.IConfiguration,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,Kartotek.Modeller.Interfaces.IPeopleService)">
+            <summary>
+            kreator för PeopleController
+            </summary>
+        </member>
+        <member name="M:Kartotek.Controllers.PeopleController.Index(Kartotek.Modeller.Vyer.HopslagenmodellVymodell)">
+            <summary>
+            bilden med:
+              sökformulär
+              formulär för att addera en person i registret
+              lista av personer enligt sökkriterier
+            </summary>
+        </member>
+        <member name="M:Kartotek.Controllers.PeopleController.Filtrera(Kartotek.Modeller.Vyer.HopslagenmodellVymodell)">
+            <summary>
+            modifiera aktiv sökterm
+            </summary>
+        </member>
+        <member name="M:Kartotek.Controllers.PeopleController.IngenFiltrering(Kartotek.Modeller.Vyer.HopslagenmodellVymodell)">
+            <summary>
+            återställ sökning, måste ange mot serviceenheten förändringen
+            </summary>
+        </member>
+        <member name="M:Kartotek.Controllers.PeopleController.SkapaNyttKort(Kartotek.Modeller.Vyer.HopslagenmodellVymodell)">
+            <summary>
+            skicka en CreatePersonViewModel till serviceenheten
+            </summary>
+        </member>
+        <member name="M:Kartotek.Controllers.PeopleController.ModifieraKort(Kartotek.Modeller.Vyer.HopslagenmodellVymodell)">
+            <summary>
+            modifiering av ett specifikt kort
+            </summary>
+        </member>
+        <member name="M:Kartotek.Controllers.PeopleController.TagBortKort(System.Int32)">
+            <summary>
+            radering av item i listan
+            </summary>
+        </member>
+        <member name="T:Kartotek.Controllers.EnvironmentController">
+             <summary>
+             anrop (GET) med curl eller postman till https://l....:5009/routes
+            
+             varför saknas exv:
+               People/Index
+             Ingen av aktörerna i People syns i listan
+             </summary>
+        </member>
+        <member name="M:Kartotek.Controllers.EnvironmentController.#ctor(Microsoft.AspNetCore.Mvc.Infrastructure.IActionDescriptorCollectionProvider)">
+            <summary>
+            to be done
+            </summary>
+        </member>
+        <member name="M:Kartotek.Controllers.EnvironmentController.GetAllRoutes">
+            <summary>
+            https://l....:5009/routes
+            </summary>
+        </member>
+        <member name="T:Kartotek.Controllers.RouteModel">
+            <summary>
+            to be done
+            </summary>
+        </member>
+        <member name="T:Kartotek.Controllers.ListResult`1">
+            <summary>
+            to be done
+            </summary>
+        </member>
+        <member name="T:Kartotek.Modeller.Data.InMemoryPeopleRepo">
+            <summary>
+            datalager - en abstraktion som lämnar garantier för data:uppgifters oföränderlighet (persistence)
+            användande lager ska ha möjlighet att ställa olika frågor mot modulen.
+            specifikt i det här fallet :
+              vilka personer heter så-och-så ? Ge mig dem!
+              vilka personer bor här-eller-där ? Ge mig dem!
+            uppgifterna lämnas som en referense till en behållare. Behållaren garanteras kunna bli komplett
+            dvs modulen kommer att sätta upp den så uppgifterna kan hämtas ut av användande modulen
+            gradvis.
+            </summary>
+        </member>
+        <member name="F:Kartotek.Modeller.Data.InMemoryPeopleRepo.kartoteket">
+            <summary>
+            testdata för övriga delar. I EF:versionen ersätts den här med en SQL:databas
+            </summary>
+        </member>
+        <member name="M:Kartotek.Modeller.Data.InMemoryPeopleRepo.#ctor">
+            <summary>
+            Kreator - fyller i seed-data
+            </summary>
+        </member>
+        <member name="M:Kartotek.Modeller.Data.InMemoryPeopleRepo.Create(System.String,System.String,System.String)">
+            <summary>
+            Lägg upp ett nytt personkort
+            </summary>
+        </member>
+        <member name="M:Kartotek.Modeller.Data.InMemoryPeopleRepo.Read">
+            <summary>
+            to be done
+            </summary>
+        </member>
+        <member name="M:Kartotek.Modeller.Data.InMemoryPeopleRepo.Read(System.Int32)">
+            <summary>
+            to be done
+            </summary>
+        </member>
+        <member name="M:Kartotek.Modeller.Data.InMemoryPeopleRepo.Update(Kartotek.Modeller.Entiteter.Person)">
+            <summary>
+            to be done
+            </summary>
+        </member>
+        <member name="M:Kartotek.Modeller.Data.InMemoryPeopleRepo.Delete(Kartotek.Modeller.Entiteter.Person)">
+            <summary>
+            to be done
+            </summary>
+        </member>
+        <member name="T:Kartotek.Modeller.Entiteter.Person">
+            <summary>
+            to be done
+            </summary>
+        </member>
+        <member name="M:Kartotek.Modeller.Entiteter.Person.#ctor(System.Int32,System.String,System.String,System.String)">
+            <summary>
+            to be done
+            </summary>
+        </member>
+        <member name="P:Kartotek.Modeller.Entiteter.Person.Id">
+            <summary>
+            to be done
+            </summary>
+        </member>
+        <member name="P:Kartotek.Modeller.Entiteter.Person.Namn">
+            <summary>
+            to be done
+            </summary>
+        </member>
+        <member name="P:Kartotek.Modeller.Entiteter.Person.Bostadsort">
+            <summary>
+            to be done
+            </summary>
+        </member>
+        <member name="P:Kartotek.Modeller.Entiteter.Person.Telefonnummer">
+            <summary>
+            to be done
+            </summary>
+        </member>
+        <member name="T:Kartotek.Modeller.ErrorViewModel">
+            <summary>
+            to be done
+            </summary>
+        </member>
+        <member name="P:Kartotek.Modeller.ErrorViewModel.RequestId">
+            <summary>
+            to be done
+            </summary>
+        </member>
+        <member name="P:Kartotek.Modeller.ErrorViewModel.ShowRequestId">
+            <summary>
+            to be done
+            </summary>
+        </member>
+        <member name="T:Kartotek.Modeller.Interfaces.IPeopleRepo">
+             <summary>
+             ett åtagande för ett det gränssnitt som affärslogikfunktioner har mot
+             datalagernivån
+            
+             Moduler som implementerar IPeopleService ska kunna använda varje modul som
+             följer IPeopleRepo-åtagandet
+             </summary>
+             <remarks>
+             </remarks>
+             <see href="https://skaraborgfakir.github.io/lexicon/3.%20MVC/MVC%20Data,%20Assignment%203%20-%View Models.pdf">
+             Designen måste följa dokumenten MVC Data, View Models</see>
+             <see href="https://skaraborgfakir.github.io/lexicon/3.%20MVC/MVC%20Data,%20Assignment%203%20-%20Partial Views.pdf">
+             och MVC Data, Partial Views</see>
+             <see href="https://skaraborgfakir.github.io/lexicon/3.%20MVC/MVC%20Data,%20Assignment%203%20-%20AJAX.pdf">
+             och MVC Data, AJAX</see>
+        </member>
+        <member name="M:Kartotek.Modeller.Interfaces.IPeopleRepo.Create(System.String,System.String,System.String)">
+            <summary>
+            inläggning av ett nytt kort
+            </summary>
+            <params>
+            Personens namn
+            Hennes bostadsort
+            och telefonnummer.
+            INTE id
+            </params>
+        </member>
+        <member name="M:Kartotek.Modeller.Interfaces.IPeopleRepo.Read">
+            <summary>
+            ett totalutdrag från registret
+            </summary>
+        </member>
+        <member name="M:Kartotek.Modeller.Interfaces.IPeopleRepo.Read(System.Int32)">
+            <summary>
+            utdrag av ett specifikt kort
+            </summary>
+            <params>
+            id - löpnummer för det kort som ska hämtas
+            </params>
+        </member>
+        <member name="M:Kartotek.Modeller.Interfaces.IPeopleRepo.Update(Kartotek.Modeller.Entiteter.Person)">
+            <summary>
+            modifiering
+            </summary>
+            <params>
+            Person person - det kort som ska modifieras
+            </params>
+        </member>
+        <member name="M:Kartotek.Modeller.Interfaces.IPeopleRepo.Delete(Kartotek.Modeller.Entiteter.Person)">
+            <summary>
+            kasering av ett kort
+            </summary>
+            <params>
+            Person person - det kort som ska kaseras
+            </params>
+        </member>
+        <member name="T:Kartotek.Modeller.Interfaces.IPeopleService">
+             <summary>
+             En design och ett åtagande för affärslogikmoduler mot kontrollanterna i ett
+             medlemskartotek
+             </summary>
+             <remarks>
+             Används som ett kontrakt mellan olika utvecklare hur de kommer att konstruera
+             något
+            
+             Moduler som implementerar IPeopleService ska ansvara för
+             affärs-logik/-funktioner
+            
+             En MVC-kontrollant ska exv inte användas för att söka eller få fram exv
+             ordersummor
+             Sådant ska vara i exv OrderService (som ansvarar för åtagandet IOrderService)
+             </remarks>
+             <seealso href="https://skaraborgfakir.github.io/lexicon/3.%20MVC/MVC%20Data,%20Assignment%203%20-%View Models.pdf">Designen måste följa dokumenten MVC Data, View Models</seealso>
+             <seealso href="https://skaraborgfakir.github.io/lexicon/3.%20MVC/MVC%20Data,%20Assignment%203%20-%20Partial Views.pdf">och MVC Data, Partial Views</seealso>
+             <seealso href="https://skaraborgfakir.github.io/lexicon/3.%20MVC/MVC%20Data,%20Assignment%203%20-%20AJAX.pdf">och MVC Data, AJAX</seealso>
+        </member>
+        <member name="M:Kartotek.Modeller.Interfaces.IPeopleService.Add(Kartotek.Modeller.Vyer.CreatePersonViewModel)">
+            <summary>
+            inläggning av ett kort, använder den Create som definieras av IPeopleRepo
+            </summary>
+            <see cref="T:Kartotek.Modeller.Interfaces.IPeopleRepo">Create i IPeopleRepo</see>
+        </member>
+        <member name="M:Kartotek.Modeller.Interfaces.IPeopleService.All">
+            <summary>
+            totalutdrag från registret, som vymodell
+            </summary>
+            <see cref="T:Kartotek.Modeller.Interfaces.IPeopleRepo">Read i IPeopleRepo</see>
+        </member>
+        <member name="M:Kartotek.Modeller.Interfaces.IPeopleService.FindBy(Kartotek.Modeller.Vyer.PeopleViewModel)">
+            <summary>
+            specifik(a) kort, som vymodell. PeopleViewModel har sökvillkoren
+            </summary>
+            <see cref="T:Kartotek.Modeller.Interfaces.IPeopleRepo">Read i IPeopleRepo</see>
+        </member>
+        <member name="M:Kartotek.Modeller.Interfaces.IPeopleService.FindBy(System.Int32)">
+            <summary>
+            ett specifikt kort
+            </summary>
+            <see cref="T:Kartotek.Modeller.Interfaces.IPeopleRepo">Read i IPeopleRepo</see>
+        </member>
+        <member name="M:Kartotek.Modeller.Interfaces.IPeopleService.Edit(System.Int32,Kartotek.Modeller.Entiteter.Person)">
+            <summary>
+            modifiering av ett kort med ett visst nummer
+            </summary>
+            <see cref="T:Kartotek.Modeller.Interfaces.IPeopleRepo">Update i IPeopleRepo</see>
+        </member>
+        <member name="M:Kartotek.Modeller.Interfaces.IPeopleService.Remove(System.Int32)">
+            <summary>
+            borttagning av ett visst kort
+            </summary>
+            <params>int id
+            </params>
+            <see cref="T:Kartotek.Modeller.Interfaces.IPeopleRepo">Delete i IPeopleRepo</see>
+        </member>
+        <member name="T:Kartotek.Modeller.PeopleService">
+            <summary>
+            to be done
+            </summary>
+        </member>
+        <member name="M:Kartotek.Modeller.PeopleService.#ctor(Kartotek.Modeller.Interfaces.IPeopleRepo)">
+            <inheritdoc/>
+            <summary>
+            injektion för att få tillgång till gemensam InMemoryPeopleRepo
+            </summary>
+        </member>
+        <member name="M:Kartotek.Modeller.PeopleService.FindBy(System.Int32)">
+            <summary>
+            plocka fram ett visst kort
+            enbart i form av entiteter, ej vymodell
+            </summary>
+        </member>
+        <member name="M:Kartotek.Modeller.PeopleService.Edit(System.Int32,Kartotek.Modeller.Entiteter.Person)">
+            <summary>
+            modifiering av ett specifikt kort
+            enbart i form av entiteter, ej vymodell
+            </summary>
+        </member>
+        <member name="M:Kartotek.Modeller.PeopleService.Remove(System.Int32)">
+            <summary>
+            kasering av ett specifikt kort
+            enbart i form av entiteter, ej vymodell
+            </summary>
+        </member>
+        <member name="M:Kartotek.Modeller.PeopleService.Add(Kartotek.Modeller.Vyer.CreatePersonViewModel)">
+            <summary>
+            tillägg av ett kort
+            utgår från en vymodell
+            </summary>
+        </member>
+        <member name="M:Kartotek.Modeller.PeopleService.All">
+            <summary>
+            sökning efter poster - utgår från en vymodell som sökterm
+            kriterier : inga, dvs alla kort ska hämtas och levereras
+            </summary>
+        </member>
+        <member name="M:Kartotek.Modeller.PeopleService.FindBy(Kartotek.Modeller.Vyer.PeopleViewModel)">
+            <summary>
+            sökning efter poster - utgår från en vymodell som sökterm
+            kriterier :
+               namn
+             eller
+               bostadsort
+             eller
+               båda ?
+            </summary>
+        </member>
+        <member name="T:Kartotek.Modeller.Vyer.AktionSpecifiktkort">
+            <summary>
+            to be done
+            </summary>
+        </member>
+        <member name="P:Kartotek.Modeller.Vyer.AktionSpecifiktkort.KortetsId">
+            <summary>
+            to be done
+            </summary>
+        </member>
+        <member name="T:Kartotek.Modeller.Vyer.CreatePersonViewModel">
+            <summary>
+            to be done
+            </summary>
+        </member>
+        <member name="P:Kartotek.Modeller.Vyer.CreatePersonViewModel.Namn">
+            <summary>
+            Namnet på den person som det nya kortet upptar
+            </summary>
+        </member>
+        <member name="P:Kartotek.Modeller.Vyer.CreatePersonViewModel.Bostadsort">
+            <summary>
+            Personens bostadsort
+            </summary>
+        </member>
+        <member name="P:Kartotek.Modeller.Vyer.CreatePersonViewModel.Telefonnummer">
+            <summary>
+            Personens telefonnummer - kontaktuppgifter
+            </summary>
+        </member>
+        <member name="T:Kartotek.Modeller.Vyer.HopslagenmodellVymodell">
+             <summary>
+             används i PeopleController:s egen index.html som datakälla - blir model
+            
+             Hopslagning av de klasser som är del av definitionerna i IPeopleService
+             iom att razor-filerna enbart vill hantera en modell, alltså måste klasserna
+             slås ihop till en gemensam modell i kontroller
+            
+             garantera att:
+               att användarna inte försöker skapa flera kort med samma innehåll
+               kontroll av uppgifterna
+                  att följande är satta dvs ej NULL
+                    namn
+                    bostadsort
+                    telefonnummer
+            
+             slås isär i kontroller innan delarna lämnas över till Peopleservice
+             </summary>
+        </member>
+        <member name="P:Kartotek.Modeller.Vyer.HopslagenmodellVymodell.Personlistan">
+            <summary>
+            de personer som ska synas i den vybaserade sidans lista
+            </summary>
+        </member>
+        <member name="P:Kartotek.Modeller.Vyer.HopslagenmodellVymodell.Filtertermer">
+            <summary>
+            söktermer från filterdialogen
+            kan innehålla namn eller bostadsort
+            </summary>
+            <see cref="T:Kartotek.Modeller.PeopleService">PeopleService</see>
+        </member>
+        <member name="P:Kartotek.Modeller.Vyer.HopslagenmodellVymodell.NyttKort">
+            <summary>
+            Skriv ut ett nytt kort - nytt-kort delen i fönstret
+            </summary>
+        </member>
+        <member name="T:Kartotek.Modeller.Vyer.PeopleViewModel">
+            <summary>
+            to be done
+            </summary>
+        </member>
+        <member name="P:Kartotek.Modeller.Vyer.PeopleViewModel.Utdraget">
+            <summary>
+            innehåller listan på de kort som ska synas i vyn
+            </summary>
+        </member>
+        <member name="P:Kartotek.Modeller.Vyer.PeopleViewModel.Namn">
+            <summary>
+            sökkriterier
+            private string namn;
+            </summary>
+        </member>
+        <member name="P:Kartotek.Modeller.Vyer.PeopleViewModel.Bostadsort">
+            <summary>
+            sökkriterier
+            string bostadsort;
+            </summary>
+        </member>
+        <member name="T:Kartotek.Program">
+             <summary>
+             Huvud-rutin/-klass i ett medlemskartotek
+            
+             Programmet körs som en webserver
+             </summary>
+        </member>
+        <member name="M:Kartotek.Program.Main(System.String[])">
+             <summary>
+             Huvud-rutin/-klass i ett medlemskartotek
+            
+             Inte något annat än ett omslag runt CreateHostBuilder och därefter build och run
+             </summary>
+        </member>
+        <member name="M:Kartotek.Program.CreateHostBuilder(System.String[])">
+             <summary>
+             startrutin för .Net core
+            
+             inkluderar logging mot konsoll och får webBuilder att aktivera klassen REVELJ
+             </summary>
+        </member>
+        <member name="T:Kartotek.REVELJ">
+            <summary>
+            används av webbuilder som definition av appen
+            </summary>
+            <remarks>
+            kan egentligen heta vad som helst exv REVELJ !
+            </remarks>
+        </member>
+        <member name="M:Kartotek.REVELJ.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
+            </summary>
+        </member>
+        <member name="P:Kartotek.REVELJ.Configuration">
+            <summary>
+            https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
+            </summary>
+        </member>
+        <member name="M:Kartotek.REVELJ.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
+            </summary>
+        </member>
+        <member name="M:Kartotek.REVELJ.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            </summary>
+        </member>
+    </members>
+</doc>
