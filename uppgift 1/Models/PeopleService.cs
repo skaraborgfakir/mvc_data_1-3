@@ -17,11 +17,13 @@ namespace Kartotek.Modeller {
     public class PeopleService : IPeopleService {
 	private readonly IPeopleRepo kartoteket;
 
-	/// <inheritdoc/>
-	/// <summary>
-	/// injektion för att få tillgång till gemensam InMemoryPeopleRepo
-	/// </summary>
-	public PeopleService( IPeopleRepo kartoteket) {
+	
+    /// <summary>
+    /// kreator av PeopleService
+    /// Ympas med DI med ett kartotek
+    /// </summary>
+    /// <param name="kartoteket"></param>  
+    public PeopleService( IPeopleRepo kartoteket) {
 	    this.kartoteket = kartoteket;
 	}
 

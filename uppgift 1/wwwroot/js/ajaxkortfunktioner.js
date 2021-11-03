@@ -21,9 +21,9 @@ $(document).ready(function () {
 // funktioner för hämtning och visning av kort ur kartoteket
 //
 $(document).ready(function() {
-    const url_samtliga_kort =  "https://localhost:5009/api/PeopleAjax/uppdateralistan"; // json-kodad lista
-    const url_specifikt_kort = "https://localhost:5009/api/PeopleAjax/tagUppKortet";    // uppgifter om ett specifikt kort
-    const url_kasera_kort =    "https://localhost:5009/api/PeopleAjax/kaseraKortet";    // kasera kortet
+    const url_samtliga_kort =  "https://localhost:44345/api/PeopleAjax/uppdateralistan"; // json-kodad lista
+    const url_specifikt_kort = "https://localhost:44345/api/PeopleAjax/tagUppKortet";    // uppgifter om ett specifikt kort
+    const url_kasera_kort =    "https://localhost:44345/api/PeopleAjax/kaseraKortet";    // kasera kortet
 
     /// <summary>
     /// inklistring av tabellhuvud med början på tabellen

@@ -365,10 +365,11 @@
             </summary>
         </member>
         <member name="M:Kartotek.Modeller.PeopleService.#ctor(Kartotek.Modeller.Interfaces.IPeopleRepo)">
-            <inheritdoc/>
             <summary>
-            injektion för att få tillgång till gemensam InMemoryPeopleRepo
+            kreator av PeopleService
+            Ympas med DI med ett kartotek
             </summary>
+            <param name="kartoteket"></param>  
         </member>
         <member name="M:Kartotek.Modeller.PeopleService.FindBy(System.Int32)">
             <summary>
