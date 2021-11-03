@@ -1,4 +1,4 @@
-// Time-stamp: <2021-11-03 15:45:46 stefan>
+// Time-stamp: <2021-11-03 18:23:00 stefan>
 //
 
 using System;
@@ -17,12 +17,13 @@ namespace Kartotek.Modeller {
     public class PeopleService : IPeopleService {
 	private readonly IPeopleRepo kartoteket;
 
-	
+
     /// <summary>
     /// kreator av PeopleService
     /// Ympas med DI med ett kartotek
+	/// injektion för att få tillgång till gemensam InMemoryPeopleRepo
     /// </summary>
-    /// <param name="kartoteket"></param>  
+    /// <param name="kartoteket"></param>
     public PeopleService( IPeopleRepo kartoteket) {
 	    this.kartoteket = kartoteket;
 	}
