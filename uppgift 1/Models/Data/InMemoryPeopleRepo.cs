@@ -1,10 +1,12 @@
 //
-// Time-stamp: <2021-11-03 12:16:18 stefan>
+// Time-stamp: <2021-11-03 22:11:37 stefan>
 //
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
+using Microsoft.Extensions.Logging;
 
 using Kartotek.Modeller.Entiteter;
 using Kartotek.Modeller.Interfaces;
@@ -26,11 +28,17 @@ namespace Kartotek.Modeller.Data {
 	/// </summary>
 	private static List<Person> kartoteket = new List<Person> ();
 	private static int idCounter; // nästa tillgänglig id. Används och exponeras som nyckel in i personregistret
+	private readonly ILogger<IPeopleRepo> loggdest;
 
 	/// <summary>
 	/// Kreator - fyller i seed-data
 	/// </summary>
-	public InMemoryPeopleRepo () {
+	public InMemoryPeopleRepo ( ILogger<IPeopleRepo> loggdest) {
+	    this.loggdest = loggdest;
+
+	    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+					 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
+
 	    this.Create( namn: "Ulf Smedbo", bostadsort: "Göteborg", telefonnummer: "031" );
 	    this.Create( namn: "Bengt Ulfsson", bostadsort: "Växjö", telefonnummer: "044" );
 	    this.Create( namn: "Micke Carlsson", bostadsort: "Solberga", telefonnummer: "0321" );

@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-02 23:54:58 stefan>
+// Time-stamp: <2021-11-03 22:16:22 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -54,6 +54,18 @@ namespace Kartotek
 	/// </summary>
 	public void ConfigureServices(IServiceCollection services)
 	{
+	    // behövs för UseCors i Configure
+	    services.AddCors(opt => {
+		opt.AddPolicy("CorsPolicy", policy => { policy
+			    .AllowAnyHeader()
+			    .AllowAnyMethod()
+			    .WithExposedHeaders("WWW-Authenticate")
+			    .WithOrigins("https://localhost:44345")
+			    .WithOrigins("https://localhost:5009")
+			    .AllowCredentials();
+		});
+	    });
+
 	    services.AddDistributedMemoryCache();
 
 	    //
@@ -81,7 +93,7 @@ namespace Kartotek
 	    // services.AddSingleton
 	    // services.AddTransient
 	    services.AddScoped<IPeopleService, PeopleService>();
-	    services.AddScoped<IPeopleRepo, InMemoryPeopleRepo>(); // används av PeopleService
+	    services.AddSingleton<IPeopleRepo, InMemoryPeopleRepo>(); // används av PeopleService
 
 	    services.AddControllersWithViews();
 	    services.AddHttpContextAccessor();

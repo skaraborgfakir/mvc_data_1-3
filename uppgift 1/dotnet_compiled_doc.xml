@@ -51,22 +51,23 @@
             kreator för PeopleAjaxController
             </summary>
         </member>
-        <member name="M:Kartotek.Controllers.PeopleAjaxController.uppdateraListanUrDatabasen">
+        <member name="M:Kartotek.Controllers.PeopleAjaxController.uppdateralistanurdatabasen">
             <summary>
             komplett kartotek, utan någon filtrering
+            API mot JS !!
             </summary>
         </member>
-        <member name="M:Kartotek.Controllers.PeopleAjaxController.uppdateraListanVissaKort">
+        <member name="M:Kartotek.Controllers.PeopleAjaxController.uppdateralistanvissakort">
             <summary>
             ett utdrag av vissa kort från kartoteket
             </summary>
         </member>
-        <member name="M:Kartotek.Controllers.PeopleAjaxController.tagFramKortet(System.Int32)">
+        <member name="M:Kartotek.Controllers.PeopleAjaxController.tagframkortet(System.Int32)">
             <summary>
             tag fram ett specifikt kort
             </summary>
         </member>
-        <member name="M:Kartotek.Controllers.PeopleAjaxController.rensaUrKortet(System.Int32)">
+        <member name="M:Kartotek.Controllers.PeopleAjaxController.kaserakortet(System.Int32)">
             <summary>
             kassera ett specifikt kort
             </summary>
@@ -95,7 +96,12 @@
             bilden med:
               sökformulär
               formulär för att addera en person i registret
-              lista av personer enligt sökkriterier
+              enbart en platsmarkör för (i AJAX:versionen)
+                  en sökväljare
+                  detaljer för ett visst kort
+                  listan av personer (vymodell.utdraget)
+              Index körs direkt vid första visning- alltså kommer
+              valdterm.{this.sessionsuffix}
             </summary>
         </member>
         <member name="M:Kartotek.Controllers.PeopleController.Filtrera(Kartotek.Modeller.Vyer.HopslagenmodellVymodell)">
@@ -169,7 +175,7 @@
             testdata för övriga delar. I EF:versionen ersätts den här med en SQL:databas
             </summary>
         </member>
-        <member name="M:Kartotek.Modeller.Data.InMemoryPeopleRepo.#ctor">
+        <member name="M:Kartotek.Modeller.Data.InMemoryPeopleRepo.#ctor(Microsoft.Extensions.Logging.ILogger{Kartotek.Modeller.Interfaces.IPeopleRepo})">
             <summary>
             Kreator - fyller i seed-data
             </summary>
@@ -368,8 +374,9 @@
             <summary>
             kreator av PeopleService
             Ympas med DI med ett kartotek
+            injektion för att få tillgång till gemensam InMemoryPeopleRepo
             </summary>
-            <param name="kartoteket"></param>  
+            <param name="kartoteket"></param>
         </member>
         <member name="M:Kartotek.Modeller.PeopleService.FindBy(System.Int32)">
             <summary>

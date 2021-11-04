@@ -1,4 +1,4 @@
-// Time-stamp: <2021-11-03 18:23:00 stefan>
+// Time-stamp: <2021-11-04 10:11:25 stefan>
 //
 
 using System;
@@ -17,40 +17,15 @@ namespace Kartotek.Modeller {
     public class PeopleService : IPeopleService {
 	private readonly IPeopleRepo kartoteket;
 
-
-    /// <summary>
-    /// kreator av PeopleService
-    /// Ympas med DI med ett kartotek
+	/// <summary>
+	/// kreator av PeopleService
+	/// Ympas med DI med ett kartotek
 	/// injektion för att få tillgång till gemensam InMemoryPeopleRepo
-    /// </summary>
-    /// <param name="kartoteket"></param>
-    public PeopleService( IPeopleRepo kartoteket) {
+	/// </summary>
+	/// <param name="kartoteket"></param>
+	public PeopleService( IPeopleRepo kartoteket) {
 	    this.kartoteket = kartoteket;
 	}
-
-	/// <summary>
-	/// gör ett komplett utdrag ur registret
-	/// enbart i form av entiteter, ej vymodell
-	/// </summary>
-	/// <returns>
-	/// lista av personer
-	/// </returns>
-	/// <remarks>
-	/// </remarks>
-	// public List<Person> Utdraget() {
-	//     return kartoteket.Read();
-	// }
-
-	/// <summary>
-	/// gör ett selekterat utdrag ur registret
-	/// enbart i form av entiteter, ej vymodell
-	/// </summary>
-	/// <returns>
-	/// lista av personer
-	/// </returns>
-	// public List<Person> VissaKort() {
-	//     return kartoteket.Read();
-	// }
 
 	/// <summary>
 	/// plocka fram ett visst kort
@@ -104,38 +79,6 @@ namespace Kartotek.Modeller {
 
 	/// <summary>
 	/// sökning efter poster - utgår från en vymodell som sökterm
-	/// kriterier : namn
-	/// </summary>
-	// private PeopleViewModel FindByNamn ( String namn,
-	//				      List<Person> poster,
-	//				      PeopleViewModel vyn ) {
-	//     foreach (Person item in poster) {
-	//	if (namn.Equals( item.Namn, StringComparison.OrdinalIgnoreCase )) {
-	//	    vyn.Utdraget.Add( item );
-	//	}
-	//     }
-
-	//     return vyn;
-	// }
-
-	/// <summary>
-	/// sökning efter poster - utgår från en vymodell som sökterm
-	/// kriterier : bostadsort
-	/// </summary>
-	// private PeopleViewModel FindByBostadsort ( String bostadsort,
-	//					    List<Person> poster,
-	//					    PeopleViewModel vyn ) {
-	//     foreach (Person item in poster) {
-	//	if (bostadsort.Equals( item.Bostadsort, StringComparison.OrdinalIgnoreCase )) {
-	//	    vyn.Utdraget.Add( item );
-	//	}
-	//     }
-
-	//     return vyn;
-	// }
-
-	/// <summary>
-	/// sökning efter poster - utgår från en vymodell som sökterm
 	/// kriterier :
 	///    namn
 	///  eller
@@ -148,8 +91,9 @@ namespace Kartotek.Modeller {
 	    /// IPeopleRepo definierar inte någon operator som kan söka på något annat än int eller
 	    /// så den här funktionen behöver läsa in och iterera igenom hela listan (relationen)
 	    ///</summary>
-	    List<Person> posterna = kartoteket.Read();
 	    PeopleViewModel vyn = new PeopleViewModel();
+
+	    List<Person> posterna = kartoteket.Read();
 
 	    //
 	    // sökning på namn eller bostadsort, eller båda ?
@@ -162,10 +106,9 @@ namespace Kartotek.Modeller {
 	    else if ( !String.IsNullOrEmpty( search.Namn ))
 		vyn.Utdraget = posterna.Where( posterna => posterna.Bostadsort == search.Bostadsort).ToList();
 	    else
-		throw new NotImplementedException( "båda söktermerna var tomma eller null" );
+		vyn.Utdraget = posterna;
 
 	    return vyn;
 	}
-
     }
 }

@@ -1,4 +1,4 @@
-<!-- Time-stamp: <2021-11-03 15:49:22 stefan> -*-web-*- -->
+<!-- Time-stamp: <2021-11-04 14:58:36 stefan> -*-web-*- -->
 
 @using System
 @using System.Collections.Generic
@@ -15,13 +15,13 @@
 <div id="personindex_div" class="table-responsive container">
     <!-- tabell med existerande kort -->
     <div class="row">
-	<div class="col-md-2 text-start" onclick="sorteraTabell( 'enumreringpartialview', 0)">Namn</div>
-	<div class="col-md-2 text-start" onclick="sorteraTabell( 'enumreringpartialview', 1)">Bostadsort</div>
-	<div class="col-md-1 text-start">Telefon</div>
+	<div class="col-md-2 text-start sorting" id="sorteraefternamn">Namn</div>
+	<div class="col-md-2 text-start sorting" id="sorteraefterbostadsort">Bostadsort</div>
+	<div class="col-md-2 text-start">Telefon</div>
 	<div class="col-md-1 text-start">Id</div>
 	<div class="col-md-2">Aktioner</div>
     </div>
-    <div id="enumreringpartialview" class="container">
+    <div id="enumreringajax">
 	@foreach (Person item in Model.Utdraget)
 	{
 	<partial name="aktiva_div" model="item" />

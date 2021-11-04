@@ -1,5 +1,5 @@
 //
-// - Time-stamp: <2021-11-03 12:06:49 stefan>
+// - Time-stamp: <2021-11-04 16:20:50 stefan>
 //
 
 //
@@ -21,22 +21,22 @@ $(document).ready(function () {
 // funktioner för hämtning och visning av kort ur kartoteket
 //
 $(document).ready(function() {
-    const url_samtliga_kort =  "https://localhost:44345/api/PeopleAjax/uppdateralistan"; // json-kodad lista
-    const url_specifikt_kort = "https://localhost:44345/api/PeopleAjax/tagUppKortet";    // uppgifter om ett specifikt kort
-    const url_kasera_kort =    "https://localhost:44345/api/PeopleAjax/kaseraKortet";    // kasera kortet
+    const url_samtliga_kort =  "https://localhost:5009/api/PeopleAjax/uppdateralistan"; // json-kodad lista
+    const url_specifikt_kort = "https://localhost:5009/api/PeopleAjax/tagUppKortet";    // uppgifter om ett specifikt kort
+    const url_kasera_kort =    "https://localhost:5009/api/PeopleAjax/kaseraKortet";    // kasera kortet
 
     /// <summary>
     /// inklistring av tabellhuvud med början på tabellen
     /// </summary>
-    $("#tabell_kartotek_ajax").append( "<div class=\"row\"> " +
-				       "<div class=\"col-md-2 text-start sorting\" id=\"sorteraefternamn\">Namn</div>" +
-				       "<div class=\"col-md-2 text-start sorting\" id=\"sorteraefterbostadsort\">Bostadsort</div>"+
-				       "<div class=\"col-md-2 text-start\">Telefon</div>"+
-				       "<div class=\"col-md-1 text-start\">Id</div>"+
-				       "<div class=\"col-md-2\">Aktioner</div>" +
-				       "</div>" +
-				       "<div id=\"enumreringajax\">" +
-				       "</div>");
+    // $("#tabell_kartotek_ajax").append( "<div class=\"row\"> " +
+    //				       "<div class=\"col-md-2 text-start sorting\" id=\"sorteraefternamn\">Namn</div>" +
+    //				       "<div class=\"col-md-2 text-start sorting\" id=\"sorteraefterbostadsort\">Bostadsort</div>"+
+    //				       "<div class=\"col-md-2 text-start\">Telefon</div>"+
+    //				       "<div class=\"col-md-1 text-start\">Id</div>"+
+    //				       "<div class=\"col-md-2\">Aktioner</div>" +
+    //				       "</div>" +
+    //				       "<div id=\"enumreringajax\">" +
+    //				       "</div>");
 
     /// få in en aktuell vy direkt
     uppdateraVy();
@@ -44,34 +44,36 @@ $(document).ready(function() {
     /// <summary>
     /// insättning av uppgifter om en viss person i uppräkningen
     /// </summary>
-    function enumeration( index, item) {
-	$("#enumreringajax").append( "<div class=\"row headline\" style=\"display:flex; flex-wrap: wrap;\" >" +
-				     "<div class=\"col-md-2 text-start\">" + item.namn + "</div>" +
-				     "<div class=\"col-md-2 text-start\">" + item.bostadsort + "</div>" +
-				     "<div class=\"col-md-2 text-start\">" + item.telefonnummer + "</div>" +
-				     "<div class=\"col-md-1 text-start\">" + item.id + "</div>" +
-				     "<div class=\"col-md-2\"> " +
-				     "<button type=\"button\" class=\"btn btn-danger\"  onClick=\"rensaUrKortet("   + item.id + ")\" >radering</button>" +
-				     "<button type=\"button\" class=\"btn btn-primary\" onClick=\"modifieraKortet(" + item.id + ")\" >modifiera</button>" +
-				     "</div>" +
-				     "</div>");
-    }
+    // function enumeration( index, item) {
+    //	$("#enumreringajax").append( "<div class=\"row headline\" style=\"display:flex; flex-wrap: wrap;\" >" +
+    //				     "<div class=\"col-md-2 text-start\">" + item.namn + "</div>" +
+    //				     "<div class=\"col-md-2 text-start\">" + item.bostadsort + "</div>" +
+    //				     "<div class=\"col-md-2 text-start\">" + item.telefonnummer + "</div>" +
+    //				     "<div class=\"col-md-1 text-start\">" + item.id + "</div>" +
+    //				     "<div class=\"col-md-2\"> " +
+    //				     "<button type=\"button\" class=\"btn btn-danger\"  onClick=\"rensaUrKortet("   + item.id + ")\" >radering</button>" +
+    //				     "<button type=\"button\" class=\"btn btn-primary\" onClick=\"modifieraspecifiktkort (" + item.id + ")\" >modifiera</button>" +
+    //				     "</div>" +
+    //				     "</div>");
+    // }
 
     /// <summary>
     /// aktiveras en gång efter inläsning av sidan för att få den första bilden
     /// kan sedan aktiveras via knapptryck i vyn (Uppdatera listan)
     /// </summary>
     function uppdateraVy() {
-	$("#enumreringajax").empty();  // töm ur listan helt och bygg upp den på nytt
-	$.ajax({
-	    url: url_samtliga_kort,
-	    type: 'GET',
-	    datatype: 'json',
-	    success: function(res) {
-		let utdraget = Object( res );
-		$.each( utdraget, function( index, item) { enumeration( index, item); });
-	    }
-	});
+	//$("#enumreringajax").empty();  // töm ur listan helt och bygg upp den på nytt
+
+	$("#tabell_kartotek_ajax").load( url_samtliga_kort);
+
+	// $.ajax({
+	//     url: url_samtliga_kort,
+	//     type: 'GET',
+	//     success: function(res) {
+	//	let utdraget = Object( res );
+	//	$("tabell_kartotek_ajax").append(utdraget);
+	//     }
+	// });
     }
 
     /// <summary>
@@ -130,11 +132,19 @@ $(document).ready(function() {
     });
 
     /// <summary>
-    /// aktiveras via knapptryck i vyn (Uppdatera listan)
+    /// aktiveras via knapptryck av någon av 'Uppdatera listan', 'Visa kort' eller 'Raderar valt kort'
     /// </summary>
     $('#uppdateralistan').click(function( event) {
 	event.preventDefault();
 	uppdateraVy();
+    });
+
+    /// <summary>
+    /// aktiveras via knapptryck i vyn (kasera kortet)
+    /// </summary>
+    $('#kaserakortet').click(function( event) {
+	event.preventDefault();
+	// hämta valtkortsid från skrollern och skicka vidare till kaseraspecifiktkort
     });
 
     /// <summary>
@@ -154,9 +164,35 @@ $(document).ready(function() {
     });
 
     /// <summary>
-    /// aktiveras via knapptryck i vyn (kasera kortet)
+    /// aktionerna i själva kortuppräkningen
+    ///
+    /// aktiveras via knapptryck i listvyn (radering bland aktionerna)
     /// </summary>
-    $('#kaserakortet').click(function( event) {
-	event.preventDefault();
-    });
+    function kaseraspecifiktkort( Id) {
+	$.ajax({
+	    url: url_kasera_kort,
+	    type: 'POST',
+	    success: function(res) {
+		let utdraget = Object( res );
+	    }
+	});
+
+    }
+
+    /// <summary>
+    /// aktionerna i själva kortuppräkningen
+    ///
+    /// aktiveras via knapptryck i listvyn (radering bland aktionerna)
+    /// </summary>
+    function modifieraspecifiktkort( Id) {
+	// $.ajax({
+	//     url: url_kasera_kort,
+	//     type: 'GET',
+	//     datatype: 'json',
+	//     success: function(res) {
+	//	let utdraget = Object( res );
+	//	/// $.each( utdraget, function( index, item) { enumeration( index, item); });
+	//     }
+	// });
+    }
 });
