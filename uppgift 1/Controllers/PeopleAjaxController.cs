@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-04 16:17:43 stefan>
+// Time-stamp: <2021-11-05 14:11:17 stefan>
 //
 
 using System;
@@ -140,7 +140,8 @@ namespace Kartotek.Controllers {
 	[Produces( "application/json" )]
 	public ActionResult tagframkortet ( int id ) {
 	    this.loggdest.LogInformation( (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
-					  (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
+					  (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
+					  "\n tag fram kortet med id : " + id.ToString());
 
 	    return Ok( this.serviceenheten.FindBy( id));
 	}

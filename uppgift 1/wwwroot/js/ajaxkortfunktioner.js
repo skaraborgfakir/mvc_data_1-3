@@ -1,5 +1,5 @@
 //
-// - Time-stamp: <2021-11-05 12:26:48 stefan>
+// - Time-stamp: <2021-11-05 14:18:30 stefan>
 //
 
 
@@ -50,13 +50,18 @@ $(document).ready(function() {
     $("#uppdateralistan").click(function( event) {
 	event.preventDefault();
 	uppdateraVy();
+
+	return false;
     });
 
     /// <summary>
     /// aktiveras via knapptryck i vyn (visa kortet) (ajaxbaserad_kortselektor.cshtml)
     /// </summary>
-    $('#plockaframkortet').click(function( event) {
-	event.preventDefault();
+    $('#plockaframkortet').click(function( ) {
+	// event.preventDefault();
+	$("#tabell_kartotek_ajax").load(url_specifikt_kort, { id: document.getElementById("uppdateralistan") }, function() {
+	});
+
 	// $.ajax({
 	//     url: url_specifikt_kort,
 	//     type: 'GET',
