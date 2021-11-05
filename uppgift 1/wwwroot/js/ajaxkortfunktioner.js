@@ -1,24 +1,9 @@
 //
-// - Time-stamp: <2021-11-05 11:38:37 stefan>
+// - Time-stamp: <2021-11-05 12:26:48 stefan>
 //
 
-//
-// validering för Shared/ajaxbaserad_kortselektor.cshtml
-//
 
 'use strict';
-
-// TODO verifiera att validering av nytt kort fungerar
-
-// TODO verifiera att validering av kortväljaren (scroll) i ajaxbaserad_kortselektor.cshtml
-$(document).ready(function () {
-    //     $('#specifiktKort').validate( {
-    //	debug: false,
-    //	onkeyup: true,
-    //	rules: {
-    //	}
-    // });
-});
 
 //
 // funktioner för hämtning och visning av kort ur kartoteket
@@ -176,29 +161,63 @@ function sorteraefterbostadsort () {
 ///
 /// aktiveras via knapptryck i listvyn (radering bland aktionerna)
 /// </summary>
-function kaseraspecifiktkort( Id) {
-//	$.ajax({
-//	    url: url_kasera_kort,
-//	    type: 'POST',
-//	    success: function(res) {
-//		let utdraget = Object( res );
-//	    }
-//	});
-}
+// function kaseraspecifiktkort( Id) {
+//     //
+//     // TODO: utifrån scrollern, radering av rätt kort
+//     //
+
+//     //	$.ajax({
+//     //	    url: url_kasera_kort,
+//     //	    type: 'POST',
+//     //	    success: function(res) {
+//     //		let utdraget = Object( res );
+//     //	    }
+//     //	});
+// }
 
 /// <summary>
 /// aktion i själva kortuppräkningen
 ///
 /// aktiveras via knapptryck i listvyn (modifiering)
 /// </summary>
-function modifieraspecifiktkort( Id) {
-    // $.ajax({
-    //     url: url_kasera_kort,
-    //     type: 'GET',
-    //     datatype: 'json',
-    //     success: function(res) {
-    //	let utdraget = Object( res );
-    //	/// $.each( utdraget, function( index, item) { enumeration( index, item); });
-    //     }
-    // });
-}
+// function modifieraspecifiktkort( Id) {
+//     //
+//     // TODO: utifrån scrollern, modifiering av rätt kort
+//     //
+//     // $.ajax({
+//     //     url: url_kasera_kort,
+//     //     type: 'GET',
+//     //     datatype: 'json',
+//     //     success: function(res) {
+//     //	let utdraget = Object( res );
+//     //	/// $.each( utdraget, function( index, item) { enumeration( index, item); });
+//     //     }
+//     // });
+// }
+
+/// <summary>
+/// Vilket ID är lägst ?
+///
+/// används för validering
+/// </summary>
+// function lägstId() {
+//     // iterera igenom personlistan för att hitta högst kort:ID
+// }
+
+/// <summary>
+/// Vilket ID är högst ?
+///
+/// används för validering
+/// </summary>
+// function högstId() {
+//     // iterera igenom personlistan för att hitta högst kort:ID
+// }
+
+/// <summary>
+/// Finns det något kort som har ett visst ID ?
+///
+/// används för validering
+/// </summary>
+// function finnsKortId( int it) {
+//     // iterera igenom personlistan för se om något kort har ett visst ID
+// }
