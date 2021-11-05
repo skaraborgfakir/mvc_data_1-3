@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-03 22:16:22 stefan>
+// Time-stamp: <2021-11-04 16:46:21 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -55,16 +55,18 @@ namespace Kartotek
 	public void ConfigureServices(IServiceCollection services)
 	{
 	    // behövs för UseCors i Configure
-	    services.AddCors(opt => {
-		opt.AddPolicy("CorsPolicy", policy => { policy
-			    .AllowAnyHeader()
-			    .AllowAnyMethod()
-			    .WithExposedHeaders("WWW-Authenticate")
-			    .WithOrigins("https://localhost:44345")
-			    .WithOrigins("https://localhost:5009")
-			    .AllowCredentials();
-		});
-	    });
+	    // services.AddCors(opt => {
+	    //	opt.AddPolicy("CorsPolicy", policy => { policy
+	    //		    .AllowAnyHeader()
+	    //		    .AllowAnyMethod()
+	    //		    .WithExposedHeaders("WWW-Authenticate")
+	    //		    .WithOrigins("https://localhost:44345")
+	    //		    .WithOrigins("https://localhost:5009")
+	    //		    .WithOrigins("http://localhost:5009")
+	    //		    .WithOrigins("https://localhost:5009/lib/jquery/jquery.js")
+	    //		    .AllowCredentials();
+	    //	});
+	    // });
 
 	    services.AddDistributedMemoryCache();
 
@@ -118,7 +120,7 @@ namespace Kartotek
 		// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 		app.UseHsts();
 	    }
-	    app.UseHttpsRedirection();
+	    // app.UseHttpsRedirection();
 	    app.UseStatusCodePages();  // mer förklarande beskrivning av fel (http status 400-599) som saknar en beskrivning
 	    app.UseStaticFiles();              // get av statisk filer exv script/css etc
 
@@ -126,6 +128,9 @@ namespace Kartotek
 	    // aktivera vidarebefordran av frågor till olika kontrollanter
 	    // MapControllerRoute är beroende
 	    app.UseRouting();
+
+	    // aktivera Cors-hantering
+	    // app.UseCors();
 
 	    if (env.IsDevelopment())
 		app.Use(next => context =>
