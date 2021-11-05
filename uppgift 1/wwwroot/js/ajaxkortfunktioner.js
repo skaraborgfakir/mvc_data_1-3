@@ -1,5 +1,5 @@
 //
-// - Time-stamp: <2021-11-04 16:20:50 stefan>
+// - Time-stamp: <2021-11-05 11:38:37 stefan>
 //
 
 //
@@ -8,13 +8,16 @@
 
 'use strict';
 
+// TODO verifiera att validering av nytt kort fungerar
+
+// TODO verifiera att validering av kortväljaren (scroll) i ajaxbaserad_kortselektor.cshtml
 $(document).ready(function () {
-    $('#specifiktKort').validate( {
-	debug: false,
-	onkeyup: true,
-	rules: {
-	}
-    });
+    //     $('#specifiktKort').validate( {
+    //	debug: false,
+    //	onkeyup: true,
+    //	rules: {
+    //	}
+    // });
 });
 
 //
@@ -26,45 +29,22 @@ $(document).ready(function() {
     const url_kasera_kort =    "https://localhost:5009/api/PeopleAjax/kaseraKortet";    // kasera kortet
 
     /// <summary>
-    /// inklistring av tabellhuvud med början på tabellen
-    /// </summary>
-    // $("#tabell_kartotek_ajax").append( "<div class=\"row\"> " +
-    //				       "<div class=\"col-md-2 text-start sorting\" id=\"sorteraefternamn\">Namn</div>" +
-    //				       "<div class=\"col-md-2 text-start sorting\" id=\"sorteraefterbostadsort\">Bostadsort</div>"+
-    //				       "<div class=\"col-md-2 text-start\">Telefon</div>"+
-    //				       "<div class=\"col-md-1 text-start\">Id</div>"+
-    //				       "<div class=\"col-md-2\">Aktioner</div>" +
-    //				       "</div>" +
-    //				       "<div id=\"enumreringajax\">" +
-    //				       "</div>");
-
-    /// få in en aktuell vy direkt
-    uppdateraVy();
-
-    /// <summary>
-    /// insättning av uppgifter om en viss person i uppräkningen
-    /// </summary>
-    // function enumeration( index, item) {
-    //	$("#enumreringajax").append( "<div class=\"row headline\" style=\"display:flex; flex-wrap: wrap;\" >" +
-    //				     "<div class=\"col-md-2 text-start\">" + item.namn + "</div>" +
-    //				     "<div class=\"col-md-2 text-start\">" + item.bostadsort + "</div>" +
-    //				     "<div class=\"col-md-2 text-start\">" + item.telefonnummer + "</div>" +
-    //				     "<div class=\"col-md-1 text-start\">" + item.id + "</div>" +
-    //				     "<div class=\"col-md-2\"> " +
-    //				     "<button type=\"button\" class=\"btn btn-danger\"  onClick=\"rensaUrKortet("   + item.id + ")\" >radering</button>" +
-    //				     "<button type=\"button\" class=\"btn btn-primary\" onClick=\"modifieraspecifiktkort (" + item.id + ")\" >modifiera</button>" +
-    //				     "</div>" +
-    //				     "</div>");
-    // }
-
-    /// <summary>
     /// aktiveras en gång efter inläsning av sidan för att få den första bilden
     /// kan sedan aktiveras via knapptryck i vyn (Uppdatera listan)
     /// </summary>
     function uppdateraVy() {
 	//$("#enumreringajax").empty();  // töm ur listan helt och bygg upp den på nytt
 
-	$("#tabell_kartotek_ajax").load( url_samtliga_kort);
+	$("#tabell_kartotek_ajax").load( url_samtliga_kort, function() {
+	    //
+	    // iom att vyn laddas efter att document.ready är klar så kan
+	    // uppsättning av händelsehanteringen för vyerna tas upp här
+	    //
+
+	    //
+	    // TODO: se till att vyn är sortera att den som var innan load
+	    //
+	});
 
 	// $.ajax({
 	//     url: url_samtliga_kort,
@@ -76,123 +56,149 @@ $(document).ready(function() {
 	// });
     }
 
-    /// <summary>
-    /// sortera listan enligt en term
-    /// se till att markeringarna i tabellhuvudet är korrekta
-    ///
-    /// koden börjar alltid med sortera i sjunkande ordning
-    /// därefter med vidare tryck i tabellhuvudet i stigande ordning för att vid nästa
-    /// tryck nolla sorteringen
-    ///
-    /// sorteraTabellStigande/sorteraTabellSjunkande sorterar listan  om den får id för tabell och indexet för den
-    /// kolumn som ska användas för sorteringen
-    /// </summary>
-    $('#sorteraefternamn').click( function( event) {
-	event.preventDefault();
-
-	$('#sorteraefterbostadsort.sorting_asc').removeClass( "sorting_asc");
-	$('#sorteraefterbostadsort.sorting_desc').removeClass( "sorting_desc");
-
-	if ( !$('#sorteraefternamn').hasClass( "sorting_asc") &&
-	     !$('#sorteraefternamn').hasClass( "sorting_desc")) {
-	    $('#sorteraefternamn').addClass( "sorting_desc");
-	} else {
-	    $('#sorteraefternamn.sorting_asc').removeClass( "sorting_asc");
-	    if ( $('#sorteraefternamn').hasClass( "sorting_desc")) {
-		$('#sorteraefternamn').removeClass( "sorting_desc");
-		$('#sorteraefternamn').addClass( "sorting_asc");
-	    }
-	}
-
-	sorteraTabellStigande( 'enumreringajax', 0);
-    });
+    /// få in en aktuell vy direkt
+    uppdateraVy();
 
     /// <summary>
-    /// sortera listan enligt en term
+    /// aktiveras via knapptryck på 'Uppdatera listan' (ajaxbaserad_kortselektor.cshtml)
     /// </summary>
-    $('#sorteraefterbostadsort').click( function(event) {
-	event.preventDefault();
-
-	$('#sorteraefternamn.sorting_asc').removeClass( "sorting_asc");
-	$('#sorteraefternamn.sorting_desc').removeClass( "sorting_desc");
-
-	if (! $('#sorteraefterbostadsort').hasClass( "sorting_asc") &&
-	    ! $('#sorteraefterbostadsort').hasClass( "sorting_desc")) {
-	    $('#sorteraefterbostadsort').addClass( "sorting_desc");
-	} else {
-	    $('#sorteraefterbostadsort.sorting_asc').removeClass( "sorting_asc");
-
-	    if ( $('#sorteraefterbostadsort').hasClass( "sorting_desc")) {
-		$('#sorteraefterbostadsort').removeClass( "sorting_desc");
-		$('#sorteraefterbostadsort').addClass( "sorting_asc");
-	    }
-	}
-
-	sorteraTabellStigande( 'enumreringajax', 1);
-    });
-
-    /// <summary>
-    /// aktiveras via knapptryck av någon av 'Uppdatera listan', 'Visa kort' eller 'Raderar valt kort'
-    /// </summary>
-    $('#uppdateralistan').click(function( event) {
+    $("#uppdateralistan").click(function( event) {
 	event.preventDefault();
 	uppdateraVy();
     });
 
     /// <summary>
-    /// aktiveras via knapptryck i vyn (kasera kortet)
+    /// aktiveras via knapptryck i vyn (visa kortet) (ajaxbaserad_kortselektor.cshtml)
+    /// </summary>
+    $('#plockaframkortet').click(function( event) {
+	event.preventDefault();
+	// $.ajax({
+	//     url: url_specifikt_kort,
+	//     type: 'GET',
+	//     datatype: 'json',
+	//     success: function(res) {
+	//	let utdraget = Object( res );
+	//	$.each( utdraget, function( index, item) { enumeration( index, item); });
+	//     }
+	// });
+    });
+
+    /// <summary>
+    /// aktiveras via knapptryck i vyn (kasera kortet) (ajaxbaserad_kortselektor.cshtml)
     /// </summary>
     $('#kaserakortet').click(function( event) {
 	event.preventDefault();
 	// hämta valtkortsid från skrollern och skicka vidare till kaseraspecifiktkort
     });
-
-    /// <summary>
-    /// aktiveras via knapptryck i vyn (visa kortet)
-    /// </summary>
-    $('#plockaframkortet').click(function( event) {
-	event.preventDefault();
-	$.ajax({
-	    url: url_specifikt_kort,
-	    type: 'GET',
-	    datatype: 'json',
-	    success: function(res) {
-		let utdraget = Object( res );
-		/// $.each( utdraget, function( index, item) { enumeration( index, item); });
-	    }
-	});
-    });
-
-    /// <summary>
-    /// aktionerna i själva kortuppräkningen
-    ///
-    /// aktiveras via knapptryck i listvyn (radering bland aktionerna)
-    /// </summary>
-    function kaseraspecifiktkort( Id) {
-	$.ajax({
-	    url: url_kasera_kort,
-	    type: 'POST',
-	    success: function(res) {
-		let utdraget = Object( res );
-	    }
-	});
-
-    }
-
-    /// <summary>
-    /// aktionerna i själva kortuppräkningen
-    ///
-    /// aktiveras via knapptryck i listvyn (radering bland aktionerna)
-    /// </summary>
-    function modifieraspecifiktkort( Id) {
-	// $.ajax({
-	//     url: url_kasera_kort,
-	//     type: 'GET',
-	//     datatype: 'json',
-	//     success: function(res) {
-	//	let utdraget = Object( res );
-	//	/// $.each( utdraget, function( index, item) { enumeration( index, item); });
-	//     }
-	// });
-    }
 });
+
+/// <summary>
+/// sortera listan efter namn, aktiveras via onClick i aktivlistan.cshtml
+///
+/// se till att markeringarna i tabellhuvudet är korrekta
+///
+/// koden börjar alltid med att sortera i stigande ordning
+/// därefter med vidare tryck i tabellhuvudet i sjunkande ordning för att vid nästa
+/// tryck nolla sorteringen (då blir sorteringen den som repo:koden använder)
+///
+/// sorteraTabellStigande/sorteraTabellSjunkande sorterar listan  om den får id för tabell och indexet för den
+/// kolumn som ska användas för sorteringen
+/// </summary>
+function sorteraefternamn() {
+    //	event.preventDefault();
+
+    $( "#sorteraefterbostadsort" ).removeClass( "sorting_asc");
+    $( "#sorteraefterbostadsort" ).removeClass( "sorting_desc");
+
+    if ( !$('#sorteraefternamn').hasClass( "sorting_asc") &&
+	 !$('#sorteraefternamn').hasClass( "sorting_desc")) {
+	//
+	// ingen sortering är i kraft men sortera i stigande
+	//
+	$('#sorteraefternamn').addClass( "sorting_asc");
+
+	sorteraTabellStigande( 'enumreringajax', 0);
+    } else {
+	// om sorteringen är inställd att vara sjunkande, tag bort den
+	$('#sorteraefternamn.sorting_desc').removeClass( "sorting_desc");
+
+	if ( $('#sorteraefternamn').hasClass( "sorting_asc")) {
+	    $('#sorteraefternamn').removeClass( "sorting_asc");
+	    $('#sorteraefternamn').addClass( "sorting_desc");
+
+	    sorteraTabellSjunkande( 'enumreringajax', 0);
+	}
+    }
+}
+
+/// <summary>
+/// sortera listan efter bostadsort, aktiveras via onClick i aktivlistan.cshtml
+///
+/// se till att markeringarna i tabellhuvudet är korrekta
+///
+/// koden börjar alltid med sortera i stigande ordning
+/// därefter med vidare tryck i tabellhuvudet i sjunkande ordning för att vid nästa
+/// tryck nolla sorteringen (då kan sorteringen bli den som repo:koden använder)
+///
+/// sorteraTabellStigande/sorteraTabellSjunkande sorterar listan om den får id för tabell och indexet för den
+/// kolumn som ska användas för sorteringen
+/// </summary>
+function sorteraefterbostadsort () {
+    //	event.preventDefault();
+
+    $( "#sorteraefternamn.sorting_asc" ).removeClass( "sorting_asc");
+    $( "#sorteraefternamn.sorting_desc" ).removeClass( "sorting_desc");
+
+    if (! $('#sorteraefterbostadsort').hasClass( "sorting_asc") &&
+	! $('#sorteraefterbostadsort').hasClass( "sorting_desc")) {
+	//
+	// ingen sortering är i kraft men sortera i stigande
+	//
+	$('#sorteraefterbostadsort').addClass( "sorting_asc");
+	sorteraTabellStigande( 'enumreringajax', 1);
+    } else {
+	// om sorteringen är inställd att vara sjunkande, tag bort den
+	$('#sorteraefterbostadsort.sorting_desc').removeClass( "sorting_desc");
+
+	// om sorteringen är inställd att vara stigande, ersätt den
+	// med sjunkande ordning och sortera om
+	if ( $('#sorteraefterbostadsort').hasClass( "sorting_asc")) {
+	    $('#sorteraefterbostadsort').removeClass( "sorting_asc");
+	    $('#sorteraefterbostadsort').addClass( "sorting_desc");
+
+	    sorteraTabellSjunkande( 'enumreringajax', 1);
+	}
+    }
+}
+
+/// <summary>
+/// aktion i själva kortuppräkningen
+///
+/// aktiveras via knapptryck i listvyn (radering bland aktionerna)
+/// </summary>
+function kaseraspecifiktkort( Id) {
+//	$.ajax({
+//	    url: url_kasera_kort,
+//	    type: 'POST',
+//	    success: function(res) {
+//		let utdraget = Object( res );
+//	    }
+//	});
+}
+
+/// <summary>
+/// aktion i själva kortuppräkningen
+///
+/// aktiveras via knapptryck i listvyn (modifiering)
+/// </summary>
+function modifieraspecifiktkort( Id) {
+    // $.ajax({
+    //     url: url_kasera_kort,
+    //     type: 'GET',
+    //     datatype: 'json',
+    //     success: function(res) {
+    //	let utdraget = Object( res );
+    //	/// $.each( utdraget, function( index, item) { enumeration( index, item); });
+    //     }
+    // });
+}

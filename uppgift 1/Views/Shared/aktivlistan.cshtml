@@ -1,4 +1,4 @@
-<!-- Time-stamp: <2021-11-04 14:58:36 stefan> -*-web-*- -->
+<!-- Time-stamp: <2021-11-05 11:10:20 stefan> -*-web-*- -->
 
 @using System
 @using System.Collections.Generic
@@ -10,17 +10,17 @@
 @model Kartotek.Modeller.Vyer.PeopleViewModel
 
 <!-- dataTable använder INTE något annat än table, så fixa sortering själv via jquery/javaScript är av nöd  -->
-<!-- sorteras av js/sorteratabell.js function sorteraTabellStigande(sorteringsterm) { -->
 <!-- därav sorteraTabell för namn och bostadsort -->
 <div id="personindex_div" class="table-responsive container">
     <!-- tabell med existerande kort -->
     <div class="row">
-	<div class="col-md-2 text-start sorting" id="sorteraefternamn">Namn</div>
-	<div class="col-md-2 text-start sorting" id="sorteraefterbostadsort">Bostadsort</div>
+	<div class="col-md-2 text-start sorting" onClick="sorteraefternamn()" id="sorteraefternamn">Namn</div>
+	<div class="col-md-2 text-start sorting" onClick="sorteraefterbostadsort()" id="sorteraefterbostadsort">Bostadsort</div>
 	<div class="col-md-2 text-start">Telefon</div>
 	<div class="col-md-1 text-start">Id</div>
 	<div class="col-md-2">Aktioner</div>
     </div>
+    <!-- sorteras av js/sorteratabell.js därav onClick i tabellhuvudet -->
     <div id="enumreringajax">
 	@foreach (Person item in Model.Utdraget)
 	{

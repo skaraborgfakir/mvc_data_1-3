@@ -97,11 +97,11 @@ function sorteraTabellSjunkande( listansid, sorteringsterm) {
 /// <summary>
 /// begränsad - den sorterar enbart på namn eller bostadsort (sorteringsterm) i stigande ordning
 /// </summary>
-function sorteraTabell( listansid, sorteringsterm) {
-    var sorteringsordning = "stigande";  // sorteringsordning
+// function sorteraTabell( listansid, sorteringsterm) {
+//     var sorteringsordning = "stigande";  // sorteringsordning
 
-    if (sorteringsordning == "stigande")
-	sorteraTabellStigande( listansid, sorteringsterm);
-    else if (sorteringsordning == "sjunkande")
-	sorteraTabellSjunkande( listansid, sorteringsterm);
-}
+//     if (sorteringsordning == "stigande")
+//	sorteraTabellStigande( listansid, sorteringsterm);
+//     else if (sorteringsordning == "sjunkande")
+//	sorteraTabellSjunkande( listansid, sorteringsterm);
+// }
