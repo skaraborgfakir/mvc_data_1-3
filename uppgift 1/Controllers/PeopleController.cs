@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-04 10:59:27 stefan>
+// Time-stamp: <2021-11-05 12:12:06 stefan>
 //
 
 using System;
@@ -191,9 +191,16 @@ namespace Kartotek.Controllers {
 	    HopslagenmodellVymodell nyVymodell = new HopslagenmodellVymodell();
 
 	    if (ModelState.IsValid) {
+	    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+					 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
+					 "\n" + " model is valid");
 		if (!String.IsNullOrEmpty( vymodell.NyttKort.Namn ) &&
 		    !String.IsNullOrEmpty( vymodell.NyttKort.Bostadsort ) &&
 		    !String.IsNullOrEmpty( vymodell.NyttKort.Telefonnummer )) {
+
+		    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+						 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
+						 "\n" + "alla uppgifter finns med");
 
 		    CreatePersonViewModel nyttKort = new CreatePersonViewModel();
 		    nyttKort = vymodell.NyttKort;
@@ -201,13 +208,16 @@ namespace Kartotek.Controllers {
 		    this.serviceenheten.Add( nyttKort );
 		}
 	    } else {
-		this.loggdest.LogInformation( "public IActionResult Skapa_kort( PeopleViewModel not if ( ModelState.IsValid ) {" );
+		this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+						 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
+						 "\n" + "modell NOT valid");
 	    }
 
 	    nyVymodell.Personlistan = this.serviceenheten.All();
 
 	    return View( "Index", nyVymodell ); // använder Views/People/Index.cshtml
 	    // return RedirectToAction( "Index", nyVymodell);
+	    // return RedirectToAction( "Index");
 	}
 
 	/// <summary>
