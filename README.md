@@ -2,7 +2,7 @@ Inlämningsuppgifter till Lexicon i MVC delen
 
 I huvudsak uppgifter med olika repo som datalager
 
-Databas-ramverk
+Entity Framework 6 - Databas-ramverk:
 Uppgift 1:
    Hantera Inversion of Control med Dependency Injection (ympning)
    Ympning av :
@@ -10,6 +10,7 @@ Uppgift 1:
       PeopleController med IPeopleService
       PeopleAjaxController med IPeopleService
 
+MVC Data:
 Uppgift 3:
 Feature-branch:
   - AJAX
