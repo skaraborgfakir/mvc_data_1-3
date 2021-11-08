@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-06 16:32:03 stefan>
+// Time-stamp: <2021-11-08 10:14:29 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -9,6 +9,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
+// https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.http?view=aspnetcore-3.1
+using Microsoft.Extensions.Logging;
 
 using Kartotek.Modeller.Interfaces;
 using Kartotek.Modeller.Data;
@@ -21,6 +24,7 @@ namespace Kartotek.Modeller {
     /// </summary>
     public class PeopleService : IPeopleService {
 	private readonly IPeopleRepo kartoteket;
+	private readonly ILogger<PeopleService> loggdest;
 
 	/// <summary>
 	/// kreator av PeopleService
@@ -28,7 +32,9 @@ namespace Kartotek.Modeller {
 	/// injektion för att få tillgång till gemensam InMemoryPeopleRepo
 	/// </summary>
 	/// <param name="kartoteket"></param>
-	public PeopleService( IPeopleRepo kartoteket) {
+	public PeopleService( ILogger<PeopleService> loggdest,
+			      IPeopleRepo kartoteket) {
+	    this.loggdest = loggdest;
 	    this.kartoteket = kartoteket;
 	}
 
@@ -92,6 +98,10 @@ namespace Kartotek.Modeller {
 	///    båda ?
 	/// </summary>
 	public PeopleViewModel FindBy ( PeopleViewModel search ) {
+	    this.loggdest.LogInformation(
+		(new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
+		(new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
+
 	    ///<summary>
 	    /// IPeopleRepo definierar inte någon operator som kan söka på något annat än int eller
 	    /// så den här funktionen behöver läsa in och iterera igenom hela listan (relationen)
@@ -105,13 +115,37 @@ namespace Kartotek.Modeller {
 	    //
 	    if ( !String.IsNullOrEmpty( search.Namn ) &&
 		 !String.IsNullOrEmpty( search.Bostadsort ))
+	    {
+		this.loggdest.LogInformation(
+		    (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
+		    (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
+
 		vyn.Utdraget = posterna.Where( posterna => ( posterna.Namn == search.Namn && posterna.Bostadsort == search.Bostadsort)).ToList();
+	    }
 	    else if ( !String.IsNullOrEmpty( search.Namn ))
+	    {
+		this.loggdest.LogInformation(
+		    (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
+		    (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
+
 		vyn.Utdraget = posterna.Where( posterna => posterna.Namn == search.Namn).ToList();
-	    else if ( !String.IsNullOrEmpty( search.Namn ))
+	    }
+	    else if ( !String.IsNullOrEmpty( search.Bostadsort ))
+	    {
+		this.loggdest.LogInformation(
+		    (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
+		    (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
+
 		vyn.Utdraget = posterna.Where( posterna => posterna.Bostadsort == search.Bostadsort).ToList();
+	    }
 	    else
+	    {
+		this.loggdest.LogInformation(
+		    (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
+		    (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
+
 		vyn.Utdraget = posterna;
+	    }
 
 	    return vyn;
 	}

@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-06 16:29:57 stefan>
+// Time-stamp: <2021-11-08 10:03:00 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -78,8 +78,8 @@ namespace Kartotek.Controllers {
 	    this.loggdest.LogInformation(
 		(new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
 		(new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
-		"\n" + "vald term : " + HttpContext.Session.GetInt32( $"valdterm.{this.sessionsuffix}").ToString() +
-		"\n" + "namn : " + HttpContext.Session.GetString( $"namn.{this.sessionsuffix}") +
+		"\n" + "vald term : "  + HttpContext.Session.GetInt32( $"valdterm.{this.sessionsuffix}").ToString() +
+		"\n" + "namn : "       + HttpContext.Session.GetString( $"namn.{this.sessionsuffix}") +
 		"\n" + "bostadsort : " + HttpContext.Session.GetString( $"bostadsort.{this.sessionsuffix}")
 	    );
 
@@ -103,6 +103,10 @@ namespace Kartotek.Controllers {
 		    //	    };
 
 		case 2:
+		    this.loggdest.LogInformation(
+			(new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
+			(new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
+
 		    söktermer.Bostadsort = HttpContext.Session.GetString( $"bostadsort.{this.sessionsuffix}");
 		    PeopleViewModel vy_efter_bostadsort = this.serviceenheten.FindBy( söktermer);
 

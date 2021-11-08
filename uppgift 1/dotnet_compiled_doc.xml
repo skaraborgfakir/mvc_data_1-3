@@ -378,7 +378,7 @@
             to be done
             </summary>
         </member>
-        <member name="M:Kartotek.Modeller.PeopleService.#ctor(Kartotek.Modeller.Interfaces.IPeopleRepo)">
+        <member name="M:Kartotek.Modeller.PeopleService.#ctor(Microsoft.Extensions.Logging.ILogger{Kartotek.Modeller.PeopleService},Kartotek.Modeller.Interfaces.IPeopleRepo)">
             <summary>
             kreator av PeopleService
             Ympas med DI med ett kartotek
