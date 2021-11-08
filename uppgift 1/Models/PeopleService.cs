@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-08 10:14:29 stefan>
+// Time-stamp: <2021-11-08 10:51:05 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -31,7 +31,8 @@ namespace Kartotek.Modeller {
 	/// Ympas med DI med ett kartotek
 	/// injektion för att få tillgång till gemensam InMemoryPeopleRepo
 	/// </summary>
-	/// <param name="kartoteket"></param>
+	/// <param name="loggdest">Ympning med loggfunktionen</param>
+	/// <param name="kartoteket">Ympning av IPeopleRepo</param>
 	public PeopleService( ILogger<PeopleService> loggdest,
 			      IPeopleRepo kartoteket) {
 	    this.loggdest = loggdest;
@@ -120,24 +121,39 @@ namespace Kartotek.Modeller {
 		    (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
 		    (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
-		vyn.Utdraget = posterna.Where( posterna => ( posterna.Namn == search.Namn && posterna.Bostadsort == search.Bostadsort)).ToList();
+		vyn.Utdraget = posterna
+		    .Where( posterna => ( posterna.Namn == search.Namn && posterna.Bostadsort == search.Bostadsort))
+		    .ToList();
 	    }
+	    //
+	    // båda var inte satta, kan det finnas något i Namn ?
+	    //
 	    else if ( !String.IsNullOrEmpty( search.Namn ))
 	    {
 		this.loggdest.LogInformation(
 		    (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
 		    (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
-		vyn.Utdraget = posterna.Where( posterna => posterna.Namn == search.Namn).ToList();
+		vyn.Utdraget = posterna
+		    .Where( posterna => posterna.Namn == search.Namn)
+		    .ToList();
 	    }
+	    //
+	    // kan det finnas något i Bostadsort ?
+	    //
 	    else if ( !String.IsNullOrEmpty( search.Bostadsort ))
 	    {
 		this.loggdest.LogInformation(
 		    (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
 		    (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
-		vyn.Utdraget = posterna.Where( posterna => posterna.Bostadsort == search.Bostadsort).ToList();
+		vyn.Utdraget = posterna
+		    .Where( posterna => posterna.Bostadsort == search.Bostadsort)
+		    .ToList();
 	    }
+	    //
+	    // Nähä ingen sökterm var satt.
+	    //
 	    else
 	    {
 		this.loggdest.LogInformation(

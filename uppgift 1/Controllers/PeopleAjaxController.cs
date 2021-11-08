@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-08 10:03:00 stefan>
+// Time-stamp: <2021-11-08 16:32:54 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -151,19 +151,33 @@ namespace Kartotek.Controllers {
 					  (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
 					  "\n tag fram kortet med id : " + id.ToString());
 
-	    return Ok( this.serviceenheten.FindBy( id));
+	    // return Ok( this.serviceenheten.FindBy( id));
+	    return PartialView( "aktiva_div", this.serviceenheten.FindBy( id));
 	}
+
 
 	/// <summary>
 	/// kassera ett specifikt kort
+	/// DELETE som metod !
+	///
+	/// Id kan inte vara med i body, den måste skickas av jQuery som del av URI:n, så bort med Id i HttpDelete:attributet
 	/// </summary>
-	[HttpDelete( "{id}" )]
+	/// <see href="https://stackoverflow.com/questions/15088955/how-to-pass-data-in-the-ajax-delete-request-other-than-headers">JQuery bug</see>
+	/// <see href="http://bugs.jquery.com/ticket/11586">bug i jQuery (?): använder man DELETE så klipps data-klumpen bort</see>
+	[HttpDelete]
 	[ActionName( "kaserakortet" )]  // API mot JS !!
 	public ActionResult kaserakortet ( int id ) {
 	    this.loggdest.LogInformation( (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
-					  (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
+					  (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
+					  "\n kasera kortet med id : " + id.ToString());
 
-	    throw new NotImplementedException( "public IActionResult rensaUrKortet())" );
+	    if ( this.serviceenheten.FindBy( id) != null) {
+		return Ok( this.serviceenheten.Remove( id));
+	    }
+	    else
+	    {
+		return NotFound();
+	    }
 	}
     }
 }

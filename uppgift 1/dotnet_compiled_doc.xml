@@ -68,9 +68,14 @@
             </summary>
         </member>
         <member name="M:Kartotek.Controllers.PeopleAjaxController.kaserakortet(System.Int32)">
-            <summary>
-            kassera ett specifikt kort
-            </summary>
+             <summary>
+             kassera ett specifikt kort
+             DELETE som metod !
+            
+             Id kan inte vara med i body, den måste skickas av jQuery som del av URI:n, så bort med Id i HttpDelete:attributet
+             </summary>
+             <see href="https://stackoverflow.com/questions/15088955/how-to-pass-data-in-the-ajax-delete-request-other-than-headers">JQuery bug</see>
+             <see href="http://bugs.jquery.com/ticket/11586">bug i jQuery (?): använder man DELETE så klipps data-klumpen bort</see>
         </member>
         <member name="T:Kartotek.Controllers.PeopleController">
              <summary>
@@ -384,7 +389,8 @@
             Ympas med DI med ett kartotek
             injektion för att få tillgång till gemensam InMemoryPeopleRepo
             </summary>
-            <param name="kartoteket"></param>
+            <param name="loggdest">Ympning med loggfunktionen</param>
+            <param name="kartoteket">Ympning av IPeopleRepo</param>
         </member>
         <member name="M:Kartotek.Modeller.PeopleService.FindBy(System.Int32)">
             <summary>

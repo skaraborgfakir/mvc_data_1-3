@@ -1,5 +1,5 @@
 //
-// - Time-stamp: <2021-11-05 14:18:30 stefan>
+// - Time-stamp: <2021-11-08 16:27:41 stefan>
 //
 
 
@@ -11,7 +11,7 @@
 $(document).ready(function() {
     const url_samtliga_kort =  "https://localhost:5009/api/PeopleAjax/uppdateralistan"; // json-kodad lista
     const url_specifikt_kort = "https://localhost:5009/api/PeopleAjax/tagUppKortet";    // uppgifter om ett specifikt kort
-    const url_kasera_kort =    "https://localhost:5009/api/PeopleAjax/kaseraKortet";    // kasera kortet
+    const url_kasera_kort =    "https://localhost:5009/api/PeopleAjax/kaserakortet";    // kasera kortet
 
     /// <summary>
     /// aktiveras en gång efter inläsning av sidan för att få den första bilden
@@ -20,15 +20,15 @@ $(document).ready(function() {
     function uppdateraVy() {
 	//$("#enumreringajax").empty();  // töm ur listan helt och bygg upp den på nytt
 
-	$("#tabell_kartotek_ajax").load( url_samtliga_kort, function() {
-	    //
-	    // iom att vyn laddas efter att document.ready är klar så kan
-	    // uppsättning av händelsehanteringen för vyerna tas upp här
-	    //
+	$("#ajaxvy_kartotek").load( url_samtliga_kort, function() {
+	//
+	// iom att vyn laddas efter att document.ready är klar så kan
+	// uppsättning av händelsehanteringen för vyerna tas upp här
+	//
 
-	    //
-	    // TODO: se till att vyn är sortera att den som var innan load
-	    //
+	//
+	// TODO: se till att vyn är sortera att den som var innan load
+	//
 	});
 
 	// $.ajax({
@@ -36,7 +36,7 @@ $(document).ready(function() {
 	//     type: 'GET',
 	//     success: function(res) {
 	//	let utdraget = Object( res );
-	//	$("tabell_kartotek_ajax").append(utdraget);
+	//	$("ajaxvy_kartotek").append(utdraget);
 	//     }
 	// });
     }
@@ -58,9 +58,24 @@ $(document).ready(function() {
     /// aktiveras via knapptryck i vyn (visa kortet) (ajaxbaserad_kortselektor.cshtml)
     /// </summary>
     $('#plockaframkortet').click(function( ) {
-	// event.preventDefault();
-	$("#tabell_kartotek_ajax").load(url_specifikt_kort, { id: document.getElementById("uppdateralistan") }, function() {
-	});
+	var id = document.getElementById("valtkortsid").value;
+
+
+	$("#ajaxvy_kartotek").load( url_specifikt_kort + '?' + $.param( { "id": id } ),
+				    function() {
+				    }
+				  );
+	// $.ajax({
+	//     url: url_specifikt_kort,
+	//     data: { "id": id },
+	//     success: function( result ){
+	//	$("#ajaxvy_kartotek").html( result );
+	//     }
+	// });
+
+	// $("#tabell_kartotek_ajax").load( url: url_specifikt_kort,
+	//				 data: { "id": id }
+	//			       );
 
 	// $.ajax({
 	//     url: url_specifikt_kort,
@@ -76,9 +91,19 @@ $(document).ready(function() {
     /// <summary>
     /// aktiveras via knapptryck i vyn (kasera kortet) (ajaxbaserad_kortselektor.cshtml)
     /// </summary>
+    /// <see href="https://stackoverflow.com/questions/15088955/how-to-pass-data-in-the-ajax-delete-request-other-than-headers">JQuery bug</see>
+    /// <see href="http://bugs.jquery.com/ticket/11586">bug i jQuery: använder man DELETE så klipps data-klumpen bort</see>
     $('#kaserakortet').click(function( event) {
-	event.preventDefault();
+	// event.preventDefault();
+	// document.getElementById("valtkortsid").value  till url_kasera_kort
 	// hämta valtkortsid från skrollern och skicka vidare till kaseraspecifiktkort
+	var id = document.getElementById("valtkortsid").value;
+
+	$.ajax({ type:  "DELETE",
+		 url:    url_kasera_kort + '?' + $.param( { "id": id }),
+		 contentType: "application/json; charset=utf-8"
+	       }
+	      );
     });
 });
 
