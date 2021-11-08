@@ -1,4 +1,8 @@
-// Time-stamp: <2021-11-02 14:43:07 stefan>
+// Time-stamp: <2021-11-06 16:32:01 stefan>
+//
+// dokumentationstaggning
+//   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
+//   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/recommended-tags#seealso
 //
 
 using System;

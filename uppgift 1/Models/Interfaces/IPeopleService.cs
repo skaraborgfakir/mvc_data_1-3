@@ -1,5 +1,9 @@
 //
-// Time-stamp: <2021-11-03 15:44:58 stefan>
+// Time-stamp: <2021-11-06 19:21:26 stefan>
+//
+// dokumentationstaggning
+//   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
+//   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/recommended-tags#seealso
 //
 
 using System.Collections.Generic;
@@ -30,38 +34,49 @@ namespace Kartotek.Modeller.Interfaces {
 	/// <summary>
 	/// inläggning av ett kort, använder den Create som definieras av IPeopleRepo
 	/// </summary>
+	/// <param name="person">uppgifter till det nya kortet</param>
+	/// <returns>Inläggning av ett nytt kort med uppgifter om en medlem</returns>
 	/// <see cref="IPeopleRepo">Create i IPeopleRepo</see>
+	/// <see cref="CreatePersonViewModel">Vymodellen CreatePersonViewModel</see>
 	Person Add ( CreatePersonViewModel person );
 
 	/// <summary>
 	/// totalutdrag från registret, som vymodell
 	/// </summary>
+	/// <returns>En lista med alla kort i kartoteket</returns>
 	/// <see cref="IPeopleRepo">Read i IPeopleRepo</see>
 	PeopleViewModel All ();
 
 	/// <summary>
 	/// specifik(a) kort, som vymodell. PeopleViewModel har sökvillkoren
 	/// </summary>
+	/// <param name="search">PeopleViewModel där sökvillkoret anges</param>
+	/// <returns>PeopleViewModel där funna kort finns i Utdraget</returns>
 	/// <see cref="IPeopleRepo">Read i IPeopleRepo</see>
 	PeopleViewModel FindBy ( PeopleViewModel search );
 
 	/// <summary>
 	/// ett specifikt kort
 	/// </summary>
+	/// <param name="id">Nummer för det kort som efterfrågas</param>
+	/// <returns>Hittat kort</returns>
 	/// <see cref="IPeopleRepo">Read i IPeopleRepo</see>
 	Person FindBy ( int id );
 
 	/// <summary>
 	/// modifiering av ett kort med ett visst nummer
 	/// </summary>
+	/// <param name="id">Kortnummer för det kort som ska modifieras</param>
+	/// <param name="person">Hur alla uppgifterna ska se ut</param>
+	/// <returns>Kopia på det modifierade kortet</returns>
 	/// <see cref="IPeopleRepo">Update i IPeopleRepo</see>
 	Person Edit ( int id, Person person );
 
 	/// <summary>
 	/// borttagning av ett visst kort
 	/// </summary>
-	/// <params>int id
-	/// </params>
+	/// <param name="id">id</param>
+	/// <returns>flagga som anger om borttangninen fungerade (fanns kortet egentligen ?)</returns>
 	/// <see cref="IPeopleRepo">Delete i IPeopleRepo</see>
 	bool Remove ( int id );
     }

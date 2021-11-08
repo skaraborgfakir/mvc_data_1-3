@@ -1,6 +1,9 @@
 //
-// Time-stamp: <2021-11-03 15:40:53 stefan>
+// Time-stamp: <2021-11-06 16:32:00 stefan>
 //
+// dokumentationstaggning
+//   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
+//   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/recommended-tags#seealso
 //
 
 using System.Collections.Generic;

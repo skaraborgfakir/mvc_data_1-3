@@ -1,15 +1,25 @@
 //
-// Time-stamp: <2021-11-02 16:44:11 stefan>
+// Time-stamp: <2021-11-08 09:33:44 stefan>
+//
+// dokumentationstaggning
+//   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
+//   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/recommended-tags#seealso
 //
 
+// från mvc-mallen:
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Hosting;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+
+// egna tillägg
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Kartotek
 {
@@ -24,17 +34,57 @@ namespace Kartotek
 	/// Huvud-rutin/-klass i ett medlemskartotek
 	///
 	/// Inte något annat än ett omslag runt CreateHostBuilder och därefter build och run
+	///
+	/// EF6:verktygen är beroende av att det finns en metod i klassen Program med namneet CreateHostBuilder
 	/// </summary>
+	/// <param name="args">argumentvektor ekvivalent med argc/argv i C</param>
+	/// <see href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/host/generic-host?view=aspnetcore-3.1">.Net Generic Host</see>
+	/// <see href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/host/web-host?view=aspnetcore-3.1">.Net Web Host</see>
+	/// <see href="https://stackoverflow.com/questions/41287648/how-do-i-write-logs-from-within-startup-cs">how-do-i-write-logs-from-within-startup-cs</see>
 	public static void Main ( string[] args )
 	{
-	    CreateHostBuilder( args: args ).Build().Run();
+
+
+	    // netcore 3: mallen för en web host använder CreateHostBuilder
+	    // vilket skiljer sig mot den äldre CreateWebHostBuilder (som finns kvar
+	    // av kompatibilitetsskäl)
+	    // skillnader:
+	    //   loggning i Startup är mer begränsad med CreateHostBuilder
+	    //   jämfört med CreateWebHostBuilder
+	    //   CreateHostBuilder stödjer fler applikationstyper än jämfört med CreateWebHostBuilder
+	    //   som i huvudsak lämpar sig för web:applikationer
+	    //   därför kan inte loggning ympas helt i REVELJ:klassen (Startup) utan enbart via
+	    //   DI i Configure:metoden
+	    // CreateHostBuilder( args: args ).Build().Run();
+	    var host = CreateHostBuilder( args: args ).Build();
+	    var config = host.Services.GetRequiredService<IConfiguration>();
+
+	    foreach (var c in config.AsEnumerable())
+	    {
+		Console.WriteLine(c.Key + " = " + c.Value);
+	    }
+	    host.Run();
+
+	    //
+	    // blurb för att mha DI få med loggning in till REVELJ:klassen
+	    // using var scope = host.Services.CreateScope();
+	    // var services = scope.ServiceProvider;
+	    // var loggerFactory = services.GetRequiredService<ILoggerFactory>();
 	}
 
 	/// <summary>
 	/// startrutin för .Net core
 	///
 	/// inkluderar logging mot konsoll och får webBuilder att aktivera klassen REVELJ
+	///
+	/// Den här metoden är speciell iom att EF6 (och Identity Server) förväntar sig att just den här
+	/// metoden finns med just det här namnet
 	/// </summary>
+	/// <param name="args">
+	/// argumentvektor ekvivalent med argc/argv i C. CreateHostBuilder exv
+	/// kan plocka bort de argument i listan som är i dess fögderi
+	/// </param>
+	/// <see href="https://stackoverflow.com/questions/41287648/how-do-i-write-logs-from-within-startup-cs">how-do-i-write-logs-from-within-startup-cs</see>
 	public static IHostBuilder CreateHostBuilder ( string[] args ) => Host
 	    // kestrel som httpd
 	    // aktivera IConfiguration och läs in från appsettings.json
@@ -47,8 +97,8 @@ namespace Kartotek
 		logging.ClearProviders();
 		logging.AddConsole();
 	    } )
-	    // här skulle man kunna lägga till en modifierad konfiguration-module
 	    //
+	    // konfigurering av en web-app
 	    //   Kestrel som web-server används
 	    //   se till att www-static dvs statiska filer tillgängliga i wwwroot även är tillgänglig när allt körs
 	    //   hostfiltering

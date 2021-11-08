@@ -270,42 +270,39 @@
         <member name="M:Kartotek.Modeller.Interfaces.IPeopleRepo.Create(System.String,System.String,System.String)">
             <summary>
             inläggning av ett nytt kort
+            INTE id som en parameter
             </summary>
-            <params>
-            Personens namn
-            Hennes bostadsort
-            och telefonnummer.
-            INTE id
-            </params>
+            <param name="namn">Medlemmens namn,</param>
+            <param name="bostadsort">hemort</param>
+            <param name="telefonnummer">telefonnummer hem</param>
+            <returns>Kopia på det nu tillagda kortobjektet</returns>
         </member>
         <member name="M:Kartotek.Modeller.Interfaces.IPeopleRepo.Read">
             <summary>
             ett totalutdrag från registret
             </summary>
+            <returns>En samling med samtliga inlagda kort</returns>
         </member>
         <member name="M:Kartotek.Modeller.Interfaces.IPeopleRepo.Read(System.Int32)">
             <summary>
             utdrag av ett specifikt kort
             </summary>
-            <params>
-            id - löpnummer för det kort som ska hämtas
-            </params>
+            <param name="id">id - löpnummer för det kort som ska hämtas</param>
+            <returns>Kopia på ett visst kort</returns>
         </member>
         <member name="M:Kartotek.Modeller.Interfaces.IPeopleRepo.Update(Kartotek.Modeller.Entiteter.Person)">
             <summary>
             modifiering
             </summary>
-            <params>
-            Person person - det kort som ska modifieras
-            </params>
+            <param name="person">det kort som ska modifieras</param>
+            <returns>Modifiering av ett visst kort</returns>
         </member>
         <member name="M:Kartotek.Modeller.Interfaces.IPeopleRepo.Delete(Kartotek.Modeller.Entiteter.Person)">
             <summary>
             kasering av ett kort
             </summary>
-            <params>
-            Person person - det kort som ska kaseras
-            </params>
+            <param name="person">Person person - det kort som ska kaseras</param>
+            <returns>Flagga som anger om kasering fungerade, fanns kortet överhuvudtaget ?</returns>
         </member>
         <member name="T:Kartotek.Modeller.Interfaces.IPeopleService">
              <summary>
@@ -331,38 +328,49 @@
             <summary>
             inläggning av ett kort, använder den Create som definieras av IPeopleRepo
             </summary>
+            <param name="person">uppgifter till det nya kortet</param>
+            <returns>Inläggning av ett nytt kort med uppgifter om en medlem</returns>
             <see cref="T:Kartotek.Modeller.Interfaces.IPeopleRepo">Create i IPeopleRepo</see>
+            <see cref="T:Kartotek.Modeller.Vyer.CreatePersonViewModel">Vymodellen CreatePersonViewModel</see>
         </member>
         <member name="M:Kartotek.Modeller.Interfaces.IPeopleService.All">
             <summary>
             totalutdrag från registret, som vymodell
             </summary>
+            <returns>En lista med alla kort i kartoteket</returns>
             <see cref="T:Kartotek.Modeller.Interfaces.IPeopleRepo">Read i IPeopleRepo</see>
         </member>
         <member name="M:Kartotek.Modeller.Interfaces.IPeopleService.FindBy(Kartotek.Modeller.Vyer.PeopleViewModel)">
             <summary>
             specifik(a) kort, som vymodell. PeopleViewModel har sökvillkoren
             </summary>
+            <param name="search">PeopleViewModel där sökvillkoret anges</param>
+            <returns>PeopleViewModel där funna kort finns i Utdraget</returns>
             <see cref="T:Kartotek.Modeller.Interfaces.IPeopleRepo">Read i IPeopleRepo</see>
         </member>
         <member name="M:Kartotek.Modeller.Interfaces.IPeopleService.FindBy(System.Int32)">
             <summary>
             ett specifikt kort
             </summary>
+            <param name="id">Nummer för det kort som efterfrågas</param>
+            <returns>Hittat kort</returns>
             <see cref="T:Kartotek.Modeller.Interfaces.IPeopleRepo">Read i IPeopleRepo</see>
         </member>
         <member name="M:Kartotek.Modeller.Interfaces.IPeopleService.Edit(System.Int32,Kartotek.Modeller.Entiteter.Person)">
             <summary>
             modifiering av ett kort med ett visst nummer
             </summary>
+            <param name="id">Kortnummer för det kort som ska modifieras</param>
+            <param name="person">Hur alla uppgifterna ska se ut</param>
+            <returns>Kopia på det modifierade kortet</returns>
             <see cref="T:Kartotek.Modeller.Interfaces.IPeopleRepo">Update i IPeopleRepo</see>
         </member>
         <member name="M:Kartotek.Modeller.Interfaces.IPeopleService.Remove(System.Int32)">
             <summary>
             borttagning av ett visst kort
             </summary>
-            <params>int id
-            </params>
+            <param name="id">id</param>
+            <returns>flagga som anger om borttangninen fungerade (fanns kortet egentligen ?)</returns>
             <see cref="T:Kartotek.Modeller.Interfaces.IPeopleRepo">Delete i IPeopleRepo</see>
         </member>
         <member name="T:Kartotek.Modeller.PeopleService">
@@ -519,14 +527,28 @@
              Huvud-rutin/-klass i ett medlemskartotek
             
              Inte något annat än ett omslag runt CreateHostBuilder och därefter build och run
+            
+             EF6:verktygen är beroende av att det finns en metod i klassen Program med namneet CreateHostBuilder
              </summary>
+             <param name="args">argumentvektor ekvivalent med argc/argv i C</param>
+             <see href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/host/generic-host?view=aspnetcore-3.1">.Net Generic Host</see>
+             <see href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/host/web-host?view=aspnetcore-3.1">.Net Web Host</see>
+             <see href="https://stackoverflow.com/questions/41287648/how-do-i-write-logs-from-within-startup-cs">how-do-i-write-logs-from-within-startup-cs</see>
         </member>
         <member name="M:Kartotek.Program.CreateHostBuilder(System.String[])">
              <summary>
              startrutin för .Net core
             
              inkluderar logging mot konsoll och får webBuilder att aktivera klassen REVELJ
+            
+             Den här metoden är speciell iom att EF6 (och Identity Server) förväntar sig att just den här
+             metoden finns med just det här namnet
              </summary>
+             <param name="args">
+             argumentvektor ekvivalent med argc/argv i C. CreateHostBuilder exv
+             kan plocka bort de argument i listan som är i dess fögderi
+             </param>
+             <see href="https://stackoverflow.com/questions/41287648/how-do-i-write-logs-from-within-startup-cs">how-do-i-write-logs-from-within-startup-cs</see>
         </member>
         <member name="T:Kartotek.REVELJ">
             <summary>
@@ -536,10 +558,12 @@
             kan egentligen heta vad som helst exv REVELJ !
             </remarks>
         </member>
-        <member name="M:Kartotek.REVELJ.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+        <member name="M:Kartotek.REVELJ.#ctor(Microsoft.Extensions.Configuration.IConfiguration,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
             <summary>
             https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
             </summary>
+            <param name="configuration">DI av en instans av IConfiguration</param>
+            <param name="env">DI av en instans av IWebHostEnvironment</param>
         </member>
         <member name="P:Kartotek.REVELJ.Configuration">
             <summary>
@@ -547,14 +571,23 @@
             </summary>
         </member>
         <member name="M:Kartotek.REVELJ.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
-            <summary>
-            https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
-            </summary>
+             <summary>
+             https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
+            
+             DI:ympning av loggning fungerar inte i ConfigureServices
+             </summary>
+             <param name="services">DI av en instans av IServiceCollection - ger tillgång till exv info om programmets miljö</param>
+             <see href="https://stackoverflow.com/questions/41287648/how-do-i-write-logs-from-within-startup-cs">how-do-i-write-logs-from-within-startup-cs</see>
         </member>
-        <member name="M:Kartotek.REVELJ.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
-            <summary>
-            This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-            </summary>
+        <member name="M:Kartotek.REVELJ.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.Extensions.Hosting.IHostEnvironment,Microsoft.Extensions.Logging.ILogger{Kartotek.REVELJ})">
+             <summary>
+             Konfiguration av hur http-trafik ska hanteras
+             överföring mellan de olika stegen via Routing, Session, Autentisering till mottagande kontrollant
+            
+             klistra in olika funktioner i ramverkets avveckling av jobb (inkommande trafik via http och returnerade svar)
+            
+             DI av loggning från rot
+             </summary>
         </member>
     </members>
 </doc>

@@ -48,7 +48,7 @@
 	    "launchBrowser": false,
 	    "applicationUrl": "http://localhost:5008;https://localhost:5009",
 	    "environmentVariables": {
-		"ASPNETCORE_ENVIRONMENT": "Development_postgres"
+		"ASPNETCORE_ENVIRONMENT": "postgres.Development"
 	    }
 	}
     }

@@ -1,13 +1,13 @@
 //
-// Time-stamp: <2021-11-04 16:46:21 stefan>
+// Time-stamp: <2021-11-08 01:41:52 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/recommended-tags#seealso
 //
 
+// från mvc-mallen:
 using System;
-using System.Text.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,19 +15,25 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Http;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
+// egna tillägg
+using Microsoft.AspNetCore.Http;
+
+using Microsoft.Extensions.Logging;
+
+using System.Text.Json;
+
+// egen kod
 using Kartotek.Modeller;
 using Kartotek.Modeller.Data;
 using Kartotek.Modeller.Interfaces;
 
 namespace Kartotek
 {
-
     /// <summary>
     /// används av webbuilder som definition av appen
     /// </summary>
@@ -39,10 +45,16 @@ namespace Kartotek
 	/// <summary>
 	/// https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
 	/// </summary>
-	public REVELJ(IConfiguration configuration)
+	/// <param name="configuration">DI av en instans av IConfiguration</param>
+	/// <param name="env">DI av en instans av IWebHostEnvironment</param>
+	public REVELJ(IConfiguration configuration,
+		      IWebHostEnvironment env)
 	{
 	    Configuration = configuration;
+	    Environment = env;
 	}
+
+	public IWebHostEnvironment Environment { get; }
 
 	/// <summary>
 	/// https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
@@ -51,9 +63,18 @@ namespace Kartotek
 
 	/// <summary>
 	/// https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
+	///
+	/// DI:ympning av loggning fungerar inte i ConfigureServices
 	/// </summary>
+	/// <param name="services">DI av en instans av IServiceCollection - ger tillgång till exv info om programmets miljö</param>
+	/// <see href="https://stackoverflow.com/questions/41287648/how-do-i-write-logs-from-within-startup-cs">how-do-i-write-logs-from-within-startup-cs</see>
 	public void ConfigureServices(IServiceCollection services)
 	{
+	    Console.WriteLine( "Startup.cs: REVELJ: ConfigureServices");
+
+	    Console.WriteLine( "Startup.cs: " + Configuration["DBConnectionStrings:People"]);
+	    Console.WriteLine( "Startup.cs: " + Configuration["DBConnectionStrings:PeopleIdentity"]);
+
 	    // behövs för UseCors i Configure
 	    // services.AddCors(opt => {
 	    //	opt.AddPolicy("CorsPolicy", policy => { policy
@@ -102,15 +123,29 @@ namespace Kartotek
 	}
 
 	/// <summary>
-	/// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+	/// Konfiguration av hur http-trafik ska hanteras
+	/// överföring mellan de olika stegen via Routing, Session, Autentisering till mottagande kontrollant
+	///
+	/// klistra in olika funktioner i ramverkets avveckling av jobb (inkommande trafik via http och returnerade svar)
+	///
+	/// DI av loggning från rot
 	/// </summary>
 	public void Configure ( IApplicationBuilder app,
-				IWebHostEnvironment env ) {
+				IHostEnvironment env,
+				ILogger<REVELJ> loggdest)
+	{
 	    //
-	    // klistra in olika funktioner i ramverkets avveckling av jobb (inkommande trafik via http och returnerade svar)
+	    //
 	    //
 	    // gaffling i flödet beroende på programmets startmiljö
-	    if (env.IsDevelopment())
+	    if (env.IsEnvironment( "Development_postgres") ||
+		env.IsEnvironment( "Development"))
+		loggdest.LogInformation( "Startup.cs: PostgreSQL:version");
+	    else
+		loggdest.LogInformation( "Startup.cs: MS SQL:version");
+
+	    if (env.IsDevelopment() ||
+		env.IsEnvironment( "Development_postgres"))
 	    {
 		app.UseDeveloperExceptionPage();  // plockar upp händelser (exceptions) i aktiverade moduler (exv en kontrollant) för att ge meddelandestatus till användaren
 	    }
@@ -120,7 +155,8 @@ namespace Kartotek
 		// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 		app.UseHsts();
 	    }
-	    // app.UseHttpsRedirection();
+
+	    // app.UseHttpsRedirection();  // blockera automatisk uppgradering till https
 	    app.UseStatusCodePages();  // mer förklarande beskrivning av fel (http status 400-599) som saknar en beskrivning
 	    app.UseStaticFiles();              // get av statisk filer exv script/css etc
 
@@ -129,8 +165,7 @@ namespace Kartotek
 	    // MapControllerRoute är beroende
 	    app.UseRouting();
 
-	    // aktivera Cors-hantering
-	    // app.UseCors();
+	    // app.UseCors(); // blockera CORS-hantering
 
 	    if (env.IsDevelopment())
 		app.Use(next => context =>

@@ -1,4 +1,8 @@
-// Time-stamp: <2021-11-03 13:13:27 stefan>
+// Time-stamp: <2021-11-06 18:50:15 stefan>
+//
+// dokumentationstaggning
+//   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
+//   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/recommended-tags#seealso
 //
 
 using System.Collections.Generic;
@@ -24,13 +28,12 @@ namespace Kartotek.Modeller.Interfaces {
     public interface IPeopleRepo {
 	/// <summary>
 	/// inläggning av ett nytt kort
+	/// INTE id som en parameter
 	/// </summary>
-	/// <params>
-	/// Personens namn
-	/// Hennes bostadsort
-	/// och telefonnummer.
-	/// INTE id
-	/// </params>
+	/// <param name="namn">Medlemmens namn,</param>
+	/// <param name="bostadsort">hemort</param>
+	/// <param name="telefonnummer">telefonnummer hem</param>
+	/// <returns>Kopia på det nu tillagda kortobjektet</returns>
 	Person Create ( string namn,
 			string bostadsort,
 			string telefonnummer );
@@ -38,30 +41,28 @@ namespace Kartotek.Modeller.Interfaces {
 	/// <summary>
 	/// ett totalutdrag från registret
 	/// </summary>
+	/// <returns>En samling med samtliga inlagda kort</returns>
 	List<Person> Read ();
 
 	/// <summary>
 	/// utdrag av ett specifikt kort
 	/// </summary>
-	/// <params>
-	/// id - löpnummer för det kort som ska hämtas
-	/// </params>
+	/// <param name="id">id - löpnummer för det kort som ska hämtas</param>
+	/// <returns>Kopia på ett visst kort</returns>
 	Person Read ( int id );
 
 	/// <summary>
 	/// modifiering
 	/// </summary>
-	/// <params>
-	/// Person person - det kort som ska modifieras
-	/// </params>
+	/// <param name="person">det kort som ska modifieras</param>
+	/// <returns>Modifiering av ett visst kort</returns>
 	Person Update ( Person person );
 
 	/// <summary>
 	/// kasering av ett kort
 	/// </summary>
-	/// <params>
-	/// Person person - det kort som ska kaseras
-	/// </params>
+	/// <param name="person">Person person - det kort som ska kaseras</param>
+	/// <returns>Flagga som anger om kasering fungerade, fanns kortet överhuvudtaget ?</returns>
 	bool Delete ( Person person );
     }
 }
