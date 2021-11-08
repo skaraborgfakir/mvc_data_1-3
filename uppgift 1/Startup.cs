@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-08 01:41:52 stefan>
+// Time-stamp: <2021-11-08 13:56:24 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -72,9 +72,6 @@ namespace Kartotek
 	{
 	    Console.WriteLine( "Startup.cs: REVELJ: ConfigureServices");
 
-	    Console.WriteLine( "Startup.cs: " + Configuration["DBConnectionStrings:People"]);
-	    Console.WriteLine( "Startup.cs: " + Configuration["DBConnectionStrings:PeopleIdentity"]);
-
 	    // behövs för UseCors i Configure
 	    // services.AddCors(opt => {
 	    //	opt.AddPolicy("CorsPolicy", policy => { policy
@@ -116,7 +113,7 @@ namespace Kartotek
 	    // services.AddSingleton
 	    // services.AddTransient
 	    services.AddScoped<IPeopleService, PeopleService>();
-	    services.AddSingleton<IPeopleRepo, InMemoryPeopleRepo>(); // används av PeopleService
+	    services.AddSingleton<IPeopleRepo, InMemoryPeopleRepo>(); // används av PeopleService - singleton to rot ansvarar för dess levnad
 
 	    services.AddControllersWithViews();
 	    services.AddHttpContextAccessor();
@@ -207,9 +204,9 @@ namespace Kartotek
 // endpoints.MapControllerRoute( name: "ajax",
 //			      pattern: "Ajax/{action=uppdateralistan}",
 //			      defaults: new { controller = "PeopleAjax" });
-// endpoints.MapControllerRoute( name: "people",
-//			      pattern: "People",
-//			      defaults: new { controller = "People", action = "Index" } );
+		endpoints.MapControllerRoute( name: "kaserakort",
+					      pattern: "PeopleAjax/kaserakortet",
+					      defaults: new { controller = "PeopleAjax", action = "kaserakortet" } );
 		endpoints.MapControllerRoute( name: "default",
 					      pattern: "{controller=Home}/{action=Index}/{id?}" );
 	    } );
