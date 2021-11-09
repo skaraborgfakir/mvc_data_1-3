@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-08 13:56:24 stefan>
+// Time-stamp: <2021-11-09 09:09:25 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -11,26 +11,25 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Text.Json;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Http;
+
+using Microsoft.EntityFrameworkCore;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
-// egna tillägg
-using Microsoft.AspNetCore.Http;
-
 using Microsoft.Extensions.Logging;
-
-using System.Text.Json;
 
 // egen kod
 using Kartotek.Modeller;
 using Kartotek.Modeller.Data;
 using Kartotek.Modeller.Interfaces;
+using Kartotek.Databas;
 
 namespace Kartotek
 {
@@ -47,10 +46,10 @@ namespace Kartotek
 	/// </summary>
 	/// <param name="configuration">DI av en instans av IConfiguration</param>
 	/// <param name="env">DI av en instans av IWebHostEnvironment</param>
-	public REVELJ(IConfiguration configuration,
+	public REVELJ(IConfiguration configurationsrc,
 		      IWebHostEnvironment env)
 	{
-	    Configuration = configuration;
+	    Configurationsrc = configurationsrc;
 	    Environment = env;
 	}
 
@@ -59,7 +58,7 @@ namespace Kartotek
 	/// <summary>
 	/// https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
 	/// </summary>
-	public IConfiguration Configuration { get; }
+	public IConfiguration Configurationsrc { get; }
 
 	/// <summary>
 	/// https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
@@ -99,12 +98,17 @@ namespace Kartotek
 	    // https://andrewlock.net/session-state-gdpr-and-non-essential-cookies/
 	    //
 	    services.AddSession( options => {
-		options.Cookie.Name = Configuration["session_kakans_namn"];
+		options.Cookie.Name = Configurationsrc["session_kakans_namn"];
 		options.IdleTimeout = TimeSpan.FromSeconds( 40 );
 		options.Cookie.HttpOnly = true;
 		options.Cookie.IsEssential = true;
 	    }
 	    );
+
+	    // services.AddDbContext<DBWebShop>(options =>
+	    //	    options.UseSqlServer(Configuration.GetConnectionString("DbConnection")));
+	    services.AddDbContext<dbPeople>( options =>
+					     options.UseNpgsql(Configurationsrc["DBConnectionStrings:People"]));
 
 	    services.AddControllers().AddJsonOptions( options => {                               // Convert JSON from Camel Case to Pascal Case
 		options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase; // Use the default property (Pascal) casing.
@@ -153,9 +157,9 @@ namespace Kartotek
 		app.UseHsts();
 	    }
 
-	    // app.UseHttpsRedirection();  // blockera automatisk uppgradering till https
-	    app.UseStatusCodePages();  // mer förklarande beskrivning av fel (http status 400-599) som saknar en beskrivning
-	    app.UseStaticFiles();              // get av statisk filer exv script/css etc
+	    // app.UseHttpsRedirection(); // blockera automatisk uppgradering till https
+	    app.UseStatusCodePages();     // mer förklarande beskrivning av fel (http status 400-599) som saknar en beskrivning
+	    app.UseStaticFiles();         // get av statisk filer exv script/css etc
 
 	    //
 	    // aktivera vidarebefordran av frågor till olika kontrollanter
