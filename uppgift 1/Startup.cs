@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-09 09:09:25 stefan>
+// Time-stamp: <2021-11-10 14:37:41 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -18,12 +18,15 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Http;
 
-using Microsoft.EntityFrameworkCore;
-
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+
+// EF6
+using Microsoft.EntityFrameworkCore;
+
+// Identity här
 
 // egen kod
 using Kartotek.Modeller;
@@ -42,10 +45,7 @@ namespace Kartotek
     public class REVELJ
     {
 	/// <summary>
-	/// https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
 	/// </summary>
-	/// <param name="configuration">DI av en instans av IConfiguration</param>
-	/// <param name="env">DI av en instans av IWebHostEnvironment</param>
 	public REVELJ(IConfiguration configurationsrc,
 		      IWebHostEnvironment env)
 	{
@@ -62,25 +62,30 @@ namespace Kartotek
 
 	/// <summary>
 	/// https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
+	/// </summary>
+	/// <param name="configurationsrc">DI av en instans av IConfiguration</param>
+	/// <param name="env">DI av en instans av IHostEnvironment</param>
+	/// <summary>
+	/// https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
 	///
 	/// DI:ympning av loggning fungerar inte i ConfigureServices
 	/// </summary>
 	/// <param name="services">DI av en instans av IServiceCollection - ger tillgång till exv info om programmets miljö</param>
 	/// <see href="https://stackoverflow.com/questions/41287648/how-do-i-write-logs-from-within-startup-cs">how-do-i-write-logs-from-within-startup-cs</see>
-	public void ConfigureServices(IServiceCollection services)
+	public void ConfigureServices( IServiceCollection services)
 	{
 	    Console.WriteLine( "Startup.cs: REVELJ: ConfigureServices");
 
 	    // behövs för UseCors i Configure
-	    // services.AddCors(opt => {
-	    //	opt.AddPolicy("CorsPolicy", policy => { policy
+	    // services.AddCors( opt => {
+	    //	opt.AddPolicy( "CorsPolicy", policy => { policy
 	    //		    .AllowAnyHeader()
 	    //		    .AllowAnyMethod()
-	    //		    .WithExposedHeaders("WWW-Authenticate")
-	    //		    .WithOrigins("https://localhost:44345")
-	    //		    .WithOrigins("https://localhost:5009")
-	    //		    .WithOrigins("http://localhost:5009")
-	    //		    .WithOrigins("https://localhost:5009/lib/jquery/jquery.js")
+	    //		    .WithExposedHeaders( "WWW-Authenticate")
+	    //		    .WithOrigins( "https://localhost:44345")
+	    //		    .WithOrigins( "https://localhost:5009")
+	    //		    .WithOrigins( "http://localhost:5009")
+	    //		    .WithOrigins( "https://localhost:5009/lib/jquery/jquery.js")
 	    //		    .AllowCredentials();
 	    //	});
 	    // });
@@ -105,19 +110,19 @@ namespace Kartotek
 	    }
 	    );
 
-	    // services.AddDbContext<DBWebShop>(options =>
-	    //	    options.UseSqlServer(Configuration.GetConnectionString("DbConnection")));
+	    // services.AddDbContext<DBWebShop>( options =>
+	    //	    options.UseSqlServer( Configuration.GetConnectionString( "DbConnection")));
 	    services.AddDbContext<dbPeople>( options =>
-					     options.UseNpgsql(Configurationsrc["DBConnectionStrings:People"]));
+					     options.UseNpgsql( Configurationsrc["DBConnectionStrings:People"]));
 
 	    services.AddControllers().AddJsonOptions( options => {                               // Convert JSON from Camel Case to Pascal Case
-		options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase; // Use the default property (Pascal) casing.
+		options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase; // Use the default property( Pascal) casing.
 	    } );
 
 	    // services.AddSingleton
 	    // services.AddTransient
-	    services.AddScoped<IPeopleService, PeopleService>();
-	    services.AddSingleton<IPeopleRepo, InMemoryPeopleRepo>(); // används av PeopleService - singleton to rot ansvarar för dess levnad
+	    services.AddScoped< IPeopleService, PeopleService>();
+	    services.AddSingleton< IPeopleRepo, InMemoryPeopleRepo>(); // används av PeopleService - singleton to rot ansvarar för dess levnad
 
 	    services.AddControllersWithViews();
 	    services.AddHttpContextAccessor();
@@ -139,8 +144,8 @@ namespace Kartotek
 	    //
 	    //
 	    // gaffling i flödet beroende på programmets startmiljö
-	    if (env.IsEnvironment( "Development_postgres") ||
-		env.IsEnvironment( "Development"))
+	    if( Environment.IsEnvironment( "Development_postgres") ||
+		Environment.IsEnvironment( "Development"))
 		loggdest.LogInformation( "Startup.cs: PostgreSQL:version");
 	    else
 		loggdest.LogInformation( "Startup.cs: MS SQL:version");
@@ -152,13 +157,13 @@ namespace Kartotek
 	    }
 	    else
 	    {
-		app.UseExceptionHandler("/Home/Error");
+		app.UseExceptionHandler( "/Home/Error");
 		// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 		app.UseHsts();
 	    }
 
 	    // app.UseHttpsRedirection(); // blockera automatisk uppgradering till https
-	    app.UseStatusCodePages();     // mer förklarande beskrivning av fel (http status 400-599) som saknar en beskrivning
+	    app.UseStatusCodePages();     // mer förklarande beskrivning av fel( http status 400-599) som saknar en beskrivning
 	    app.UseStaticFiles();         // get av statisk filer exv script/css etc
 
 	    //
@@ -170,13 +175,15 @@ namespace Kartotek
 
 	    if (env.IsDevelopment())
 		app.Use(next => context =>
+	    //
+	    // debug-utskrift - vad är adressen ???
 		{
 		    Console.WriteLine($"Found: {context.GetEndpoint()?.DisplayName}");
 		    return next(context);
 		});
 
 	    //
-	    // sessions-kakan - det här anropet måste vara placerad innan de moduler (exv
+	    // sessions-kakan - det här anropet måste vara placerad innan de moduler( exv
 	    // aktion-metoder) som ska ha tillgång till kakan.
 	    //
 	    app.UseSession();
@@ -186,20 +193,20 @@ namespace Kartotek
 	    //
 	    // https://docs.microsoft.com/en-us/aspnet/core/fundamentals/routing?view=aspnetcore-3.1
 	    //
-	    // avgrening till olika styrprogram (Controller) - ingen egentlig återuppsamling efter
+	    // avgrening till olika styrprogram( Controller) - ingen egentlig återuppsamling efter
 	    // dessa så inte en egentlig gaffling
 	    //
 	    // beroende av UseRouting() !
 	    //
 	    // mönsterigenkänning:
-	    //   en inkommande URL ska ha ett nominerat styrprogram (Controller)
+	    //   en inkommande URL ska ha ett nominerat styrprogram( Controller)
 	    //   och som option en aktion som eventuellt kan använda ett Id
 	    //
-	    // för varje fördelning ska det finnas ett unikt namn (id)
+	    // för varje fördelning ska det finnas ett unikt namn( id)
 	    //
-	    // mer specifika  rutter ska vara före mer generella ( more specific patterns before less  specific ones.)
+	    // mer specifika  rutter ska vara före mer generella( more specific patterns before less  specific ones.)
 	    //
-	    // UseEndpoints är en utökning av samma typ som de tidigare UseStaticFiles (middleware component)
+	    // UseEndpoints är en utökning av samma typ som de tidigare UseStaticFiles( middleware component)
 	    // men den är speciell i att den är final dvs slutdestination
 	    //
 	    app.UseEndpoints( endpoints => {
