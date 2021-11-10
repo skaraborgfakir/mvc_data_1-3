@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-06 16:32:00 stefan>
+// Time-stamp: <2021-11-09 12:23:07 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -52,11 +52,11 @@ namespace Kartotek.Modeller.Vyer
 	/// </summary>
 	public CreatePersonViewModel NyttKort { get; set; }
 
-	/// <summary>
-	/// skrollistan i den ajaxbaserade kort-väljaren
-	/// </summary>
-	// public  AktionSpecifiktkort specifiktKort
-	// {
+	// <summary>
+	// skrollistan i den ajaxbaserade kort-väljaren
+	// </summary>
+	//public  AktionSpecifiktkort specifiktKort
+	//{
 	//     get; set;
 	// }
     }
