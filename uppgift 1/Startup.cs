@@ -46,14 +46,7 @@ namespace Kartotek
     {
 	/// <summary>
 	/// </summary>
-	public REVELJ(IConfiguration configurationsrc,
-		      IWebHostEnvironment env)
-	{
-	    Configurationsrc = configurationsrc;
-	    Environment = env;
-	}
-
-	public IWebHostEnvironment Environment { get; }
+	public IHostEnvironment Environment { get; }
 
 	/// <summary>
 	/// https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
@@ -65,6 +58,13 @@ namespace Kartotek
 	/// </summary>
 	/// <param name="configurationsrc">DI av en instans av IConfiguration</param>
 	/// <param name="env">DI av en instans av IHostEnvironment</param>
+	public REVELJ( IConfiguration configurationsrc,
+		       IHostEnvironment env)
+	{
+	    Configurationsrc = configurationsrc;
+	    Environment = env;
+	}
+
 	/// <summary>
 	/// https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
 	///
@@ -136,9 +136,8 @@ namespace Kartotek
 	///
 	/// DI av loggning från rot
 	/// </summary>
-	public void Configure ( IApplicationBuilder app,
-				IHostEnvironment env,
-				ILogger<REVELJ> loggdest)
+	public void Configure( IApplicationBuilder app,
+			       ILogger<REVELJ> loggdest)
 	{
 	    //
 	    //
@@ -150,10 +149,10 @@ namespace Kartotek
 	    else
 		loggdest.LogInformation( "Startup.cs: MS SQL:version");
 
-	    if (env.IsDevelopment() ||
-		env.IsEnvironment( "Development_postgres"))
+	    if( Environment.IsDevelopment() ||
+		Environment.IsEnvironment( "Development_postgres"))
 	    {
-		app.UseDeveloperExceptionPage();  // plockar upp händelser (exceptions) i aktiverade moduler (exv en kontrollant) för att ge meddelandestatus till användaren
+		app.UseDeveloperExceptionPage();  // plockar upp händelser( exceptions) i aktiverade moduler( exv en kontrollant) för att ge meddelandestatus till användaren
 	    }
 	    else
 	    {
@@ -173,13 +172,13 @@ namespace Kartotek
 
 	    // app.UseCors(); // blockera CORS-hantering
 
-	    if (env.IsDevelopment())
-		app.Use(next => context =>
 	    //
 	    // debug-utskrift - vad är adressen ???
+	    if( Environment.IsDevelopment())
+		app.Use( next => context =>
 		{
-		    Console.WriteLine($"Found: {context.GetEndpoint()?.DisplayName}");
-		    return next(context);
+		    Console.WriteLine( $"Found: {context.GetEndpoint()?.DisplayName}");
+		    return next( context);
 		});
 
 	    //
