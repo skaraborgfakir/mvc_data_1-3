@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-11 14:49:48 stefan>
+// Time-stamp: <2021-11-11 16:44:31 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -57,8 +57,9 @@ namespace Kartotek.Controllers {
 	    this.webHostEnvironment = webHostEnvironment;
 	    this.serviceenheten     = serviceenheten;
 
-	    Loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) + "\n"
-					  + "this.configurationsrc: " + this.configurationsrc["session_kakans_namn"]);
+	    Loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) +
+				     " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) + "\n" +
+				     "this.configurationsrc: " + this.configurationsrc["session_kakans_namn"]);
 
 	    this.sessionsuffix=this.configurationsrc["session_kakans_namn"];
 	}
