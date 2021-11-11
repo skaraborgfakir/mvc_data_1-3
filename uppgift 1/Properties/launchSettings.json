@@ -7,49 +7,49 @@
 	    "sslPort": 44345
 	}
     },
-    "profiles": {
-	"IIS Express": {
-	    "commandName": "IISExpress",
-	    "launchBrowser": true,
-	    "environmentVariables": {
-		"ASPNETCORE_ENVIRONMENT": "Development"
-	    }
-	},
-	"Kartotek": {
-	    "commandName": "Project",
-	    "dotnetRunMessages": "true",
-	    "launchBrowser": false,
-	    "applicationUrl": "http://localhost:5008;https://localhost:5009",
-	    "environmentVariables": {
-		"ASPNETCORE_ENVIRONMENT": ""
-	    }
-	},
-	"Kartotek-postgres": {
-	    "commandName": "Project",
-	    "dotnetRunMessages": "true",
-	    "launchBrowser": false,
-	    "applicationUrl": "http://localhost:5008;https://localhost:5009",
-	    "environmentVariables": {
-		"ASPNETCORE_ENVIRONMENT": "postgres"
-	    }
-	},
-	"Kartotek-dev": {
-	    "commandName": "Project",
-	    "dotnetRunMessages": "true",
-	    "launchBrowser": false,
-	    "applicationUrl": "http://localhost:5008;https://localhost:5009",
-	    "environmentVariables": {
-		"ASPNETCORE_ENVIRONMENT": "Development"
-	    }
-	},
-	"Kartotek-postgres-dev": {
-	    "commandName": "Project",
-	    "dotnetRunMessages": "true",
-	    "launchBrowser": false,
-	    "applicationUrl": "http://localhost:5008;https://localhost:5009",
-	    "environmentVariables": {
-		"ASPNETCORE_ENVIRONMENT": "postgres.Development"
-	    }
-	}
+  "profiles": {
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": false,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "Kartotek": {
+      "applicationUrl": "http://localhost:5008;https://localhost:5009",
+      "commandName": "Project",
+      "dotnetRunMessages": "true",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": ""
+      },
+      "launchBrowser": false
+    },
+    "Kartotek-dev": {
+      "applicationUrl": "http://localhost:5008;https://localhost:5009",
+      "commandName": "Project",
+      "dotnetRunMessages": "true",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "launchBrowser": false
+    },
+    "Kartotek-postgres": {
+      "applicationUrl": "http://localhost:5008;https://localhost:5009",
+      "commandName": "Project",
+      "dotnetRunMessages": "true",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "postgres"
+      },
+      "launchBrowser": false
+    },
+    "Kartotek-postgres-dev": {
+      "applicationUrl": "http://localhost:5008;https://localhost:5009",
+      "commandName": "Project",
+      "dotnetRunMessages": "true",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "postgres.Development"
+      },
+      "launchBrowser": false
     }
+  }
 }
