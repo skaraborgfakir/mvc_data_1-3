@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-10 14:37:41 stefan>
+// Time-stamp: <2021-11-11 14:47:33 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -110,8 +110,8 @@ namespace Kartotek
 	    }
 	    );
 
-	    // services.AddDbContext<DBWebShop>( options =>
-	    //	    options.UseSqlServer( Configuration.GetConnectionString( "DbConnection")));
+	    //
+	    // registrering för DI av dbcontext mot DatabasePeopleRepo
 	    services.AddDbContext<dbPeople>( options =>
 					     options.UseNpgsql( Configurationsrc["DBConnectionStrings:People"]));
 
@@ -119,10 +119,8 @@ namespace Kartotek
 		options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase; // Use the default property( Pascal) casing.
 	    } );
 
-	    // services.AddSingleton
-	    // services.AddTransient
-	    services.AddScoped< IPeopleService, PeopleService>();
-	    services.AddSingleton< IPeopleRepo, InMemoryPeopleRepo>(); // används av PeopleService - singleton to rot ansvarar för dess levnad
+	    services.AddScoped< IPeopleService, PeopleService>();   // används av kontrollanterna så länge de finns en igång (de avslutas efter return)
+	    services.AddScoped< IPeopleRepo, DatabasePeopleRepo>(); // används av PeopleService - scoped, så den kastas efter att PeopleService avslutas
 
 	    services.AddControllersWithViews();
 	    services.AddHttpContextAccessor();
