@@ -26,12 +26,15 @@ namespace Kartotek.Migrations
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Bostadsort")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Namn")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Telefonnummer")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");

@@ -3,7 +3,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Kartotek.Migrations
 {
-    public partial class dbPeople_initial_inläggning_20211109 : Migration
+    public partial class dbpeople_initial_20211111 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,9 +13,9 @@ namespace Kartotek.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Namn = table.Column<string>(nullable: true),
-                    Bostadsort = table.Column<string>(nullable: true),
-                    Telefonnummer = table.Column<string>(nullable: true)
+                    Namn = table.Column<string>(nullable: false),
+                    Bostadsort = table.Column<string>(nullable: false),
+                    Telefonnummer = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {

@@ -9,8 +9,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Kartotek.Migrations
 {
     [DbContext(typeof(dbPeople))]
-    [Migration("20211109091249_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20211111102444_dbpeople_initial_2021-11-11")]
+    partial class dbpeople_initial_20211111
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,12 +28,15 @@ namespace Kartotek.Migrations
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Bostadsort")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Namn")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Telefonnummer")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");

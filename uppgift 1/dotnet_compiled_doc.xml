@@ -163,6 +163,49 @@
             to be done
             </summary>
         </member>
+        <member name="T:Kartotek.Databas.dbPeople">
+            <summary>
+            to be done
+            </summary>
+        </member>
+        <member name="P:Kartotek.Databas.dbPeople.Environment">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Kartotek.Databas.dbPeople.Configurationsrc">
+            <summary>
+            https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
+            </summary>
+        </member>
+        <member name="P:Kartotek.Databas.dbPeople.Loggdest">
+            <summary>
+            loggning från dbPeople
+            </summary>
+        </member>
+        <member name="P:Kartotek.Databas.dbPeople.Person">
+            <summary>
+            databasens relation som objekt-relations mappning
+            </summary>
+        </member>
+        <member name="M:Kartotek.Databas.dbPeople.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{Kartotek.Databas.dbPeople},Microsoft.Extensions.Hosting.IHostEnvironment,Microsoft.Extensions.Logging.ILogger{Kartotek.Databas.dbPeople},Microsoft.Extensions.Configuration.IConfiguration)">
+             <summary>
+            
+             </summary>
+             <param name="options"></param>
+             <param name="env"></param>
+             <param name="loggdest"></param>
+             <param name="configurationsrc"></param>
+        </member>
+        <member name="M:Kartotek.Databas.dbPeople.OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder)">
+            <summary>
+            Använder PostgreSQL istället för MS SQL som database
+            Istället för att via appsettings*.json sätta anslutningssträngarna kan man göra så här istället
+            </summary>
+        </member>
+        <member name="M:Kartotek.Databas.dbPeople.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            </summary>
+        </member>
         <member name="T:Kartotek.Modeller.Data.InMemoryPeopleRepo">
             <summary>
             datalager - en abstraktion som lämnar garantier för data:uppgifters oföränderlighet (persistence)
@@ -564,17 +607,21 @@
             kan egentligen heta vad som helst exv REVELJ !
             </remarks>
         </member>
-        <member name="M:Kartotek.REVELJ.#ctor(Microsoft.Extensions.Configuration.IConfiguration,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+        <member name="P:Kartotek.REVELJ.Environment">
             <summary>
-            https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
             </summary>
-            <param name="configuration">DI av en instans av IConfiguration</param>
-            <param name="env">DI av en instans av IWebHostEnvironment</param>
         </member>
-        <member name="P:Kartotek.REVELJ.Configuration">
+        <member name="P:Kartotek.REVELJ.Configurationsrc">
             <summary>
             https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
             </summary>
+        </member>
+        <member name="M:Kartotek.REVELJ.#ctor(Microsoft.Extensions.Configuration.IConfiguration,Microsoft.Extensions.Hosting.IHostEnvironment)">
+            <summary>
+            https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
+            </summary>
+            <param name="configurationsrc">DI av en instans av IConfiguration</param>
+            <param name="env">DI av en instans av IHostEnvironment</param>
         </member>
         <member name="M:Kartotek.REVELJ.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
              <summary>
@@ -585,7 +632,7 @@
              <param name="services">DI av en instans av IServiceCollection - ger tillgång till exv info om programmets miljö</param>
              <see href="https://stackoverflow.com/questions/41287648/how-do-i-write-logs-from-within-startup-cs">how-do-i-write-logs-from-within-startup-cs</see>
         </member>
-        <member name="M:Kartotek.REVELJ.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.Extensions.Hosting.IHostEnvironment,Microsoft.Extensions.Logging.ILogger{Kartotek.REVELJ})">
+        <member name="M:Kartotek.REVELJ.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.Extensions.Logging.ILogger{Kartotek.REVELJ})">
              <summary>
              Konfiguration av hur http-trafik ska hanteras
              överföring mellan de olika stegen via Routing, Session, Autentisering till mottagande kontrollant
