@@ -33,7 +33,7 @@ namespace Kartotek.Modeller {
 	/// databaslagret är registrerat i Startup.cs: ConfigureServices
 	/// </summary>
 	public DatabasePeopleRepo ( ILogger<DatabasePeopleRepo> loggdest,
-				    dbPeople databaslager )
+				    DBPeople databaslager )
 	{
 	    databas = dbPeople;
 	}
