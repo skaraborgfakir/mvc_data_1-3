@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-06 16:29:56 stefan>
+// Time-stamp: <2021-11-11 14:49:48 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -38,11 +38,12 @@ namespace Kartotek.Controllers {
     /// En kontroller implementeras utgående från serviceenhetens termer
     /// </remark>
     public class PeopleController : Controller {
-	private readonly ILogger<PeopleController> loggdest;
 	private readonly IConfiguration configurationsrc;
 	private readonly IWebHostEnvironment webHostEnvironment;
 	private readonly IPeopleService serviceenheten;
 	private readonly string sessionsuffix;
+
+	private ILogger<PeopleController> Loggdest { get; }
 
 	/// <summary>
 	/// kreator för PeopleController
@@ -51,14 +52,13 @@ namespace Kartotek.Controllers {
 				  IConfiguration configurationsrc,
 				  IWebHostEnvironment webHostEnvironment,
 				  IPeopleService serviceenheten ) {
+	    Loggdest = loggdest;
 	    this.configurationsrc   = configurationsrc;
-	    this.loggdest           = loggdest;
 	    this.webHostEnvironment = webHostEnvironment;
 	    this.serviceenheten     = serviceenheten;
 
-	    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
-					 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
-					 "\n" + "this.configurationsrc: " + this.configurationsrc["session_kakans_namn"]);
+	    Loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) + "\n"
+					  + "this.configurationsrc: " + this.configurationsrc["session_kakans_namn"]);
 
 	    this.sessionsuffix=this.configurationsrc["session_kakans_namn"];
 	}
@@ -78,7 +78,7 @@ namespace Kartotek.Controllers {
 	[ActionName( "Index" )]
 	public IActionResult Index ( HopslagenmodellVymodell vymodell )
 	{
-	    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+	    Loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
 					 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
 					 "\n" + "this.configurationsrc: " + this.configurationsrc["app_run_miljö"]);
 
@@ -115,7 +115,7 @@ namespace Kartotek.Controllers {
 	[HttpPost]
 	[ActionName("filtrering")]
 	public IActionResult Filtrera ( HopslagenmodellVymodell vymodell ) {
-	    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+	    Loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
 					 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
 	    // HopslagenmodellVymodell nyVymodell = new HopslagenmodellVymodell();
@@ -123,7 +123,7 @@ namespace Kartotek.Controllers {
 
 	    if (ModelState.IsValid) {
 		if (vymodell != null) {
-		    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+		    Loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
 						 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
 		    //
@@ -133,7 +133,7 @@ namespace Kartotek.Controllers {
 		    // sökkriterier (namn/bostadsort) i session ?
 		    //
 		    if (vymodell.Filtertermer != null) {
-			this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+			Loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
 						     (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
 						     " namn : " + vymodell.Filtertermer.Namn +
 						     " bostadsort " + vymodell.Filtertermer.Bostadsort);
@@ -173,7 +173,7 @@ namespace Kartotek.Controllers {
 	[HttpPost]
 	[ActionName( "ingenfiltrering" )]
 	public IActionResult IngenFiltrering ( HopslagenmodellVymodell vymodell ) {
-	    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+	    Loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
 					 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
 	    HttpContext.Session.SetInt32( $"valdterm.{this.sessionsuffix}", 0 );
@@ -189,20 +189,20 @@ namespace Kartotek.Controllers {
 	[HttpPost]
 	[ActionName( "nyttkort" )]
 	public IActionResult SkapaNyttKort ( HopslagenmodellVymodell vymodell ) {
-	    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+	    Loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
 					 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
 	    HopslagenmodellVymodell nyVymodell = new HopslagenmodellVymodell();
 
 	    if (ModelState.IsValid) {
-	    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+	    Loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
 					 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
 					 "\n" + " model is valid");
 		if (!String.IsNullOrEmpty( vymodell.NyttKort.Namn ) &&
 		    !String.IsNullOrEmpty( vymodell.NyttKort.Bostadsort ) &&
 		    !String.IsNullOrEmpty( vymodell.NyttKort.Telefonnummer )) {
 
-		    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+		    Loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
 						 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
 						 "\n" + "alla uppgifter finns med");
 
@@ -212,7 +212,7 @@ namespace Kartotek.Controllers {
 		    this.serviceenheten.Add( nyttKort );
 		}
 	    } else {
-		this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+		Loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
 						 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
 						 "\n" + "modell NOT valid");
 	    }
@@ -230,7 +230,7 @@ namespace Kartotek.Controllers {
 	[HttpPost]
 	[ActionName( "modifiering" )]
 	public IActionResult ModifieraKort ( HopslagenmodellVymodell vymodell ) {
-	    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+	    Loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
 					 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
 	    HopslagenmodellVymodell nyVymodell = new HopslagenmodellVymodell();
@@ -245,7 +245,7 @@ namespace Kartotek.Controllers {
 	[HttpGet]
 	[ActionName( "radering" )]
 	public IActionResult TagBortKort ( int id ) {
-	    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+	    Loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
 					 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
 	    HopslagenmodellVymodell nyVymodell = new HopslagenmodellVymodell();

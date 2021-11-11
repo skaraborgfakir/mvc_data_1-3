@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-09 14:46:08 stefan>
+// Time-stamp: <2021-11-11 14:47:36 stefan>
 //
 
 
@@ -23,7 +23,7 @@ namespace Kartotek.Databas {
     /// <summary>
     /// to be done
     /// </summary>
-    public class dbPeople : DbContext {
+    public class DBPeople : DbContext {
 	/// <summary>
 	/// </summary>
 	public IHostEnvironment Environment { get; }
@@ -34,32 +34,52 @@ namespace Kartotek.Databas {
 	public IConfiguration Configurationsrc { get; }
 
 	/// <summary>
+	/// loggning från DBPeople
+	/// </summary>
+	public ILogger<DBPeople> Loggdest { get; }
+
+	/// <summary>
 	/// databasens relation som objekt-relations mappning
 	/// </summary>
 	public DbSet<Person> Person { get; set; }
 
+
 	/// <summary>
-	///
+	/// Kreator
 	/// </summary>
 	/// <param name="options"></param>
 	/// <param name="env"></param>
 	/// <param name="loggdest"></param>
 	/// <param name="configurationsrc"></param>
-	public dbPeople( DbContextOptions<dbPeople> options,
+	public DBPeople( DbContextOptions<DBPeople> options,
 			 IHostEnvironment env,
-			 ILogger<dbPeople> loggdest,
+			 ILogger<DBPeople> loggdest,
 			 IConfiguration configurationsrc ) : base(options)
 	{
-	    Console.WriteLine("public dbPeople( DbContextOptions<dbPeople> options,");
-
-	    if ( Environment.IsDevelopment() ||
-		 Environment.IsEnvironment( "Development_postgres")) {
-		loggdest.LogInformation( "public dbPeople( DbContextOptions<dbPeople> options," +
-					 "\n" + Configurationsrc["DBConnectionStrings:People"]);
-	    }
-
 	    Environment = env;
+	    Loggdest = loggdest;
 	    Configurationsrc = configurationsrc;
+
+	    Loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
+				     "\n" + "Configurationsrc: " + Configurationsrc["DBConnectionStrings:People"] +
+				     "\n" + "Configurationsrc: " + Configurationsrc["DBConnectionStrings:PeopleIdentity"]);
+
+	    if ( Environment.IsDevelopment()) {
+		Loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) + "\n"
+					 + "MS SQL - Environment: Development");
+	    }
+	    if ( Environment.IsProduction()) {
+		Loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) + "\n"
+					 + "MS SQL - Environment: Production");
+	    }
+	    if ( Environment.IsEnvironment( "postgres.Development")) {
+		Loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) + "\n"
+					 + "Postgres - Environment: Development");
+	    }
+	    if ( Environment.IsEnvironment( "postgres")) {
+		Loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) + "\n"
+					 + "Postgres - Environment: Production");
+	    }
 	}
 
 	/// <summary>
@@ -73,7 +93,8 @@ namespace Kartotek.Databas {
 	/// </summary>
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
-	    Console.WriteLine("protected override void OnModelCreating(ModelBuilder modelBuilder)");
+	    Loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) + "\n"
+				     + "Configurationsrc: " + Configurationsrc["session_kakans_namn"]);
 
 	    base.OnModelCreating(modelBuilder);
 	    modelBuilder.Entity<Person>()
@@ -86,14 +107,12 @@ namespace Kartotek.Databas {
 	    //	.Entity<Person>().HasData(
 	    //	new Person
 	    //	{
-	    //	    id = 1,
 	    //	    Namn= "Ulf Smedbo",
 	    //	    Bostadsort= "Göteborg",
 	    //	    Telefonnummer= "031"
 	    //	},
 	    //	new Person
 	    //	{
-	    //	    id = 2,
 	    //	    Namn= "Bengt Ulfsson",
 	    //	    Bostadsort= "Växjö",
 	    //	    Telefonnummer= "044"
