@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-06 16:32:03 stefan>
+// Time-stamp: <2021-11-11 23:15:34 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/

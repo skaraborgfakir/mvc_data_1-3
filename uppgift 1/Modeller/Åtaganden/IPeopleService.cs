@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-06 19:21:26 stefan>
+// Time-stamp: <2021-11-11 23:18:24 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -26,10 +26,15 @@ namespace Kartotek.Modeller.Interfaces {
     /// En MVC-kontrollant ska exv inte användas för att söka eller få fram exv
     /// ordersummor
     /// Sådant ska vara i exv OrderService (som ansvarar för åtagandet IOrderService)
+    ///
+    /// Definitioner av åtagandena finns i http://skaraborgfakir.github.io/lexicon/3. MVC
     /// </remarks>
-    /// <seealso href="https://skaraborgfakir.github.io/lexicon/3.%20MVC/MVC%20Data,%20Assignment%203%20-%View Models.pdf">Designen måste följa dokumenten MVC Data, View Models</seealso>
-    /// <seealso href="https://skaraborgfakir.github.io/lexicon/3.%20MVC/MVC%20Data,%20Assignment%203%20-%20Partial Views.pdf">och MVC Data, Partial Views</seealso>
-    /// <seealso href="https://skaraborgfakir.github.io/lexicon/3.%20MVC/MVC%20Data,%20Assignment%203%20-%20AJAX.pdf">och MVC Data, AJAX</seealso>
+    /// <seealso href="https://skaraborgfakir.github.io/lexicon/3.%20MVC/MVC%20Data,%20Assignment%203%20-%View Models.pdf">
+    /// Designen måste följa dokumenten MVC Data, View Models</seealso>
+    /// <seealso href="https://skaraborgfakir.github.io/lexicon/3.%20MVC/MVC%20Data,%20Assignment%203%20-%20Partial Views.pdf">
+    /// och MVC Data, Partial Views</seealso>
+    /// <seealso href="https://skaraborgfakir.github.io/lexicon/3.%20MVC/MVC%20Data,%20Assignment%203%20-%20AJAX.pdf">
+    /// och MVC Data, AJAX</seealso>
     public interface IPeopleService {
 	/// <summary>
 	/// inläggning av ett kort, använder den Create som definieras av IPeopleRepo

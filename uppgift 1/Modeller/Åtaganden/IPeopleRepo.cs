@@ -1,4 +1,4 @@
-// Time-stamp: <2021-11-06 18:50:15 stefan>
+// Time-stamp: <2021-11-11 23:18:15 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -18,6 +18,8 @@ namespace Kartotek.Modeller.Interfaces {
     /// följer IPeopleRepo-åtagandet
     /// </summary>
     /// <remarks>
+    ///
+    /// Definitioner av åtagandena finns i http://skaraborgfakir.github.io/lexicon/3. MVC
     /// </remarks>
     /// <see href="https://skaraborgfakir.github.io/lexicon/3.%20MVC/MVC%20Data,%20Assignment%203%20-%View Models.pdf">
     /// Designen måste följa dokumenten MVC Data, View Models</see>
