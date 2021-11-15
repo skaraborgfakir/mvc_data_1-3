@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-11 14:47:36 stefan>
+// Time-stamp: <2021-11-15 16:29:43 stefan>
 //
 
 
@@ -86,8 +86,17 @@ namespace Kartotek.Databas {
 	/// Använder PostgreSQL istället för MS SQL som database
 	/// Istället för att via appsettings*.json sätta anslutningssträngarna kan man göra så här istället
 	/// </summary>
-	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder
-	    .UseNpgsql(Configurationsrc["DBConnectionStrings:People"]);
+	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+	{
+	    if( Environment.IsEnvironment( "postgres.Development") ||
+		Environment.IsEnvironment( "postgres"))
+	    {
+		optionsBuilder.UseNpgsql(Configurationsrc["DBConnectionStrings:People"]);
+	    } else {
+		optionsBuilder.UseSqlServer(Configurationsrc["DBConnectionStrings:People"]);
+	    }
+	}
+
 
 	/// <summary>
 	/// </summary>
@@ -104,13 +113,14 @@ namespace Kartotek.Databas {
 		});
 
 	    // modelBuilder
-	    //	.Entity<Person>().HasData(
-	    //	new Person
-	    //	{
-	    //	    Namn= "Ulf Smedbo",
-	    //	    Bostadsort= "Göteborg",
-	    //	    Telefonnummer= "031"
-	    //	},
+	     //		 .Entity<Person>().HasData(
+	     //		     p => new Person {
+	     //			 ID = 0;
+	     //			 Namn = "Ulf Smedbo";
+	     //			 Bostadsort =  "Göteborg";
+	     //			 Telefonnummer =  "031";
+	     //		     }
+	     //		 );
 	    //	new Person
 	    //	{
 	    //	    Namn= "Bengt Ulfsson",
