@@ -1,5 +1,5 @@
 //
-// - Time-stamp: <2021-11-08 16:27:41 stefan>
+// - Time-stamp: <2021-11-15 19:42:59 stefan>
 //
 
 
@@ -27,7 +27,7 @@ $(document).ready(function() {
 	//
 
 	//
-	// TODO: se till att vyn är sortera att den som var innan load
+	// TODO: se till att vyn är sortera så som den var direkt efter inläsning
 	//
 	});
 
