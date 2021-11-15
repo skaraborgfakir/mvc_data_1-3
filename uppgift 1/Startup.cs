@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-11 14:47:33 stefan>
+// Time-stamp: <2021-11-15 12:21:33 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -77,18 +77,21 @@ namespace Kartotek
 	    Console.WriteLine( "Startup.cs: REVELJ: ConfigureServices");
 
 	    // behövs för UseCors i Configure
-	    // services.AddCors( opt => {
-	    //	opt.AddPolicy( "CorsPolicy", policy => { policy
-	    //		    .AllowAnyHeader()
-	    //		    .AllowAnyMethod()
-	    //		    .WithExposedHeaders( "WWW-Authenticate")
-	    //		    .WithOrigins( "https://localhost:44345")
+	    services.AddCors( opt => { opt
+			.AddPolicy( "CorsPolicy", policy => { policy
+				    // .AllowAnyHeader()
+				    // .AllowAnyMethod()
+				    // .WithExposedHeaders( "WWW-Authenticate")
+				    .WithOrigins( "http://localhost:5008/People",
+						  "https://localhost:5009/People",
+						  "https://localhost:5009/api/PeopleAjax" )
+				    .AllowCredentials();
+				    });
+			});
+
 	    //		    .WithOrigins( "https://localhost:5009")
 	    //		    .WithOrigins( "http://localhost:5009")
 	    //		    .WithOrigins( "https://localhost:5009/lib/jquery/jquery.js")
-	    //		    .AllowCredentials();
-	    //	});
-	    // });
 
 	    services.AddDistributedMemoryCache();
 
@@ -159,7 +162,7 @@ namespace Kartotek
 		app.UseHsts();
 	    }
 
-	    // app.UseHttpsRedirection(); // blockera automatisk uppgradering till https
+	    app.UseHttpsRedirection(); // blockera automatisk uppgradering till https
 	    app.UseStatusCodePages();     // mer förklarande beskrivning av fel( http status 400-599) som saknar en beskrivning
 	    app.UseStaticFiles();         // get av statisk filer exv script/css etc
 
@@ -168,7 +171,7 @@ namespace Kartotek
 	    // MapControllerRoute är beroende
 	    app.UseRouting();
 
-	    // app.UseCors(); // blockera CORS-hantering
+	    app.UseCors(); // blockera CORS-hantering
 
 	    //
 	    // debug-utskrift - vad är adressen ???
