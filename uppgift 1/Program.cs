@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-08 09:33:44 stefan>
+// Time-stamp: <2021-11-14 16:42:35 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -43,8 +43,6 @@ namespace Kartotek
 	/// <see href="https://stackoverflow.com/questions/41287648/how-do-i-write-logs-from-within-startup-cs">how-do-i-write-logs-from-within-startup-cs</see>
 	public static void Main ( string[] args )
 	{
-
-
 	    // netcore 3: mallen för en web host använder CreateHostBuilder
 	    // vilket skiljer sig mot den äldre CreateWebHostBuilder (som finns kvar
 	    // av kompatibilitetsskäl)
@@ -57,19 +55,16 @@ namespace Kartotek
 	    //   DI i Configure:metoden
 	    // CreateHostBuilder( args: args ).Build().Run();
 	    var host = CreateHostBuilder( args: args ).Build();
-	    var config = host.Services.GetRequiredService<IConfiguration>();
 
-	    foreach (var c in config.AsEnumerable())
-	    {
-		Console.WriteLine(c.Key + " = " + c.Value);
-	    }
+	    // dump av vad som kan hittas via Configuration
+	    // var config = host.Services.GetRequiredService<IConfiguration>();
+	    // Console.WriteLine("c in config.AsEnumerable");
+	    // foreach (var c in config.AsEnumerable())
+	    // {
+	    //	Console.WriteLine(c.Key + " = " + c.Value);
+	    // }
+
 	    host.Run();
-
-	    //
-	    // blurb för att mha DI få med loggning in till REVELJ:klassen
-	    // using var scope = host.Services.CreateScope();
-	    // var services = scope.ServiceProvider;
-	    // var loggerFactory = services.GetRequiredService<ILoggerFactory>();
 	}
 
 	/// <summary>
