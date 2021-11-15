@@ -2,15 +2,17 @@
 using Kartotek.Databas;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Kartotek.Migrations
 {
-    [DbContext(typeof(dbPeople))]
-    partial class dbPeopleModelSnapshot : ModelSnapshot
+    [DbContext(typeof(DBPeople))]
+    [Migration("20211115153748_Initial_2021-11-15")]
+    partial class Initial_20211115
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

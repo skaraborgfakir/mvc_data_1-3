@@ -3,7 +3,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Kartotek.Migrations
 {
-    public partial class dbpeople_initial_20211111 : Migration
+    public partial class Initial_20211115 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
