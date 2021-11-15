@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-11 23:14:55 stefan>
+// Time-stamp: <2021-11-15 20:01:30 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -84,7 +84,16 @@ namespace Kartotek.Modeller {
 	/// kriterier : inga, dvs alla kort ska hämtas och levereras
 	/// </summary>
 	public PeopleViewModel All () {
-	    PeopleViewModel vyn = new PeopleViewModel() { Utdraget = kartoteket.Read() };
+	    List<Person> utdrag = kartoteket.Read();
+
+	    foreach (Person kort in utdrag) {
+		this.loggdest.LogInformation( (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) + "\n" +
+					      "id: " + kort.Id.ToString() + "\n" +
+					      "namn: " + kort.Namn + "\n" +
+					      "namn: " + kort.Bostadsort);
+	    }
+
+	    PeopleViewModel vyn = new PeopleViewModel() { Utdraget = utdrag };
 
 	    return vyn;
 	}
