@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-11 23:15:34 stefan>
+// Time-stamp: <2021-11-15 20:00:33 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -58,10 +58,10 @@ namespace Kartotek.Modeller.Data {
 	public Person Create ( string namn,
 			       string bostadsort,
 			       string telefonnummer ) {
-	    Person person = new Person( id: idCounter++,
-					namn: namn,
-					bostadsort: bostadsort,
-					telefonnummer: telefonnummer );
+	    Person person = new Person( id : idCounter++,
+					namn : namn,
+					bostadsort : bostadsort,
+					telefonnummer : telefonnummer);
 	    kartoteket.Add( person );
 
 	    return person;
