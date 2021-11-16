@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-06 16:32:00 stefan>
+// Time-stamp: <2021-11-15 22:11:55 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -14,6 +14,10 @@
 //        namn
 //        bostadsort
 //        telefonnummer
+//
+// används av dialogen filtrering i People/Index.cshtml
+// och kortuppgifter.cshtml (modifiering eller radering av ett befintligt kort
+// via kortselektor eller listan)
 //
 
 using System;
@@ -49,9 +53,6 @@ namespace Kartotek.Modeller.Vyer {
 	[BindProperty]
 	[DisplayName("telefonnummer")]
 	[DataType(DataType.PhoneNumber)]
-	public string Telefonnummer {
-	    get;// { return telefonnummer; }
-	    set;// { telefonnummer = value; }
-	}
+	public string Telefonnummer { get; set; }
     }
 }

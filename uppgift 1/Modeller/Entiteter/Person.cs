@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-11 23:16:19 stefan>
+// Time-stamp: <2021-11-15 16:30:02 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -33,7 +33,7 @@ namespace Kartotek.Modeller.Entiteter {
 	/// <summary>
 	/// to be done
 	/// </summary>
-	[Key]
+	[Required]
 	public int Id { get; set; }
 
 	/// <summary>

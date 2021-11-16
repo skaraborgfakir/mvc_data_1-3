@@ -1,4 +1,4 @@
-<!-- Time-stamp: <2021-11-08 16:15:57 stefan> -*-web-*- -->
+<!-- Time-stamp: <2021-11-16 01:10:00 stefan> -*-web-*- -->
 <!-- https://www.educba.com/bootstrap-sort-table/
      här använder jag metod 1 för att sortera tabellen
 
@@ -6,6 +6,7 @@
 
      bootstrap 5.1 används
 -->
+<!-- klistras in via partialanrop i People/Index.cshtml -->
 
 @using System
 @using System.Collections.Generic
@@ -15,10 +16,6 @@
 @using Kartotek.Modeller.Entiteter
 
 @model Kartotek.Modeller.Vyer.HopslagenmodellVymodell
-
-<!-- aktörer efter förändringar i vad som ska hämtas mha AJAX och visas -->
-<!-- PeopleAjax ska vara rent webAPI -->
-<!-- funktion i paket hanterar validering av input -->
 
 <div class="container">
     <form id="specifiktKort" >  <!-- validering! -->
@@ -30,7 +27,9 @@
 	    <button id="kaserakortet"                   class="btn btn-danger">Radera valt kort</button>
 	</fieldset>
     </form>
-    <div id="ajaxvy_kartotek">
+    <!-- används som märke av de funktioner i ajaxkortfunktioner.js -->
+    <!-- som ska sätta in listan av kort/eller modifieringsdialogen -->
+    <div id="ajaxbaserad_kartotekvy">
     </div>
 </div>
 

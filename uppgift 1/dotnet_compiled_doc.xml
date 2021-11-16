@@ -127,11 +127,13 @@
         <member name="M:Kartotek.Controllers.PeopleController.ModifieraKort(Kartotek.Modeller.Vyer.HopslagenmodellVymodell)">
             <summary>
             modifiering av ett specifikt kort
+            använder modifieringsfunktionen i kortlistan
             </summary>
         </member>
         <member name="M:Kartotek.Controllers.PeopleController.TagBortKort(System.Int32)">
             <summary>
-            radering av item i listan
+            kasering
+            använder kaseringsfunktionen i kortlistan
             </summary>
         </member>
         <member name="T:Kartotek.Controllers.EnvironmentController">
@@ -163,47 +165,142 @@
             to be done
             </summary>
         </member>
-        <member name="T:Kartotek.Databas.dbPeople">
+        <member name="T:Kartotek.Databas.DBPeople">
             <summary>
             to be done
             </summary>
         </member>
-        <member name="P:Kartotek.Databas.dbPeople.Environment">
+        <member name="P:Kartotek.Databas.DBPeople.Environment">
             <summary>
             </summary>
         </member>
-        <member name="P:Kartotek.Databas.dbPeople.Configurationsrc">
+        <member name="P:Kartotek.Databas.DBPeople.Configurationsrc">
             <summary>
             https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
             </summary>
         </member>
-        <member name="P:Kartotek.Databas.dbPeople.Loggdest">
+        <member name="P:Kartotek.Databas.DBPeople.Loggdest">
             <summary>
-            loggning från dbPeople
+            loggning från DBPeople
             </summary>
         </member>
-        <member name="P:Kartotek.Databas.dbPeople.Person">
+        <member name="P:Kartotek.Databas.DBPeople.Person">
             <summary>
             databasens relation som objekt-relations mappning
             </summary>
         </member>
-        <member name="M:Kartotek.Databas.dbPeople.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{Kartotek.Databas.dbPeople},Microsoft.Extensions.Hosting.IHostEnvironment,Microsoft.Extensions.Logging.ILogger{Kartotek.Databas.dbPeople},Microsoft.Extensions.Configuration.IConfiguration)">
-             <summary>
-            
-             </summary>
-             <param name="options"></param>
-             <param name="env"></param>
-             <param name="loggdest"></param>
-             <param name="configurationsrc"></param>
+        <member name="M:Kartotek.Databas.DBPeople.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{Kartotek.Databas.DBPeople},Microsoft.Extensions.Hosting.IHostEnvironment,Microsoft.Extensions.Logging.ILogger{Kartotek.Databas.DBPeople},Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Kreator
+            </summary>
+            <param name="options"></param>
+            <param name="env"></param>
+            <param name="loggdest"></param>
+            <param name="configurationsrc"></param>
         </member>
-        <member name="M:Kartotek.Databas.dbPeople.OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder)">
+        <member name="M:Kartotek.Databas.DBPeople.OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder)">
             <summary>
             Använder PostgreSQL istället för MS SQL som database
             Istället för att via appsettings*.json sätta anslutningssträngarna kan man göra så här istället
             </summary>
         </member>
-        <member name="M:Kartotek.Databas.dbPeople.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+        <member name="M:Kartotek.Databas.DBPeople.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <summary>
+            </summary>
+        </member>
+        <member name="T:Kartotek.Modeller.PeopleService">
+            <summary>
+            to be done
+            </summary>
+        </member>
+        <member name="M:Kartotek.Modeller.PeopleService.#ctor(Microsoft.Extensions.Logging.ILogger{Kartotek.Modeller.PeopleService},Kartotek.Modeller.Interfaces.IPeopleRepo)">
+            <summary>
+            kreator av PeopleService
+            Ympas med DI med ett kartotek
+            injektion för att få tillgång till gemensam InMemoryPeopleRepo
+            </summary>
+            <param name="loggdest">Ympning med loggfunktionen</param>
+            <param name="kartoteket">Ympning av IPeopleRepo</param>
+        </member>
+        <member name="M:Kartotek.Modeller.PeopleService.FindBy(System.Int32)">
+            <summary>
+            plocka fram ett visst kort
+            enbart i form av entiteter, ej vymodell
+            </summary>
+        </member>
+        <member name="M:Kartotek.Modeller.PeopleService.Edit(System.Int32,Kartotek.Modeller.Entiteter.Person)">
+            <summary>
+            modifiering av ett specifikt kort
+            enbart i form av entiteter, ej vymodell
+            </summary>
+        </member>
+        <member name="M:Kartotek.Modeller.PeopleService.Remove(System.Int32)">
+            <summary>
+            kasering av ett specifikt kort
+            enbart i form av entiteter, ej vymodell
+            </summary>
+        </member>
+        <member name="M:Kartotek.Modeller.PeopleService.Add(Kartotek.Modeller.Vyer.CreatePersonViewModel)">
+            <summary>
+            tillägg av ett kort
+            utgår från en vymodell
+            </summary>
+        </member>
+        <member name="M:Kartotek.Modeller.PeopleService.All">
+            <summary>
+            sökning efter poster - utgår från en vymodell som sökterm
+            kriterier : inga, dvs alla kort ska hämtas och levereras
+            </summary>
+        </member>
+        <member name="M:Kartotek.Modeller.PeopleService.FindBy(Kartotek.Modeller.Vyer.PeopleViewModel)">
+            <summary>
+            sökning efter poster - utgår från en vymodell som sökterm
+            kriterier :
+               namn
+             eller
+               bostadsort
+             eller
+               båda ?
+            </summary>
+        </member>
+        <member name="P:Kartotek.Modeller.DatabasePeopleRepo.Kartoteket">
+            <summary>
+            referens till EF:s databaskontext
+            </summary>
+        </member>
+        <member name="F:Kartotek.Modeller.DatabasePeopleRepo.Loggdest">
+            <summary>
+            loggdestination
+            </summary>
+        </member>
+        <member name="M:Kartotek.Modeller.DatabasePeopleRepo.#ctor(Microsoft.Extensions.Logging.ILogger{Kartotek.Modeller.DatabasePeopleRepo},Kartotek.Databas.DBPeople)">
+            <summary>
+            Kreator - använd ympning (DI) för att få med ett databaslager
+            databaslagret är registrerat i Startup.cs: ConfigureServices
+            </summary>
+        </member>
+        <member name="M:Kartotek.Modeller.DatabasePeopleRepo.Create(System.String,System.String,System.String)">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Kartotek.Modeller.DatabasePeopleRepo.Read">
+            <summary>
+            returnerar en lista (iterator) för läsning från databasen
+            </summary>
+        </member>
+        <member name="M:Kartotek.Modeller.DatabasePeopleRepo.Read(System.Int32)">
+            <summary>
+            inläsning av ett visst kort
+            </summary>
+        </member>
+        <member name="M:Kartotek.Modeller.DatabasePeopleRepo.Update(Kartotek.Modeller.Entiteter.Person)">
+            <summary>
+            modfiering av ett visst kort
+            </summary>
+        </member>
+        <member name="M:Kartotek.Modeller.DatabasePeopleRepo.Delete(Kartotek.Modeller.Entiteter.Person)">
+            <summary>
+            kasering av uppgifter
             </summary>
         </member>
         <member name="T:Kartotek.Modeller.Data.InMemoryPeopleRepo">
@@ -298,6 +395,106 @@
             to be done
             </summary>
         </member>
+        <member name="T:Kartotek.Modeller.Vyer.AktionSpecifiktkort">
+            <summary>
+            to be done
+            </summary>
+        </member>
+        <member name="P:Kartotek.Modeller.Vyer.AktionSpecifiktkort.KortetsId">
+            <summary>
+            to be done
+            </summary>
+        </member>
+        <member name="T:Kartotek.Modeller.Vyer.CreatePersonViewModel">
+            <summary>
+            to be done
+            </summary>
+        </member>
+        <member name="P:Kartotek.Modeller.Vyer.CreatePersonViewModel.Namn">
+            <summary>
+            Namnet på den person som det nya kortet upptar
+            </summary>
+        </member>
+        <member name="P:Kartotek.Modeller.Vyer.CreatePersonViewModel.Bostadsort">
+            <summary>
+            Personens bostadsort
+            </summary>
+        </member>
+        <member name="P:Kartotek.Modeller.Vyer.CreatePersonViewModel.Telefonnummer">
+            <summary>
+            Personens telefonnummer - kontaktuppgifter
+            </summary>
+        </member>
+        <member name="P:Kartotek.Modeller.Vyer.Filtreringstermer.Namn">
+             <summary>
+             sökkriterier i sidhuvudet (används av PeopleController)
+             private string namn;
+            
+             används av Shared/Filtrering/Filtreringstermer.cshtml
+             </summary>
+        </member>
+        <member name="P:Kartotek.Modeller.Vyer.Filtreringstermer.Bostadsort">
+            <summary>
+            sökkriterier i sidhuvudet (används av PeopleController)
+            string bostadsort;
+            </summary>
+        </member>
+        <member name="T:Kartotek.Modeller.Vyer.HopslagenmodellVymodell">
+             <summary>
+             används i PeopleController:s egen index.html som datakälla - blir model
+            
+             Hopslagning av de klasser som är del av definitionerna i IPeopleService
+             iom att razor-filerna enbart vill hantera en modell, alltså måste klasserna
+             slås ihop till en gemensam modell i kontroller
+            
+             garantera att:
+               att användarna inte försöker skapa flera kort med samma innehåll
+               kontroll av uppgifterna
+                  att följande är satta dvs ej NULL
+                    namn
+                    bostadsort
+                    telefonnummer
+            
+             slås isär i kontroller innan delarna lämnas över till Peopleservice
+             </summary>
+        </member>
+        <member name="P:Kartotek.Modeller.Vyer.HopslagenmodellVymodell.Listfiltrering">
+            <summary>
+            söktermer i filtreringsdialogen
+            kan innehålla namn eller bostadsort
+            </summary>
+            <see cref="T:Kartotek.Modeller.PeopleService">PeopleService</see>
+        </member>
+        <member name="F:Kartotek.Modeller.Vyer.HopslagenmodellVymodell.InskrivningNyttKort">
+            <summary>
+            Fyll i ett nytt kort - nytt-kort delen i fönstret
+            </summary>
+        </member>
+        <member name="P:Kartotek.Modeller.Vyer.HopslagenmodellVymodell.Personlistan">
+            <summary>
+            de personer som ska synas i den vybaserade sidans lista
+            </summary>
+        </member>
+        <member name="T:Kartotek.Modeller.Vyer.PeopleViewModel">
+            <summary>
+            to be done
+            </summary>
+        </member>
+        <member name="P:Kartotek.Modeller.Vyer.PeopleViewModel.Termer">
+            <summary>
+            PeopleController.cs hanterar filtrering på så vis
+            den kontroller filtreringen via session-variablerna.
+            Nackdel/fördel: PeopleController och PeopleAjaxController har olika URL,
+            alltså får man slåss med CORS
+            </summary>
+        </member>
+        <member name="P:Kartotek.Modeller.Vyer.PeopleViewModel.Utdraget">
+            <summary>
+            innehåller listan på de kort som ska synas i vyn (från PeopleController)
+            används inte i den AJAX-baserade versionen iom den är ersatt av en partial view
+            som utgår från en lista av personer, för varje person skapas en specfik partial view
+            </summary>
+        </member>
         <member name="T:Kartotek.Modeller.Interfaces.IPeopleRepo">
              <summary>
              ett åtagande för ett det gränssnitt som affärslogikfunktioner har mot
@@ -307,6 +504,8 @@
              följer IPeopleRepo-åtagandet
              </summary>
              <remarks>
+            
+             Definitioner av åtagandena finns i http://skaraborgfakir.github.io/lexicon/3. MVC
              </remarks>
              <see href="https://skaraborgfakir.github.io/lexicon/3.%20MVC/MVC%20Data,%20Assignment%203%20-%View Models.pdf">
              Designen måste följa dokumenten MVC Data, View Models</see>
@@ -367,10 +566,15 @@
              En MVC-kontrollant ska exv inte användas för att söka eller få fram exv
              ordersummor
              Sådant ska vara i exv OrderService (som ansvarar för åtagandet IOrderService)
+            
+             Definitioner av åtagandena finns i http://skaraborgfakir.github.io/lexicon/3. MVC
              </remarks>
-             <seealso href="https://skaraborgfakir.github.io/lexicon/3.%20MVC/MVC%20Data,%20Assignment%203%20-%View Models.pdf">Designen måste följa dokumenten MVC Data, View Models</seealso>
-             <seealso href="https://skaraborgfakir.github.io/lexicon/3.%20MVC/MVC%20Data,%20Assignment%203%20-%20Partial Views.pdf">och MVC Data, Partial Views</seealso>
-             <seealso href="https://skaraborgfakir.github.io/lexicon/3.%20MVC/MVC%20Data,%20Assignment%203%20-%20AJAX.pdf">och MVC Data, AJAX</seealso>
+             <seealso href="https://skaraborgfakir.github.io/lexicon/3.%20MVC/MVC%20Data,%20Assignment%203%20-%View Models.pdf">
+             Designen måste följa dokumenten MVC Data, View Models</seealso>
+             <seealso href="https://skaraborgfakir.github.io/lexicon/3.%20MVC/MVC%20Data,%20Assignment%203%20-%20Partial Views.pdf">
+             och MVC Data, Partial Views</seealso>
+             <seealso href="https://skaraborgfakir.github.io/lexicon/3.%20MVC/MVC%20Data,%20Assignment%203%20-%20AJAX.pdf">
+             och MVC Data, AJAX</seealso>
         </member>
         <member name="M:Kartotek.Modeller.Interfaces.IPeopleService.Add(Kartotek.Modeller.Vyer.CreatePersonViewModel)">
             <summary>
@@ -420,149 +624,6 @@
             <param name="id">id</param>
             <returns>flagga som anger om borttangninen fungerade (fanns kortet egentligen ?)</returns>
             <see cref="T:Kartotek.Modeller.Interfaces.IPeopleRepo">Delete i IPeopleRepo</see>
-        </member>
-        <member name="T:Kartotek.Modeller.PeopleService">
-            <summary>
-            to be done
-            </summary>
-        </member>
-        <member name="M:Kartotek.Modeller.PeopleService.#ctor(Microsoft.Extensions.Logging.ILogger{Kartotek.Modeller.PeopleService},Kartotek.Modeller.Interfaces.IPeopleRepo)">
-            <summary>
-            kreator av PeopleService
-            Ympas med DI med ett kartotek
-            injektion för att få tillgång till gemensam InMemoryPeopleRepo
-            </summary>
-            <param name="loggdest">Ympning med loggfunktionen</param>
-            <param name="kartoteket">Ympning av IPeopleRepo</param>
-        </member>
-        <member name="M:Kartotek.Modeller.PeopleService.FindBy(System.Int32)">
-            <summary>
-            plocka fram ett visst kort
-            enbart i form av entiteter, ej vymodell
-            </summary>
-        </member>
-        <member name="M:Kartotek.Modeller.PeopleService.Edit(System.Int32,Kartotek.Modeller.Entiteter.Person)">
-            <summary>
-            modifiering av ett specifikt kort
-            enbart i form av entiteter, ej vymodell
-            </summary>
-        </member>
-        <member name="M:Kartotek.Modeller.PeopleService.Remove(System.Int32)">
-            <summary>
-            kasering av ett specifikt kort
-            enbart i form av entiteter, ej vymodell
-            </summary>
-        </member>
-        <member name="M:Kartotek.Modeller.PeopleService.Add(Kartotek.Modeller.Vyer.CreatePersonViewModel)">
-            <summary>
-            tillägg av ett kort
-            utgår från en vymodell
-            </summary>
-        </member>
-        <member name="M:Kartotek.Modeller.PeopleService.All">
-            <summary>
-            sökning efter poster - utgår från en vymodell som sökterm
-            kriterier : inga, dvs alla kort ska hämtas och levereras
-            </summary>
-        </member>
-        <member name="M:Kartotek.Modeller.PeopleService.FindBy(Kartotek.Modeller.Vyer.PeopleViewModel)">
-            <summary>
-            sökning efter poster - utgår från en vymodell som sökterm
-            kriterier :
-               namn
-             eller
-               bostadsort
-             eller
-               båda ?
-            </summary>
-        </member>
-        <member name="T:Kartotek.Modeller.Vyer.AktionSpecifiktkort">
-            <summary>
-            to be done
-            </summary>
-        </member>
-        <member name="P:Kartotek.Modeller.Vyer.AktionSpecifiktkort.KortetsId">
-            <summary>
-            to be done
-            </summary>
-        </member>
-        <member name="T:Kartotek.Modeller.Vyer.CreatePersonViewModel">
-            <summary>
-            to be done
-            </summary>
-        </member>
-        <member name="P:Kartotek.Modeller.Vyer.CreatePersonViewModel.Namn">
-            <summary>
-            Namnet på den person som det nya kortet upptar
-            </summary>
-        </member>
-        <member name="P:Kartotek.Modeller.Vyer.CreatePersonViewModel.Bostadsort">
-            <summary>
-            Personens bostadsort
-            </summary>
-        </member>
-        <member name="P:Kartotek.Modeller.Vyer.CreatePersonViewModel.Telefonnummer">
-            <summary>
-            Personens telefonnummer - kontaktuppgifter
-            </summary>
-        </member>
-        <member name="T:Kartotek.Modeller.Vyer.HopslagenmodellVymodell">
-             <summary>
-             används i PeopleController:s egen index.html som datakälla - blir model
-            
-             Hopslagning av de klasser som är del av definitionerna i IPeopleService
-             iom att razor-filerna enbart vill hantera en modell, alltså måste klasserna
-             slås ihop till en gemensam modell i kontroller
-            
-             garantera att:
-               att användarna inte försöker skapa flera kort med samma innehåll
-               kontroll av uppgifterna
-                  att följande är satta dvs ej NULL
-                    namn
-                    bostadsort
-                    telefonnummer
-            
-             slås isär i kontroller innan delarna lämnas över till Peopleservice
-             </summary>
-        </member>
-        <member name="P:Kartotek.Modeller.Vyer.HopslagenmodellVymodell.Personlistan">
-            <summary>
-            de personer som ska synas i den vybaserade sidans lista
-            </summary>
-        </member>
-        <member name="P:Kartotek.Modeller.Vyer.HopslagenmodellVymodell.Filtertermer">
-            <summary>
-            söktermer från filterdialogen
-            kan innehålla namn eller bostadsort
-            </summary>
-            <see cref="T:Kartotek.Modeller.PeopleService">PeopleService</see>
-        </member>
-        <member name="P:Kartotek.Modeller.Vyer.HopslagenmodellVymodell.NyttKort">
-            <summary>
-            Skriv ut ett nytt kort - nytt-kort delen i fönstret
-            </summary>
-        </member>
-        <member name="T:Kartotek.Modeller.Vyer.PeopleViewModel">
-            <summary>
-            to be done
-            </summary>
-        </member>
-        <member name="P:Kartotek.Modeller.Vyer.PeopleViewModel.Utdraget">
-            <summary>
-            innehåller listan på de kort som ska synas i vyn
-            </summary>
-        </member>
-        <member name="P:Kartotek.Modeller.Vyer.PeopleViewModel.Namn">
-            <summary>
-            sökkriterier
-            private string namn;
-            </summary>
-        </member>
-        <member name="P:Kartotek.Modeller.Vyer.PeopleViewModel.Bostadsort">
-            <summary>
-            sökkriterier
-            string bostadsort;
-            </summary>
         </member>
         <member name="T:Kartotek.Program">
              <summary>

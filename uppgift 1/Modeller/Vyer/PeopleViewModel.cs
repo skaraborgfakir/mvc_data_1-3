@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-06 16:31:59 stefan>
+// Time-stamp: <2021-11-16 00:27:16 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -22,34 +22,18 @@ namespace Kartotek.Modeller.Vyer {
     /// </summary>
     public class PeopleViewModel {
 	/// <summary>
-	/// innehåller listan på de kort som ska synas i vyn
+	/// PeopleController.cs hanterar filtrering på så vis
+	/// den kontroller filtreringen via session-variablerna.
+	/// Nackdel/fördel: PeopleController och PeopleAjaxController har olika URL,
+	/// alltså får man slåss med CORS
 	/// </summary>
-	public List<Person> Utdraget {
-	    get;
-	    set;
-	}
+	public Filtreringstermer Termer { get; set; }
 
 	/// <summary>
-	/// sökkriterier
-	/// private string namn;
+	/// innehåller listan på de kort som ska synas i vyn (från PeopleController)
+	/// används inte i den AJAX-baserade versionen iom den är ersatt av en partial view
+	/// som utgår från en lista av personer, för varje person skapas en specfik partial view
 	/// </summary>
-	[BindProperty]
-	[DisplayName("personens namn")]
-	[DataType(DataType.Text)]
-	public string Namn {
-	    get;
-	    set;
-	}
-	/// <summary>
-	/// sökkriterier
-	/// string bostadsort;
-	/// </summary>
-	[BindProperty]
-	[DisplayName("bostadsort")]
-	[DataType(DataType.Text)]
-	public string Bostadsort {
-	    get;
-	    set;
-	}
+	public List<Person> Utdraget { get; set; }
     }
 }

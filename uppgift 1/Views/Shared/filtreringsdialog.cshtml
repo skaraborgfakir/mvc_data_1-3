@@ -1,0 +1,22 @@
+<!-- Time-stamp: <2021-11-15 23:58:24 stefan> -*-web-*- -->
+<!-- filtrering via People-kontrollanten -->
+<!-- använder en partial -->
+
+@using Kartotek.Modeller.Vyer
+@using Kartotek.Modeller.Entiteter
+
+@model Kartotek.Modeller.Vyer.PeopleViewModel
+
+<div class="container">
+    <h4 class="text-start">
+	Sökning igenom poster
+    </h4>
+    <form id="filtrering" method="post" asp-controller="People">
+	<fieldset class="mb-1 text-start">
+	    <partial name="Filtreringstermer" for="Termer"/>
+	    <button class="btn btn-secondary" type="reset">Töm fälten</button>
+	    <button class="btn btn-success" type="submit" asp-action="filtrering">Filtrera</button>
+	    <button class="btn btn-success" type="submit" asp-action="ingenfiltrering">Återställ filtrering</button>
+	</fieldset>
+    </form>
+</div>

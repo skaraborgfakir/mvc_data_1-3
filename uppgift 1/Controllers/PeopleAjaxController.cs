@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-08 16:32:54 stefan>
+// Time-stamp: <2021-11-16 03:22:50 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -83,41 +83,31 @@ namespace Kartotek.Controllers {
 		"\n" + "bostadsort : " + HttpContext.Session.GetString( $"bostadsort.{this.sessionsuffix}")
 	    );
 
-	    PeopleViewModel söktermer = new PeopleViewModel();
+	    PeopleViewModel filter = new PeopleViewModel();
+	    Filtreringstermer termer = new Filtreringstermer();
 
 	    switch (HttpContext.Session.GetInt32( $"valdterm.{this.sessionsuffix}")) {
 		case 1 :
-		    söktermer.Namn = HttpContext.Session.GetString( $"namn.{this.sessionsuffix}");
-		    PeopleViewModel vy_efter_namn = this.serviceenheten.FindBy( söktermer);
+		    this.loggdest.LogInformation(
+			(new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
+			(new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
+
+		    termer.Namn = HttpContext.Session.GetString( $"namn.{this.sessionsuffix}");
+		    filter.Termer = termer;
+		    PeopleViewModel vy_efter_namn = this.serviceenheten.FindBy( filter);
 
 		    return PartialView( "aktivlistan", vy_efter_namn);
-
-		    // return  View() {
-		    //	ViewName = "aktivlistan",
-		    //	    ViewData = new ViewDataDictionary( vy_efter_namn),
-		    //	    };
-
-		    // return new PartialViewResult() {
-		    //	ViewName = "aktivlistan",
-		    //	    ViewData = vyn
-		    //	    };
 
 		case 2:
 		    this.loggdest.LogInformation(
 			(new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
 			(new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
-		    söktermer.Bostadsort = HttpContext.Session.GetString( $"bostadsort.{this.sessionsuffix}");
-		    PeopleViewModel vy_efter_bostadsort = this.serviceenheten.FindBy( söktermer);
+		    termer.Bostadsort = HttpContext.Session.GetString( $"bostadsort.{this.sessionsuffix}");
+		    filter.Termer = termer;
+		    PeopleViewModel vy_efter_bostadsort = this.serviceenheten.FindBy( filter);
 
 		    return PartialView( "aktivlistan", vy_efter_bostadsort);
-
-		    // return View() {
-		    //	ViewName = "aktivlistan",
-		    //	    ViewData = new ViewDataDictionary( vy_efter_bostadsort)
-		    //	    };
-
-		    // return new PartialViewResult( "aktivlistan", vyn);
 
 		default:
 		    PeopleViewModel vyn = this.serviceenheten.All();
@@ -143,16 +133,19 @@ namespace Kartotek.Controllers {
 	/// <summary>
 	/// tag fram ett specifikt kort
 	/// </summary>
-	[HttpGet( "{id=1}" )]
+	[HttpGet]
 	[ActionName( "taguppkortet" )]  // API mot JS !!
-	[Produces( "application/json" )]
 	public ActionResult tagframkortet ( int id ) {
 	    this.loggdest.LogInformation( (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
 					  (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
 					  "\n tag fram kortet med id : " + id.ToString());
 
 	    // return Ok( this.serviceenheten.FindBy( id));
-	    return PartialView( "aktiva_div", this.serviceenheten.FindBy( id));
+	    // aktivlistan ska ha en PeopleViewModel - så
+	    List <Person> utdrag = new List <Person>();
+	    utdrag.Add ( this.serviceenheten.FindBy( id));
+	    PeopleViewModel vyn = new PeopleViewModel() { Utdraget = utdrag };
+	    return PartialView( "aktivlistan", vyn);
 	}
 
 

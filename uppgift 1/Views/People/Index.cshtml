@@ -1,4 +1,4 @@
-<!-- Time-stamp: <2021-11-15 19:49:11 stefan> -*-web-*- -->
+<!-- Time-stamp: <2021-11-16 09:48:40 stefan> -*-web-*- -->
 <!-- https://www.educba.com/bootstrap-sort-table/
      här använder jag metod 1 för att sortera tabellen
 
@@ -6,7 +6,7 @@
 
      bootstrap 5.1 används
 
-     sidan klistras in i Shared/Mallen.cshtml som @RenderBody()
+     sidan inkluderas av Shared/Mallen.cshtml som RenderBody()
 -->
 
 @using System
@@ -22,18 +22,37 @@
     ViewData["Title"] = "Ett personkartotek";
 }
 
+<!-- innehåll uppifrån och nedåt: -->
+<!--   1: funktion för filtrering -->
+<!--   2: inläggning av nytt kort -->
+<!--      använder en vy som är specialiserad på att hantera uppgifter från ett kort förutom kortets ID, vilket är fast (kortuppgifter) -->
+<!--      två knappar för att förkasta fälten eller acceptera dvs spara kortet -->
+<!--   3 den ajaxbaserad, som kan visa antingen : -->
+<!--      funktioner för visning av ett visst kort (en scroll) och knappar för just det valet -->
+<!--        en tabell för uppräkning av (alla ?/några ?/ett specifikt) korten  -->
+<!--           listan av kort - antingen ett eller flera -->
+<!--      eller -->
+<!--        dialog för modifiering av ett visst kort -->
+<!--        som återanvänder kortuppgifter och förutom den har två knappar "bläh" dvs kasta ändringar eller "OK" dvs spara  -->
+
+<!-- partiella i bruk: -->
+<!--    Shared/filtrering.cshtml  -->
+<!--    Shared/skriv_nytt_kort.cshtml -->
+<!--       Shared/kortuppgifter.cshtml -->
+<!--    Shared/ajaxbaserad_kort ( -->
+<!-- partiella i bruk: -->
+
 <div class="text-center">
     <h3 class="display-4">Ett kartotek över aktiva medlemmar</h3>
     <div>
-	<partial name="filtrering" for="Filtertermer" />
+	<partial name="filtreringsdialog" for="Listfiltrering" />
 	<hr>
 	<!-- funktion för inläggning av en person i taget  -->
-	<partial name="nya_aktiva" for="NyttKort"/>
+	<partial name="inskrivning_av_nytt_kort" for="InskrivningNyttKort" />
 	<hr>
-	<!-- via ajax se och förändra en databas  -->
-	<partial name="ajaxbaserad_kortselektor"/>
-	<!-- <hr> -->
-	<!-- <partial name="aktivlistan" for="Personlistan"/>  -->
+	<!-- hanteras via ajaxkortfunktioner.js  -->
+	<!-- js/ajaxkortfunktioner.js klistrar in sitt material med den h -->
+	<partial name="ajaxbaserad_kartotekvy"/>
     </div>
 </div>
 
@@ -44,14 +63,14 @@
 
     <script type="text/javascript" src="~/js/site.js"></script>
     <script type="text/javascript" src="~/js/sorteratabell.js"></script>
-    <script type="text/javascript" src="~/lib/jquery-validate/jquery.validate.js"></script>
-    <script type="text/javascript" src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <!--     <script type="text/javascript" src="~/lib/jquery-validate/jquery.validate.js"></script> -->
+    <!--  <script type="text/javascript" src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script> -->
 
     <!-- validering för partial view Shared/nya_aktiva.cshtml -->
-    <script type="text/javascript" src="~/js/validering_nya_aktiva.js"></script>
+    <!-- <script type="text/javascript" src="~/js/validering_nya_aktiva.js"></script> -->
 
     <!-- validering för dialog i partial view Shared/ajaxbaserad_kortselektor.cshtml -->
-    <script type="text/javascript" src="~/js/validering_ajaxbaserad_kortselektor.js"></script>
+    <!-- <script type="text/javascript" src="~/js/validering_ajaxbaserad_kortselektor.js"></script> -->
 
     <!-- aktörer efter förändringar i vad som ska hämtas mha AJAX och visas -->
     <!-- PeopleAjax ska vara rent webAPI -->

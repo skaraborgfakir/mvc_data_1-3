@@ -115,8 +115,19 @@ namespace Kartotek
 
 	    //
 	    // registrering för DI av dbcontext mot DatabasePeopleRepo
-	    services.AddDbContext<dbPeople>( options =>
-					     options.UseNpgsql( Configurationsrc["DBConnectionStrings:People"]));
+	    if( Environment.IsEnvironment( "postgres.Development") ||
+		Environment.IsEnvironment( "postgres"))
+	    {
+		Console.WriteLine( "services.AddDbContext<DBPeople: PostgreSQL:version");
+
+		services.AddDbContext<DBPeople>( options =>
+						 options.UseNpgsql( Configurationsrc["DBConnectionStrings:People"]));
+	    } else {
+		Console.WriteLine( "services.AddDbContext<DBPeople: MS SQL:version");
+
+		services.AddDbContext<DBPeople>( options =>
+						 options.UseSqlServer( Configurationsrc["DBConnectionStrings:People"]));
+	    }
 
 	    services.AddControllers().AddJsonOptions( options => {                               // Convert JSON from Camel Case to Pascal Case
 		options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase; // Use the default property( Pascal) casing.
@@ -141,14 +152,20 @@ namespace Kartotek
 			       ILogger<REVELJ> loggdest)
 	{
 	    //
-	    //
-	    //
 	    // gaffling i flödet beroende på programmets startmiljö
-	    if( Environment.IsEnvironment( "Development_postgres") ||
-		Environment.IsEnvironment( "Development"))
+	    // och vilken databas som ska användas
+	    //
+	    if( Environment.IsEnvironment( "postgres.Development") ||
+		Environment.IsEnvironment( "postgres"))
 		loggdest.LogInformation( "Startup.cs: PostgreSQL:version");
 	    else
 		loggdest.LogInformation( "Startup.cs: MS SQL:version");
+
+	    if( Environment.IsEnvironment( "Development") ||
+		Environment.IsEnvironment( "postgres.Development"))
+		loggdest.LogInformation( "Startup.cs: Utvecklingsmiljö");
+	    else
+		loggdest.LogInformation( "Startup.cs: Production");
 
 	    if( Environment.IsDevelopment() ||
 		Environment.IsEnvironment( "Development_postgres"))

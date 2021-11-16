@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-11 16:44:31 stefan>
+// Time-stamp: <2021-11-16 04:12:08 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -91,19 +91,26 @@ namespace Kartotek.Controllers {
 	    }
 
 	    HopslagenmodellVymodell nyVymodell = new HopslagenmodellVymodell();
-	    nyVymodell.Filtertermer = new PeopleViewModel();
+	    nyVymodell.InskrivningNyttKort = new CreatePersonViewModel();
+	    Filtreringstermer termer = new Filtreringstermer();
+	    PeopleViewModel filter = new PeopleViewModel();
 
 	    switch (HttpContext.Session.GetInt32( $"valdterm.{this.sessionsuffix}" )) {
 		case 1:
-		    nyVymodell.Filtertermer.Namn = HttpContext.Session.GetString( $"namn.{this.sessionsuffix}" );
-		    nyVymodell.Personlistan = this.serviceenheten.FindBy( nyVymodell.Filtertermer );
+		    termer.Namn = HttpContext.Session.GetString( $"namn.{this.sessionsuffix}" );
+		    filter.Termer = termer;
+		    nyVymodell.Personlistan = this.serviceenheten.FindBy( filter );
 		    break;
+
 		case 2:
-		    nyVymodell.Filtertermer.Bostadsort = HttpContext.Session.GetString( $"bostadsort.{this.sessionsuffix}" );
-		    nyVymodell.Personlistan = this.serviceenheten.FindBy( nyVymodell.Filtertermer );
+		    termer.Bostadsort = HttpContext.Session.GetString( $"bostadsort.{this.sessionsuffix}" );
+		    filter.Termer = termer;
+		    nyVymodell.Personlistan = this.serviceenheten.FindBy( filter );
 		    break;
+
 		default:
 		    nyVymodell.Personlistan = this.serviceenheten.All();
+
 		    break;
 	    }
 
@@ -125,34 +132,41 @@ namespace Kartotek.Controllers {
 	    if (ModelState.IsValid) {
 		if (vymodell != null) {
 		    Loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
-						 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
+					    (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
 		    //
 		    // hur kommer man hit ? tanken är att man skulle ha sökning efter data på
-		    // enbart ett ställe och filtrering då enbart ska ändra kriterierna
+		    // enbart ett ställe och att filtrering då enbart ska ändra kriterierna
 		    //
 		    // sökkriterier (namn/bostadsort) i session ?
 		    //
-		    if (vymodell.Filtertermer != null) {
+		    if ( vymodell.Listfiltrering != null &&
+			 vymodell.Listfiltrering.Termer != null ) {
 			Loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
-						     (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
-						     " namn : " + vymodell.Filtertermer.Namn +
-						     " bostadsort " + vymodell.Filtertermer.Bostadsort);
+						(new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
+						" namn : " + vymodell.Listfiltrering.Termer.Namn +
+						" bostadsort " + vymodell.Listfiltrering.Termer.Bostadsort);
 
-			// nyVymodell.Filtertermer = new PeopleViewModel();
+			if ( !String.IsNullOrEmpty( vymodell.Listfiltrering.Termer.Namn )) {
+			    Loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+						    (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
+						    " namn : " + vymodell.Listfiltrering.Termer.Namn );
 
-			if (!String.IsNullOrEmpty( vymodell.Filtertermer.Namn )) {
 			    HttpContext.Session.SetInt32( $"valdterm.{this.sessionsuffix}", 1 );
-			    HttpContext.Session.SetString( $"namn.{this.sessionsuffix}", vymodell.Filtertermer.Namn );
+			    HttpContext.Session.SetString( $"namn.{this.sessionsuffix}", vymodell.Listfiltrering.Termer.Namn );
 			    HttpContext.Session.SetString( $"bostadsort.{this.sessionsuffix}", "" );
-			} else if (!String.IsNullOrEmpty( vymodell.Filtertermer.Bostadsort )) {
+			} else if (!String.IsNullOrEmpty( vymodell.Listfiltrering.Termer.Bostadsort )) {
+			    Loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+						    (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
+						    " Bostadsort : " + vymodell.Listfiltrering.Termer.Bostadsort );
+
 			    HttpContext.Session.SetInt32( $"valdterm.{this.sessionsuffix}", 2 );
 			    HttpContext.Session.SetString( $"namn.{this.sessionsuffix}", "" );
-			    HttpContext.Session.SetString( $"bostadsort.{this.sessionsuffix}", vymodell.Filtertermer.Bostadsort );
+			    HttpContext.Session.SetString( $"bostadsort.{this.sessionsuffix}", vymodell.Listfiltrering.Termer.Bostadsort );
 			}
 
-			if (vymodell.Filtertermer.Namn == null &&
-			    vymodell.Filtertermer.Bostadsort == null) {
+			if (vymodell.Listfiltrering.Termer.Namn == null &&
+			    vymodell.Listfiltrering.Termer.Bostadsort == null) {
 			    HttpContext.Session.SetInt32( $"valdterm.{this.sessionsuffix}", 0 );
 			    HttpContext.Session.SetString( $"namn.{this.sessionsuffix}", "" );
 			    HttpContext.Session.SetString( $"bostadsort.{this.sessionsuffix}", "" );
@@ -199,18 +213,27 @@ namespace Kartotek.Controllers {
 		Loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
 					(new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
 					"\n" + " model is valid");
-		if (!String.IsNullOrEmpty( vymodell.InskrivningNyttKort.Namn ) &&
-		    !String.IsNullOrEmpty( vymodell.InskrivningNyttKort.Bostadsort ) &&
-		    !String.IsNullOrEmpty( vymodell.InskrivningNyttKort.Telefonnummer )) {
 
+		if (vymodell.InskrivningNyttKort != null) {
+		    if (!String.IsNullOrEmpty( vymodell.InskrivningNyttKort.Namn ) &&
+			!String.IsNullOrEmpty( vymodell.InskrivningNyttKort.Bostadsort ) &&
+			!String.IsNullOrEmpty( vymodell.InskrivningNyttKort.Telefonnummer )) {
+
+			Loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+						(new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
+						"\n" + "alla uppgifter finns med");
+
+			// CreatePersonViewModel nyttKort = new CreatePersonViewModel();
+			// nyttKort = vymodell.InskrivningNyttKort;
+
+			this.serviceenheten.Add( vymodell.InskrivningNyttKort );
+		    }
+		}
+		else
+		{
 		    Loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
 					    (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
-					    "\n" + "alla uppgifter finns med");
-
-		    // CreatePersonViewModel nyttKort = new CreatePersonViewModel();
-		    // nyttKort = vymodell.InskrivningNyttKort;
-
-		    this.serviceenheten.Add( vymodell.InskrivningNyttKort );
+					    "\n" + "Upppgifter sakns");
 		}
 	    } else {
 		Loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +

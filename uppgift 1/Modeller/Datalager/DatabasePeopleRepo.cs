@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-11 23:15:23 stefan>
+// Time-stamp: <2021-11-15 16:31:51 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -21,21 +21,78 @@ using Kartotek.Databas;
 
 namespace Kartotek.Modeller {
     public class DatabasePeopleRepo : IPeopleRepo {
-	private dbPeople databas;
+	/// <summary>
+	/// referens till EF:s databaskontext
+	/// </summary>
+	private DBPeople Kartoteket { get; set; }
 
 	/// <summary>
 	/// loggdestination
 	/// </summary>
-	private readonly ILogger<DatabasePeopleRepo> loggdest;
+	private ILogger<DatabasePeopleRepo> Loggdest;
 
 	/// <summary>
 	/// Kreator - använd ympning (DI) för att få med ett databaslager
 	/// databaslagret är registrerat i Startup.cs: ConfigureServices
 	/// </summary>
 	public DatabasePeopleRepo ( ILogger<DatabasePeopleRepo> loggdest,
-				    DBPeople databaslager )
+				    DBPeople kartoteket )
 	{
-	    databas = dbPeople;
+	    Loggdest = loggdest;
+	    Kartoteket = kartoteket;
+	}
+
+	/// <summary>
+	/// </summary>
+	public Person Create( string namn,
+			      string bostadsort,
+			      string telefonnummer) {
+
+	    Person ny = new Person( id: 0,
+				    namn: namn,
+				    bostadsort: bostadsort,
+				    telefonnummer: telefonnummer);
+
+	    Kartoteket.Person.Add( ny);
+	    Kartoteket.SaveChanges();
+
+	    return ny;
+	}
+
+	/// <summary>
+	/// returnerar en lista (iterator) för läsning från databasen
+	/// </summary>
+	public List<Person> Read() {
+	    Loggdest.LogInformation(
+		(new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
+		(new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
+
+	    return Kartoteket.Person
+		.Where ( p => p.Id != 0)
+		.ToList();
+	}
+
+	/// <summary>
+	/// inläsning av ett visst kort
+	/// </summary>
+	public Person Read ( int id ) {
+	    return Kartoteket.Person
+		.Single (p => p.Id == id);
+	}
+
+	/// <summary>
+	/// modfiering av ett visst kort
+	/// </summary>
+	public Person Update ( Person person) {
+	    throw new ArgumentException( "felaktigt id i InMemoryPeopleRepo:Read" );
+	}
+
+	/// <summary>
+	/// kasering av uppgifter
+	/// </summary>
+	public bool Delete ( Person person ) {
+	    throw new ArgumentException( "felaktigt id i InMemoryPeopleRepo:Read" );
+	    // return false;
 	}
 
 	/// <summary>
