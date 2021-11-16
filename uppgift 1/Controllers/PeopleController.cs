@@ -80,8 +80,8 @@ namespace Kartotek.Controllers {
 	public IActionResult Index ( HopslagenmodellVymodell vymodell )
 	{
 	    Loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
-					 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
-					 "\n" + "this.configurationsrc: " + this.configurationsrc["app_run_miljö"]);
+				    (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
+				    "\n" + "this.configurationsrc: " + this.configurationsrc["app_run_miljö"]);
 
 	    if ( (HttpContext.Session.GetString( $"namn.{this.sessionsuffix}" ) == null) ||
 		 (HttpContext.Session.GetString( $"bostadsort.{this.sessionsuffix}" ) == null)) {
@@ -117,7 +117,7 @@ namespace Kartotek.Controllers {
 	[ActionName("filtrering")]
 	public IActionResult Filtrera ( HopslagenmodellVymodell vymodell ) {
 	    Loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
-					 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
+				    (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
 	    // HopslagenmodellVymodell nyVymodell = new HopslagenmodellVymodell();
 	    // nyVymodell.NyttKort = new CreatePersonViewModel();
@@ -175,7 +175,7 @@ namespace Kartotek.Controllers {
 	[ActionName( "ingenfiltrering" )]
 	public IActionResult IngenFiltrering ( HopslagenmodellVymodell vymodell ) {
 	    Loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
-					 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
+				    (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
 	    HttpContext.Session.SetInt32( $"valdterm.{this.sessionsuffix}", 0 );
 	    HttpContext.Session.SetString( $"namn.{this.sessionsuffix}", "" );
@@ -191,31 +191,31 @@ namespace Kartotek.Controllers {
 	[ActionName( "nyttkort" )]
 	public IActionResult SkapaNyttKort ( HopslagenmodellVymodell vymodell ) {
 	    Loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
-					 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
+				    (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
 	    HopslagenmodellVymodell nyVymodell = new HopslagenmodellVymodell();
 
 	    if (ModelState.IsValid) {
-	    Loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
-					 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
-					 "\n" + " model is valid");
-		if (!String.IsNullOrEmpty( vymodell.NyttKort.Namn ) &&
-		    !String.IsNullOrEmpty( vymodell.NyttKort.Bostadsort ) &&
-		    !String.IsNullOrEmpty( vymodell.NyttKort.Telefonnummer )) {
+		Loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+					(new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
+					"\n" + " model is valid");
+		if (!String.IsNullOrEmpty( vymodell.InskrivningNyttKort.Namn ) &&
+		    !String.IsNullOrEmpty( vymodell.InskrivningNyttKort.Bostadsort ) &&
+		    !String.IsNullOrEmpty( vymodell.InskrivningNyttKort.Telefonnummer )) {
 
 		    Loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
-						 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
-						 "\n" + "alla uppgifter finns med");
+					    (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
+					    "\n" + "alla uppgifter finns med");
 
-		    CreatePersonViewModel nyttKort = new CreatePersonViewModel();
-		    nyttKort = vymodell.NyttKort;
+		    // CreatePersonViewModel nyttKort = new CreatePersonViewModel();
+		    // nyttKort = vymodell.InskrivningNyttKort;
 
-		    this.serviceenheten.Add( nyttKort );
+		    this.serviceenheten.Add( vymodell.InskrivningNyttKort );
 		}
 	    } else {
 		Loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
-						 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
-						 "\n" + "modell NOT valid");
+					(new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
+					"\n" + "modell NOT valid");
 	    }
 
 	    nyVymodell.Personlistan = this.serviceenheten.All();
@@ -227,12 +227,13 @@ namespace Kartotek.Controllers {
 
 	/// <summary>
 	/// modifiering av ett specifikt kort
+	/// använder modifieringsfunktionen i kortlistan
 	/// </summary>
 	[HttpPost]
 	[ActionName( "modifiering" )]
 	public IActionResult ModifieraKort ( HopslagenmodellVymodell vymodell ) {
 	    Loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
-					 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
+				    (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
 	    HopslagenmodellVymodell nyVymodell = new HopslagenmodellVymodell();
 
@@ -241,13 +242,14 @@ namespace Kartotek.Controllers {
 	}
 
 	/// <summary>
-	/// radering av item i listan
+	/// kasering
+	/// använder kaseringsfunktionen i kortlistan
 	/// </summary>
 	[HttpGet]
 	[ActionName( "radering" )]
 	public IActionResult TagBortKort ( int id ) {
 	    Loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
-					 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
+				    (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
 	    HopslagenmodellVymodell nyVymodell = new HopslagenmodellVymodell();
 
