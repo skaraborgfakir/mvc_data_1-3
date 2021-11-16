@@ -1,5 +1,5 @@
 //
-// - Time-stamp: <2021-11-16 14:45:09 stefan>
+// - Time-stamp: <2021-11-17 00:31:35 stefan>
 //
 
 
@@ -20,7 +20,7 @@ $(document).ready(function() {
     function uppdateraVy() {
 	//$("#enumreringajax").empty();  // töm ur listan helt och bygg upp den på nytt
 
-	$("#ajaxbaserad_kartotekvy").load( url_samtliga_kort, function() {
+	$("#kartotekvyn").load( url_samtliga_kort, function() {
 	//
 	// iom att vyn laddas efter att document.ready är klar så kan
 	// uppsättning av händelsehanteringen för vyerna tas upp här
@@ -61,7 +61,7 @@ $(document).ready(function() {
 	var id = document.getElementById("valtkortsid").value;
 
 
-	$("#ajaxbaserad_kartotekvy").load( url_specifikt_kort + '?' + $.param( { "id": id } ),
+	$("#kartotekvyn").load( url_specifikt_kort + '?' + $.param( { "id": id } ),
 					   function() {
 					   }
 					 );
