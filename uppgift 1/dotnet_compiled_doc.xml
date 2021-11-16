@@ -465,7 +465,7 @@
             </summary>
             <see cref="T:Kartotek.Modeller.PeopleService">PeopleService</see>
         </member>
-        <member name="F:Kartotek.Modeller.Vyer.HopslagenmodellVymodell.InskrivningNyttKort">
+        <member name="P:Kartotek.Modeller.Vyer.HopslagenmodellVymodell.InskrivningNyttKort">
             <summary>
             Fyll i ett nytt kort - nytt-kort delen i fönstret
             </summary>

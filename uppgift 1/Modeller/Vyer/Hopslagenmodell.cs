@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-16 13:27:59 stefan>
+// Time-stamp: <2021-11-16 13:30:54 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -45,7 +45,7 @@ namespace Kartotek.Modeller.Vyer
 	/// <summary>
 	/// Fyll i ett nytt kort - nytt-kort delen i fönstret
 	/// </summary>
-	public CreatePersonViewModel InskrivningNyttKort; // { get; set; }
+	public CreatePersonViewModel InskrivningNyttKort { get; set; }
 
 	/// <summary>
 	/// de personer som ska synas i den vybaserade sidans lista
