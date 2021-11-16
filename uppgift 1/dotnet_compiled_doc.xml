@@ -480,12 +480,18 @@
             to be done
             </summary>
         </member>
-        <member name="P:Kartotek.Modeller.Vyer.PeopleViewModel.Termer">
+        <member name="P:Kartotek.Modeller.Vyer.PeopleViewModel.Namn">
+             <summary>
+             sökkriterier i sidhuvudet (används av PeopleController)
+             private string namn;
+            
+             används av Shared/Filtrering/Filtreringstermer.cshtml
+             </summary>
+        </member>
+        <member name="P:Kartotek.Modeller.Vyer.PeopleViewModel.Bostadsort">
             <summary>
-            PeopleController.cs hanterar filtrering på så vis
-            den kontroller filtreringen via session-variablerna.
-            Nackdel/fördel: PeopleController och PeopleAjaxController har olika URL,
-            alltså får man slåss med CORS
+            sökkriterier i sidhuvudet (används av PeopleController)
+            string bostadsort;
             </summary>
         </member>
         <member name="P:Kartotek.Modeller.Vyer.PeopleViewModel.Utdraget">

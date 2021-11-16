@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-16 00:36:57 stefan>
+// Time-stamp: <2021-11-16 13:21:58 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -121,41 +121,41 @@ namespace Kartotek.Modeller {
 	    //
 	    // sökning på namn eller bostadsort, eller båda ?
 	    //
-	    if ( !String.IsNullOrEmpty( search.Termer.Namn ) &&
-		 !String.IsNullOrEmpty( search.Termer.Bostadsort ))
+	    if ( !String.IsNullOrEmpty( search.Namn ) &&
+		 !String.IsNullOrEmpty( search.Bostadsort ))
 	    {
 		this.loggdest.LogInformation(
 		    (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
 		    (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
 		vyn.Utdraget = posterna
-		    .Where( posterna => ( posterna.Namn == search.Termer.Namn && posterna.Bostadsort == search.Termer.Bostadsort))
+		    .Where( posterna => ( posterna.Namn == search.Namn && posterna.Bostadsort == search.Bostadsort))
 		    .ToList();
 	    }
 	    //
 	    // båda var inte satta, kan det finnas något i Namn ?
 	    //
-	    else if ( !String.IsNullOrEmpty( search.Termer.Namn ))
+	    else if ( !String.IsNullOrEmpty( search.Namn ))
 	    {
 		this.loggdest.LogInformation(
 		    (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
 		    (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
 		vyn.Utdraget = posterna
-		    .Where( posterna => posterna.Namn == search.Termer.Namn)
+		    .Where( posterna => posterna.Namn == search.Namn)
 		    .ToList();
 	    }
 	    //
 	    // kan det finnas något i Bostadsort ?
 	    //
-	    else if ( !String.IsNullOrEmpty( search.Termer.Bostadsort ))
+	    else if ( !String.IsNullOrEmpty( search.Bostadsort ))
 	    {
 		this.loggdest.LogInformation(
 		    (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
 		    (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
 		vyn.Utdraget = posterna
-		    .Where( posterna => posterna.Bostadsort == search.Termer.Bostadsort)
+		    .Where( posterna => posterna.Bostadsort == search.Bostadsort)
 		    .ToList();
 	    }
 	    //

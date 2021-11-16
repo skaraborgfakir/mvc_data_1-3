@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-16 03:22:50 stefan>
+// Time-stamp: <2021-11-16 11:00:01 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -84,7 +84,6 @@ namespace Kartotek.Controllers {
 	    );
 
 	    PeopleViewModel filter = new PeopleViewModel();
-	    Filtreringstermer termer = new Filtreringstermer();
 
 	    switch (HttpContext.Session.GetInt32( $"valdterm.{this.sessionsuffix}")) {
 		case 1 :
@@ -92,8 +91,7 @@ namespace Kartotek.Controllers {
 			(new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
 			(new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
-		    termer.Namn = HttpContext.Session.GetString( $"namn.{this.sessionsuffix}");
-		    filter.Termer = termer;
+		    filter.Namn = HttpContext.Session.GetString( $"namn.{this.sessionsuffix}");
 		    PeopleViewModel vy_efter_namn = this.serviceenheten.FindBy( filter);
 
 		    return PartialView( "aktivlistan", vy_efter_namn);
@@ -103,8 +101,7 @@ namespace Kartotek.Controllers {
 			(new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
 			(new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
-		    termer.Bostadsort = HttpContext.Session.GetString( $"bostadsort.{this.sessionsuffix}");
-		    filter.Termer = termer;
+		    filter.Bostadsort = HttpContext.Session.GetString( $"bostadsort.{this.sessionsuffix}");
 		    PeopleViewModel vy_efter_bostadsort = this.serviceenheten.FindBy( filter);
 
 		    return PartialView( "aktivlistan", vy_efter_bostadsort);
