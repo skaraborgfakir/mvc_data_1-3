@@ -1,5 +1,5 @@
 //
-// - Time-stamp: <2021-11-16 01:10:28 stefan>
+// - Time-stamp: <2021-11-16 14:45:09 stefan>
 //
 
 
@@ -10,7 +10,7 @@
 //
 $(document).ready(function() {
     const url_samtliga_kort =  "https://localhost:5009/api/PeopleAjax/uppdateralistan"; // json-kodad lista
-    const url_specifikt_kort = "https://localhost:5009/api/PeopleAjax/tagUppKortet";    // uppgifter om ett specifikt kort
+    const url_specifikt_kort = "https://localhost:5009/api/PeopleAjax/taguppkortet";    // uppgifter om ett specifikt kort
     const url_kasera_kort =    "https://localhost:5009/api/PeopleAjax/kaserakortet";    // kasera kortet
 
     /// <summary>

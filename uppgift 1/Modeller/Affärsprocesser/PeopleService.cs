@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-16 13:21:58 stefan>
+// Time-stamp: <2021-11-16 14:19:13 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -129,7 +129,7 @@ namespace Kartotek.Modeller {
 		    (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
 		vyn.Utdraget = posterna
-		    .Where( posterna => ( posterna.Namn == search.Namn && posterna.Bostadsort == search.Bostadsort))
+		    .Where( posterna => ( posterna.Namn.ToLower() == search.Namn.ToLower() && posterna.Bostadsort.ToLower() == search.Bostadsort.ToLower()))
 		    .ToList();
 	    }
 	    //
@@ -142,7 +142,7 @@ namespace Kartotek.Modeller {
 		    (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
 		vyn.Utdraget = posterna
-		    .Where( posterna => posterna.Namn == search.Namn)
+		    .Where( posterna => posterna.Namn.ToLower() == search.Namn.ToLower())
 		    .ToList();
 	    }
 	    //
@@ -155,7 +155,7 @@ namespace Kartotek.Modeller {
 		    (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
 		vyn.Utdraget = posterna
-		    .Where( posterna => posterna.Bostadsort == search.Bostadsort)
+		    .Where( posterna => posterna.Bostadsort.ToLower() == search.Bostadsort.ToLower())
 		    .ToList();
 	    }
 	    //

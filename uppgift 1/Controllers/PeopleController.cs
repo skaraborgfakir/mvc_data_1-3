@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-16 13:28:39 stefan>
+// Time-stamp: <2021-11-16 13:53:22 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -207,6 +207,14 @@ namespace Kartotek.Controllers {
 				    (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
 	    HopslagenmodellVymodell nyVymodell = new HopslagenmodellVymodell();
+
+	    if ( ( vymodell.InskrivningNyttKort != null) &&
+		 ( vymodell.InskrivningNyttKort.Namn != null))
+		Loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+					(new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
+					"\n" + " namn " + vymodell.InskrivningNyttKort.Namn +
+					"\n" + " Bostadsort " + vymodell.InskrivningNyttKort.Bostadsort  +
+					"\n" + " Telefonnummer " + vymodell.InskrivningNyttKort.Telefonnummer);
 
 	    if (ModelState.IsValid) {
 		Loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +

@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-15 22:11:55 stefan>
+// Time-stamp: <2021-11-16 14:07:27 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -35,7 +35,7 @@ namespace Kartotek.Modeller.Vyer {
 	/// Namnet på den person som det nya kortet upptar
 	/// </summary>
 	[BindProperty]
-	[StringLength(60,MinimumLength=8)]
+	[StringLength(60,MinimumLength=4)]
 	[DisplayName("personens namn")]
 	public string Namn { get; set; }
 
