@@ -1,4 +1,4 @@
-<!-- Time-stamp: <2021-11-17 00:09:55 stefan> -*-web-*- -->
+<!-- Time-stamp: <2021-11-17 01:16:24 stefan> -*-web-*- -->
 <!-- https://www.educba.com/bootstrap-sort-table/
      här använder jag metod 1 för att sortera tabellen
 
@@ -20,11 +20,11 @@
 <div class="container">
     <form id="specifiktKort" >  <!-- validering! -->
 	<fieldset class="mb-1 text-start">
-	    <button id="uppdateralistan"                class="btn btn-primary ignore">Uppdatera listan</button>
-	    <label                                      class="filtertermer_label col-sm-1 col-form-label">ID</label>
-	    <input  id="valtkortsid"      type="number" class="col-sm" />
-	    <button id="plockaframkortet"               class="btn btn-primary">Visa kort</button>
-	    <button id="kaserakortet"                   class="btn btn-danger">Radera valt kort</button>
+	    <button id="uppdateralistan"  form="specifiktKort" class="btn btn-primary ignore">Uppdatera listan</button>
+	    <label                                             class="filtertermer_label col-sm-1 col-form-label">ID</label>
+	    <input  id="valtkortsid"      type="number"        class="col-sm" />
+	    <button id="plockaframkortet" form="specifiktKort" class="btn btn-primary">Visa kort</button>
+	    <button id="kaserakortet"     form="specifiktKort" class="btn btn-danger">Radera valt kort</button>
 	</fieldset>
     </form>
     <!-- används som märke av de funktioner i ajaxkortfunktioner.js -->
