@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-17 10:20:41 stefan>
+// Time-stamp: <2021-11-17 11:26:50 stefan>
 //
 
 
@@ -67,15 +67,15 @@ namespace Kartotek.Databas {
 		Loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) + "\n"
 					 + "MS SQL - Environment: Development");
 	    }
-	    if ( Environment.IsProduction()) {
+	    else if ( Environment.IsProduction()) {
 		Loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) + "\n"
 					 + "MS SQL - Environment: Production");
 	    }
-	    if ( Environment.IsEnvironment( "postgres.Development")) {
+	    else if ( Environment.IsEnvironment( "postgres.Development")) {
 		Loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) + "\n"
 					 + "Postgres - Environment: Development");
 	    }
-	    if ( Environment.IsEnvironment( "postgres")) {
+	    else if ( Environment.IsEnvironment( "postgres")) {
 		Loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) + "\n"
 					 + "Postgres - Environment: Production");
 	    }
@@ -112,14 +112,14 @@ namespace Kartotek.Databas {
 		});
 
 	    // modelBuilder
-	     //		 .Entity<Person>().HasData(
-	     //		     p => new Person {
-	     //			 ID = 0;
-	     //			 Namn = "Ulf Smedbo";
-	     //			 Bostadsort =  "Göteborg";
-	     //			 Telefonnummer =  "031";
-	     //		     }
-	     //		 );
+	    //		 .Entity<Person>().HasData(
+	    //		     p => new Person {
+	    //			 ID = 0;
+	    //			 Namn = "Ulf Smedbo";
+	    //			 Bostadsort =  "Göteborg";
+	    //			 Telefonnummer =  "031";
+	    //		     }
+	    //		 );
 	    //	new Person
 	    //	{
 	    //	    Namn= "Bengt Ulfsson",
