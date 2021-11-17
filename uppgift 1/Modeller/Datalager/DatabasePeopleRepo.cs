@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-17 10:25:20 stefan>
+// Time-stamp: <2021-11-17 11:47:08 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -12,6 +12,8 @@ using System.Linq;
 
 // https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.http?view=aspnetcore-3.1
 using Microsoft.Extensions.Logging;
+
+using Microsoft.EntityFrameworkCore;
 
 using Kartotek.Modeller.Interfaces;
 using Kartotek.Modeller.Data;
@@ -86,19 +88,27 @@ namespace Kartotek.Modeller {
 	/// modfiering av ett visst kort
 	/// </summary>
 	public Person Update ( Person person) {
-	    throw new ArgumentException( "felaktigt id i InMemoryPeopleRepo:Read" );
+	    throw new NotImplementedException( "funktionalitet ej klar");
 	}
 
 	/// <summary>
 	/// kasering av uppgifter
 	/// </summary>
-	public bool Delete ( Person person ) {
-	    throw new ArgumentException( "felaktigt id i InMemoryPeopleRepo:Read" );
-	    // return false;
-	}
+	public bool Delete ( Person person )
+	{
+	    bool result = true;
+	    try
+	    {
+		Kartoteket.Person.Remove( person);
+		Kartoteket.SaveChanges();
+		result = true;
+	    }
+	    catch (DbUpdateException /* ex */)
+	    {
+		result = false;
+	    }
 
-	/// <summary>
-	/// testdata för övriga delar. I EF:versionen ersätts den här med en SQL:databas
-	/// </summary>
+	    return result;
+	}
     }
 }

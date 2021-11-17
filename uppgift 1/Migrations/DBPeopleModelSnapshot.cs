@@ -40,6 +40,22 @@ namespace Kartotek.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Person");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Bostadsort = "Solberga",
+                            Namn = "Michael Carlsson",
+                            Telefonnummer = "0433"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Bostadsort = "Göteborg",
+                            Namn = "Ulf Smedbo",
+                            Telefonnummer = "031"
+                        });
                 });
 #pragma warning restore 612, 618
         }
