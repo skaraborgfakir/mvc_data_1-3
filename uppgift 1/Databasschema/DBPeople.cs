@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-15 16:29:43 stefan>
+// Time-stamp: <2021-11-17 10:20:41 stefan>
 //
 
 
@@ -42,7 +42,6 @@ namespace Kartotek.Databas {
 	/// databasens relation som objekt-relations mappning
 	/// </summary>
 	public DbSet<Person> Person { get; set; }
-
 
 	/// <summary>
 	/// Kreator
@@ -102,8 +101,8 @@ namespace Kartotek.Databas {
 	/// </summary>
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
-	    Loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) + "\n"
-				     + "Configurationsrc: " + Configurationsrc["session_kakans_namn"]);
+	    // Loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) + "\n"
+	    //			     + "Configurationsrc: " + Configurationsrc["session_kakans_namn"]);
 
 	    base.OnModelCreating(modelBuilder);
 	    modelBuilder.Entity<Person>()

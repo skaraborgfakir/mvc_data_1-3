@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-14 16:42:35 stefan>
+// Time-stamp: <2021-11-17 10:47:32 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -64,6 +64,7 @@ namespace Kartotek
 	    //	Console.WriteLine(c.Key + " = " + c.Value);
 	    // }
 
+	    // Båten är lastad - KASTA LOSS !
 	    host.Run();
 	}
 
@@ -73,7 +74,7 @@ namespace Kartotek
 	/// inkluderar logging mot konsoll och får webBuilder att aktivera klassen REVELJ
 	///
 	/// Den här metoden är speciell iom att EF6 (och Identity Server) förväntar sig att just den här
-	/// metoden finns med just det här namnet
+	/// metoden finns med just det här namnet, därför vill man inte köra Run() i denna.
 	/// </summary>
 	/// <param name="args">
 	/// argumentvektor ekvivalent med argc/argv i C. CreateHostBuilder exv
@@ -85,6 +86,7 @@ namespace Kartotek
 	    // aktivera IConfiguration och läs in från appsettings.json
 	    // loggning (iloggerfactory) aktiveras
 	    // Development-miljön är speciell iom att scope i DI valideras
+	    //
 	    .CreateDefaultBuilder( args: args )
 	    // CreateDefaultBuilder kommer att ympa in loggning men för att få kontroll över den
 	    // och var det skickas, används detta

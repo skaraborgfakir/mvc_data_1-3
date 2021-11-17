@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-15 12:21:33 stefan>
+// Time-stamp: <2021-11-17 10:57:48 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -74,7 +74,7 @@ namespace Kartotek
 	/// <see href="https://stackoverflow.com/questions/41287648/how-do-i-write-logs-from-within-startup-cs">how-do-i-write-logs-from-within-startup-cs</see>
 	public void ConfigureServices( IServiceCollection services)
 	{
-	    Console.WriteLine( "Startup.cs: REVELJ: ConfigureServices");
+	    // Console.WriteLine( "Startup.cs: REVELJ: ConfigureServices");
 
 	    // behövs för UseCors i Configure
 	    services.AddCors( opt => { opt
@@ -86,12 +86,13 @@ namespace Kartotek
 						  "https://localhost:5009/People",
 						  "https://localhost:5009/api/PeopleAjax" )
 				    .AllowCredentials();
-				    });
-			});
-
-	    //		    .WithOrigins( "https://localhost:5009")
-	    //		    .WithOrigins( "http://localhost:5009")
-	    //		    .WithOrigins( "https://localhost:5009/lib/jquery/jquery.js")
+				// .WithOrigins( "https://localhost:5009")
+				// .WithOrigins( "http://localhost:5009")
+				// .WithOrigins( "https://localhost:5009/lib/jquery/jquery.js")
+			}
+			);
+	    }
+	    );
 
 	    services.AddDistributedMemoryCache();
 
@@ -118,12 +119,14 @@ namespace Kartotek
 	    if( Environment.IsEnvironment( "postgres.Development") ||
 		Environment.IsEnvironment( "postgres"))
 	    {
-		Console.WriteLine( "services.AddDbContext<DBPeople: PostgreSQL:version");
+		// Console.WriteLine( "services.AddDbContext<DBPeople: PostgreSQL:version");
 
 		services.AddDbContext<DBPeople>( options =>
 						 options.UseNpgsql( Configurationsrc["DBConnectionStrings:People"]));
-	    } else {
-		Console.WriteLine( "services.AddDbContext<DBPeople: MS SQL:version");
+	    }
+	    else
+	    {
+		// Console.WriteLine( "services.AddDbContext<DBPeople: MS SQL:version");
 
 		services.AddDbContext<DBPeople>( options =>
 						 options.UseSqlServer( Configurationsrc["DBConnectionStrings:People"]));
@@ -192,7 +195,7 @@ namespace Kartotek
 
 	    //
 	    // debug-utskrift - vad är adressen ???
-	    if( Environment.IsDevelopment())
+	    if ( Environment.IsDevelopment())
 		app.Use( next => context =>
 		{
 		    Console.WriteLine( $"Found: {context.GetEndpoint()?.DisplayName}");

@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-15 16:31:51 stefan>
+// Time-stamp: <2021-11-17 10:25:20 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -35,6 +35,8 @@ namespace Kartotek.Modeller {
 	/// Kreator - använd ympning (DI) för att få med ett databaslager
 	/// databaslagret är registrerat i Startup.cs: ConfigureServices
 	/// </summary>
+	/// <param name="loggdest">Loggning (DI) från modulen</param>
+	/// <param name="kartoteket">Ympning (DI) med en referens till databaskontextet</param>
 	public DatabasePeopleRepo ( ILogger<DatabasePeopleRepo> loggdest,
 				    DBPeople kartoteket )
 	{

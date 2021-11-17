@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-16 14:19:13 stefan>
+// Time-stamp: <2021-11-17 01:42:09 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -61,7 +61,11 @@ namespace Kartotek.Modeller {
 	/// enbart i form av entiteter, ej vymodell
 	/// </summary>
 	public bool Remove ( int id ) {
-	    Person kortet = this.FindBy( id );
+	    this.loggdest.LogInformation( (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
+					  (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
+					  "\n kasera kortet med id : " + id.ToString());
+
+	    Person kortet = FindBy( id );
 
 	    if (kortet != null)
 		return kartoteket.Delete( kortet );
