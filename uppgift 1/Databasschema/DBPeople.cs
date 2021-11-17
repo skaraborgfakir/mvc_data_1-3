@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-17 11:26:50 stefan>
+// Time-stamp: <2021-11-17 12:56:17 stefan>
 //
 
 
@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 // egen kod
 using Kartotek.Modeller.Entiteter;
@@ -96,37 +97,60 @@ namespace Kartotek.Databas {
 	    }
 	}
 
+	/// <summary>
+	/// flyttar ut funktionen specifikt för Person till separat klass/funktion
+	/// </summary>
+	/// <see href="https://docs.microsoft.com/en-us/ef/core/modeling/">Databasscheman i EF</see>
+	/// <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore.metadata.builders.entitytypebuilder?view=efcore-5.0">EntityTypeBuilder</see>
+	public class PersonEntityTypeConfiguration : IEntityTypeConfiguration<Person>
+	{
+	    public void Configure(EntityTypeBuilder<Person> builder)
+	    {
+		builder
+		    .HasKey(o => new
+		    {
+			o.Id
+		    });
+
+		builder
+		    .Property(o => o.Namn)
+		    .IsRequired();
+		builder
+		    .Property(o => o.Bostadsort)
+		    .IsRequired();
+
+		builder
+		    .HasData(
+			new
+			{
+			    Id = 1,
+			    Namn = "Michael Carlsson",
+			    Bostadsort = "Solberga",
+			    Telefonnummer = "0433"
+			}
+		    );
+		builder
+		    .HasData(
+			new
+			{
+			    Id = 2,
+			    Namn = "Ulf Smedbo",
+			    Bostadsort = "Göteborg",
+			    Telefonnummer = "031"
+			}
+		    );
+	    }
+	}
 
 	/// <summary>
 	/// </summary>
+	/// <see href="https://docs.microsoft.com/en-us/ef/core/modeling/">Databasscheman i EF</see>
+	/// <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore.metadata.builders.entitytypebuilder?view=efcore-5.0">EntityTypeBuilder</see>
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
-	    // Loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) + "\n"
-	    //			     + "Configurationsrc: " + Configurationsrc["session_kakans_namn"]);
-
 	    base.OnModelCreating(modelBuilder);
-	    modelBuilder.Entity<Person>()
-		.HasKey(o => new
-		{
-		    o.Id
-		});
 
-	    // modelBuilder
-	    //		 .Entity<Person>().HasData(
-	    //		     p => new Person {
-	    //			 ID = 0;
-	    //			 Namn = "Ulf Smedbo";
-	    //			 Bostadsort =  "Göteborg";
-	    //			 Telefonnummer =  "031";
-	    //		     }
-	    //		 );
-	    //	new Person
-	    //	{
-	    //	    Namn= "Bengt Ulfsson",
-	    //	    Bostadsort= "Växjö",
-	    //	    Telefonnummer= "044"
-	    //	}
-	    //	);
+	    new PersonEntityTypeConfiguration().Configure(modelBuilder.Entity<Person>());
 	}
     }
 }
