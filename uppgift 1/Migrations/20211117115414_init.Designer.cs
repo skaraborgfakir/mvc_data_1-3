@@ -9,8 +9,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Kartotek.Migrations
 {
     [DbContext(typeof(DBPeople))]
-    [Migration("20211115153748_Initial_2021-11-15")]
-    partial class Initial_20211115
+    [Migration("20211117115414_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -42,6 +42,22 @@ namespace Kartotek.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Person");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Bostadsort = "Solberga",
+                            Namn = "Michael Carlsson",
+                            Telefonnummer = "0433"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Bostadsort = "Göteborg",
+                            Namn = "Ulf Smedbo",
+                            Telefonnummer = "031"
+                        });
                 });
 #pragma warning restore 612, 618
         }
