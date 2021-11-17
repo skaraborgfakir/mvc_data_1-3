@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-17 00:31:28 stefan>
+// Time-stamp: <2021-11-17 00:37:15 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -139,10 +139,11 @@ namespace Kartotek.Controllers {
 
 	    // return Ok( this.serviceenheten.FindBy( id));
 	    // aktivlistan ska ha en PeopleViewModel - så
-	    // List <Person> utdrag = new List <Person>();
-	    // utdrag.Add ( this.serviceenheten.FindBy( id));
+	    List <Person> utdrag = new List <Person>();
+	    utdrag.Add ( this.serviceenheten.FindBy( id));
+
 	    PeopleViewModel vyn = new PeopleViewModel();
-	    vyn.Utdraget.Add (this.serviceenheten.FindBy( id));
+	    vyn.Utdraget = utdrag;
 	    return PartialView( "aktivlistan", vyn);
 	}
 
