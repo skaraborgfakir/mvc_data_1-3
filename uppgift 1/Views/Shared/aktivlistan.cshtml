@@ -1,4 +1,4 @@
-<!-- Time-stamp: <2021-11-16 16:16:52 stefan> -*-web-*- -->
+<!-- Time-stamp: <2021-11-19 14:59:09 stefan> -*-web-*- -->
 <!-- ersättning med div för en tabell -->
 <!-- används för uppräkningen av personer -->
 <!-- klistras av in av funktioner i ajaxkortfunktioner.js -->
@@ -16,13 +16,14 @@
 <div id="personindex_div" class="table-responsive container">
     <!-- tabell med existerande kort -->
     <div class="row">
-	<div class="col-md-2 text-start sorting" onClick="sorteraefternamn()" id="sorteraefternamn">Namn</div>
+	<div class="col-md-2 text-start sorting" onClick="sorteraefternamn()"       id="sorteraefternamn">Namn</div>
 	<div class="col-md-2 text-start sorting" onClick="sorteraefterbostadsort()" id="sorteraefterbostadsort">Bostadsort</div>
 	<div class="col-md-2 text-start">Telefon</div>
 	<div class="col-md-1 text-start">Id</div>
 	<div class="col-md-2">Aktioner</div>
     </div>
     <!-- sorteras av js/sorteratabell.js därav onClick i tabellhuvudet -->
+    <!-- personobjektorienterad -->
     <div id="enumreringajax">
 	@foreach (Person item in Model.Utdraget)
 	{

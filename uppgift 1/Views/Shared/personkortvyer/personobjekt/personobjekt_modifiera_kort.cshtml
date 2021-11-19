@@ -1,0 +1,15 @@
+<!-- Time-stamp: <2021-11-19 14:02:14 stefan> -*-web-*- -->
+
+<!-- orienterad mot Personobjekt -->
+<!-- använder kortuppgifter.cshtml -->
+
+@using Kartotek.Modeller.Vyer
+@using Kartotek.Modeller.Entiteter
+
+@model Kartotek.Modeller.Entiteter.Person
+
+<fieldset>
+    <partial name="kortuppgifter.cshtml"/>
+    <button class="btn btn-secondary" type="reset">Bläh (ångra)</button>
+    <button class="btn btn-success"   type="submit">Modifiera kortet (spara)</button>
+</fieldset>

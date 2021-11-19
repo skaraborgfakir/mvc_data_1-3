@@ -1,4 +1,4 @@
-<!-- Time-stamp: <2021-11-16 00:57:30 stefan> -*-web-*- -->
+<!-- Time-stamp: <2021-11-19 15:02:00 stefan> -*-web-*- -->
 <!-- används för uppräkningen av personer -->
 
 @using System
@@ -14,12 +14,9 @@
 <!-- insättning av uppgifter om en viss person i uppräkningen -->
 
 <div class="row headline" style="display: flex; flex-wrap: wrap;">
-    <div class="col-md-2 text-start">@Html.DisplayFor(model => Model.Namn)</div>
-    <div class="col-md-2 text-start">@Html.DisplayFor(model => Model.Bostadsort)</div>
-    <div class="col-md-2 text-start">@Html.DisplayFor(model => Model.Telefonnummer)</div>
-    <div class="col-md-1 text-start">@Html.DisplayFor(model => Model.Id)</div>
+    <partial name="specifikt_kort_uppgifter" model="@Model"/>
     <div class="col-md-2">
-	<button type="button" class="btn btn-danger"  onClick="kaseraspecifiktkort(@Html.Raw(Model.Id))">radering</button>
-	<button type="button" class="btn btn-primary" onClick="modifieraspecifiktkort(@Html.Raw(Model.Id))">modifiera</button>
+	<button type="button" name="kortkasering"    value="@Html.Raw(Model.Id)" class="btn btn-danger">radering</button>
+	<button type="button" name="modifierakortet" value="@Html.Raw(Model.Id)" class="btn btn-primary">modifiera</button>
     </div>
 </div>

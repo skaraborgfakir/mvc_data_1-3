@@ -1,0 +1,16 @@
+<!-- Time-stamp: <2021-11-19 15:02:29 stefan> -*-web-*- -->
+<!-- används för uppräkningen av personer -->
+<!-- personobjekt -->
+
+@using Kartotek.Modeller.Entiteter
+
+@model Kartotek.Modeller.Entiteter.Person
+
+<!-- sorteras av js/sorteratabell.js function sorteraTabellStigande(sorteringsterm) { -->
+<!-- därav sorteraTabell för namn och bostadsort -->
+<!-- insättning av uppgifter om en viss person i uppräkningen -->
+
+<div class="col-md-2 text-start">@Html.DisplayFor(model => Model.Namn)</div>
+<div class="col-md-2 text-start">@Html.DisplayFor(model => Model.Bostadsort)</div>
+<div class="col-md-2 text-start">@Html.DisplayFor(model => Model.Telefonnummer)</div>
+<div class="col-md-1 text-start">@Html.DisplayFor(model => Model.Id)</div>
