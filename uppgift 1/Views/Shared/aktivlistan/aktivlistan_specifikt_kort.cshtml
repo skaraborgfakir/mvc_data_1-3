@@ -1,10 +1,6 @@
-<!-- Time-stamp: <2021-11-19 15:02:00 stefan> -*-web-*- -->
+<!-- Time-stamp: <2021-11-20 16:37:28 stefan> -*-web-*- -->
 <!-- används för uppräkningen av personer -->
 
-@using System
-@using System.Collections.Generic
-
-@using Kartotek.Modeller.Vyer
 @using Kartotek.Modeller.Entiteter
 
 @model Kartotek.Modeller.Entiteter.Person
@@ -14,7 +10,7 @@
 <!-- insättning av uppgifter om en viss person i uppräkningen -->
 
 <div class="row headline" style="display: flex; flex-wrap: wrap;">
-    <partial name="specifikt_kort_uppgifter" model="@Model"/>
+    <partial name="personkortvy_objektbaserad/kortvisning" model="@Model"/>
     <div class="col-md-2">
 	<button type="button" name="kortkasering"    value="@Html.Raw(Model.Id)" class="btn btn-danger">radering</button>
 	<button type="button" name="modifierakortet" value="@Html.Raw(Model.Id)" class="btn btn-primary">modifiera</button>

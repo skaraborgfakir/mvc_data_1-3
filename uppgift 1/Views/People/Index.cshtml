@@ -1,4 +1,4 @@
-<!-- Time-stamp: <2021-11-19 15:21:44 stefan> -*-web-*- -->
+<!-- Time-stamp: <2021-11-19 17:39:33 stefan> -*-web-*- -->
 <!-- https://www.educba.com/bootstrap-sort-table/
      här använder jag metod 1 för att sortera tabellen
 
@@ -24,20 +24,22 @@
 
 <!-- innehåll uppifrån och nedåt: -->
 <!--   1: funktion för filtrering -->
-<!--   2: inläggning av nytt kort -->
+<!--   2: inskrivning av nytt kort -->
 <!--      använder en vy som är specialiserad på att hantera uppgifter från ett kort förutom kortets ID, vilket är fast (kortuppgifter) -->
 <!--      två knappar för att förkasta fälten eller acceptera dvs spara kortet -->
 <!--   3 den ajaxbaserad, som kan visa antingen : -->
-<!--      funktioner för visning av ett visst kort (en scroll) och knappar för just det valet -->
-<!--        en tabell för uppräkning av (alla ?/några ?/ett specifikt) korten  -->
-<!--           listan av kort - antingen ett eller flera -->
+<!--      funktion för uppräkning av alla korten eller visning av ett visst kort (en scroll) och knappar för just det valet -->
+<!--      eller om just det kortet ska raderas -->
+<!--        om användaren inte har begärt att titta på ett visst kort -->
+<!--           en tabell för uppräkning av (alla ?/några ?/ett specifikt) korten  -->
+<!--             listan av kort - antingen ett eller flera, i listan kan man välja att modifiera ett kort -->
 <!--      eller -->
 <!--        dialog för modifiering av ett visst kort -->
 <!--        som återanvänder kortuppgifter och förutom den har två knappar "bläh" dvs kasta ändringar eller "OK" dvs spara  -->
 
 <!-- partiella i bruk: -->
-<!--    Shared/filtreringsdialog.cshtml -->
-<!--       Shared/filtreringstermer.cshtml -->
+<!--    Shared/filtrering/dialog.cshtml -->
+<!--       Shared/filtrering/termer.cshtml (fält för de uppgifter i korten som kan användas för filtrering) -->
 <!--    Shared/inskrivning_av_nytt_kort.cshtml -->
 <!--    Shared/ajaxbaserad_kartotekvy.cshtml  -->
 <!--       #kartotekvyn (i ajaxbaserad_kartotekvy.cshtml) -->

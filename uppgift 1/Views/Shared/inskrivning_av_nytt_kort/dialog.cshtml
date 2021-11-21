@@ -1,4 +1,4 @@
-<!-- Time-stamp: <2021-11-19 15:24:25 stefan> -*-web-*- -->
+<!-- Time-stamp: <2021-11-19 18:09:05 stefan> -*-web-*- -->
 <!-- används för modellbaserad inskrivning av ett nytt kort -->
 
 @model Kartotek.Modeller.Vyer.CreatePersonViewModel
@@ -9,7 +9,7 @@
     </h4>
     <!-- js/nyakort.js ansvarar för validering -->
     <form id="nya_aktiva" method="post" asp-controller="People">
-	<partial name="vymodell_kortuppgifter/inskrivning_av_nytt_kort_kortuppgifter" for="@Model" />
+	<partial name="personkortvy_modellbaserad/inskrivning_av_nytt_kort" for="@Model" />
 	<button class="btn btn-secondary" type="reset">Rensa fälten</button>
 	<button class="btn btn-success"   asp-action="nyttkort" type="submit">Skapa kortet</button>
     </form>
