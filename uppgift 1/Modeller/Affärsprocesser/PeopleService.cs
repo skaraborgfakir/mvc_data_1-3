@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-17 01:42:09 stefan>
+// Time-stamp: <2021-11-20 17:16:58 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -67,6 +67,9 @@ namespace Kartotek.Modeller {
 
 	    Person kortet = FindBy( id );
 
+	    loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+				    (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
+
 	    if (kortet != null)
 		return kartoteket.Delete( kortet );
 
@@ -133,8 +136,13 @@ namespace Kartotek.Modeller {
 		    (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
 		vyn.Utdraget = posterna
-		    .Where( posterna => ( posterna.Namn.ToLower() == search.Namn.ToLower() && posterna.Bostadsort.ToLower() == search.Bostadsort.ToLower()))
+		    .Where( posterna => ( posterna.Namn.ToLower() == search.Namn.ToLower() &&
+					  posterna.Bostadsort.ToLower() == search.Bostadsort.ToLower()))
 		    .ToList();
+
+		this.loggdest.LogInformation(
+		    (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
+		    (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 	    }
 	    //
 	    // båda var inte satta, kan det finnas något i Namn ?

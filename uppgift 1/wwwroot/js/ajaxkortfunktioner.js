@@ -1,45 +1,72 @@
 //
-// - Time-stamp: <2021-11-17 00:31:35 stefan>
+// - Time-stamp: <2021-11-20 16:11:24 stefan>
 //
 
 
 'use strict';
 
+const url_samtliga_kort            = "https://localhost:5009/api/PeopleAjax/uppdateralistan";    // json-kodad lista
+const url_specifikt_kort           = "https://localhost:5009/api/PeopleAjax/tagframvisstkort";       // uppgifter om ett specifikt kort
+const url_modifiera_specifikt_kort = "https://localhost:5009/api/PeopleAjax/modifieravisstkort"; // modifiering av ett specifikt kort
+const url_kasera_kort              = "https://localhost:5009/api/PeopleAjax/kaserakortet";       // kasera kortet
+
 //
 // funktioner för hämtning och visning av kort ur kartoteket
 //
-$(document).ready(function() {
-    const url_samtliga_kort =  "https://localhost:5009/api/PeopleAjax/uppdateralistan"; // json-kodad lista
-    const url_specifikt_kort = "https://localhost:5009/api/PeopleAjax/taguppkortet";    // uppgifter om ett specifikt kort
-    const url_kasera_kort =    "https://localhost:5009/api/PeopleAjax/kaserakortet";    // kasera kortet
+function uppdateraVy() {
+    // $("#kartotekvyn").empty();  // töm ur listan helt och bygg upp den på nytt
 
+    //
+    // klistra in uppräkningen av korten vid #kartotekvyn
+    //
+    $("#kartotekvyn").load( url_samtliga_kort, function() {
+	//
+	// hantera tryck på någon av de två knapparna i kortuppräkningen som finns för varje kort i uppräkningen
+	// kopplas mot radering- och modifierings-knapparna
+	//
+	// radering: då försvinner korter direkt
+	// modifiering: använd #visa modifiering_av_specifikt_kort
+	// och klistra där in Shared/modifiera_kort.cshtml
+	//
+	$("button[name=modifierakortet]").on("click", function(event) {
+	    //
+	    // TODO: utifrån Id, hämta vyn för modifiering (GET)
+	    // göm uppräkningen (#kartotekvyn) och klistra in dialogen vid #modifiering_av_specifikt_kort
+	    //
+	    $("#modifiering_av_specifikt_kort").load(
+		url_specifikt_kort + '/' + $(this).val(),
+		function(res) {
+		    $("#kartotekvyn").hide();
+		    $("#visning_av_specifikt_kort").hide();
+		    $("#modifiering_av_specifikt_kort").show();
+		}
+	    );
+	});
+
+	$("button[name=kortkasering]").on("click", function(event) {
+	    $.ajax({
+		url: url_kasera_kort + '?' + $.param( { "id": $(this).val() }),
+		type: 'DELETE',
+		success: function(res) {
+		    console.log( "radering av kort med Id: " + $(this).val() + " fungerade" );
+		}
+	    })
+	});
+    });
+
+    //
+    // om vyn för ett specifikt kort syns, göm den
+    //
+    $("#kartotekvyn").show();
+    $("#visning_av_specifikt_kort").hide();
+    $("#modifiering_av_specifikt_kort").hide();
+}
+
+$(document).ready(function() {
     /// <summary>
     /// aktiveras en gång efter inläsning av sidan för att få den första bilden
     /// kan sedan aktiveras via knapptryck i vyn (Uppdatera listan)
     /// </summary>
-    function uppdateraVy() {
-	//$("#enumreringajax").empty();  // töm ur listan helt och bygg upp den på nytt
-
-	$("#kartotekvyn").load( url_samtliga_kort, function() {
-	//
-	// iom att vyn laddas efter att document.ready är klar så kan
-	// uppsättning av händelsehanteringen för vyerna tas upp här
-	//
-
-	//
-	// TODO: se till att vyn är sortera så som den var direkt efter inläsning
-	//
-	});
-
-	// $.ajax({
-	//     url: url_samtliga_kort,
-	//     type: 'GET',
-	//     success: function(res) {
-	//	let utdraget = Object( res );
-	//	$("ajaxvy_kartotek").append(utdraget);
-	//     }
-	// });
-    }
 
     /// få in en aktuell vy direkt
     uppdateraVy();
@@ -50,62 +77,81 @@ $(document).ready(function() {
     $("#uppdateralistan").click(function( event) {
 	event.preventDefault();
 	uppdateraVy();
-
 	return false;
     });
 
     /// <summary>
     /// aktiveras via knapptryck i vyn (visa kortet) (ajaxbaserad_kortselektor.cshtml)
     /// </summary>
-    $('#plockaframkortet').click(function( ) {
-	var id = document.getElementById("valtkortsid").value;
+    // $('#plockaframkortet').click(function( ) {
+    //	var id = document.getElementById("valtkortsid").value;
 
 
-	$("#kartotekvyn").load( url_specifikt_kort + '?' + $.param( { "id": id } ),
-					   function() {
-					   }
-					 );
-	// $.ajax({
-	//     url: url_specifikt_kort,
-	//     data: { "id": id },
-	//     success: function( result ){
-	//	$("#ajaxvy_kartotek").html( result );
-	//     }
-	// });
+    //	$("#kartotekvyn").load( url_specifikt_kort + '?' + $.param( { "id": id } ),
+    //				function() {
+    //				}
+    //			      );
+    // $.ajax({
+    //     url: url_specifikt_kort,
+    //     data: { "id": id },
+    //     success: function( result ){
+    //	$("#ajaxvy_kartotek").html( result );
+    //     }
+    // });
 
-	// $("#tabell_kartotek_ajax").load( url: url_specifikt_kort,
-	//				 data: { "id": id }
-	//			       );
+    // $("#tabell_kartotek_ajax").load( url: url_specifikt_kort,
+    //				 data: { "id": id }
+    //			       );
 
-	// $.ajax({
-	//     url: url_specifikt_kort,
-	//     type: 'GET',
-	//     datatype: 'json',
-	//     success: function(res) {
-	//	let utdraget = Object( res );
-	//	$.each( utdraget, function( index, item) { enumeration( index, item); });
-	//     }
-	// });
-    });
+    // $.ajax({
+    //     url: url_specifikt_kort,
+    //     type: 'GET',
+    //     datatype: 'json',
+    //     success: function(res) {
+    //	let utdraget = Object( res );
+    //	$.each( utdraget, function( index, item) { enumeration( index, item); });
+    //     }
+    // });
+    // });
 
     /// <summary>
     /// aktiveras via knapptryck i vyn (kasera kortet) (ajaxbaserad_kortselektor.cshtml)
     /// </summary>
     /// <see href="https://stackoverflow.com/questions/15088955/how-to-pass-data-in-the-ajax-delete-request-other-than-headers">JQuery bug</see>
     /// <see href="http://bugs.jquery.com/ticket/11586">bug i jQuery: använder man DELETE så klipps data-klumpen bort</see>
-    $('#kaserakortet').click(function( event) {
-	// event.preventDefault();
-	// document.getElementById("valtkortsid").value  till url_kasera_kort
-	// hämta valtkortsid från skrollern och skicka vidare till kaseraspecifiktkort
-	var id = document.getElementById("valtkortsid").value;
+    // $('#kaserakortet').click(function( event) {
+    //	// event.preventDefault();
+    //	// document.getElementById("valtkortsid").value  till url_kasera_kort
+    //	// hämta valtkortsid från skrollern och skicka vidare till kaseraspecifiktkort
+    //	var id = document.getElementById("valtkortsid").value;
 
-	$.ajax({ type:  "DELETE",
-		 url:    url_kasera_kort + '?' + $.param( { "id": id }),
-		 contentType: "application/json; charset=utf-8"
-	       }
-	      );
-    });
+    //	$.ajax({ type:  "DELETE",
+    //		 url:    url_kasera_kort + '?' + $.param( { "id": id }),
+    //		 contentType: "application/json; charset=utf-8"
+    //	       }
+    //	      );
+    // })
+    ;
 });
+
+
+    // $.ajax({
+    //     url: url_samtliga_kort,
+    //     type: 'GET',
+    //     success: function(res) {
+    //	let utdraget = Object( res );
+    //	$("ajaxvy_kartotek").append(utdraget);
+    //     }
+    // });
+
+//
+// $.ajax({
+//     url: url_specifikt_kort,
+//	type: 'GET',
+//	success: function(res) {
+//	    $.each( utdraget, function( index, item) { enumeration( index, item); });
+//	}
+// });
 
 /// <summary>
 /// sortera listan efter namn, aktiveras via onClick i aktivlistan.cshtml
@@ -191,18 +237,16 @@ function sorteraefterbostadsort () {
 ///
 /// aktiveras via knapptryck i listvyn (radering bland aktionerna)
 /// </summary>
-// function kaseraspecifiktkort( Id) {
+// function kaseraspecifiktkort( id) {
 //     //
 //     // TODO: utifrån scrollern, radering av rätt kort
 //     //
-
-//     //	$.ajax({
-//     //	    url: url_kasera_kort,
-//     //	    type: 'POST',
-//     //	    success: function(res) {
-//     //		let utdraget = Object( res );
-//     //	    }
-//     //	});
+//     $.ajax({ type: 'DELETE',
+//	     url: url_kasera_kort + '?' + $.param( { "id": id }),
+//	     success: function(res) {
+//		 let utdraget = Object( res );
+//	     }
+//	   });
 // }
 
 /// <summary>
@@ -210,20 +254,21 @@ function sorteraefterbostadsort () {
 ///
 /// aktiveras via knapptryck i listvyn (modifiering)
 /// </summary>
-// function modifieraspecifiktkort( Id) {
-//     //
-//     // TODO: utifrån scrollern, modifiering av rätt kort
-//     //
-//     // $.ajax({
-//     //     url: url_kasera_kort,
-//     //     type: 'GET',
-//     //     datatype: 'json',
-//     //     success: function(res) {
-//     //	let utdraget = Object( res );
-//     //	/// $.each( utdraget, function( index, item) { enumeration( index, item); });
-//     //     }
-//     // });
-// }
+function modifieraspecifiktkort( Id) {
+    //
+    // TODO: utifrån Id, hämta vyn för modifiering (GET)
+    //
+    // $.ajax({
+    //     url: url_kasera_kort,
+    //     type: 'GET',
+    //     datatype: 'json',
+    //     success: function(res) {
+    //	let utdraget = Object( res );
+    //	/// $.each( utdraget, function( index, item) { enumeration( index, item); });
+    //     }
+    // });
+    // $("#kartotekvyn").load( url_specifikt_kort
+}
 
 /// <summary>
 /// Vilket ID är lägst ?

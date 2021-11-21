@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-17 12:56:17 stefan>
+// Time-stamp: <2021-11-17 14:01:36 stefan>
 //
 
 
@@ -150,6 +150,7 @@ namespace Kartotek.Databas {
 	{
 	    base.OnModelCreating(modelBuilder);
 
+	    modelBuilder.HasDefaultSchema("people");
 	    new PersonEntityTypeConfiguration().Configure(modelBuilder.Entity<Person>());
 	}
     }

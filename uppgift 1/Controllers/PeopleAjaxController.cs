@@ -1,9 +1,19 @@
 //
-// Time-stamp: <2021-11-17 00:37:15 stefan>
+// Time-stamp: <2021-11-20 17:17:55 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/recommended-tags#seealso
+//
+// olika metoder som kan anropas från ett formulär i javascript
+//   1 uppräkning av korten med personernas namn, telefonnummer och hemort
+//   2 visning av ett specifikt kort enbart, med möjlighet att kasera det eller begära att få ändra i det
+//       olika vyer:
+//         visningsvy
+//         modifieringsvy
+//         vy för radering ?
+//     visningsvyn kommer man åt igenom att välja kortets nummer i dialog ovanför
+//     eller igenom att klicka 'visa kort' i uppräkningen
 //
 
 using System;
@@ -69,6 +79,7 @@ namespace Kartotek.Controllers {
 	/// <summary>
 	/// komplett kartotek, utan någon filtrering
 	/// API mot JS !!
+	/// anropas från js/ajaxkortfunktioner.js för visning av listan
 	/// </summary>
 	[ActionName( "uppdateralistan" )]
 	public IActionResult uppdateralistanurdatabasen () {
@@ -83,7 +94,7 @@ namespace Kartotek.Controllers {
 		"\n" + "bostadsort : " + HttpContext.Session.GetString( $"bostadsort.{this.sessionsuffix}")
 	    );
 
-	    PeopleViewModel filter = new PeopleViewModel();
+	    PeopleViewModel söktermer = new PeopleViewModel();
 
 	    switch (HttpContext.Session.GetInt32( $"valdterm.{this.sessionsuffix}")) {
 		case 1 :
@@ -91,62 +102,75 @@ namespace Kartotek.Controllers {
 			(new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
 			(new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
-		    filter.Namn = HttpContext.Session.GetString( $"namn.{this.sessionsuffix}");
-		    PeopleViewModel vy_efter_namn = this.serviceenheten.FindBy( filter);
+		    söktermer.Namn = HttpContext.Session.GetString( $"namn.{this.sessionsuffix}");
+		    PeopleViewModel vy_efter_namn = this.serviceenheten.FindBy( söktermer);
+		    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+						 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
-		    return PartialView( "aktivlistan", vy_efter_namn);
+		    return PartialView( "aktivlistan/aktivlistan", vy_efter_namn);
 
 		case 2:
 		    this.loggdest.LogInformation(
 			(new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
 			(new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
-		    filter.Bostadsort = HttpContext.Session.GetString( $"bostadsort.{this.sessionsuffix}");
-		    PeopleViewModel vy_efter_bostadsort = this.serviceenheten.FindBy( filter);
+		    söktermer.Bostadsort = HttpContext.Session.GetString( $"bostadsort.{this.sessionsuffix}");
+		    PeopleViewModel vy_efter_bostadsort = this.serviceenheten.FindBy( söktermer);
+		    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+						 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
-		    return PartialView( "aktivlistan", vy_efter_bostadsort);
+		    return PartialView( "aktivlistan/aktivlistan", vy_efter_bostadsort);
 
 		default:
+		    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+						 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 		    PeopleViewModel vyn = this.serviceenheten.All();
+		    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+						 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
-		    return PartialView( "aktivlistan", vyn);
+		    return PartialView( "aktivlistan/aktivlistan", vyn);
 	    }
 	}
 
 	/// <summary>
-	/// ett utdrag av vissa kort från kartoteket
+	/// tag fram ett specifikt kort för visning
 	/// </summary>
-	[ActionName( "uppdateralistanvissakort" )]  // API mot JS !!
-	public ActionResult uppdateralistanvissakort () {
-	    this.loggdest.LogInformation( (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
-					  (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
-
-	    PeopleViewModel söktermer = new PeopleViewModel(){
-	    };
-
-	    return Ok( this.serviceenheten.FindBy(söktermer));
-	}
-
-	/// <summary>
-	/// tag fram ett specifikt kort
-	/// </summary>
-	[HttpGet]
-	[ActionName( "taguppkortet" )]  // API mot JS !!
+	[HttpGet("{id}")]
+	[ActionName( "tagframvisstkort" )]  // API mot JS !!
 	public ActionResult tagframkortet ( int id ) {
 	    this.loggdest.LogInformation( (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
 					  (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
 					  "\n tag fram kortet med id : " + id.ToString());
 
 	    // return Ok( this.serviceenheten.FindBy( id));
-	    // aktivlistan ska ha en PeopleViewModel - så
+	    // aktivlistan/aktivlistan ska ha en PeopleViewModel - så
 	    List <Person> utdrag = new List <Person>();
 	    utdrag.Add ( this.serviceenheten.FindBy( id));
+	    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+					 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
 	    PeopleViewModel vyn = new PeopleViewModel();
 	    vyn.Utdraget = utdrag;
-	    return PartialView( "aktivlistan", vyn);
+	    return PartialView( "aktivlistan/aktivlistan", vyn);
 	}
 
+	/// <summary>
+	/// modifiering av ett visst kort
+	/// </summary>
+	[ActionName( "modifieravisstkort" )]  // API mot JS !!
+	public ActionResult uppdateralistanvissakort ( int id) {
+	    this.loggdest.LogInformation( (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
+					  (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
+					  "\n modifiering av kortet med id : " + id.ToString());
+
+	    PeopleViewModel söktermer = new PeopleViewModel(){
+	    };
+
+	    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+					 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
+
+	    return Ok( this.serviceenheten.FindBy(söktermer));
+	}
 
 	/// <summary>
 	/// kassera ett specifikt kort
@@ -164,10 +188,16 @@ namespace Kartotek.Controllers {
 					  "\n kasera kortet med id : " + id.ToString());
 
 	    if ( this.serviceenheten.FindBy(id) != null) {
+		this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+					     (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
+
 		return Ok( this.serviceenheten.Remove( id));
 	    }
 	    else
 	    {
+		this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+					     (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
+
 		return NotFound();
 	    }
 	}
