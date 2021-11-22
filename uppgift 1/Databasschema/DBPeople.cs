@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-22 17:34:50 stefan>
+// Time-stamp: <2021-11-22 19:24:53 stefan>
 //
 
 
@@ -244,13 +244,13 @@ namespace Kartotek.Databas {
 	{
 	    base.OnModelCreating(modelBuilder);
 
-	    modelBuilder.HasDefaultSchema("medlemskartotek");
+	    modelBuilder.HasDefaultSchema("medlemskartotek_1_2_M");
 	    new LandEntityTypeConfiguration().Configure(modelBuilder.Entity<Land>());
 
-	    modelBuilder.HasDefaultSchema("medlemskartotek");
+	    modelBuilder.HasDefaultSchema("medlemskartotek_1_2_M");
 	    new OrterEntityTypeConfiguration().Configure(modelBuilder.Entity<Hemort>());
 
-	    modelBuilder.HasDefaultSchema("medlemskartotek");
+	    modelBuilder.HasDefaultSchema("medlemskartotek_1_2_M");
 	    new PersonEntityTypeConfiguration().Configure(modelBuilder.Entity<Person>());
 	}
     }
