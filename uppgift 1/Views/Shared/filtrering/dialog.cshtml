@@ -1,4 +1,4 @@
-<!-- Time-stamp: <2021-11-22 01:47:47 stefan> -*-web-*- -->
+<!-- Time-stamp: <2021-11-22 10:09:01 stefan> -*-web-*- -->
 <!-- filtrering via People-kontrollanten -->
 <!-- använder en partial -->
 
@@ -17,7 +17,7 @@
     </h4>
     <form id="filtrering" method="post" asp-controller="People">
 	<fieldset class="mb-1 text-start">
-	    <partial name="Shared/personkortvy_modellbaserad/filtreringstermer" for="@Model"/>
+	    <partial name="personkortvy_modellbaserad/filtreringstermer" for="@Model"/>
 	    <button type="reset"                               class="btn btn-secondary">Töm fälten</button>
 	    <button type="submit" asp-action="filtrering"      class="btn btn-success">Filtrera</button>
 	    <button type="submit" asp-action="ingenfiltrering" class="btn btn-success">Återställ filtrering</button>

@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-22 10:01:27 stefan>
+// Time-stamp: <2021-11-22 15:26:49 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -78,6 +78,9 @@ namespace Kartotek.Controllers {
 	    this.serviceenheten     = serviceenheten;
 
 	    this.sessionsuffix=this.configurationsrc["session_kakans_namn"];
+
+	    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
+					 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 	}
 
 	/// <summary>
@@ -87,9 +90,6 @@ namespace Kartotek.Controllers {
 	/// </summary>
 	[ActionName( "uppdateralistan" )]
 	public IActionResult uppdateralistanurdatabasen () {
-	    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
-					 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
-
 	    this.loggdest.LogInformation(
 		(new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
 		(new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
@@ -108,6 +108,7 @@ namespace Kartotek.Controllers {
 
 		    söktermer.Namn = HttpContext.Session.GetString( $"namn.{this.sessionsuffix}");
 		    PeopleViewModel vy_efter_namn = this.serviceenheten.FindBy( söktermer);
+
 		    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
 						 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
@@ -120,6 +121,7 @@ namespace Kartotek.Controllers {
 
 		    söktermer.Bostadsort = HttpContext.Session.GetString( $"bostadsort.{this.sessionsuffix}");
 		    PeopleViewModel vy_efter_bostadsort = this.serviceenheten.FindBy( söktermer);
+
 		    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
 						 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
@@ -137,7 +139,8 @@ namespace Kartotek.Controllers {
 	}
 
 	/// <summary>
-	/// tag fram ett specifikt kort för visning
+	/// tag fram ett specifikt kort för visning enbart
+	/// det kan finnas knappar i bilden för att modifiera eller ta bort det
 	/// </summary>
 	[HttpGet("{id}")]
 	[ActionName( "tagframvisstkort" )]  // API mot JS !!
@@ -149,7 +152,14 @@ namespace Kartotek.Controllers {
 	    // return Ok( this.serviceenheten.FindBy( id));
 	    // aktivlistan/aktivlistan ska ha en PeopleViewModel - så
 	    List <Person> utdrag = new List <Person>();
-	    utdrag.Add ( this.serviceenheten.FindBy( id));
+	    Person resultat = this.serviceenheten.FindBy( id);
+
+	    if ( resultat == null ) {
+		return NotFound();
+	    }
+
+	    utdrag.Add ( resultat);
+
 	    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
 					 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
@@ -159,7 +169,7 @@ namespace Kartotek.Controllers {
 	}
 
 	/// <summary>
-	/// modifiering av ett visst kort
+	/// gå direkt till modifiering av ett visst kort
 	/// </summary>
 	[ActionName( "modifieravisstkort" )]  // API mot JS !!
 	public ActionResult uppdateralistanvissakort ( int id) {

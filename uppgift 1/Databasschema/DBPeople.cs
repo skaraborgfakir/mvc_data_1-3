@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-22 01:24:43 stefan>
+// Time-stamp: <2021-11-22 10:15:27 stefan>
 //
 
 
@@ -60,25 +60,29 @@ namespace Kartotek.Databas {
 	    Environment = env;
 	    Configurationsrc = configurationsrc;
 
-	    this.loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
-				     "\n" + "Configurationsrc: " + Configurationsrc["DBConnectionStrings:People"] +
-				     "\n" + "Configurationsrc: " + Configurationsrc["DBConnectionStrings:PeopleIdentity"]);
-
 	    if ( Environment.IsDevelopment()) {
-		this.loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) + "\n"
-					 + "MS SQL - Environment: Development");
+		this.loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
+					      "\n" + "Configurationsrc: " + Configurationsrc["DBConnectionStrings:People"] +
+					      "\n" + "Configurationsrc: " + Configurationsrc["DBConnectionStrings:PeopleIdentity"] +
+					      "\n" + "MS SQL - Environment: Development");
 	    }
 	    else if ( Environment.IsProduction()) {
-		this.loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) + "\n"
-					 + "MS SQL - Environment: Production");
+		this.loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
+					      "\n" + "Configurationsrc: " + Configurationsrc["DBConnectionStrings:People"] +
+					      "\n" + "Configurationsrc: " + Configurationsrc["DBConnectionStrings:PeopleIdentity"] +
+					      "\n" + "MS SQL - Environment: Production");
 	    }
 	    else if ( Environment.IsEnvironment( "postgres.Development")) {
-		this.loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) + "\n"
-					 + "Postgres - Environment: Development");
+		this.loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
+					      "\n" + "Configurationsrc: " + Configurationsrc["DBConnectionStrings:People"] +
+					      "\n" + "Configurationsrc: " + Configurationsrc["DBConnectionStrings:PeopleIdentity"] +
+					      "\n" + "Postgres - Environment: Development");
 	    }
 	    else if ( Environment.IsEnvironment( "postgres")) {
-		this.loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) + "\n"
-					 + "Postgres - Environment: Production");
+		this.loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
+					      "\n" + "Configurationsrc: " + Configurationsrc["DBConnectionStrings:People"] +
+					      "\n" + "Configurationsrc: " + Configurationsrc["DBConnectionStrings:PeopleIdentity"] +
+					      "\n" + "Postgres - Environment: Production");
 	    }
 	}
 
@@ -104,6 +108,9 @@ namespace Kartotek.Databas {
 	/// <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore.metadata.builders.entitytypebuilder?view=efcore-5.0">EntityTypeBuilder</see>
 	public class PersonEntityTypeConfiguration : IEntityTypeConfiguration<Person>
 	{
+	    /// <summary>
+	    /// beskrivning av relationen i mot EF
+	    /// </summary>
 	    public void Configure(EntityTypeBuilder<Person> builder)
 	    {
 		builder

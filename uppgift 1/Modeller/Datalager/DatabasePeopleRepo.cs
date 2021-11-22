@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-22 09:53:28 stefan>
+// Time-stamp: <2021-11-22 12:46:25 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -50,6 +50,8 @@ namespace Kartotek.Modeller {
 	{
 	    this.loggdest = loggdest;
 	    Kartoteket = kartoteket;
+
+	    this.loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 	}
 
 	/// <summary>
@@ -86,8 +88,17 @@ namespace Kartotek.Modeller {
 	/// inläsning av ett visst kort
 	/// </summary>
 	public Person Read ( int id ) {
+	    this.loggdest.LogInformation(
+		(new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
+		(new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
+		"\n sök efter kortet med id : " + id.ToString() );
+
+	    // LINQ metod syntax
+	    // return Kartoteket.Person
+	    //	.Where (p => p.Id == id)
+	    //	.Single();
 	    return Kartoteket.Person
-		.Single (p => p.Id == id);
+		.SingleOrDefault (p => p.Id == id);
 	}
 
 	/// <summary>

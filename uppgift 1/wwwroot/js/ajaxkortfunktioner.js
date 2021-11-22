@@ -1,12 +1,12 @@
 //
-// - Time-stamp: <2021-11-20 16:11:24 stefan>
+// - Time-stamp: <2021-11-22 15:25:42 stefan>
 //
 
 
 'use strict';
 
 const url_samtliga_kort            = "https://localhost:5009/api/PeopleAjax/uppdateralistan";    // json-kodad lista
-const url_specifikt_kort           = "https://localhost:5009/api/PeopleAjax/tagframvisstkort";       // uppgifter om ett specifikt kort
+const url_specifikt_kort           = "https://localhost:5009/api/PeopleAjax/tagframvisstkort";   // uppgifter om ett specifikt kort
 const url_modifiera_specifikt_kort = "https://localhost:5009/api/PeopleAjax/modifieravisstkort"; // modifiering av ett specifikt kort
 const url_kasera_kort              = "https://localhost:5009/api/PeopleAjax/kaserakortet";       // kasera kortet
 
@@ -18,6 +18,7 @@ function uppdateraVy() {
 
     //
     // klistra in uppräkningen av korten vid #kartotekvyn
+    // och ordna eventhantering för de olika knapparna i kortuppräkningen
     //
     $("#kartotekvyn").load( url_samtliga_kort, function() {
 	//
@@ -33,20 +34,22 @@ function uppdateraVy() {
 	    // TODO: utifrån Id, hämta vyn för modifiering (GET)
 	    // göm uppräkningen (#kartotekvyn) och klistra in dialogen vid #modifiering_av_specifikt_kort
 	    //
-	    $("#modifiering_av_specifikt_kort").load(
-		url_specifikt_kort + '/' + $(this).val(),
-		function(res) {
+	    $.ajax({
+		url: url_modifiera_specifikt_kort + '/' + $(this).val(),
+		method: 'GET',
+		success: function( data, textStatus, jqXHR) {
 		    $("#kartotekvyn").hide();
 		    $("#visning_av_specifikt_kort").hide();
+		    $("#modifiering_av_specifikt_kort").html( data);
 		    $("#modifiering_av_specifikt_kort").show();
 		}
-	    );
+	    });
 	});
 
 	$("button[name=kortkasering]").on("click", function(event) {
 	    $.ajax({
 		url: url_kasera_kort + '?' + $.param( { "id": $(this).val() }),
-		type: 'DELETE',
+		method: 'DELETE',
 		success: function(res) {
 		    console.log( "radering av kort med Id: " + $(this).val() + " fungerade" );
 		}
@@ -74,34 +77,78 @@ $(document).ready(function() {
     /// <summary>
     /// aktiveras via knapptryck på 'Uppdatera listan' (ajaxbaserad_kortselektor.cshtml)
     /// </summary>
-    $("#uppdateralistan").click(function( event) {
-	event.preventDefault();
+    $("#uppdateralistan").on( "click", function( event) {
+	// event.preventDefault();
 	uppdateraVy();
+
 	return false;
     });
 
     /// <summary>
-    /// aktiveras via knapptryck i vyn (visa kortet) (ajaxbaserad_kortselektor.cshtml)
+    /// välj kort-id med skroller
+    /// aktiveras via knapptryck i vyn (visa kortet) (ajaxbaserad_kortselektor.cshtml), inte från listan
     /// </summary>
-    // $('#plockaframkortet').click(function( ) {
-    //	var id = document.getElementById("valtkortsid").value;
+    $("form fieldset #plockaframkortet").on( "click", function( ) {
+	var id = document.getElementById("valtkortsid").value;
 
 
-    //	$("#kartotekvyn").load( url_specifikt_kort + '?' + $.param( { "id": id } ),
-    //				function() {
-    //				}
-    //			      );
-    // $.ajax({
-    //     url: url_specifikt_kort,
-    //     data: { "id": id },
-    //     success: function( result ){
-    //	$("#ajaxvy_kartotek").html( result );
-    //     }
-    // });
+	//	$("#visning_av_specifikt_kort").load( url_specifikt_kort + '?' + $.param( { "id": id } ),
+	//	function() {
+	//		}
+	//	     );
+	$.ajax( url_specifikt_kort + '/' + id,
+		{
+		    error: function( jqXHR, textStatus, errorThrown) {
+			if ( jqXHR.status == 404 ) {
+			    console.log( "inget i databasen med id = " + id);
+			    $("#visning_av_specifikt_kort").html( "inget i databasen med id = " + id);
+			    $("#visning_av_specifikt_kort").show();
+			    $("#kartotekvyn").hide();
+			} else {
+			    console.log( "fel från server status: " + textStatus + " error " + errorThrown);
+			    $("#visning_av_specifikt_kort").html( "error från server-textStatus: " + textStatus + " errorThrown : " + errorThrown);
+			    $("#visning_av_specifikt_kort").show();
+			    $("#kartotekvyn").hide();
+			}
+		    },
+		    success: function( result, status, jqXHR ) {
+			$("#visning_av_specifikt_kort").html( result );
+			$("#visning_av_specifikt_kort").show();
+			$("#kartotekvyn").hide();
+		    }
+		});
+    });
 
-    // $("#tabell_kartotek_ajax").load( url: url_specifikt_kort,
-    //				 data: { "id": id }
-    //			       );
+    /// <summary>
+    /// välj kort-id med skroller
+    /// aktiveras via knapptryck i vyn (kasera kortet), inte från listan
+    /// synonym med ovanstående
+    /// </summary>
+    /// <see href="https://stackoverflow.com/questions/15088955/how-to-pass-data-in-the-ajax-delete-request-other-than-headers">JQuery bug</see>
+    /// <see href="http://bugs.jquery.com/ticket/11586">bug i jQuery: använder man DELETE så klipps data-klumpen bort</see>
+    $('form fieldset #kaserakortet').on( "click", function() {
+	// hämta valtkortsid från skrollern och skicka vidare till kaseraspecifiktkort
+	var id = document.getElementById("valtkortsid").value;
+
+	$.ajax({ url:    url_kasera_kort + '?' + $.param( { "id": id }),
+		 method: "DELETE",
+		 error: function( jqXHR, textStatus, errorThrown) {
+		     if ( jqXHR.status == 404 ) {
+			 console.log( "inget i databasen med id = " + id);
+			 $("#visning_av_specifikt_kort").html( "inget i databasen med id = " + id);
+			 $("#visning_av_specifikt_kort").show();
+			 $("#kartotekvyn").hide();
+		     } else {
+			 console.log( "fel från server status: " + textStatus + " error " + errorThrown);
+			 $("#visning_av_specifikt_kort").html( "error från server-textStatus: " + textStatus + " errorThrown : " + errorThrown);
+			 $("#visning_av_specifikt_kort").show();
+			 $("#kartotekvyn").hide();
+		     }
+		 },
+		 success: function( result, status, jqXHR) {
+		 }
+	       });
+    });
 
     // $.ajax({
     //     url: url_specifikt_kort,
@@ -113,25 +160,6 @@ $(document).ready(function() {
     //     }
     // });
     // });
-
-    /// <summary>
-    /// aktiveras via knapptryck i vyn (kasera kortet) (ajaxbaserad_kortselektor.cshtml)
-    /// </summary>
-    /// <see href="https://stackoverflow.com/questions/15088955/how-to-pass-data-in-the-ajax-delete-request-other-than-headers">JQuery bug</see>
-    /// <see href="http://bugs.jquery.com/ticket/11586">bug i jQuery: använder man DELETE så klipps data-klumpen bort</see>
-    // $('#kaserakortet').click(function( event) {
-    //	// event.preventDefault();
-    //	// document.getElementById("valtkortsid").value  till url_kasera_kort
-    //	// hämta valtkortsid från skrollern och skicka vidare till kaseraspecifiktkort
-    //	var id = document.getElementById("valtkortsid").value;
-
-    //	$.ajax({ type:  "DELETE",
-    //		 url:    url_kasera_kort + '?' + $.param( { "id": id }),
-    //		 contentType: "application/json; charset=utf-8"
-    //	       }
-    //	      );
-    // })
-    ;
 });
 
 

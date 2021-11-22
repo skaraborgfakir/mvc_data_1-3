@@ -41,10 +41,14 @@
             
              En AJAX:anpassad kontrollklass <c>PeopleAjaxController</c> för medlemskartoteket.
              </summary>
-             <remark>
+             <remarks>
              kontroller-klassen knyter ihop affärs-/process-logik (serviceenhten) med UI.
              En kontroller implementeras utgående från serviceenhetens termer
-             </remark>
+             </remarks>
+             <remarks>
+             Route:attributet på klassen innebär att all interaktion mellan front och metoder i klassen
+             i klassen istället för route-reglerna i Startup, istället kommer gå på uppmärkningen i koden (attributen)
+             </remarks>
         </member>
         <member name="M:Kartotek.Controllers.PeopleAjaxController.#ctor(Microsoft.Extensions.Logging.ILogger{Kartotek.Controllers.PeopleAjaxController},Microsoft.Extensions.Configuration.IConfiguration,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,Kartotek.Modeller.Interfaces.IPeopleService)">
             <summary>
@@ -87,10 +91,10 @@
              Den kontrollklass som enbart är skriven enligt MVC:konceptet och
              där sidan/sidorna i huvudsak formas som partial view - komponentbaserade vyer ?
              </summary>
-             <remark>
+             <remarks>
              kontroller-klassen knyter ihop affärs-/process-logik (serviceenhten) med UI.
              En kontroller implementeras utgående från serviceenhetens termer
-             </remark>
+             </remarks>
         </member>
         <member name="M:Kartotek.Controllers.PeopleController.#ctor(Microsoft.Extensions.Logging.ILogger{Kartotek.Controllers.PeopleController},Microsoft.Extensions.Configuration.IConfiguration,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,Kartotek.Modeller.Interfaces.IPeopleService)">
             <summary>
@@ -109,6 +113,14 @@
               Index körs direkt vid första visning- alltså kommer
               valdterm.{this.sessionsuffix}
             </summary>
+            <remarks>
+            Funktionen är en aktör i .Net därför att den är :
+                 en metod
+                 allmänt tillgänglig (public)
+            <seealso href="https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/routing?view=aspnetcore-3.1#action">
+            Routing to controller actions in ASP.Net Core
+            </seealso>
+            </remarks>
         </member>
         <member name="M:Kartotek.Controllers.PeopleController.Filtrera(Kartotek.Modeller.Vyer.HopslagenmodellVymodell)">
             <summary>
@@ -171,6 +183,11 @@
             to be done
             </summary>
         </member>
+        <member name="F:Kartotek.Databas.DBPeople.loggdest">
+            <summary>
+            loggning från DBPeople
+            </summary>
+        </member>
         <member name="P:Kartotek.Databas.DBPeople.Environment">
             <summary>
             </summary>
@@ -178,11 +195,6 @@
         <member name="P:Kartotek.Databas.DBPeople.Configurationsrc">
             <summary>
             https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
-            </summary>
-        </member>
-        <member name="P:Kartotek.Databas.DBPeople.Loggdest">
-            <summary>
-            loggning från DBPeople
             </summary>
         </member>
         <member name="P:Kartotek.Databas.DBPeople.Person">
@@ -211,6 +223,11 @@
             </summary>
             <see href="https://docs.microsoft.com/en-us/ef/core/modeling/">Databasscheman i EF</see>
             <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore.metadata.builders.entitytypebuilder?view=efcore-5.0">EntityTypeBuilder</see>
+        </member>
+        <member name="M:Kartotek.Databas.DBPeople.PersonEntityTypeConfiguration.Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder{Kartotek.Modeller.Entiteter.Person})">
+            <summary>
+            beskrivning av relationen i mot EF
+            </summary>
         </member>
         <member name="M:Kartotek.Databas.DBPeople.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <summary>
@@ -273,12 +290,20 @@
                båda ?
             </summary>
         </member>
+        <member name="T:Kartotek.Modeller.DatabasePeopleRepo">
+             <summary>
+             datalagerklass
+               databasen hanterar en entitet (än så länge)
+            
+               två relationer : stad och land ska in.
+             </summary>
+        </member>
         <member name="P:Kartotek.Modeller.DatabasePeopleRepo.Kartoteket">
             <summary>
             referens till EF:s databaskontext
             </summary>
         </member>
-        <member name="F:Kartotek.Modeller.DatabasePeopleRepo.Loggdest">
+        <member name="F:Kartotek.Modeller.DatabasePeopleRepo.loggdest">
             <summary>
             loggdestination
             </summary>
@@ -425,17 +450,28 @@
         <member name="P:Kartotek.Modeller.Vyer.CreatePersonViewModel.Namn">
             <summary>
             Namnet på den person som det nya kortet upptar
+            Den validering som används kommer att blockera för korta namn
             </summary>
         </member>
         <member name="P:Kartotek.Modeller.Vyer.CreatePersonViewModel.Bostadsort">
             <summary>
             Personens bostadsort
+            Den validering som används kommer att blockera för korta namn
             </summary>
         </member>
         <member name="P:Kartotek.Modeller.Vyer.CreatePersonViewModel.Telefonnummer">
             <summary>
             Personens telefonnummer - kontaktuppgifter
             </summary>
+        </member>
+        <member name="T:Kartotek.Modeller.Vyer.Filtreringstermer">
+             <summary>
+             Vymodell för sökningstermerna, programmet tillåter sökning på
+             en valfri term (namn eller hemort)
+            
+             TODO:
+             Något är fel i sökningen så sökning på både namn och hemort ger oväntat resultat
+             </summary>
         </member>
         <member name="P:Kartotek.Modeller.Vyer.Filtreringstermer.Namn">
              <summary>
@@ -522,6 +558,7 @@
              följer IPeopleRepo-åtagandet
              </summary>
              <remarks>
+             Används som ett kontrakt mellan olika utvecklare hur de kommer att konstruera något
             
              Definitioner av åtagandena finns i http://skaraborgfakir.github.io/lexicon/3. MVC
              </remarks>
@@ -541,6 +578,8 @@
             <param name="bostadsort">hemort</param>
             <param name="telefonnummer">telefonnummer hem</param>
             <returns>Kopia på det nu tillagda kortobjektet</returns>
+            <seealso href="https://skaraborgfakir.github.io/lexicon/3.%20MVC/MVC%20Data,%20Assignment%203%20-%View Models.pdf">
+            Designen måste följa dokumenten MVC Data, View Models (sidan två)</seealso>
         </member>
         <member name="M:Kartotek.Modeller.Interfaces.IPeopleRepo.Read">
             <summary>
@@ -575,14 +614,11 @@
              medlemskartotek
              </summary>
              <remarks>
-             Används som ett kontrakt mellan olika utvecklare hur de kommer att konstruera
-             något
+             Används som ett kontrakt mellan olika utvecklare hur de kommer att konstruera något
             
-             Moduler som implementerar IPeopleService ska ansvara för
-             affärs-logik/-funktioner
+             Moduler som implementerar IPeopleService ska ansvara för affärs-logik/-funktioner
             
-             En MVC-kontrollant ska exv inte användas för att söka eller få fram exv
-             ordersummor
+             En MVC-kontrollant ska exv inte användas för att söka eller få fram exv ordersummor
              Sådant ska vara i exv OrderService (som ansvarar för åtagandet IOrderService)
             
              Definitioner av åtagandena finns i http://skaraborgfakir.github.io/lexicon/3. MVC
@@ -602,6 +638,8 @@
             <returns>Inläggning av ett nytt kort med uppgifter om en medlem</returns>
             <see cref="T:Kartotek.Modeller.Interfaces.IPeopleRepo">Create i IPeopleRepo</see>
             <see cref="T:Kartotek.Modeller.Vyer.CreatePersonViewModel">Vymodellen CreatePersonViewModel</see>
+            <seealso href="https://skaraborgfakir.github.io/lexicon/3.%20MVC/MVC%20Data,%20Assignment%203%20-%View Models.pdf">
+            Designen måste följa dokumenten MVC Data, View Models (sidan två)</seealso>
         </member>
         <member name="M:Kartotek.Modeller.Interfaces.IPeopleService.All">
             <summary>
@@ -640,7 +678,9 @@
             borttagning av ett visst kort
             </summary>
             <param name="id">id</param>
-            <returns>flagga som anger om borttangninen fungerade (fanns kortet egentligen ?)</returns>
+            <returns>flagga som anger om borttangninen fungerade (fanns kortet egentligen ?)
+            true = kasering fungerade, false = något fel, fanns det alls ?
+            </returns>
             <see cref="T:Kartotek.Modeller.Interfaces.IPeopleRepo">Delete i IPeopleRepo</see>
         </member>
         <member name="T:Kartotek.Program">

@@ -9,13 +9,14 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Kartotek.Migrations
 {
     [DbContext(typeof(DBPeople))]
-    [Migration("20211117115414_init")]
-    partial class init
+    [Migration("20211117130515_databasens schema")]
+    partial class databasensschema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("people")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
                 .HasAnnotation("ProductVersion", "3.1.21")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);

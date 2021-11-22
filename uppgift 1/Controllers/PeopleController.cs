@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-22 09:45:50 stefan>
+// Time-stamp: <2021-11-22 11:48:11 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -91,6 +91,10 @@ namespace Kartotek.Controllers {
 
 	    if ( (HttpContext.Session.GetString( $"namn.{this.sessionsuffix}" ) == null) ||
 		 (HttpContext.Session.GetString( $"bostadsort.{this.sessionsuffix}" ) == null)) {
+		this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+					     (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
+					     "\n" + "ingen sessionvariabel (sorteringsterm) är definierad");
+
 		HttpContext.Session.SetInt32( $"valdterm.{this.sessionsuffix}", 0 );
 		HttpContext.Session.SetString( $"namn.{this.sessionsuffix}", "" );
 		HttpContext.Session.SetString( $"bostadsort.{this.sessionsuffix}", "" );
@@ -109,11 +113,6 @@ namespace Kartotek.Controllers {
 		    filter.Bostadsort = HttpContext.Session.GetString( $"bostadsort.{this.sessionsuffix}" );
 		    nyVymodell.Listfiltrering = filter;
 		    nyVymodell.Personlistan = this.serviceenheten.FindBy( filter );
-		    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
-						 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
-
-		    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
-						 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
 		    break;
 
@@ -124,8 +123,6 @@ namespace Kartotek.Controllers {
 		    filter.Bostadsort = HttpContext.Session.GetString( $"bostadsort.{this.sessionsuffix}" );
 		    nyVymodell.Listfiltrering = filter;
 		    nyVymodell.Personlistan = this.serviceenheten.FindBy( filter );
-		    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
-						 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 		    break;
 
 		case 1:
@@ -135,8 +132,6 @@ namespace Kartotek.Controllers {
 		    filter.Namn = HttpContext.Session.GetString( $"namn.{this.sessionsuffix}" );
 		    nyVymodell.Listfiltrering = filter;
 		    nyVymodell.Personlistan = this.serviceenheten.FindBy( filter );
-		    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
-						 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 		    break;
 
 		default:
@@ -144,14 +139,16 @@ namespace Kartotek.Controllers {
 						 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
 		    nyVymodell.Listfiltrering = filter;
-		    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
-						 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 		    nyVymodell.Personlistan = this.serviceenheten.All();
-		    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
-						 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
 		    break;
 	    }
+
+	    foreach (Person person in nyVymodell.Personlistan.Utdraget )
+	    {
+		this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " personens Namn : " + person.Namn);
+	    }
+
 
 	    return View( nyVymodell );
 	}
@@ -164,9 +161,6 @@ namespace Kartotek.Controllers {
 	public IActionResult Filtrera ( HopslagenmodellVymodell vymodell ) {
 	    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
 					 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
-
-	    // HopslagenmodellVymodell nyVymodell = new HopslagenmodellVymodell();
-	    // nyVymodell.NyttKort = new CreatePersonViewModel();
 
 	    if (ModelState.IsValid) {
 		if (vymodell != null) {
