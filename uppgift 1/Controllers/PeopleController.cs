@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-22 01:23:03 stefan>
+// Time-stamp: <2021-11-22 09:45:50 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -33,10 +33,10 @@ namespace Kartotek.Controllers {
     /// Den kontrollklass som enbart är skriven enligt MVC:konceptet och
     /// där sidan/sidorna i huvudsak formas som partial view - komponentbaserade vyer ?
     /// </summary>
-    /// <remark>
+    /// <remarks>
     /// kontroller-klassen knyter ihop affärs-/process-logik (serviceenhten) med UI.
     /// En kontroller implementeras utgående från serviceenhetens termer
-    /// </remark>
+    /// </remarks>
     public class PeopleController : Controller {
 	private readonly ILogger<PeopleController> loggdest;
 	private readonly IConfiguration configurationsrc;
@@ -74,6 +74,14 @@ namespace Kartotek.Controllers {
 	///   Index körs direkt vid första visning- alltså kommer
 	///   valdterm.{this.sessionsuffix}
 	/// </summary>
+	/// <remarks>
+	/// Funktionen är en aktör i .Net därför att den är :
+	///      en metod
+	///      allmänt tillgänglig (public)
+	/// <seealso href="https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/routing?view=aspnetcore-3.1#action">
+	/// Routing to controller actions in ASP.Net Core
+	/// </seealso>
+	/// </remarks>
 	[HttpGet]
 	[ActionName( "Index" )]
 	public IActionResult Index ( HopslagenmodellVymodell vymodell )

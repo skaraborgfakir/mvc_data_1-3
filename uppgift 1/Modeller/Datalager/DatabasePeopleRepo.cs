@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-22 01:26:07 stefan>
+// Time-stamp: <2021-11-22 09:53:28 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -22,6 +22,12 @@ using Kartotek.Modeller.Vyer;
 using Kartotek.Databas;
 
 namespace Kartotek.Modeller {
+    /// <summary>
+    /// datalagerklass
+    ///   databasen hanterar en entitet (än så länge)
+    ///
+    ///   två relationer : stad och land ska in.
+    /// </summary>
     public class DatabasePeopleRepo : IPeopleRepo {
 	/// <summary>
 	/// referens till EF:s databaskontext

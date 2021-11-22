@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-15 22:15:41 stefan>
+// Time-stamp: <2021-11-22 09:50:44 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -15,6 +15,13 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Kartotek.Modeller.Vyer {
+    /// <summary>
+    /// Vymodell för sökningstermerna, programmet tillåter sökning på
+    /// en valfri term (namn eller hemort)
+    ///
+    /// TODO:
+    /// Något är fel i sökningen så sökning på både namn och hemort ger oväntat resultat
+    /// </summary>
     public class Filtreringstermer {
 	/// <summary>
 	/// sökkriterier i sidhuvudet (används av PeopleController)
