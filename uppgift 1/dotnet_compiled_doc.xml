@@ -55,16 +55,17 @@
             <summary>
             komplett kartotek, utan någon filtrering
             API mot JS !!
-            </summary>
-        </member>
-        <member name="M:Kartotek.Controllers.PeopleAjaxController.uppdateralistanvissakort">
-            <summary>
-            ett utdrag av vissa kort från kartoteket
+            anropas från js/ajaxkortfunktioner.js för visning av listan
             </summary>
         </member>
         <member name="M:Kartotek.Controllers.PeopleAjaxController.tagframkortet(System.Int32)">
             <summary>
-            tag fram ett specifikt kort
+            tag fram ett specifikt kort för visning
+            </summary>
+        </member>
+        <member name="M:Kartotek.Controllers.PeopleAjaxController.uppdateralistanvissakort(System.Int32)">
+            <summary>
+            modifiering av ett visst kort
             </summary>
         </member>
         <member name="M:Kartotek.Controllers.PeopleAjaxController.kaserakortet(System.Int32)">
@@ -204,9 +205,18 @@
             Istället för att via appsettings*.json sätta anslutningssträngarna kan man göra så här istället
             </summary>
         </member>
+        <member name="T:Kartotek.Databas.DBPeople.PersonEntityTypeConfiguration">
+            <summary>
+            flyttar ut funktionen specifikt för Person till separat klass/funktion
+            </summary>
+            <see href="https://docs.microsoft.com/en-us/ef/core/modeling/">Databasscheman i EF</see>
+            <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore.metadata.builders.entitytypebuilder?view=efcore-5.0">EntityTypeBuilder</see>
+        </member>
         <member name="M:Kartotek.Databas.DBPeople.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <summary>
             </summary>
+            <see href="https://docs.microsoft.com/en-us/ef/core/modeling/">Databasscheman i EF</see>
+            <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore.metadata.builders.entitytypebuilder?view=efcore-5.0">EntityTypeBuilder</see>
         </member>
         <member name="T:Kartotek.Modeller.PeopleService">
             <summary>
@@ -278,6 +288,8 @@
             Kreator - använd ympning (DI) för att få med ett databaslager
             databaslagret är registrerat i Startup.cs: ConfigureServices
             </summary>
+            <param name="loggdest">Loggning (DI) från modulen</param>
+            <param name="kartoteket">Ympning (DI) med en referens till databaskontextet</param>
         </member>
         <member name="M:Kartotek.Modeller.DatabasePeopleRepo.Create(System.String,System.String,System.String)">
             <summary>
@@ -658,7 +670,7 @@
              inkluderar logging mot konsoll och får webBuilder att aktivera klassen REVELJ
             
              Den här metoden är speciell iom att EF6 (och Identity Server) förväntar sig att just den här
-             metoden finns med just det här namnet
+             metoden finns med just det här namnet, därför vill man inte köra Run() i denna.
              </summary>
              <param name="args">
              argumentvektor ekvivalent med argc/argv i C. CreateHostBuilder exv
