@@ -1,4 +1,4 @@
-<!-- Time-stamp: <2021-11-19 17:39:33 stefan> -*-web-*- -->
+<!-- Time-stamp: <2021-11-22 01:46:22 stefan> -*-web-*- -->
 <!-- https://www.educba.com/bootstrap-sort-table/
      här använder jag metod 1 för att sortera tabellen
 
@@ -55,14 +55,14 @@
 <div class="text-center">
     <h3 class="display-4">Ett kartotek över aktiva medlemmar</h3>
     <div>
-	<partial name="filtrering/dialog" for="Listfiltrering" />
+	<partial name="Shared/filtrering/dialog" for="Listfiltrering" />
 	<hr>
 	<!-- funktion för inläggning av en person i taget  -->
-	<partial name="inskrivning_av_nytt_kort/dialog" for="InskrivningNyttKort" />
+	<partial name="Shared/inskrivning_av_nytt_kort/dialog" for="InskrivningNyttKort" />
 	<hr>
 	<!-- hanteras via ajaxkortfunktioner.js  -->
 	<!-- js/ajaxkortfunktioner.js klistrar in sitt material med den h -->
-	<partial name="ajaxbaserad_kartotekvy"/>
+	<partial name="Shared/ajaxbaserad_kartotekvy"/>
     </div>
 </div>
 
