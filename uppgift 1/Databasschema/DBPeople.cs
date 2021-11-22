@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-17 14:01:36 stefan>
+// Time-stamp: <2021-11-22 01:24:43 stefan>
 //
 
 
@@ -26,6 +26,11 @@ namespace Kartotek.Databas {
     /// </summary>
     public class DBPeople : DbContext {
 	/// <summary>
+	/// loggning från DBPeople
+	/// </summary>
+	private readonly ILogger<DBPeople> loggdest;
+
+	/// <summary>
 	/// </summary>
 	public IHostEnvironment Environment { get; }
 
@@ -33,11 +38,6 @@ namespace Kartotek.Databas {
 	/// https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
 	/// </summary>
 	public IConfiguration Configurationsrc { get; }
-
-	/// <summary>
-	/// loggning från DBPeople
-	/// </summary>
-	public ILogger<DBPeople> Loggdest { get; }
 
 	/// <summary>
 	/// databasens relation som objekt-relations mappning
@@ -56,28 +56,28 @@ namespace Kartotek.Databas {
 			 ILogger<DBPeople> loggdest,
 			 IConfiguration configurationsrc ) : base(options)
 	{
+	    this.loggdest = loggdest;
 	    Environment = env;
-	    Loggdest = loggdest;
 	    Configurationsrc = configurationsrc;
 
-	    Loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
+	    this.loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
 				     "\n" + "Configurationsrc: " + Configurationsrc["DBConnectionStrings:People"] +
 				     "\n" + "Configurationsrc: " + Configurationsrc["DBConnectionStrings:PeopleIdentity"]);
 
 	    if ( Environment.IsDevelopment()) {
-		Loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) + "\n"
+		this.loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) + "\n"
 					 + "MS SQL - Environment: Development");
 	    }
 	    else if ( Environment.IsProduction()) {
-		Loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) + "\n"
+		this.loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) + "\n"
 					 + "MS SQL - Environment: Production");
 	    }
 	    else if ( Environment.IsEnvironment( "postgres.Development")) {
-		Loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) + "\n"
+		this.loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) + "\n"
 					 + "Postgres - Environment: Development");
 	    }
 	    else if ( Environment.IsEnvironment( "postgres")) {
-		Loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) + "\n"
+		this.loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) + "\n"
 					 + "Postgres - Environment: Production");
 	    }
 	}

@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-16 10:51:49 stefan>
+// Time-stamp: <2021-11-22 01:12:32 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -36,19 +36,21 @@ namespace Kartotek.Modeller.Vyer {
 	/// används av Shared/Filtrering/Filtreringstermer.cshtml
 	/// </summary>
 	[BindProperty]
-	[DisplayName("personens namn")]
+	[StringLength(60,MinimumLength=4)]
+	[DisplayName("Personens namn")]
 	[DataType(DataType.Text)]
 	public string Namn { get; set;
 	}
+
 	/// <summary>
 	/// sökkriterier i sidhuvudet (används av PeopleController)
 	/// string bostadsort;
 	/// </summary>
 	[BindProperty]
-	[DisplayName("bostadsort")]
+	[StringLength(60,MinimumLength=2)]
+	[DisplayName("Hennes hemort")]
 	[DataType(DataType.Text)]
 	public string Bostadsort { get; set; }
-
 
 	/// <summary>
 	/// innehåller listan på de kort som ska synas i vyn (från PeopleController)

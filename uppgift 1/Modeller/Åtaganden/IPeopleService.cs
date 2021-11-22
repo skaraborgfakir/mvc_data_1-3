@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-11 23:18:24 stefan>
+// Time-stamp: <2021-11-22 01:18:37 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -17,14 +17,11 @@ namespace Kartotek.Modeller.Interfaces {
     /// medlemskartotek
     /// </summary>
     /// <remarks>
-    /// Används som ett kontrakt mellan olika utvecklare hur de kommer att konstruera
-    /// något
+    /// Används som ett kontrakt mellan olika utvecklare hur de kommer att konstruera något
     ///
-    /// Moduler som implementerar IPeopleService ska ansvara för
-    /// affärs-logik/-funktioner
+    /// Moduler som implementerar IPeopleService ska ansvara för affärs-logik/-funktioner
     ///
-    /// En MVC-kontrollant ska exv inte användas för att söka eller få fram exv
-    /// ordersummor
+    /// En MVC-kontrollant ska exv inte användas för att söka eller få fram exv ordersummor
     /// Sådant ska vara i exv OrderService (som ansvarar för åtagandet IOrderService)
     ///
     /// Definitioner av åtagandena finns i http://skaraborgfakir.github.io/lexicon/3. MVC
@@ -43,6 +40,8 @@ namespace Kartotek.Modeller.Interfaces {
 	/// <returns>Inläggning av ett nytt kort med uppgifter om en medlem</returns>
 	/// <see cref="IPeopleRepo">Create i IPeopleRepo</see>
 	/// <see cref="CreatePersonViewModel">Vymodellen CreatePersonViewModel</see>
+	/// <seealso href="https://skaraborgfakir.github.io/lexicon/3.%20MVC/MVC%20Data,%20Assignment%203%20-%View Models.pdf">
+	/// Designen måste följa dokumenten MVC Data, View Models (sidan två)</seealso>
 	Person Add ( CreatePersonViewModel person );
 
 	/// <summary>
@@ -81,7 +80,9 @@ namespace Kartotek.Modeller.Interfaces {
 	/// borttagning av ett visst kort
 	/// </summary>
 	/// <param name="id">id</param>
-	/// <returns>flagga som anger om borttangninen fungerade (fanns kortet egentligen ?)</returns>
+	/// <returns>flagga som anger om borttangninen fungerade (fanns kortet egentligen ?)
+	/// true = kasering fungerade, false = något fel, fanns det alls ?
+	/// </returns>
 	/// <see cref="IPeopleRepo">Delete i IPeopleRepo</see>
 	bool Remove ( int id );
     }

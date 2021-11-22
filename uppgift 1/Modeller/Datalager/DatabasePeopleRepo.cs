@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-17 14:02:16 stefan>
+// Time-stamp: <2021-11-22 01:26:07 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -31,7 +31,7 @@ namespace Kartotek.Modeller {
 	/// <summary>
 	/// loggdestination
 	/// </summary>
-	private ILogger<DatabasePeopleRepo> Loggdest;
+	private readonly ILogger<DatabasePeopleRepo> loggdest;
 
 	/// <summary>
 	/// Kreator - använd ympning (DI) för att få med ett databaslager
@@ -42,7 +42,7 @@ namespace Kartotek.Modeller {
 	public DatabasePeopleRepo ( ILogger<DatabasePeopleRepo> loggdest,
 				    DBPeople kartoteket )
 	{
-	    Loggdest = loggdest;
+	    this.loggdest = loggdest;
 	    Kartoteket = kartoteket;
 	}
 
@@ -67,7 +67,7 @@ namespace Kartotek.Modeller {
 	/// returnerar en lista (iterator) för läsning från databasen
 	/// </summary>
 	public List<Person> Read() {
-	    Loggdest.LogInformation(
+	    this.loggdest.LogInformation(
 		(new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
 		(new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 

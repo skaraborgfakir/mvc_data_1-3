@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-16 14:07:27 stefan>
+// Time-stamp: <2021-11-22 01:12:05 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -33,25 +33,29 @@ namespace Kartotek.Modeller.Vyer {
     public class CreatePersonViewModel {
 	/// <summary>
 	/// Namnet på den person som det nya kortet upptar
+	/// Den validering som används kommer att blockera för korta namn
 	/// </summary>
 	[BindProperty]
 	[StringLength(60,MinimumLength=4)]
-	[DisplayName("personens namn")]
+	[DisplayName("Personens namn")]
+	[DataType(DataType.Text)]
 	public string Namn { get; set; }
 
 	/// <summary>
 	/// Personens bostadsort
+	/// Den validering som används kommer att blockera för korta namn
 	/// </summary>
 	[BindProperty]
 	[StringLength(60,MinimumLength=2)]
-	[DisplayName("bostadsort")]
+	[DisplayName("Hennes hemort")]
+	[DataType(DataType.Text)]
 	public string Bostadsort { get; set; }
 
 	/// <summary>
 	/// Personens telefonnummer - kontaktuppgifter
 	/// </summary>
 	[BindProperty]
-	[DisplayName("telefonnummer")]
+	[DisplayName("Telefonnummer")]
 	[DataType(DataType.PhoneNumber)]
 	public string Telefonnummer { get; set; }
     }

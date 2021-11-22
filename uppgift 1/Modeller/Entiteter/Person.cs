@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-15 16:30:02 stefan>
+// Time-stamp: <2021-11-22 01:09:44 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -40,6 +40,7 @@ namespace Kartotek.Modeller.Entiteter {
 	/// to be done
 	/// </summary>
 	[Required]
+	[StringLength(60,MinimumLength=4)]
 	[DisplayName("Personens namn")]
 	public string Namn { get; set; }
 
@@ -47,14 +48,14 @@ namespace Kartotek.Modeller.Entiteter {
 	/// to be done
 	/// </summary>
 	[Required]
-	[DisplayName("hennes hemort")]
+	[DisplayName("Hennes hemort")]
 	public string Bostadsort { get; set; }
 
 	/// <summary>
 	/// to be done
 	/// </summary>
 	[Required]
-	[DisplayName("telefonnummer")]
+	[DisplayName("Telefonnummer")]
 	public string Telefonnummer { get; set;}
     }
 }

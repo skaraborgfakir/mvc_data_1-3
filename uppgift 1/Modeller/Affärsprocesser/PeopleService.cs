@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-20 17:16:58 stefan>
+// Time-stamp: <2021-11-22 01:27:29 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -67,7 +67,7 @@ namespace Kartotek.Modeller {
 
 	    Person kortet = FindBy( id );
 
-	    loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+	    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
 				    (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
 	    if (kortet != null)
