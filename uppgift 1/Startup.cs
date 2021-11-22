@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-17 10:57:48 stefan>
+// Time-stamp: <2021-11-22 10:01:30 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -235,9 +235,9 @@ namespace Kartotek
 // endpoints.MapControllerRoute( name: "ajax",
 //			      pattern: "Ajax/{action=uppdateralistan}",
 //			      defaults: new { controller = "PeopleAjax" });
-		endpoints.MapControllerRoute( name: "kaserakort",
-					      pattern: "PeopleAjax/kaserakortet",
-					      defaults: new { controller = "PeopleAjax", action = "kaserakortet" } );
+// endpoints.MapControllerRoute( name: "kaserakort",
+//			      pattern: "PeopleAjax/kaserakortet",
+//			      defaults: new { controller = "PeopleAjax", action = "kaserakortet" } );
 		endpoints.MapControllerRoute( name: "default",
 					      pattern: "{controller=Home}/{action=Index}/{id?}" );
 	    } );
