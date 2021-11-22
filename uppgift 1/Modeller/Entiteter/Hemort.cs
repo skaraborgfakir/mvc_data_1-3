@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-22 18:02:20 stefan>
+// Time-stamp: <2021-11-22 18:03:02 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -16,18 +16,16 @@ namespace Kartotek.Modeller.Entiteter {
     /// <summary>
     /// to be done
     /// </summary>
-    public class Person {
+    public class Hemort {
 	/// <summary>
 	/// to be done
 	/// </summary>
-	public Person( int    id,
+	public Hemort( int    id,
 		       string namn,
-		       Hemort bostadsort,
-		       string telefonnummer) {
+		       Land   land) {
 	    Id = id;
 	    Namn = namn;
-	    Bostadsort = bostadsort;
-	    Telefonnummer = telefonnummer;
+	    Land = land;
 	}
 
 	/// <summary>
@@ -41,21 +39,18 @@ namespace Kartotek.Modeller.Entiteter {
 	/// </summary>
 	[Required]
 	[StringLength(60,MinimumLength=4)]
-	[DisplayName("Personens namn")]
+	[DisplayName("Stadens namn")]
 	public string Namn { get; set; }
 
 	/// <summary>
 	/// to be done
 	/// </summary>
 	[Required]
-	[DisplayName("Hennes hemort")]
-	public Hemort Bostadsort { get; set; }
+	public Land VilketLand { get; set; }
 
 	/// <summary>
 	/// to be done
 	/// </summary>
-	[Required]
-	[DisplayName("Telefonnummer")]
-	public string Telefonnummer { get; set;}
+	public List<Person> Boende { get; set; }
     }
 }

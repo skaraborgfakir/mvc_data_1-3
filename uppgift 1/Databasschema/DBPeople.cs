@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-22 10:15:27 stefan>
+// Time-stamp: <2021-11-22 17:34:50 stefan>
 //
 
 
@@ -40,9 +40,11 @@ namespace Kartotek.Databas {
 	public IConfiguration Configurationsrc { get; }
 
 	/// <summary>
-	/// databasens relation som objekt-relations mappning
+	/// databasens relationer som objekt-relations mappning
 	/// </summary>
 	public DbSet<Person> Person { get; set; }
+	public DbSet<Land>   Land   { get; set; }
+	public DbSet<Hemort> Orter  { get; set; }
 
 	/// <summary>
 	/// Kreator
@@ -102,7 +104,7 @@ namespace Kartotek.Databas {
 	}
 
 	/// <summary>
-	/// flyttar ut funktionen specifikt för Person till separat klass/funktion
+	/// flyttar ut funktionen specifikt för Person till separat klass/metod
 	/// </summary>
 	/// <see href="https://docs.microsoft.com/en-us/ef/core/modeling/">Databasscheman i EF</see>
 	/// <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore.metadata.builders.entitytypebuilder?view=efcore-5.0">EntityTypeBuilder</see>
@@ -150,6 +152,91 @@ namespace Kartotek.Databas {
 	}
 
 	/// <summary>
+	/// flyttar ut funktionen specifikt för Land till separat klass/funktion
+	/// </summary>
+	/// <see href="https://docs.microsoft.com/en-us/ef/core/modeling/">Databasscheman i EF</see>
+	/// <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore.metadata.builders.entitytypebuilder?view=efcore-5.0">EntityTypeBuilder</see>
+	public class LandEntityTypeConfiguration : IEntityTypeConfiguration<Land>
+	{
+	    /// <summary>
+	    /// beskrivning av relationen i mot EF
+	    /// </summary>
+	    public void Configure(EntityTypeBuilder<Land> builder)
+	    {
+		builder
+		    .HasKey(o => new { o.Id })
+		    .HasIndex( o => o.Namn)
+		    .IsUnique();
+
+		builder
+		    .Property(o => o.Namn)
+		    .IsRequired();
+
+		builder
+		    .HasData(
+			new
+			{
+			    Id = 1,
+			    Namn = "Finland"
+			},
+			new
+			{
+			    Id = 2,
+			    Namn = "Sverige"
+			},
+			new
+			{
+			    Id = 3,
+			    Namn = "Danmark"
+			}
+		    );
+	    }
+	}
+
+	/// <summary>
+	/// flyttar ut funktionen specifikt för hemort till separat klass/funktion
+	/// </summary>
+	/// <see href="https://docs.microsoft.com/en-us/ef/core/modeling/">Databasscheman i EF</see>
+	/// <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore.metadata.builders.entitytypebuilder?view=efcore-5.0">EntityTypeBuilder</see>
+	public class OrterEntityTypeConfiguration : IEntityTypeConfiguration<Hemort>
+	{
+	    /// <summary>
+	    /// beskrivning av relationen i mot EF
+	    /// </summary>
+	    public void Configure(EntityTypeBuilder<Hemort> builder)
+	    {
+		builder
+		    .HasKey(o => new
+		    {
+			o.Id
+		    });
+
+		builder
+		    .Property(o => o.Namn)
+		    .IsRequired();
+
+		builder
+		    .HasData(
+			new
+			{
+			    Id = 1,
+			    Namn = "Solberga",
+			    Land = "Sverige"
+			}
+		    );
+		builder
+		    .HasData(
+			new
+			{
+			    Id = 2,
+			    Namn = "Göteborg",
+			    Land = "Sverige"
+			}
+		    );
+	    }
+	}
+
+	/// <summary>
 	/// </summary>
 	/// <see href="https://docs.microsoft.com/en-us/ef/core/modeling/">Databasscheman i EF</see>
 	/// <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore.metadata.builders.entitytypebuilder?view=efcore-5.0">EntityTypeBuilder</see>
@@ -157,7 +244,13 @@ namespace Kartotek.Databas {
 	{
 	    base.OnModelCreating(modelBuilder);
 
-	    modelBuilder.HasDefaultSchema("people");
+	    modelBuilder.HasDefaultSchema("medlemskartotek");
+	    new LandEntityTypeConfiguration().Configure(modelBuilder.Entity<Land>());
+
+	    modelBuilder.HasDefaultSchema("medlemskartotek");
+	    new OrterEntityTypeConfiguration().Configure(modelBuilder.Entity<Hemort>());
+
+	    modelBuilder.HasDefaultSchema("medlemskartotek");
 	    new PersonEntityTypeConfiguration().Configure(modelBuilder.Entity<Person>());
 	}
     }

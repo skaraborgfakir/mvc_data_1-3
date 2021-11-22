@@ -3,15 +3,17 @@ using System;
 using Kartotek.Databas;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Kartotek.Migrations
 {
     [DbContext(typeof(DBPeople))]
-    partial class DBPeopleModelSnapshot : ModelSnapshot
+    [Migration("20211122151007_hemort och land i databasens schema")]
+    partial class hemortochlandidatabasensschema
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

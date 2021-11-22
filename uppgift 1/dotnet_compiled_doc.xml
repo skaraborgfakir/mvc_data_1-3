@@ -64,12 +64,13 @@
         </member>
         <member name="M:Kartotek.Controllers.PeopleAjaxController.tagframkortet(System.Int32)">
             <summary>
-            tag fram ett specifikt kort för visning
+            tag fram ett specifikt kort för visning enbart
+            det kan finnas knappar i bilden för att modifiera eller ta bort det
             </summary>
         </member>
         <member name="M:Kartotek.Controllers.PeopleAjaxController.uppdateralistanvissakort(System.Int32)">
             <summary>
-            modifiering av ett visst kort
+            gå direkt till modifiering av ett visst kort
             </summary>
         </member>
         <member name="M:Kartotek.Controllers.PeopleAjaxController.kaserakortet(System.Int32)">
@@ -199,7 +200,7 @@
         </member>
         <member name="P:Kartotek.Databas.DBPeople.Person">
             <summary>
-            databasens relation som objekt-relations mappning
+            databasens relationer som objekt-relations mappning
             </summary>
         </member>
         <member name="M:Kartotek.Databas.DBPeople.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{Kartotek.Databas.DBPeople},Microsoft.Extensions.Hosting.IHostEnvironment,Microsoft.Extensions.Logging.ILogger{Kartotek.Databas.DBPeople},Microsoft.Extensions.Configuration.IConfiguration)">
@@ -219,12 +220,36 @@
         </member>
         <member name="T:Kartotek.Databas.DBPeople.PersonEntityTypeConfiguration">
             <summary>
-            flyttar ut funktionen specifikt för Person till separat klass/funktion
+            flyttar ut funktionen specifikt för Person till separat klass/metod
             </summary>
             <see href="https://docs.microsoft.com/en-us/ef/core/modeling/">Databasscheman i EF</see>
             <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore.metadata.builders.entitytypebuilder?view=efcore-5.0">EntityTypeBuilder</see>
         </member>
         <member name="M:Kartotek.Databas.DBPeople.PersonEntityTypeConfiguration.Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder{Kartotek.Modeller.Entiteter.Person})">
+            <summary>
+            beskrivning av relationen i mot EF
+            </summary>
+        </member>
+        <member name="T:Kartotek.Databas.DBPeople.LandEntityTypeConfiguration">
+            <summary>
+            flyttar ut funktionen specifikt för Land till separat klass/funktion
+            </summary>
+            <see href="https://docs.microsoft.com/en-us/ef/core/modeling/">Databasscheman i EF</see>
+            <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore.metadata.builders.entitytypebuilder?view=efcore-5.0">EntityTypeBuilder</see>
+        </member>
+        <member name="M:Kartotek.Databas.DBPeople.LandEntityTypeConfiguration.Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder{Kartotek.Modeller.Entiteter.Land})">
+            <summary>
+            beskrivning av relationen i mot EF
+            </summary>
+        </member>
+        <member name="T:Kartotek.Databas.DBPeople.OrterEntityTypeConfiguration">
+            <summary>
+            flyttar ut funktionen specifikt för hemort till separat klass/funktion
+            </summary>
+            <see href="https://docs.microsoft.com/en-us/ef/core/modeling/">Databasscheman i EF</see>
+            <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore.metadata.builders.entitytypebuilder?view=efcore-5.0">EntityTypeBuilder</see>
+        </member>
+        <member name="M:Kartotek.Databas.DBPeople.OrterEntityTypeConfiguration.Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder{Kartotek.Modeller.Entiteter.Hemort})">
             <summary>
             beskrivning av relationen i mot EF
             </summary>
@@ -385,6 +410,56 @@
         <member name="M:Kartotek.Modeller.Data.InMemoryPeopleRepo.Delete(Kartotek.Modeller.Entiteter.Person)">
             <summary>
             to be done
+            </summary>
+        </member>
+        <member name="T:Kartotek.Modeller.Entiteter.Hemort">
+            <summary>
+            to be done
+            </summary>
+        </member>
+        <member name="M:Kartotek.Modeller.Entiteter.Hemort.#ctor(System.Int32,System.String,System.String)">
+            <summary>
+            to be done
+            </summary>
+        </member>
+        <member name="P:Kartotek.Modeller.Entiteter.Hemort.Id">
+            <summary>
+            to be done
+            </summary>
+        </member>
+        <member name="P:Kartotek.Modeller.Entiteter.Hemort.Namn">
+            <summary>
+            to be done
+            </summary>
+        </member>
+        <member name="P:Kartotek.Modeller.Entiteter.Hemort.Land">
+            <summary>
+            to be done
+            </summary>
+        </member>
+        <member name="T:Kartotek.Modeller.Entiteter.Land">
+            <summary>
+            to be done
+            </summary>
+        </member>
+        <member name="M:Kartotek.Modeller.Entiteter.Land.#ctor(System.Int32,System.String)">
+            <summary>
+            to be done
+            </summary>
+        </member>
+        <member name="P:Kartotek.Modeller.Entiteter.Land.Id">
+            <summary>
+            to be done
+            </summary>
+        </member>
+        <member name="P:Kartotek.Modeller.Entiteter.Land.Namn">
+            <summary>
+            to be done
+            </summary>
+        </member>
+        <member name="P:Kartotek.Modeller.Entiteter.Land.städerilandet">
+            <summary>
+            städer i landet i fråga
             </summary>
         </member>
         <member name="T:Kartotek.Modeller.Entiteter.Person">
