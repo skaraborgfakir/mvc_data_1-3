@@ -2,6 +2,24 @@ Inlämningsuppgifter till Lexicon i MVC delen
 
 I huvudsak uppgifter med olika repo som datalager
 
+Identity Server :
+Uppgift 1:
+  registrering av konton för användare i systemet, som ska kunna :
+    se inlagda kort i systemet
+    skriva in nya personkort
+    modifiera existerande kort
+  vem som helst ska kunna lägga in en ny användare i systemet
+  när de lägger in sig själva som användare, ska de mata in:
+    namn (för- och efter-namn)
+    födelsedatum
+  ett inlagt konto ska kunna markera ett annat som administratör
+    administratörer ska ha samma roller som vanliga användare
+    de ska även kunna se, modifiera och ta bort kort i systemets tre kategorier:
+      personkort
+      städer
+      länder
+    rollen för vanliga användare ska inte ha tillgång till kontrollanterna för städer och länder
+
 Entity Framework 6 - Databas-ramverk:
 Uppgift 1:
    Hantera Inversion of Control med Dependency Injection (ympning)
