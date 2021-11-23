@@ -3,6 +3,15 @@ Inlämningsuppgifter till Lexicon i MVC delen
 I huvudsak uppgifter med olika repo som datalager
 
 Identity Server :
+Uppgift 2:
+  fler roller:
+    superadministratör
+      ensam om att kunna förändra vilka användare som har administratörsrollen
+      bildas vid databassådd
+
+  kodkrav:
+    minst tre roller
+
 Uppgift 1:
   registrering av konton för användare i systemet, som ska kunna :
     se inlagda kort i systemet
