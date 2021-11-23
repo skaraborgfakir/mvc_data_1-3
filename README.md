@@ -24,3 +24,6 @@ Den här versionen har:
   markering av sorteringsriktning
 
 den använder bootstrap 5.1
+
+TCP-portar för olika versioner:
+  5002 (http),5003 (https) MVC Data uppgift 3 AJAX
