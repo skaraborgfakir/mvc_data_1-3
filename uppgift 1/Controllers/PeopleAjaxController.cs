@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-08 16:32:54 stefan>
+// Time-stamp: <2021-11-08 16:57:59 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -72,16 +72,16 @@ namespace Kartotek.Controllers {
 	/// </summary>
 	[ActionName( "uppdateralistan" )]
 	public IActionResult uppdateralistanurdatabasen () {
-	    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
-					 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
+	    // this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
+	    //				 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
-	    this.loggdest.LogInformation(
-		(new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
-		(new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
-		"\n" + "vald term : "  + HttpContext.Session.GetInt32( $"valdterm.{this.sessionsuffix}").ToString() +
-		"\n" + "namn : "       + HttpContext.Session.GetString( $"namn.{this.sessionsuffix}") +
-		"\n" + "bostadsort : " + HttpContext.Session.GetString( $"bostadsort.{this.sessionsuffix}")
-	    );
+	    // this.loggdest.LogInformation(
+	    //	(new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
+	    //	(new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
+	    //	"\n" + "vald term : "  + HttpContext.Session.GetInt32( $"valdterm.{this.sessionsuffix}").ToString() +
+	    //	"\n" + "namn : "       + HttpContext.Session.GetString( $"namn.{this.sessionsuffix}") +
+	    //	"\n" + "bostadsort : " + HttpContext.Session.GetString( $"bostadsort.{this.sessionsuffix}")
+	    // );
 
 	    PeopleViewModel söktermer = new PeopleViewModel();
 
@@ -103,9 +103,9 @@ namespace Kartotek.Controllers {
 		    //	    };
 
 		case 2:
-		    this.loggdest.LogInformation(
-			(new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
-			(new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
+		    // this.loggdest.LogInformation(
+		    //	(new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
+		    //	(new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
 		    söktermer.Bostadsort = HttpContext.Session.GetString( $"bostadsort.{this.sessionsuffix}");
 		    PeopleViewModel vy_efter_bostadsort = this.serviceenheten.FindBy( söktermer);
@@ -131,8 +131,8 @@ namespace Kartotek.Controllers {
 	/// </summary>
 	[ActionName( "uppdateralistanvissakort" )]  // API mot JS !!
 	public ActionResult uppdateralistanvissakort () {
-	    this.loggdest.LogInformation( (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
-					  (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
+	    // this.loggdest.LogInformation( (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
+	    //				  (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
 	    PeopleViewModel söktermer = new PeopleViewModel(){
 	    };
@@ -147,9 +147,9 @@ namespace Kartotek.Controllers {
 	[ActionName( "taguppkortet" )]  // API mot JS !!
 	[Produces( "application/json" )]
 	public ActionResult tagframkortet ( int id ) {
-	    this.loggdest.LogInformation( (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
-					  (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
-					  "\n tag fram kortet med id : " + id.ToString());
+	    // this.loggdest.LogInformation( (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
+	    //				  (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
+	    //				  "\n tag fram kortet med id : " + id.ToString());
 
 	    // return Ok( this.serviceenheten.FindBy( id));
 	    return PartialView( "aktiva_div", this.serviceenheten.FindBy( id));
@@ -167,9 +167,9 @@ namespace Kartotek.Controllers {
 	[HttpDelete]
 	[ActionName( "kaserakortet" )]  // API mot JS !!
 	public ActionResult kaserakortet ( int id ) {
-	    this.loggdest.LogInformation( (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
-					  (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
-					  "\n kasera kortet med id : " + id.ToString());
+	    // this.loggdest.LogInformation( (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
+	    //				  (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
+	    //				  "\n kasera kortet med id : " + id.ToString());
 
 	    if ( this.serviceenheten.FindBy( id) != null) {
 		return Ok( this.serviceenheten.Remove( id));
