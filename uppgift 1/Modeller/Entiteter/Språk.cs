@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-22 19:27:08 stefan>
+// Time-stamp: <2021-11-23 10:05:43 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -55,5 +55,11 @@ namespace Kartotek.Modeller.Entiteter {
 	[Required]
 	[DisplayName("Telefonnummer")]
 	public string Telefonnummer { get; set;}
+
+	/// <summary>
+	/// vilka har ett visst språk som aktivt dvs
+	/// har vissa kunskaper i det ?
+	/// </summary>
+	public List<Person> användare;
     }
 }
