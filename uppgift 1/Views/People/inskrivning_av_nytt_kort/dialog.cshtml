@@ -1,5 +1,9 @@
-<!-- Time-stamp: <2021-11-22 10:10:27 stefan> -*-web-*- -->
-<!-- används för modellbaserad inskrivning av ett nytt kort -->
+<!-- Time-stamp: <2021-11-24 17:14:26 stefan> -*-web-*- -->
+<!-- används för kontrollant- och modell-baserad inskrivning av ett nytt kort -->
+<!-- beroende av Controllers/PeopleController.cs -->
+
+<!-- inkluderas av People/Index.cshtml -->
+<!-- fälten definieras i Shared/personkortvy_modellbaserad/inskrivning_av_nytt_kort.cshtml -->
 
 @model Kartotek.Modeller.Vyer.CreatePersonViewModel
 
@@ -10,8 +14,8 @@
     <!-- js/nyakort.js ansvarar för validering -->
     <form id="nya_aktiva" method="post" asp-controller="People">
 	<partial name="personkortvy_modellbaserad/inskrivning_av_nytt_kort" for="@Model" />
-	<button class="btn btn-secondary" type="reset">Rensa fälten</button>
-	<button class="btn btn-success"   asp-action="nyttkort" type="submit">Skapa kortet</button>
+	<button type="reset"  class="btn btn-secondary" >Rensa fälten</button>
+	<button type="submit" class="btn btn-success" asp-action="nyttkort" >Skapa kortet</button>
     </form>
 </div>
 

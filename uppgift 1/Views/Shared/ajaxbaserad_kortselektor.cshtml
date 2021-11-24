@@ -1,37 +1,40 @@
-<!-- Time-stamp: <2021-11-08 16:15:57 stefan> -*-web-*- -->
-<!-- https://www.educba.com/bootstrap-sort-table/
-     här använder jag metod 1 för att sortera tabellen
+<!-- Time-stamp: <2021-11-24 15:49:15 stefan> -*-web-*- -->
+<!-- aktörer efter förändringar i vad som ska hämtas mha AJAX och visas -->
+<!-- PeopleAjax ska vara rent webAPI -->
+<!-- funktioner i exv js/person/ajaxkortfunktioner.js kommer att koppla sig på varje knapp via on("click" -->
 
-     tabellen sorteras mha funktioner i jQuery
+<!-- funktioner för att: -->
+<!-- 1 uppdatera den visade listan (efter ändringar ?) -->
+<!-- 2 att välja kort efter id, -->
+<!-- 3 välja vad som ska göras med valt kort -->
+<!-- 3.1 visa enbart det -->
+<!-- 3.2 visa -->
+<!-- 3.3 modifiera -->
+<!-- 3.4 radera -->
 
-     bootstrap 5.1 används
--->
+<!-- de här knapparna kan ha samma ID som andra knappar i vyn, exv de i själva kortuppräkningen -->
+<!-- därför att de finns inuti en form med id:t specifiktKortEfterId -->
+
 
 @using System
 @using System.Collections.Generic
-@using System.Linq
 
 @using Kartotek.Modeller.Vyer
 @using Kartotek.Modeller.Entiteter
 
-@model Kartotek.Modeller.Vyer.HopslagenmodellVymodell
-
-<!-- aktörer efter förändringar i vad som ska hämtas mha AJAX och visas -->
-<!-- PeopleAjax ska vara rent webAPI -->
-<!-- funktion i paket hanterar validering av input -->
+<!-- valtkortsid behöver kontrolleras, vad är korrekt värde ? -->
 
 <div class="container">
-    <form id="specifiktKort" >  <!-- validering! -->
+    <form id="specifiktKortEfterId" >  <!-- validering! -->
 	<fieldset class="mb-1 text-start">
-	    <button id="uppdateralistan"                class="btn btn-primary ignore">Uppdatera listan</button>
-	    <label                                      class="filtertermer_label col-sm-1 col-form-label">ID</label>
-	    <input  id="valtkortsid"      type="number" class="col-sm" />
-	    <button id="plockaframkortet"               class="btn btn-primary">Visa kort</button>
-	    <button id="kaserakortet"                   class="btn btn-danger">Radera valt kort</button>
+	    <button type="button" id="uppdateralistan"  form="specifiktKortEfterId" class="btn btn-primary ignore">Uppdatera listan</button>
+	    <label                                                                  class="col-sm-1 col-form-label">ID</label>
+	    <input  type="number" id="valtkortsid"                                  class="col-sm" />
+	    <button type="button" id="visakortet"       form="specifiktKortEfterId" class="btn btn-primary">Visa kort</button>
+	    <button type="button" id="modifierakortet"  form="specifiktKortEfterId" class="btn btn-primary">Modifiera</button>
+	    <button type="button" id="kaserakortet"     form="specifiktKortEfterId" class="btn btn-danger">Radera valt kort</button>
 	</fieldset>
     </form>
-    <div id="ajaxvy_kartotek">
-    </div>
 </div>
 
 @section Scripts
