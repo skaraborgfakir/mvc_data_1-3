@@ -1,4 +1,4 @@
-<!-- Time-stamp: <2021-11-23 15:04:57 stefan> -*-web-*- -->
+<!-- Time-stamp: <2021-11-24 14:44:38 stefan> -*-web-*- -->
 <!-- https://www.educba.com/bootstrap-sort-table/
      här använder jag metod 1 för att sortera tabellen
 
@@ -55,12 +55,13 @@
 <div class="text-center">
     <h3 class="display-4">Ett kartotek över aktiva medlemmar</h3>
     <div>
-	<partial name="filtrering/dialog" for="Listfiltrering" />
+	<!-- filtrering av uppräkningen av kort - hanteras av kontrollanten (People) -->
+	<partial name="filtrering/dialog" for="Filtertermer" />
 	<hr>
-	<!-- funktion för inläggning av en person i taget  -->
+	<!-- funktion för inläggning av en person i taget - hanteras av kontrollanten (People) -->
 	<partial name="inskrivning_av_nytt_kort/dialog" for="InskrivningNyttKort" />
 	<hr>
-	<!-- hanteras via ajaxkortfunktioner.js  -->
+	<!-- uppräkning av kort - hanteras via ajaxkortfunktioner.js -->
 	<!-- js/ajaxkortfunktioner.js klistrar in sitt material efter document.load -->
 	<partial name="ajaxbaserad_kartotekvy" />
     </div>
@@ -77,13 +78,13 @@
     <script type="text/javascript" src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
 
     <!-- validering för partial view Shared/nya_aktiva.cshtml -->
-    <script type="text/javascript" src="~/js/validering_nya_aktiva.js"></script>
+    <!--  <script type="text/javascript" src="~/js/validering_nya_aktiva.js"></script> -->
 
     <!-- validering för dialog i partial view Shared/ajaxbaserad_kortselektor.cshtml -->
-    <script type="text/javascript" src="~/js/validering_ajaxbaserad_kortselektor.js"></script>
+    <!-- <script type="text/javascript" src="~/js/validering_ajaxbaserad_kortselektor.js"></script>  -->
 
     <!-- aktörer efter förändringar i vad som ska hämtas mha AJAX och visas -->
     <!-- PeopleAjax ska vara rent webAPI -->
     <!-- funktion i paket hanterar validering av input -->
-    <script type="text/javascript" src="~/js/ajaxkortfunktioner.js"></script>
+    <script type="text/javascript" src="~/js/person/ajaxkortfunktioner.js"></script>
     }

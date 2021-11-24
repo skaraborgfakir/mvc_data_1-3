@@ -1,0 +1,21 @@
+<!-- Time-stamp: <2021-11-22 10:10:27 stefan> -*-web-*- -->
+<!-- används för modellbaserad inskrivning av ett nytt kort -->
+
+@model Kartotek.Modeller.Vyer.CreatePersonViewModel
+
+<div class="container">
+    <h4 class="text-start">
+	Inrapportering av nya aktiva
+    </h4>
+    <!-- js/nyakort.js ansvarar för validering -->
+    <form id="nya_aktiva" method="post" asp-controller="People">
+	<partial name="personkortvy_modellbaserad/inskrivning_av_nytt_kort" for="@Model" />
+	<button class="btn btn-secondary" type="reset">Rensa fälten</button>
+	<button class="btn btn-success"   asp-action="nyttkort" type="submit">Skapa kortet</button>
+    </form>
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+    }

@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-06 16:29:56 stefan>
+// Time-stamp: <2021-11-24 13:14:03 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -119,7 +119,7 @@ namespace Kartotek.Controllers {
 					 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
 	    // HopslagenmodellVymodell nyVymodell = new HopslagenmodellVymodell();
-	    // nyVymodell.NyttKort = new CreatePersonViewModel();
+	    // nyVymodell.InskrivningNyttKort = new CreatePersonViewModel();
 
 	    if (ModelState.IsValid) {
 		if (vymodell != null) {
@@ -198,16 +198,16 @@ namespace Kartotek.Controllers {
 	    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
 					 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
 					 "\n" + " model is valid");
-		if (!String.IsNullOrEmpty( vymodell.NyttKort.Namn ) &&
-		    !String.IsNullOrEmpty( vymodell.NyttKort.Bostadsort ) &&
-		    !String.IsNullOrEmpty( vymodell.NyttKort.Telefonnummer )) {
+		if (!String.IsNullOrEmpty( vymodell.InskrivningNyttKort.Namn ) &&
+		    !String.IsNullOrEmpty( vymodell.InskrivningNyttKort.Bostadsort ) &&
+		    !String.IsNullOrEmpty( vymodell.InskrivningNyttKort.Telefonnummer )) {
 
 		    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
 						 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
 						 "\n" + "alla uppgifter finns med");
 
 		    CreatePersonViewModel nyttKort = new CreatePersonViewModel();
-		    nyttKort = vymodell.NyttKort;
+		    nyttKort = vymodell.InskrivningNyttKort;
 
 		    this.serviceenheten.Add( nyttKort );
 		}

@@ -1,0 +1,26 @@
+<!-- Time-stamp: <2021-11-22 10:09:01 stefan> -*-web-*- -->
+<!-- filtrering via People-kontrollanten -->
+<!-- använder en partial -->
+
+<!-- inkluderas av People/Index.cshtml -->
+<!-- själva termerna är i en separat partial : filtreringstermer.cshtml -->
+<!-- termerna sänds till PeopleController som i sin tur sätter filtreringsreglerna via session  -->
+<!-- PeopleAjaxController använder session-variablerna när uppgifter hämtas -->
+
+@using Kartotek.Modeller.Vyer
+
+@model Kartotek.Modeller.Vyer.PeopleViewModel
+
+<div class="container">
+    <h4 class="text-start">
+	Sökning igenom poster
+    </h4>
+    <form id="filtrering" method="post" asp-controller="People">
+	<fieldset class="mb-1 text-start">
+	    <partial name="personkortvy_modellbaserad/filtreringstermer" for="@Model"/>
+	    <button type="reset"                               class="btn btn-secondary">Töm fälten</button>
+	    <button type="submit" asp-action="filtrering"      class="btn btn-success">Filtrera</button>
+	    <button type="submit" asp-action="ingenfiltrering" class="btn btn-success">Återställ filtrering</button>
+	</fieldset>
+    </form>
+</div>

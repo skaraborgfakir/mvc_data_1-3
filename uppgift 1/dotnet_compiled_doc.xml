@@ -494,7 +494,7 @@
             </summary>
             <see cref="T:Kartotek.Modeller.PeopleService">PeopleService</see>
         </member>
-        <member name="P:Kartotek.Modeller.Vyer.HopslagenmodellVymodell.NyttKort">
+        <member name="P:Kartotek.Modeller.Vyer.HopslagenmodellVymodell.InskrivningNyttKort">
             <summary>
             Skriv ut ett nytt kort - nytt-kort delen i fönstret
             </summary>
@@ -548,7 +548,8 @@
              inkluderar logging mot konsoll och får webBuilder att aktivera klassen REVELJ
             
              Den här metoden är speciell iom att EF6 (och Identity Server) förväntar sig att just den här
-             metoden finns med just det här namnet
+             metoden finns med just det här namnet, därför vill man inte köra Run() i denna iom
+             att EF:verktygen använder CreateHostBuilder för att bland annat uppdatera databasen
              </summary>
              <param name="args">
              argumentvektor ekvivalent med argc/argv i C. CreateHostBuilder exv
@@ -564,17 +565,21 @@
             kan egentligen heta vad som helst exv REVELJ !
             </remarks>
         </member>
+        <member name="P:Kartotek.REVELJ.Environment">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Kartotek.REVELJ.Configuration">
+            <summary>
+            https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
+            </summary>
+        </member>
         <member name="M:Kartotek.REVELJ.#ctor(Microsoft.Extensions.Configuration.IConfiguration,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
             <summary>
             https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
             </summary>
             <param name="configuration">DI av en instans av IConfiguration</param>
             <param name="env">DI av en instans av IWebHostEnvironment</param>
-        </member>
-        <member name="P:Kartotek.REVELJ.Configuration">
-            <summary>
-            https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
-            </summary>
         </member>
         <member name="M:Kartotek.REVELJ.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
              <summary>
@@ -585,7 +590,7 @@
              <param name="services">DI av en instans av IServiceCollection - ger tillgång till exv info om programmets miljö</param>
              <see href="https://stackoverflow.com/questions/41287648/how-do-i-write-logs-from-within-startup-cs">how-do-i-write-logs-from-within-startup-cs</see>
         </member>
-        <member name="M:Kartotek.REVELJ.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.Extensions.Hosting.IHostEnvironment,Microsoft.Extensions.Logging.ILogger{Kartotek.REVELJ})">
+        <member name="M:Kartotek.REVELJ.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.Extensions.Logging.ILogger{Kartotek.REVELJ})">
              <summary>
              Konfiguration av hur http-trafik ska hanteras
              överföring mellan de olika stegen via Routing, Session, Autentisering till mottagande kontrollant

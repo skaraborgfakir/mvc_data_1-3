@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-08 13:56:24 stefan>
+// Time-stamp: <2021-11-24 15:11:20 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -11,21 +11,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Text.Json;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Http;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
-// egna tillägg
-using Microsoft.AspNetCore.Http;
-
 using Microsoft.Extensions.Logging;
-
-using System.Text.Json;
 
 // egen kod
 using Kartotek.Modeller;
@@ -43,6 +39,15 @@ namespace Kartotek
     public class REVELJ
     {
 	/// <summary>
+	/// </summary>
+	public IHostEnvironment Environment { get; }
+
+	/// <summary>
+	/// https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
+	/// </summary>
+	public IConfiguration Configuration { get; }
+
+	/// <summary>
 	/// https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
 	/// </summary>
 	/// <param name="configuration">DI av en instans av IConfiguration</param>
@@ -54,13 +59,6 @@ namespace Kartotek
 	    Environment = env;
 	}
 
-	public IWebHostEnvironment Environment { get; }
-
-	/// <summary>
-	/// https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
-	/// </summary>
-	public IConfiguration Configuration { get; }
-
 	/// <summary>
 	/// https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
 	///
@@ -68,23 +66,23 @@ namespace Kartotek
 	/// </summary>
 	/// <param name="services">DI av en instans av IServiceCollection - ger tillgång till exv info om programmets miljö</param>
 	/// <see href="https://stackoverflow.com/questions/41287648/how-do-i-write-logs-from-within-startup-cs">how-do-i-write-logs-from-within-startup-cs</see>
-	public void ConfigureServices(IServiceCollection services)
+	public void ConfigureServices( IServiceCollection services)
 	{
-	    Console.WriteLine( "Startup.cs: REVELJ: ConfigureServices");
+	    // Console.WriteLine( "Startup.cs: REVELJ: ConfigureServices");
 
 	    // behövs för UseCors i Configure
-	    // services.AddCors(opt => {
-	    //	opt.AddPolicy("CorsPolicy", policy => { policy
-	    //		    .AllowAnyHeader()
-	    //		    .AllowAnyMethod()
-	    //		    .WithExposedHeaders("WWW-Authenticate")
-	    //		    .WithOrigins("https://localhost:44345")
-	    //		    .WithOrigins("https://localhost:5009")
-	    //		    .WithOrigins("http://localhost:5009")
-	    //		    .WithOrigins("https://localhost:5009/lib/jquery/jquery.js")
-	    //		    .AllowCredentials();
-	    //	});
-	    // });
+	    services.AddCors(options => {
+		options.AddPolicy( "CorsPolicy", policy => { policy
+			    .AllowAnyHeader()
+			    .AllowAnyMethod()
+			    // .WithExposedHeaders( "WWW-Authenticate")
+			    .WithOrigins( "http://localhost:5002/People",
+					  "https://localhost:5003/People",
+					  "https://localhost:5003/api/PeopleAjax"
+			    )
+			    .AllowCredentials();
+		});
+	    });
 
 	    services.AddDistributedMemoryCache();
 
@@ -128,21 +126,13 @@ namespace Kartotek
 	/// DI av loggning från rot
 	/// </summary>
 	public void Configure ( IApplicationBuilder app,
-				IHostEnvironment env,
 				ILogger<REVELJ> loggdest)
 	{
 	    //
-	    //
-	    //
 	    // gaffling i flödet beroende på programmets startmiljö
-	    if (env.IsEnvironment( "Development_postgres") ||
-		env.IsEnvironment( "Development"))
-		loggdest.LogInformation( "Startup.cs: PostgreSQL:version");
-	    else
-		loggdest.LogInformation( "Startup.cs: MS SQL:version");
-
-	    if (env.IsDevelopment() ||
-		env.IsEnvironment( "Development_postgres"))
+	    //
+	    if (Environment.IsDevelopment() ||
+		Environment.IsEnvironment( "Development"))
 	    {
 		app.UseDeveloperExceptionPage();  // plockar upp händelser (exceptions) i aktiverade moduler (exv en kontrollant) för att ge meddelandestatus till användaren
 	    }
@@ -162,10 +152,10 @@ namespace Kartotek
 	    // MapControllerRoute är beroende
 	    app.UseRouting();
 
-	    // app.UseCors(); // blockera CORS-hantering
+	    app.UseCors();
 
-	    if (env.IsDevelopment())
-		app.Use(next => context =>
+	    if (Environment.IsDevelopment())
+		app.Use( next => context =>
 		{
 		    Console.WriteLine($"Found: {context.GetEndpoint()?.DisplayName}");
 		    return next(context);
@@ -204,9 +194,9 @@ namespace Kartotek
 // endpoints.MapControllerRoute( name: "ajax",
 //			      pattern: "Ajax/{action=uppdateralistan}",
 //			      defaults: new { controller = "PeopleAjax" });
-		endpoints.MapControllerRoute( name: "kaserakort",
-					      pattern: "PeopleAjax/kaserakortet",
-					      defaults: new { controller = "PeopleAjax", action = "kaserakortet" } );
+// endpoints.MapControllerRoute( name: "kaserakort",
+//			      pattern: "PeopleAjax/kaserakortet",
+//			      defaults: new { controller = "PeopleAjax", action = "kaserakortet" } );
 		endpoints.MapControllerRoute( name: "default",
 					      pattern: "{controller=Home}/{action=Index}/{id?}" );
 	    } );

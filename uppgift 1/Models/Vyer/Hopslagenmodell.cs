@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-06 16:32:00 stefan>
+// Time-stamp: <2021-11-24 13:15:13 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -50,7 +50,7 @@ namespace Kartotek.Modeller.Vyer
 	/// <summary>
 	/// Skriv ut ett nytt kort - nytt-kort delen i fönstret
 	/// </summary>
-	public CreatePersonViewModel NyttKort { get; set; }
+	public CreatePersonViewModel InskrivningNyttKort { get; set; }
 
 	/// <summary>
 	/// skrollistan i den ajaxbaserade kort-väljaren

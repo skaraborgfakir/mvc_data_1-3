@@ -1,5 +1,5 @@
 //
-// - Time-stamp: <2021-11-23 18:14:15 stefan>
+// - Time-stamp: <2021-11-24 14:46:43 stefan>
 //
 // sidan har följande organisation (delvyer) i People/Index.cshtml
 // <html>  (Shared/Mallen.cshtml)
@@ -57,10 +57,10 @@
 
 'use strict';
 
-const url_samtliga_kort            = "https://localhost:5009/api/PeopleAjax/uppdateralistan";    // json-kodad lista
-const url_specifikt_kort           = "https://localhost:5009/api/PeopleAjax/tagframvisstkort";   // uppgifter om ett specifikt kort
-const url_modifiera_specifikt_kort = "https://localhost:5009/api/PeopleAjax/modifieravisstkort"; // modifiering av ett specifikt kort
-const url_kasera_kort              = "https://localhost:5009/api/PeopleAjax/kaserakortet";       // kasera kortet
+const url_samtliga_kort            = "https://localhost:5003/api/PeopleAjax/uppdateralistan";    // json-kodad lista
+const url_specifikt_kort           = "https://localhost:5003/api/PeopleAjax/tagframvisstkort";   // uppgifter om ett specifikt kort
+const url_modifiera_specifikt_kort = "https://localhost:5003/api/PeopleAjax/modifieravisstkort"; // modifiering av ett specifikt kort
+const url_kasera_kort              = "https://localhost:5003/api/PeopleAjax/kaserakortet";       // kasera kortet
 
 //
 // funktion för hämtning och visning av kort ur kartoteket
