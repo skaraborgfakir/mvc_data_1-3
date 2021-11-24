@@ -1,0 +1,30 @@
+<!-- Time-stamp: <2021-11-19 18:03:14 stefan> -*-web-*- -->
+<!-- dialog för uppläggning/modfiering av ett Kort -->
+<!-- skriven för att kunna användas om : -->
+<!--   ett nytt kort ska skrivas ut -->
+<!-- Den är vy-beroende - fungerar inte med Person -->
+
+@using Kartotek.Modeller.Vyer
+
+@model Kartotek.Modeller.Vyer.CreatePersonViewModel
+
+<fieldset>
+    <div class="row mb-1">
+	<label class="kortuppgifter_label personnamn text-start col-sm-2 col-form-label" asp-for="Namn">Namn</label>
+	<div class="col-sm-4">
+	    <input id="kortuppgifter_namn" class="form-control" asp-for="Namn" />
+	</div>
+    </div>
+    <div class="row mb-1">
+	<label class="kortuppgifter_label bostadsort text-start col-sm-2 col-form-label" asp-for="Bostadsort">Bostadsort</label>
+	<div class="col-sm-3">
+	    <input id="kortuppgifter_bostadsort" class="form-control" asp-for="Bostadsort" />
+	</div>
+    </div>
+    <div class="row mb-1">
+	<label class="kortuppgifter_label telefonnummer text-start col-sm-2 col-form-label">Telefonnummer</label>
+	<div class="col-sm-2">
+	    <input id="kortuppgifter_telefonnummer" class="form-control col-sm-6" asp-for="Telefonnummer" />
+	</div>
+    </div>
+</fieldset>

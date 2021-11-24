@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-08 09:33:44 stefan>
+// Time-stamp: <2021-11-23 14:59:06 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -43,8 +43,6 @@ namespace Kartotek
 	/// <see href="https://stackoverflow.com/questions/41287648/how-do-i-write-logs-from-within-startup-cs">how-do-i-write-logs-from-within-startup-cs</see>
 	public static void Main ( string[] args )
 	{
-
-
 	    // netcore 3: mallen för en web host använder CreateHostBuilder
 	    // vilket skiljer sig mot den äldre CreateWebHostBuilder (som finns kvar
 	    // av kompatibilitetsskäl)
@@ -57,12 +55,16 @@ namespace Kartotek
 	    //   DI i Configure:metoden
 	    // CreateHostBuilder( args: args ).Build().Run();
 	    var host = CreateHostBuilder( args: args ).Build();
-	    var config = host.Services.GetRequiredService<IConfiguration>();
 
-	    foreach (var c in config.AsEnumerable())
-	    {
-		Console.WriteLine(c.Key + " = " + c.Value);
-	    }
+	    // dump av vad som kan hittas via Configuration
+	    // var config = host.Services.GetRequiredService<IConfiguration>();
+	    // Console.WriteLine("c in config.AsEnumerable");
+	    // foreach (var c in config.AsEnumerable())
+	    // {
+	    //	Console.WriteLine(c.Key + " = " + c.Value);
+	    // }
+
+	    // Båten är lastad - KASTA LOSS !
 	    host.Run();
 
 	    //
@@ -78,7 +80,8 @@ namespace Kartotek
 	/// inkluderar logging mot konsoll och får webBuilder att aktivera klassen REVELJ
 	///
 	/// Den här metoden är speciell iom att EF6 (och Identity Server) förväntar sig att just den här
-	/// metoden finns med just det här namnet
+	/// metoden finns med just det här namnet, därför vill man inte köra Run() i denna iom
+	/// att EF:verktygen använder CreateHostBuilder för att bland annat uppdatera databasen
 	/// </summary>
 	/// <param name="args">
 	/// argumentvektor ekvivalent med argc/argv i C. CreateHostBuilder exv
@@ -90,6 +93,7 @@ namespace Kartotek
 	    // aktivera IConfiguration och läs in från appsettings.json
 	    // loggning (iloggerfactory) aktiveras
 	    // Development-miljön är speciell iom att scope i DI valideras
+	    //
 	    .CreateDefaultBuilder( args: args )
 	    // CreateDefaultBuilder kommer att ympa in loggning men för att få kontroll över den
 	    // och var det skickas, används detta

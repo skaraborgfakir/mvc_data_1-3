@@ -1,45 +1,125 @@
 //
-// - Time-stamp: <2021-11-08 16:27:41 stefan>
+// - Time-stamp: <2021-11-23 18:14:15 stefan>
 //
-
+// sidan har följande organisation (delvyer) i People/Index.cshtml
+// <html>  (Shared/Mallen.cshtml)
+//  <head
+//  <body>
+//    <header>
+//    </header>
+//    <div class="container">
+//      <main role="main"
+//        <div class="text-center" (People/Index.cshtml)
+//          <h3   Ett kartotek över aktiva
+//          </h3>
+//          <div>
+//              <div class="container"                        (partial Shared/filtrering/dialog.cshtml)
+//                <h4
+//                </h4
+//                <form
+//                  <fieldset
+//                  <div class="row mb-1                      (partial Shared/personkortvy_modellbaserad/filtreringstermer.cshtml)
+//                    <label class="kortuppgifter ... Namn
+//                    <div
+//                      <input  />
+//                    </div
+//                  </div
+//                  <div class="row mb-1
+//                    <label class="kortuppgifter ... Bostadsort
+//                    <div
+//                      <input  />
+//                    </div
+//                  </div                                     (/partial Shared/personkortvy_modellbaserad/filtreringstermer.cshtml)
+//                  </fieldset
+//                </form
+//              </div                                         (partial Shared/filtrering/dialog.cshtml)
+//            <hr>
+//                                    (partial Shared/inskrivning_av_nytt_kort/dialog.cshtml)
+//            <hr>
+//                                    (partial Shared/ajaxbaserad_kartotekvy)
+//          </div>
+//        </div class="text-center" (People/Index.cshtml)
+//      </main                   (Shared/Mallen.cshtml)
+//    </div>
+//    <footer>
+//    </footer>
+//      skript etc
+//  </body>
+// </html>
+//      main
+//       div class="text-center"   (People/Index.cshtml)
+//         h3 ett kartotek...
+//         div
+//           div
+//             div id=filtrering/dialog
+//
+//
 
 'use strict';
 
+const url_samtliga_kort            = "https://localhost:5009/api/PeopleAjax/uppdateralistan";    // json-kodad lista
+const url_specifikt_kort           = "https://localhost:5009/api/PeopleAjax/tagframvisstkort";   // uppgifter om ett specifikt kort
+const url_modifiera_specifikt_kort = "https://localhost:5009/api/PeopleAjax/modifieravisstkort"; // modifiering av ett specifikt kort
+const url_kasera_kort              = "https://localhost:5009/api/PeopleAjax/kaserakortet";       // kasera kortet
+
 //
-// funktioner för hämtning och visning av kort ur kartoteket
+// funktion för hämtning och visning av kort ur kartoteket
 //
-$(document).ready(function() {
-    const url_samtliga_kort =  "https://localhost:5009/api/PeopleAjax/uppdateralistan"; // json-kodad lista
-    const url_specifikt_kort = "https://localhost:5009/api/PeopleAjax/tagUppKortet";    // uppgifter om ett specifikt kort
-    const url_kasera_kort =    "https://localhost:5009/api/PeopleAjax/kaserakortet";    // kasera kortet
-
-    /// <summary>
-    /// aktiveras en gång efter inläsning av sidan för att få den första bilden
-    /// kan sedan aktiveras via knapptryck i vyn (Uppdatera listan)
-    /// </summary>
-    function uppdateraVy() {
-	//$("#enumreringajax").empty();  // töm ur listan helt och bygg upp den på nytt
-
-	$("#ajaxvy_kartotek").load( url_samtliga_kort, function() {
+function uppdateraVy() {
+    //
+    // klistra in uppräkningen av korten vid #kartotekvyn
+    // och ordna eventhantering för de olika knapparna i kortuppräkningen
+    //
+    $("#kartotekvyn").load( url_samtliga_kort, function() {
 	//
-	// iom att vyn laddas efter att document.ready är klar så kan
-	// uppsättning av händelsehanteringen för vyerna tas upp här
+	// hantera tryck på någon av de två radering- och modifierings-knapparna i kortuppräkningen som finns för varje kort
 	//
-
+	// radering: då försvinner korter direkt
+	// modifiering: använd #visa modifiering_av_specifikt_kort
+	// och klistra där in Shared/modifiera_kort.cshtml
 	//
-	// TODO: se till att vyn är sortera att den som var innan load
-	//
+	$("button[name=modifierakortet]").on("click", function(event) {
+	    //
+	    // TODO: utifrån Id, hämta vyn för modifiering (GET)
+	    // göm uppräkningen (#kartotekvyn) och klistra in dialogen vid #modifiering_av_specifikt_kort
+	    //
+	    $.ajax({
+		url: url_modifiera_specifikt_kort + '/' + $(this).val(),
+		method: 'GET',
+		success: function( data, textStatus, jqXHR) {
+		    $("#kartotekvyn").hide();
+		    $("#visning_av_specifikt_kort").hide();
+		    $("#modifiering_av_specifikt_kort").html( data);
+		    $("#modifiering_av_specifikt_kort").show();
+		}
+	    });
 	});
 
-	// $.ajax({
-	//     url: url_samtliga_kort,
-	//     type: 'GET',
-	//     success: function(res) {
-	//	let utdraget = Object( res );
-	//	$("ajaxvy_kartotek").append(utdraget);
-	//     }
-	// });
-    }
+	$("button[name=kortkasering]").on("click", function(event) {
+	    $.ajax({
+		url: url_kasera_kort + '?' + $.param( { "id": $(this).val() }),
+		method: 'DELETE',
+		success: function(res) {
+		    console.log( "radering av kort med Id: " + $(this).val() + " fungerade" );
+		}
+	    })
+	});
+    });
+
+    //
+    // om vyn för ett specifikt kort syns, göm den
+    //
+    $("#kartotekvyn").show();
+    $("#visning_av_specifikt_kort").hide();
+    $("#modifiering_av_specifikt_kort").hide();
+}
+
+$(document).ready(function() {
+    /// <summary>
+    /// aktiveras en gång efter inläsning av sidan
+    /// används för att få den första bilden
+    /// som sedan kan aktiveras via knapptryck i vyn (Uppdatera listan)
+    /// </summary>
 
     /// få in en aktuell vy direkt
     uppdateraVy();

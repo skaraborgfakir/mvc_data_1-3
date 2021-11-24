@@ -1,10 +1,12 @@
-<!-- Time-stamp: <2021-11-05 13:49:40 stefan> -*-web-*- -->
+<!-- Time-stamp: <2021-11-23 15:04:57 stefan> -*-web-*- -->
 <!-- https://www.educba.com/bootstrap-sort-table/
      här använder jag metod 1 för att sortera tabellen
 
      tabellen sorteras mha funktioner i jQuery
 
      bootstrap 5.1 används
+
+     sidan inkluderas av Shared/Mallen.cshtml som RenderBody()
 -->
 
 @using System
@@ -20,18 +22,47 @@
     ViewData["Title"] = "Ett personkartotek";
 }
 
+<!-- innehåll uppifrån och nedåt: -->
+<!--   1: funktion för filtrering -->
+<!--   2: inskrivning av nytt kort -->
+<!--      använder en vy som är specialiserad på att hantera uppgifter från ett kort förutom kortets ID, vilket är fast (kortuppgifter) -->
+<!--      två knappar för att förkasta fälten eller acceptera dvs spara kortet -->
+<!--   3 den ajaxbaserad, som kan visa antingen : -->
+<!--      funktion för uppräkning av alla korten eller visning av ett visst kort (en scroll) och knappar för just det valet -->
+<!--      eller om just det kortet ska raderas -->
+<!--        om användaren inte har begärt att titta på ett visst kort -->
+<!--           en tabell för uppräkning av (alla ?/några ?/ett specifikt) korten  -->
+<!--             listan av kort - antingen ett eller flera, i listan kan man välja att modifiera ett kort -->
+<!--      eller -->
+<!--        dialog för modifiering av ett visst kort -->
+<!--        som återanvänder kortuppgifter och förutom den har två knappar "bläh" dvs kasta ändringar eller "OK" dvs spara  -->
+
+<!-- partiella i bruk: -->
+<!--    Shared/filtrering/dialog.cshtml -->
+<!--       Shared/filtrering/termer.cshtml (fält för de uppgifter i korten som kan användas för filtrering) -->
+<!--    Shared/inskrivning_av_nytt_kort.cshtml -->
+<!--    Shared/ajaxbaserad_kartotekvy.cshtml  -->
+<!--       #kartotekvyn (i ajaxbaserad_kartotekvy.cshtml) -->
+<!--         Shared/aktivlistan.cshtml  -->
+<!--             Shared/aktivlistan_specifikt_kort.cshtml (för varje kort i uppräkningen)  -->
+<!--       #visning_av_specifikt_kort  (i ajaxbaserad_kartotekvy.cshtml) -->
+<!--          Shared/aktivlistan.cshtml  -->
+<!--             Shared/aktivlistan_specifikt_kort.cshtml (i det här fallet endast ett)  -->
+<!--       #modifiering_av_specifikt_kort (i ajaxbaserad_kartotekvy.cshtml) -->
+<!--          -->
+<!--      _ValidationScriptsPartial -->
+
 <div class="text-center">
     <h3 class="display-4">Ett kartotek över aktiva medlemmar</h3>
     <div>
-	<partial name="filtrering" for="Filtertermer" />
+	<partial name="filtrering/dialog" for="Listfiltrering" />
 	<hr>
 	<!-- funktion för inläggning av en person i taget  -->
-	<partial name="nya_aktiva" for="NyttKort"/>
+	<partial name="inskrivning_av_nytt_kort/dialog" for="InskrivningNyttKort" />
 	<hr>
-	<!-- via ajax se och förändra en databas  -->
-	<partial name="ajaxbaserad_kortselektor"/>
-	<!-- <hr> -->
-	<!-- <partial name="aktivlistan" for="Personlistan"/>  -->
+	<!-- hanteras via ajaxkortfunktioner.js  -->
+	<!-- js/ajaxkortfunktioner.js klistrar in sitt material efter document.load -->
+	<partial name="ajaxbaserad_kartotekvy" />
     </div>
 </div>
 

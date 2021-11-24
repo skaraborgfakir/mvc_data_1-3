@@ -1,0 +1,19 @@
+<!-- Time-stamp: <2021-11-19 17:37:47 stefan> -*-web-*- -->
+<!-- används i filtreringsdialogen specfikt för uppgifterna -->
+<!-- ID och telefonnummer syns inte i denna -->
+<!-- begränsad till filtrering, iom att den enbart ska ha namn och bostadsort, men inte telefonnummer -->
+<!-- ska man kunna söka på fler termer måste enbart denna modifieras -->
+
+<!-- inkluderas från filtreringsdialog.cshtml -->
+@using Kartotek.Modeller.Vyer
+
+@model Kartotek.Modeller.Vyer.PeopleViewModel
+
+<div class="row mb-1">
+    <label class="kortuppgifter_label personnamn text-start col-sm-2 col-form-label" asp-for="Namn">Namn</label>
+    <div class="col-sm-4"><input id="kortuppgifter_namn" class="form-control" asp-for="Namn" /></div>
+</div>
+<div class="row mb-1">
+    <label class="kortuppgifter_label bostadsort text-start col-sm-2 col-form-label" asp-for="Bostadsort">Bostadsort</label>
+    <div class="col-sm-3"> <input id="kortuppgifter_bostadsort" class="form-control" asp-for="Bostadsort" /></div>
+</div>

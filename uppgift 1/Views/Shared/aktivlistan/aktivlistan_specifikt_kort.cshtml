@@ -1,0 +1,21 @@
+<!-- Time-stamp: <2021-11-22 10:08:54 stefan> -*-web-*- -->
+<!-- används för uppräkningen av personer -->
+<!-- MVC Data Partial Views: -->
+<!-- kodkrav: partial view som arbetar med Person-klassen ska användas, inte en vymodell ! -->
+<!-- see: https://docs.microsoft.com/en-us/aspnet/core/mvc/views/tag-helpers/built-in/partial-tag-helper?view=aspnetcore-3.1 -->
+
+@using Kartotek.Modeller.Entiteter
+
+@model Kartotek.Modeller.Entiteter.Person
+
+<!-- sorteras av js/sorteratabell.js function sorteraTabellStigande(sorteringsterm) { -->
+<!-- därav sorteraTabell för namn och bostadsort -->
+<!-- insättning av uppgifter om en viss person i uppräkningen -->
+
+<div class="row headline" style="display: flex; flex-wrap: wrap;">
+    <partial name="personkortvy_objektbaserad/kortvisning" model="@Model"/>
+    <div class="col-md-2">
+	<button type="button" name="kortkasering"    value="@Html.Raw(Model.Id)" class="btn btn-danger">radering</button>
+	<button type="button" name="modifierakortet" value="@Html.Raw(Model.Id)" class="btn btn-primary">modifiera</button>
+    </div>
+</div>
