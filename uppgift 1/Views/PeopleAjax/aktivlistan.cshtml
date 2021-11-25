@@ -1,4 +1,4 @@
-<!-- Time-stamp: <2021-11-24 16:52:20 stefan> -*-web-*- -->
+<!-- Time-stamp: <2021-11-24 17:53:42 stefan> -*-web-*- -->
 <!-- ersättning med div för en tabell -->
 <!-- används för uppräkningen av personer -->
 <!-- klistras av in av funktioner i ajaxkortfunktioner.js -->
@@ -27,7 +27,7 @@
     <div id="enumreringajax">
 	@foreach (Person item in Model.Utdraget)
 	{
-	<partial name="aktivlistan/aktivlistan_specifikt_kort" model="item" />
+	<partial name="aktivlistan_specifikt_kort" model="item" />
 	}
     </div>
 </div>

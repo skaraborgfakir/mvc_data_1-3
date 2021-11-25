@@ -1,4 +1,4 @@
-<!-- Time-stamp: <2021-11-24 17:09:48 stefan> -*-web-*- -->
+<!-- Time-stamp: <2021-11-24 22:38:18 stefan> -*-web-*- -->
 
 <!-- används för kontrollant- och modell-baserad inskrivning av ett nytt kort -->
 <!-- beroende av Controllers/PeopleController.cs -->
@@ -12,23 +12,21 @@
 
 @model Kartotek.Modeller.Vyer.CreatePersonViewModel
 
-<fieldset>
-    <div class="row mb-1">
-	<label class="kortuppgifter_label personnamn text-start col-sm-2 col-form-label" asp-for="Namn">Namn</label>
-	<div class="col-sm-4">
-	    <input id="kortuppgifter_namn" class="form-control" asp-for="Namn" />
-	</div>
+<div class="row mb-1">
+    <label class="kortuppgifter_label personnamn text-start col-sm-2 col-form-label" asp-for="Namn">Namn</label>
+    <div class="col-sm-4">
+	<input id="kortuppgifter_namn" class="form-control" asp-for="Namn" />
     </div>
-    <div class="row mb-1">
-	<label class="kortuppgifter_label bostadsort text-start col-sm-2 col-form-label" asp-for="Bostadsort">Bostadsort</label>
-	<div class="col-sm-3">
-	    <input id="kortuppgifter_bostadsort" class="form-control" asp-for="Bostadsort" />
-	</div>
+</div>
+<div class="row mb-1">
+    <label class="kortuppgifter_label bostadsort text-start col-sm-2 col-form-label" asp-for="Bostadsort">Bostadsort</label>
+    <div class="col-sm-3">
+	<input id="kortuppgifter_bostadsort" class="form-control" asp-for="Bostadsort" />
     </div>
-    <div class="row mb-1">
-	<label class="kortuppgifter_label telefonnummer text-start col-sm-2 col-form-label">Telefonnummer</label>
-	<div class="col-sm-2">
-	    <input id="kortuppgifter_telefonnummer" class="form-control col-sm-6" asp-for="Telefonnummer" />
-	</div>
+</div>
+<div class="row mb-1">
+    <label class="kortuppgifter_label telefonnummer text-start col-sm-2 col-form-label">Telefonnummer</label>
+    <div class="col-sm-2">
+	<input id="kortuppgifter_telefonnummer" class="form-control col-sm-6" asp-for="Telefonnummer" />
     </div>
-</fieldset>
+</div>

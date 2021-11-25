@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-06 16:32:03 stefan>
+// Time-stamp: <2021-11-25 12:20:09 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -44,6 +44,7 @@ namespace Kartotek.Modeller.Data {
 					 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
 	    this.Create( namn: "Ulf Smedbo", bostadsort: "Göteborg", telefonnummer: "031" );
+	    this.Create( namn: "Ulf Smedbo", bostadsort: "Växjö", telefonnummer: "0444" );
 	    this.Create( namn: "Bengt Ulfsson", bostadsort: "Växjö", telefonnummer: "044" );
 	    this.Create( namn: "Micke Carlsson", bostadsort: "Solberga", telefonnummer: "0321" );
 	    this.Create( namn: "Ulf Bengtsson", bostadsort: "Växjö", telefonnummer: "044" );

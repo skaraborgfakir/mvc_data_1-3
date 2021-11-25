@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-08 16:57:59 stefan>
+// Time-stamp: <2021-11-25 13:15:54 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -69,12 +69,10 @@ namespace Kartotek.Controllers {
 	/// <summary>
 	/// komplett kartotek, utan någon filtrering
 	/// API mot JS !!
+	/// använder de sessionsvariabler som kontrolleras av PeopleController
 	/// </summary>
 	[ActionName( "uppdateralistan" )]
 	public IActionResult uppdateralistanurdatabasen () {
-	    // this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
-	    //				 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
-
 	    // this.loggdest.LogInformation(
 	    //	(new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
 	    //	(new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
@@ -103,21 +101,19 @@ namespace Kartotek.Controllers {
 		    //	    };
 
 		case 2:
-		    // this.loggdest.LogInformation(
-		    //	(new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
-		    //	(new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
-
 		    söktermer.Bostadsort = HttpContext.Session.GetString( $"bostadsort.{this.sessionsuffix}");
 		    PeopleViewModel vy_efter_bostadsort = this.serviceenheten.FindBy( söktermer);
 
 		    return PartialView( "aktivlistan", vy_efter_bostadsort);
 
-		    // return View() {
-		    //	ViewName = "aktivlistan",
-		    //	    ViewData = new ViewDataDictionary( vy_efter_bostadsort)
-		    //	    };
+		case 3:
+		    söktermer.Namn = HttpContext.Session.GetString( $"namn.{this.sessionsuffix}");
+		    söktermer.Bostadsort = HttpContext.Session.GetString( $"bostadsort.{this.sessionsuffix}");
+		    PeopleViewModel vy_flera_termer = this.serviceenheten.FindBy( söktermer);
 
-		    // return new PartialViewResult( "aktivlistan", vyn);
+		    return PartialView( "aktivlistan", vy_flera_termer);
+
+		    break;
 
 		default:
 		    PeopleViewModel vyn = this.serviceenheten.All();
@@ -131,9 +127,6 @@ namespace Kartotek.Controllers {
 	/// </summary>
 	[ActionName( "uppdateralistanvissakort" )]  // API mot JS !!
 	public ActionResult uppdateralistanvissakort () {
-	    // this.loggdest.LogInformation( (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
-	    //				  (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
-
 	    PeopleViewModel söktermer = new PeopleViewModel(){
 	    };
 
@@ -143,16 +136,19 @@ namespace Kartotek.Controllers {
 	/// <summary>
 	/// tag fram ett specifikt kort
 	/// </summary>
-	[HttpGet( "{id=1}" )]
-	[ActionName( "taguppkortet" )]  // API mot JS !!
-	[Produces( "application/json" )]
+	[HttpGet( "id={id=1}" )]
+	[ActionName( "tagframvisstkort" )]  // API mot JS !!
 	public ActionResult tagframkortet ( int id ) {
 	    // this.loggdest.LogInformation( (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
-	    //				  (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
-	    //				  "\n tag fram kortet med id : " + id.ToString());
+	    //				     (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
+	    //				     "\n tag fram kortet med id : " + id.ToString());
 
-	    // return Ok( this.serviceenheten.FindBy( id));
-	    return PartialView( "aktiva_div", this.serviceenheten.FindBy( id));
+	    Person personkort = this.serviceenheten.FindBy( id);
+
+	    if ( personkort != null )
+		return PartialView( "personkortvy_objektbaserad/separat_kortvisning", personkort);
+	    else
+		return NotFound();
 	}
 
 
@@ -171,13 +167,14 @@ namespace Kartotek.Controllers {
 	    //				  (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
 	    //				  "\n kasera kortet med id : " + id.ToString());
 
-	    if ( this.serviceenheten.FindBy( id) != null) {
+	    if ( this.serviceenheten.FindBy( id) != null)
 		return Ok( this.serviceenheten.Remove( id));
-	    }
 	    else
-	    {
+		//
+		// kan bli exv om valideringen av valtkortsid i ajaxbaserad_kortselektor.cshtml
+		// inte fungerar, dvs att valt kort id i scroller är ogiltigt
+		//
 		return NotFound();
-	    }
 	}
     }
 }

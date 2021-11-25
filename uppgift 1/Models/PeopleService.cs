@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-08 10:51:05 stefan>
+// Time-stamp: <2021-11-25 12:33:50 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -119,11 +119,31 @@ namespace Kartotek.Modeller {
 	    {
 		this.loggdest.LogInformation(
 		    (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
-		    (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
+		    (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString())+
+		    "\n" + "Namn : " + search.Namn +
+		    "\n" + "Bostadsort : " + search.Bostadsort);
 
-		vyn.Utdraget = posterna
-		    .Where( posterna => ( posterna.Namn == search.Namn && posterna.Bostadsort == search.Bostadsort))
-		    .ToList();
+		// vyn.Utdraget = posterna
+		//     .Where( posterna => ( posterna.Namn == search.Namn &&
+		//			  posterna.Bostadsort == search.Bostadsort))
+		//     .ToList();
+		var res =
+		    from post in posterna
+		    where ( post.Namn == search.Namn &&
+			    post.Bostadsort == search.Bostadsort )
+		    select post;
+
+		foreach ( var post in res) {
+		    this.loggdest.LogInformation(
+			"\n" + "Namn : " + post.Namn + " Bostadsort : " + post.Bostadsort);
+		}
+
+		vyn.Utdraget = res.ToList();
+
+		foreach ( var person in vyn.Utdraget ) {
+		    this.loggdest.LogInformation(
+			"\n" + "Namn : " + person.Namn + " Bostadsort : " + person.Bostadsort);
+		}
 	    }
 	    //
 	    // båda var inte satta, kan det finnas något i Namn ?

@@ -1,0 +1,40 @@
+<!-- Time-stamp: <2021-11-24 22:29:11 stefan> -*-web-*- -->
+<!-- används för visning av enstaka kort -->
+<!-- personobjekt -->
+<!-- MVC Data Partial Views: -->
+<!-- kodkrav: partial view som arbetar med Person-klassen ska användas, inte en vymodell ! -->
+
+@using Kartotek.Modeller.Entiteter
+
+@model Kartotek.Modeller.Entiteter.Person
+
+<!-- sorteras av js/sorteratabell.js function sorteraTabellStigande(sorteringsterm) { -->
+<!-- därav sorteraTabell för namn och bostadsort -->
+<!-- insättning av uppgifter om en viss person i uppräkningen -->
+
+<div>
+    <div class="row">
+	<label class="kortuppgifter_label personnamn text-start col-sm-2 col-form-label">Namn</label>
+	<div class="col-md-2 text-start namn">
+	    @Html.DisplayFor(model => Model.Namn)
+	</div>
+    </div>
+    <div class="row mb-1">
+	<label class="kortuppgifter_label bostadsort text-start col-sm-2 col-form-label">Bostadsort</label>
+	<div class="col-md-2 text-start bostadsort">
+	    @Html.DisplayFor(model => Model.Bostadsort)
+	</div>
+    </div>
+    <div class="row mb-1">
+	<label class="kortuppgifter_label telefonnummer text-start col-sm-2 col-form-label">Telefonnummer</label>
+	<div class="col-md-2 text-start telefonnummer">
+	    @Html.DisplayFor(model => Model.Telefonnummer)
+	</div>
+    </div>
+    <div class="row mb-1">
+	<label class="kortuppgifter_label text-start col-sm-2 col-form-label">Id</label>
+	<div class="col-md-1 text-start id">
+	    @Html.DisplayFor(model => Model.Id)
+	</div>
+    </div>
+</div>

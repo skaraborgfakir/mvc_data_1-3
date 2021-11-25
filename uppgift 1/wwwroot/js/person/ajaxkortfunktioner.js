@@ -1,65 +1,14 @@
 //
-// - Time-stamp: <2021-11-24 14:46:43 stefan>
+// - Time-stamp: <2021-11-24 22:16:39 stefan>
 //
-// sidan har följande organisation (delvyer) i People/Index.cshtml
-// <html>  (Shared/Mallen.cshtml)
-//  <head
-//  <body>
-//    <header>
-//    </header>
-//    <div class="container">
-//      <main role="main"
-//        <div class="text-center" (People/Index.cshtml)
-//          <h3   Ett kartotek över aktiva
-//          </h3>
-//          <div>
-//              <div class="container"                        (partial Shared/filtrering/dialog.cshtml)
-//                <h4
-//                </h4
-//                <form
-//                  <fieldset
-//                  <div class="row mb-1                      (partial Shared/personkortvy_modellbaserad/filtreringstermer.cshtml)
-//                    <label class="kortuppgifter ... Namn
-//                    <div
-//                      <input  />
-//                    </div
-//                  </div
-//                  <div class="row mb-1
-//                    <label class="kortuppgifter ... Bostadsort
-//                    <div
-//                      <input  />
-//                    </div
-//                  </div                                     (/partial Shared/personkortvy_modellbaserad/filtreringstermer.cshtml)
-//                  </fieldset
-//                </form
-//              </div                                         (partial Shared/filtrering/dialog.cshtml)
-//            <hr>
-//                                    (partial Shared/inskrivning_av_nytt_kort/dialog.cshtml)
-//            <hr>
-//                                    (partial Shared/ajaxbaserad_kartotekvy)
-//          </div>
-//        </div class="text-center" (People/Index.cshtml)
-//      </main                   (Shared/Mallen.cshtml)
-//    </div>
-//    <footer>
-//    </footer>
-//      skript etc
-//  </body>
-// </html>
-//      main
-//       div class="text-center"   (People/Index.cshtml)
-//         h3 ett kartotek...
-//         div
-//           div
-//             div id=filtrering/dialog
-//
+// AJAX:funktionalitet för personvyn i kartoteket
 //
 
-'use strict';
+"use strict";
 
 const url_samtliga_kort            = "https://localhost:5003/api/PeopleAjax/uppdateralistan";    // json-kodad lista
-const url_specifikt_kort           = "https://localhost:5003/api/PeopleAjax/tagframvisstkort";   // uppgifter om ett specifikt kort
-const url_modifiera_specifikt_kort = "https://localhost:5003/api/PeopleAjax/modifieravisstkort"; // modifiering av ett specifikt kort
+const url_specifikt_kort           = "https://localhost:5003/api/PeopleAjax/tagframvisstkort";   // enbart visning av ett specifikt kort
+const url_modifiera_specifikt_kort = "https://localhost:5003/api/PeopleAjax/modifieravisstkort"; // modifiering eller radering av ett specifikt kort
 const url_kasera_kort              = "https://localhost:5003/api/PeopleAjax/kaserakortet";       // kasera kortet
 
 //
@@ -68,42 +17,95 @@ const url_kasera_kort              = "https://localhost:5003/api/PeopleAjax/kase
 function uppdateraVy() {
     //
     // klistra in uppräkningen av korten vid #kartotekvyn
-    // och ordna eventhantering för de olika knapparna i kortuppräkningen
+    // och ordna eventhantering för de olika knapparna inne i kortuppräkningen
     //
-    $("#kartotekvyn").load( url_samtliga_kort, function() {
-	//
-	// hantera tryck på någon av de två radering- och modifierings-knapparna i kortuppräkningen som finns för varje kort
-	//
-	// radering: då försvinner korter direkt
-	// modifiering: använd #visa modifiering_av_specifikt_kort
-	// och klistra där in Shared/modifiera_kort.cshtml
-	//
-	$("button[name=modifierakortet]").on("click", function(event) {
+    $.ajax({
+	method: "GET",
+	url: url_samtliga_kort,
+	success: function ( data, textStatus, jqXHR) {
+	    $("#kartotekvyn").html( data);
 	    //
-	    // TODO: utifrån Id, hämta vyn för modifiering (GET)
-	    // göm uppräkningen (#kartotekvyn) och klistra in dialogen vid #modifiering_av_specifikt_kort
+	    // hantera tryck på någon av tre knapparna som finns i uppräkningen för varje kort
+	    //     Visa
+	    //     Modifiering
+	    //     Raderingsknappen
 	    //
-	    $.ajax({
-		url: url_modifiera_specifikt_kort + '/' + $(this).val(),
-		method: 'GET',
-		success: function( data, textStatus, jqXHR) {
-		    $("#kartotekvyn").hide();
-		    $("#visning_av_specifikt_kort").hide();
-		    $("#modifiering_av_specifikt_kort").html( data);
-		    $("#modifiering_av_specifikt_kort").show();
-		}
+	    // radering: då försvinner korter direkt
+	    // modifiering: använd #visa modifiering_av_specifikt_kort
+	    // och klistra där in Shared/modifiera_kort.cshtml
+	    //
+	    // samtliga varianterna sparar först undan kortets Id, det blir nödvändigt
+	    // i DELETE:metoden därför $(this) halvvägs igenom blir ogiltig
+	    //
+	    $("button[name=kortvisning]").on("click", function(event) {
+		var kortets_id = $(this).val();
+		console.log( "kortvisning - Id: " + kortets_id  );
+		$.ajax({
+		    method: "GET",
+		    url: url_specifikt_kort + '/' + $.param( { "id": kortets_id }),
+		    success: function( data, textStatus, jqXHR) {
+			// göm uppräkningen (#kartotekvyn) och klistra in dialogen vid #visning_av_specifikt_kort
+			$("#kartotekvyn").hide();
+			$("#visning_av_specifikt_kort").html(data);
+			$("#visning_av_specifikt_kort").show();
+		    }
+		});
 	    });
-	});
+	    $("button[name=modifierakortet]").on("click", function(event) {
+		var kortets_id = $(this).val();
+		console.log( "modifierakortet - Id: " + kortets_id );
+		//
+		// TODO: utifrån Id, hämta vyn för modifiering (GET)
+		// göm uppräkningen (#kartotekvyn) och klistra in dialogen vid #modifiering_av_specifikt_kort
+		//
+		$.ajax({
+		    method: "POST",
+		    url: url_modifiera_specifikt_kort + '/' + $.param( { "id": kortets_id }),
+		    success: function( data, textStatus, jqXHR) {
+			$("#kartotekvyn").hide();
+			$("#modifiering_av_specifikt_kort").html( data);
+			$("#modifiering_av_specifikt_kort").show();
+		    }
+		});
+	    });
+	    $("button[name=kortkasering]").on("click", function(event) {
+		var kortets_id = $(this).val();
+		console.log( "kortkasering - Id: " + kortets_id  );
+		$.ajax({
+		    method: "DELETE",
+		    url: url_kasera_kort + '?' + $.param( { "id": kortets_id }),
+		    success: function( data, textStatus, jqXHR) {
+			console.log( "radering av kort fungerade med id : " + kortets_id );
+			uppdateraVy();
+		    },
+		    error: function( data, textStatus, jqXHR) {
+			// omöjligt, då har vi fel i koden någonstans
+			if ( data.status == 404 ) {
+			    console.log( "radering av kort fungerade inte därför att id : " + kortets_id + " är ogiltigt" );
+			    $("#kartotekvyn").hide();
+			    $("#modifiering_av_specifikt_kort").html( jqXHR);
+			    $("#modifiering_av_specifikt_kort").show();
+			} else
+			{
+			    console.log( "radering av kort fungerade inte därför att data : " + data + " och jqXHR : " + jqXHR);
+			    $("#kartotekvyn").hide();
+			    $("#modifiering_av_specifikt_kort").html( jqXHR);
+			    $("#modifiering_av_specifikt_kort").show();
+			}
+		    }
+		});
+	    });
 
-	$("button[name=kortkasering]").on("click", function(event) {
-	    $.ajax({
-		url: url_kasera_kort + '?' + $.param( { "id": $(this).val() }),
-		method: 'DELETE',
-		success: function(res) {
-		    console.log( "radering av kort med Id: " + $(this).val() + " fungerade" );
-		}
-	    })
-	});
+	    //
+	    // fixa anropen till sorterings-funktion iom att tabellhuvudet finns först nu
+	    //
+	    $("#sorteraefternamn").on( "click", function(event) {
+		sorteraefternamn()
+	    });
+	    $("#sorteraefterbostadsort").on( "click", function(event) {
+		sorteraefterbostadsort()
+	    });
+	}
     });
 
     //
@@ -127,45 +129,44 @@ $(document).ready(function() {
     /// <summary>
     /// aktiveras via knapptryck på 'Uppdatera listan' (ajaxbaserad_kortselektor.cshtml)
     /// </summary>
-    $("#uppdateralistan").click(function( event) {
-	event.preventDefault();
+    $("#uppdateralistan").on( "click", function( event) {
 	uppdateraVy();
-
 	return false;
     });
 
     /// <summary>
     /// aktiveras via knapptryck i vyn (visa kortet) (ajaxbaserad_kortselektor.cshtml)
     /// </summary>
-    $('#plockaframkortet').click(function( ) {
-	var id = document.getElementById("valtkortsid").value;
+    $("#visakortet").on( "click", function( ) {
+	var kortets_id = $("#valtkortsid").val();
+	$.ajax({
+	    method: "GET",
+	    url : url_specifikt_kort + "/" + $.param( { "id": kortets_id }),
+	    success: function( data, textStatus, jqXHR) {
+		// göm uppräkningen (#kartotekvyn) och klistra in dialogen vid #visning_av_specifikt_kort
+		$("#kartotekvyn").hide();
+		$("#visning_av_specifikt_kort").html(data);
+		$("#visning_av_specifikt_kort").show();
+	    }
+	});
+    });
 
-
-	$("#ajaxvy_kartotek").load( url_specifikt_kort + '?' + $.param( { "id": id } ),
-				    function() {
-				    }
-				  );
-	// $.ajax({
-	//     url: url_specifikt_kort,
-	//     data: { "id": id },
-	//     success: function( result ){
-	//	$("#ajaxvy_kartotek").html( result );
-	//     }
-	// });
-
-	// $("#tabell_kartotek_ajax").load( url: url_specifikt_kort,
-	//				 data: { "id": id }
-	//			       );
-
-	// $.ajax({
-	//     url: url_specifikt_kort,
-	//     type: 'GET',
-	//     datatype: 'json',
-	//     success: function(res) {
-	//	let utdraget = Object( res );
-	//	$.each( utdraget, function( index, item) { enumeration( index, item); });
-	//     }
-	// });
+    /// <summary>
+    /// aktiveras via knapptryck i vyn (modifierakortet) (ajaxbaserad_kortselektor.cshtml)
+    /// </summary>
+    $("#modifierakortet").on( "click", function() {
+	var kortets_id = $("#valtkortsid").val();
+	$.ajax({
+	    method: "POST",
+	    url: url_modifiera_specifikt_kort + "?" + $.param( { "id": kortets_id }),
+	    success: function( data, textStatus, jqXHR) {
+		$("#kartotekvyn").hide();
+		$("#modifiering_av_specifikt_kort").html( data);
+		$("#modifiering_av_specifikt_kort").show();
+	    },
+	    error: function( data, textStatus, jqXHR) {
+	    }
+	});
     });
 
     /// <summary>
@@ -173,22 +174,22 @@ $(document).ready(function() {
     /// </summary>
     /// <see href="https://stackoverflow.com/questions/15088955/how-to-pass-data-in-the-ajax-delete-request-other-than-headers">JQuery bug</see>
     /// <see href="http://bugs.jquery.com/ticket/11586">bug i jQuery: använder man DELETE så klipps data-klumpen bort</see>
-    $('#kaserakortet').click(function( event) {
-	// event.preventDefault();
-	// document.getElementById("valtkortsid").value  till url_kasera_kort
-	// hämta valtkortsid från skrollern och skicka vidare till kaseraspecifiktkort
-	var id = document.getElementById("valtkortsid").value;
+    $("#kaserakortet").on( "click", function() {
+	var kortets_id = $("#valtkortsid").val();
 
-	$.ajax({ type:  "DELETE",
-		 url:    url_kasera_kort + '?' + $.param( { "id": id }),
-		 contentType: "application/json; charset=utf-8"
-	       }
-	      );
+	$.ajax({
+	    method: "DELETE",
+	    url: url_kasera_kort + "?" + $.param( { "id": kortets_id }),
+	    success: function( data, textStatus, jqXHR) {
+	    },
+	    error: function( data, textStatus, jqXHR) {
+	    }
+	});
     });
 });
 
 /// <summary>
-/// sortera listan efter namn, aktiveras via onClick i aktivlistan.cshtml
+/// sortera listan efter namn, aktiveras via klick på kolumnhuvudet (#sorteraefternamn) i PeopleAjax/aktivlistan_tabellhuvud.cshtml
 ///
 /// se till att markeringarna i tabellhuvudet är korrekta
 ///
@@ -202,32 +203,32 @@ $(document).ready(function() {
 function sorteraefternamn() {
     //	event.preventDefault();
 
-    $( "#sorteraefterbostadsort" ).removeClass( "sorting_asc");
-    $( "#sorteraefterbostadsort" ).removeClass( "sorting_desc");
+    $( "#personindex_div div #sorteraefterbostadsort" ).removeClass( "sorting_asc");
+    $( "#personindex_div div #sorteraefterbostadsort" ).removeClass( "sorting_desc");
 
-    if ( !$('#sorteraefternamn').hasClass( "sorting_asc") &&
-	 !$('#sorteraefternamn').hasClass( "sorting_desc")) {
+    if ( !$("#sorteraefternamn").hasClass( "sorting_asc") &&
+	 !$("#sorteraefternamn").hasClass( "sorting_desc")) {
 	//
 	// ingen sortering är i kraft men sortera i stigande
 	//
-	$('#sorteraefternamn').addClass( "sorting_asc");
+	$("#sorteraefternamn").addClass( "sorting_asc");
 
-	sorteraTabellStigande( 'enumreringajax', 0);
+	sorteraTabellStigande( "enumreringajax", 0);
     } else {
 	// om sorteringen är inställd att vara sjunkande, tag bort den
-	$('#sorteraefternamn.sorting_desc').removeClass( "sorting_desc");
+	$("#sorteraefternamn.sorting_desc").removeClass( "sorting_desc");
 
-	if ( $('#sorteraefternamn').hasClass( "sorting_asc")) {
-	    $('#sorteraefternamn').removeClass( "sorting_asc");
-	    $('#sorteraefternamn').addClass( "sorting_desc");
+	if ( $("#sorteraefternamn").hasClass( "sorting_asc")) {
+	    $("#sorteraefternamn").removeClass( "sorting_asc");
+	    $("#sorteraefternamn").addClass( "sorting_desc");
 
-	    sorteraTabellSjunkande( 'enumreringajax', 0);
+	    sorteraTabellSjunkande( "enumreringajax", 0);
 	}
     }
 }
 
 /// <summary>
-/// sortera listan efter bostadsort, aktiveras via onClick i aktivlistan.cshtml
+/// sortera listan efter bostadsort, aktiveras via klick på kolumnhuvudet (#sorteraefterbostadsort) i PeopleAjax/aktivlistan_tabellhuvud.cshtml
 ///
 /// se till att markeringarna i tabellhuvudet är korrekta
 ///
@@ -239,71 +240,30 @@ function sorteraefternamn() {
 /// kolumn som ska användas för sorteringen
 /// </summary>
 function sorteraefterbostadsort () {
-    //	event.preventDefault();
+    $( "#personindex_div div #sorteraefternamn.sorting_asc" ).removeClass( "sorting_asc");
+    $( "#personindex_div div #sorteraefternamn.sorting_desc" ).removeClass( "sorting_desc");
 
-    $( "#sorteraefternamn.sorting_asc" ).removeClass( "sorting_asc");
-    $( "#sorteraefternamn.sorting_desc" ).removeClass( "sorting_desc");
-
-    if (! $('#sorteraefterbostadsort').hasClass( "sorting_asc") &&
-	! $('#sorteraefterbostadsort').hasClass( "sorting_desc")) {
+    if (! $("#personindex_div div #sorteraefterbostadsort").hasClass( "sorting_asc") &&
+	! $("#personindex_div div #sorteraefterbostadsort").hasClass( "sorting_desc")) {
 	//
 	// ingen sortering är i kraft men sortera i stigande
 	//
-	$('#sorteraefterbostadsort').addClass( "sorting_asc");
-	sorteraTabellStigande( 'enumreringajax', 1);
+	$("#personindex_div div #sorteraefterbostadsort").addClass( "sorting_asc");
+	sorteraTabellStigande( "enumreringajax", 1);
     } else {
 	// om sorteringen är inställd att vara sjunkande, tag bort den
-	$('#sorteraefterbostadsort.sorting_desc').removeClass( "sorting_desc");
+	$("#personindex_div div #sorteraefterbostadsort.sorting_desc").removeClass( "sorting_desc");
 
 	// om sorteringen är inställd att vara stigande, ersätt den
 	// med sjunkande ordning och sortera om
-	if ( $('#sorteraefterbostadsort').hasClass( "sorting_asc")) {
-	    $('#sorteraefterbostadsort').removeClass( "sorting_asc");
-	    $('#sorteraefterbostadsort').addClass( "sorting_desc");
+	if ( $("#personindex_div div #sorteraefterbostadsort").hasClass( "sorting_asc")) {
+	    $("#personindex_div div #sorteraefterbostadsort").removeClass( "sorting_asc");
+	    $("#personindex_div div #sorteraefterbostadsort").addClass( "sorting_desc");
 
-	    sorteraTabellSjunkande( 'enumreringajax', 1);
+	    sorteraTabellSjunkande( "enumreringajax", 1);
 	}
     }
 }
-
-/// <summary>
-/// aktion i själva kortuppräkningen
-///
-/// aktiveras via knapptryck i listvyn (radering bland aktionerna)
-/// </summary>
-// function kaseraspecifiktkort( Id) {
-//     //
-//     // TODO: utifrån scrollern, radering av rätt kort
-//     //
-
-//     //	$.ajax({
-//     //	    url: url_kasera_kort,
-//     //	    type: 'POST',
-//     //	    success: function(res) {
-//     //		let utdraget = Object( res );
-//     //	    }
-//     //	});
-// }
-
-/// <summary>
-/// aktion i själva kortuppräkningen
-///
-/// aktiveras via knapptryck i listvyn (modifiering)
-/// </summary>
-// function modifieraspecifiktkort( Id) {
-//     //
-//     // TODO: utifrån scrollern, modifiering av rätt kort
-//     //
-//     // $.ajax({
-//     //     url: url_kasera_kort,
-//     //     type: 'GET',
-//     //     datatype: 'json',
-//     //     success: function(res) {
-//     //	let utdraget = Object( res );
-//     //	/// $.each( utdraget, function( index, item) { enumeration( index, item); });
-//     //     }
-//     // });
-// }
 
 /// <summary>
 /// Vilket ID är lägst ?

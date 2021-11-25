@@ -1,4 +1,4 @@
-<!-- Time-stamp: <2021-11-24 16:59:24 stefan> -*-web-*- -->
+<!-- Time-stamp: <2021-11-24 21:35:57 stefan> -*-web-*- -->
 <!-- används för uppräkningen av personer -->
 <!-- MVC Data Partial Views: -->
 <!-- kodkrav: partial view som arbetar med Person-klassen ska användas, inte en vymodell ! -->
@@ -14,8 +14,8 @@
 
 <div class="row headline" style="display: flex; flex-wrap: wrap;">
     <partial name="personkortvy_objektbaserad/kortvisning" model="@Model"/>
-    <div class="col-md-2">
-	<button type="button" name="kortkasering"    value="@Html.Raw(Model.Id)" class="btn btn-primary">visa</button>
+    <div class="col-md-3">
+	<button type="button" name="kortvisning"     value="@Html.Raw(Model.Id)" class="btn btn-primary">visa</button>
 	<button type="button" name="modifierakortet" value="@Html.Raw(Model.Id)" class="btn btn-primary">modifiera/radera</button>
 	<button type="button" name="kortkasering"    value="@Html.Raw(Model.Id)" class="btn btn-danger">radering</button>
     </div>

@@ -1,7 +1,10 @@
-// https://www.educba.com/bootstrap-sort-table/
-// här använder jag metod 2 för att sortera tabellen
 //
-// direkt från Sedgewicks Algorithms: bubble-sort
+// den är oberoende av vad för tabell det är som ska sorteras, språk/land/stad går lika bra som person
+// använder inte jQuery, det är rent JavaScript
+//
+// beskrivning från https://www.educba.com/bootstrap-sort-table/
+//
+// här använder jag metod 2 för att sortera tabellen direkt från Sedgewicks Algorithms: bubble-sort
 //
 // void bubble(itemType a[], int N) {
 //   int i, j;
@@ -59,15 +62,17 @@
 // 1 1   slut på inre loop
 
 /// <summary>
-/// samma men annat villkor för beslut - vi vill knuffa det större framåt !
+/// bubbel-sortering
+///
+/// villkor för beslut - vi vill knuffa det större framåt !
 ///
 /// API: under vilken div finns uppräkningen
 ///      sorteringsterm : vilken av värdena (de har index 0 .... n) ska användas för sorteringen
 /// </summary>
 function sorteraTabellStigande(listansid, sorteringsterm) {
     var tabellen = document.getElementById( listansid);
-    var posterna = tabellen.children; // varje rad i tabellen - htmlcollection
-    var i = posterna.length;                                // antalet poster
+    var posterna = tabellen.children;                     // varje rad i tabellen - htmlcollection
+    var i = posterna.length;                              // antalet poster
 
     for (; i >= 1; i--)
 	for (let j = 1; j < i; j++)
@@ -77,14 +82,16 @@ function sorteraTabellStigande(listansid, sorteringsterm) {
 }
 
 /// <summary>
-/// samma men annat villkor för beslut - vi vill knuffa det minsta framför oss !
+/// bubbel-sortering
+///
+/// villkor för beslut - vi vill knuffa det minsta framför oss !
 ///
 /// API: under vilken div finns uppräkningen
 ///      sorteringsterm : vilken av värdena (de har index 0 .... n) ska användas för sorteringen
 /// </summary>
 function sorteraTabellSjunkande( listansid, sorteringsterm) {
     var tabellen = document.getElementById( listansid);
-    var posterna = tabellen.children;   // varje rad i tabellen
+    var posterna = tabellen.children;                       // varje rad i tabellen
     var i = posterna.length;                                // antalet poster
 
     for (; i >= 1; i--)
@@ -93,15 +100,3 @@ function sorteraTabellSjunkande( listansid, sorteringsterm) {
 		posterna.item(j - 1).children.item(sorteringsterm).innerHTML < posterna.item(j).children.item(sorteringsterm).innerHTML)
 		tabellen.insertBefore(posterna.item(j), posterna.item(j - 1));  // post (j) framför posten i j-1
 }
-
-/// <summary>
-/// begränsad - den sorterar enbart på namn eller bostadsort (sorteringsterm) i stigande ordning
-/// </summary>
-// function sorteraTabell( listansid, sorteringsterm) {
-//     var sorteringsordning = "stigande";  // sorteringsordning
-
-//     if (sorteringsordning == "stigande")
-//	sorteraTabellStigande( listansid, sorteringsterm);
-//     else if (sorteringsordning == "sjunkande")
-//	sorteraTabellSjunkande( listansid, sorteringsterm);
-// }

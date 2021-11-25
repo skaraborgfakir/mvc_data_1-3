@@ -55,6 +55,7 @@
             <summary>
             komplett kartotek, utan någon filtrering
             API mot JS !!
+            använder de sessionsvariabler som kontrolleras av PeopleController
             </summary>
         </member>
         <member name="M:Kartotek.Controllers.PeopleAjaxController.uppdateralistanvissakort">
@@ -116,7 +117,8 @@
         </member>
         <member name="M:Kartotek.Controllers.PeopleController.IngenFiltrering(Kartotek.Modeller.Vyer.HopslagenmodellVymodell)">
             <summary>
-            återställ sökning, måste ange mot serviceenheten förändringen
+            återställ sökning, inställningen exporteras mot andra kontrollanter
+            via sessionsvariablerna
             </summary>
         </member>
         <member name="M:Kartotek.Controllers.PeopleController.SkapaNyttKort(Kartotek.Modeller.Vyer.HopslagenmodellVymodell)">
