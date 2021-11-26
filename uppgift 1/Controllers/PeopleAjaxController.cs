@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-26 14:16:49 stefan>
+// Time-stamp: <2021-11-26 15:10:11 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -112,8 +112,6 @@ namespace Kartotek.Controllers {
 		    PeopleViewModel vy_flera_termer = this.serviceenheten.FindBy( söktermer);
 
 		    return PartialView( "aktivlistan", vy_flera_termer);
-
-		    break;
 
 		default:
 		    PeopleViewModel vyn = this.serviceenheten.All();
