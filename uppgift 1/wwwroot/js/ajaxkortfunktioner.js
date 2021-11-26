@@ -1,14 +1,14 @@
 //
-// - Time-stamp: <2021-11-22 15:25:42 stefan>
+// - Time-stamp: <2021-11-26 13:45:28 stefan>
 //
 
 
 'use strict';
 
-const url_samtliga_kort            = "https://localhost:5009/api/PeopleAjax/uppdateralistan";    // json-kodad lista
-const url_specifikt_kort           = "https://localhost:5009/api/PeopleAjax/tagframvisstkort";   // uppgifter om ett specifikt kort
-const url_modifiera_specifikt_kort = "https://localhost:5009/api/PeopleAjax/modifieravisstkort"; // modifiering av ett specifikt kort
-const url_kasera_kort              = "https://localhost:5009/api/PeopleAjax/kaserakortet";       // kasera kortet
+const url_samtliga_kort            = "https://localhost:5005/api/PeopleAjax/uppdateralistan";    // json-kodad lista
+const url_specifikt_kort           = "https://localhost:5005/api/PeopleAjax/tagframvisstkort";   // uppgifter om ett specifikt kort
+const url_modifiera_specifikt_kort = "https://localhost:5005/api/PeopleAjax/modifieravisstkort"; // modifiering av ett specifikt kort
+const url_kasera_kort              = "https://localhost:5005/api/PeopleAjax/kaserakortet";       // kasera kortet
 
 //
 // funktioner för hämtning och visning av kort ur kartoteket

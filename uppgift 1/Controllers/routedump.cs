@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-06 16:29:57 stefan>
+// Time-stamp: <2021-11-26 13:45:28 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace Kartotek.Controllers {
     /// <summary>
-    /// anrop (GET) med curl eller postman till https://l....:5009/routes
+    /// anrop (GET) med curl eller postman till https://l....:5005/routes
     ///
     /// varför saknas exv:
     ///   People/Index
@@ -31,7 +31,7 @@ namespace Kartotek.Controllers {
 	}
 
 	/// <summary>
-	/// https://l....:5009/routes
+	/// https://l....:5005/routes
 	/// </summary>
 	[HttpGet( "routes", Name = "ApiEnvironmentGetAllRoutes" )]
 	[Produces( typeof( ListResult<RouteModel> ) )]
