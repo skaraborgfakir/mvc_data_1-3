@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-22 10:01:30 stefan>
+// Time-stamp: <2021-11-26 13:55:48 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -23,16 +23,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-// EF6
-using Microsoft.EntityFrameworkCore;
-
-// Identity här
-
 // egen kod
 using Kartotek.Modeller;
 using Kartotek.Modeller.Data;
 using Kartotek.Modeller.Interfaces;
-using Kartotek.Databas;
 
 namespace Kartotek
 {
@@ -51,17 +45,17 @@ namespace Kartotek
 	/// <summary>
 	/// https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
 	/// </summary>
-	public IConfiguration Configurationsrc { get; }
+	public IConfiguration Configuration { get; }
 
 	/// <summary>
 	/// https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
 	/// </summary>
-	/// <param name="configurationsrc">DI av en instans av IConfiguration</param>
-	/// <param name="env">DI av en instans av IHostEnvironment</param>
-	public REVELJ( IConfiguration configurationsrc,
-		       IHostEnvironment env)
+	/// <param name="configuration">DI av en instans av IConfiguration</param>
+	/// <param name="env">DI av en instans av IWebHostEnvironment</param>
+	public REVELJ(IConfiguration configuration,
+		      IWebHostEnvironment env)
 	{
-	    Configurationsrc = configurationsrc;
+	    Configuration = configuration;
 	    Environment = env;
 	}
 
@@ -77,22 +71,17 @@ namespace Kartotek
 	    // Console.WriteLine( "Startup.cs: REVELJ: ConfigureServices");
 
 	    // behövs för UseCors i Configure
-	    services.AddCors( opt => { opt
+	    services.AddCors( options => { options
 			.AddPolicy( "CorsPolicy", policy => { policy
-				    // .AllowAnyHeader()
-				    // .AllowAnyMethod()
+				    .AllowAnyHeader()
+				    .AllowAnyMethod()
 				    // .WithExposedHeaders( "WWW-Authenticate")
-				    .WithOrigins( "http://localhost:5008/People",
-						  "https://localhost:5009/People",
-						  "https://localhost:5009/api/PeopleAjax" )
+				    .WithOrigins( "http://localhost:5004/People",
+						  "https://localhost:5005/People",
+						  "https://localhost:5005/api/PeopleAjax" )
 				    .AllowCredentials();
-				// .WithOrigins( "https://localhost:5009")
-				// .WithOrigins( "http://localhost:5009")
-				// .WithOrigins( "https://localhost:5009/lib/jquery/jquery.js")
-			}
-			);
-	    }
-	    );
+			});
+	    });
 
 	    services.AddDistributedMemoryCache();
 
@@ -107,37 +96,20 @@ namespace Kartotek
 	    // https://andrewlock.net/session-state-gdpr-and-non-essential-cookies/
 	    //
 	    services.AddSession( options => {
-		options.Cookie.Name = Configurationsrc["session_kakans_namn"];
+		options.Cookie.Name = Configuration["session_kakans_namn"];
 		options.IdleTimeout = TimeSpan.FromSeconds( 40 );
 		options.Cookie.HttpOnly = true;
 		options.Cookie.IsEssential = true;
 	    }
 	    );
 
-	    //
-	    // registrering för DI av dbcontext mot DatabasePeopleRepo
-	    if( Environment.IsEnvironment( "postgres.Development") ||
-		Environment.IsEnvironment( "postgres"))
-	    {
-		// Console.WriteLine( "services.AddDbContext<DBPeople: PostgreSQL:version");
-
-		services.AddDbContext<DBPeople>( options =>
-						 options.UseNpgsql( Configurationsrc["DBConnectionStrings:People"]));
-	    }
-	    else
-	    {
-		// Console.WriteLine( "services.AddDbContext<DBPeople: MS SQL:version");
-
-		services.AddDbContext<DBPeople>( options =>
-						 options.UseSqlServer( Configurationsrc["DBConnectionStrings:People"]));
-	    }
-
 	    services.AddControllers().AddJsonOptions( options => {                               // Convert JSON from Camel Case to Pascal Case
 		options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase; // Use the default property( Pascal) casing.
 	    } );
 
-	    services.AddScoped< IPeopleService, PeopleService>();   // används av kontrollanterna så länge de finns en igång (de avslutas efter return)
-	    services.AddScoped< IPeopleRepo, DatabasePeopleRepo>(); // används av PeopleService - scoped, så den kastas efter att PeopleService avslutas
+
+	    services.AddScoped< IPeopleService, PeopleService>();     // används av kontrollanterna så länge de finns en igång (de avslutas efter return)
+	    services.AddSingleton<IPeopleRepo, InMemoryPeopleRepo>(); // används av PeopleService - singleton to rot ansvarar för dess levnad
 
 	    services.AddControllersWithViews();
 	    services.AddHttpContextAccessor();
@@ -156,23 +128,11 @@ namespace Kartotek
 	{
 	    //
 	    // gaffling i flödet beroende på programmets startmiljö
-	    // och vilken databas som ska användas
 	    //
-	    if( Environment.IsEnvironment( "postgres.Development") ||
-		Environment.IsEnvironment( "postgres"))
-		loggdest.LogInformation( "Startup.cs: PostgreSQL:version");
-	    else
-		loggdest.LogInformation( "Startup.cs: MS SQL:version");
-
-	    if( Environment.IsEnvironment( "Development") ||
-		Environment.IsEnvironment( "postgres.Development"))
-		loggdest.LogInformation( "Startup.cs: Utvecklingsmiljö");
-	    else
-		loggdest.LogInformation( "Startup.cs: Production");
-
 	    if( Environment.IsDevelopment() ||
-		Environment.IsEnvironment( "Development_postgres"))
+		Environment.IsEnvironment( "Development"))
 	    {
+		loggdest.LogInformation( "Startup.cs: Utvecklingsmiljö");
 		app.UseDeveloperExceptionPage();  // plockar upp händelser( exceptions) i aktiverade moduler( exv en kontrollant) för att ge meddelandestatus till användaren
 	    }
 	    else
@@ -191,7 +151,7 @@ namespace Kartotek
 	    // MapControllerRoute är beroende
 	    app.UseRouting();
 
-	    app.UseCors(); // blockera CORS-hantering
+	    app.UseCors();  // CORS-hantering : övergång mellan olika kontrollanter (de har helt olika URL)
 
 	    //
 	    // debug-utskrift - vad är adressen ???

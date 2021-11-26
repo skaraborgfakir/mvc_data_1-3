@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-17 10:47:32 stefan>
+// Time-stamp: <2021-11-26 13:45:29 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -66,6 +66,12 @@ namespace Kartotek
 
 	    // Båten är lastad - KASTA LOSS !
 	    host.Run();
+
+	    //
+	    // blurb för att mha DI få med loggning in till REVELJ:klassen
+	    // using var scope = host.Services.CreateScope();
+	    // var services = scope.ServiceProvider;
+	    // var loggerFactory = services.GetRequiredService<ILoggerFactory>();
 	}
 
 	/// <summary>
@@ -74,7 +80,8 @@ namespace Kartotek
 	/// inkluderar logging mot konsoll och får webBuilder att aktivera klassen REVELJ
 	///
 	/// Den här metoden är speciell iom att EF6 (och Identity Server) förväntar sig att just den här
-	/// metoden finns med just det här namnet, därför vill man inte köra Run() i denna.
+	/// metoden finns med just det här namnet, därför vill man inte köra Run() i denna iom
+	/// att EF:verktygen använder CreateHostBuilder för att bland annat uppdatera databasen
 	/// </summary>
 	/// <param name="args">
 	/// argumentvektor ekvivalent med argc/argv i C. CreateHostBuilder exv
