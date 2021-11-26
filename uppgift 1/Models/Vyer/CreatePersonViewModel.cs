@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-06 16:32:00 stefan>
+// Time-stamp: <2021-11-26 14:36:46 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -15,6 +15,10 @@
 //        bostadsort
 //        telefonnummer
 //
+// används av dialogen filtrering i People/Index.cshtml
+// och kortuppgifter.cshtml (modifiering eller radering av ett befintligt kort
+// via kortselektor eller listan)
+//
 
 using System;
 using System.ComponentModel;
@@ -29,29 +33,30 @@ namespace Kartotek.Modeller.Vyer {
     public class CreatePersonViewModel {
 	/// <summary>
 	/// Namnet på den person som det nya kortet upptar
+	/// Den validering som används kommer att blockera för korta namn
 	/// </summary>
 	[BindProperty]
-	[StringLength(60,MinimumLength=8)]
-	[DisplayName("personens namn")]
+	[StringLength(60,MinimumLength=4)]
+	[DisplayName("Personens namn")]
+	[DataType(DataType.Text)]
 	public string Namn { get; set; }
 
 	/// <summary>
 	/// Personens bostadsort
+	/// Den validering som används kommer att blockera för korta namn
 	/// </summary>
 	[BindProperty]
 	[StringLength(60,MinimumLength=2)]
-	[DisplayName("bostadsort")]
+	[DisplayName("Hennes hemort")]
+	[DataType(DataType.Text)]
 	public string Bostadsort { get; set; }
 
 	/// <summary>
 	/// Personens telefonnummer - kontaktuppgifter
 	/// </summary>
 	[BindProperty]
-	[DisplayName("telefonnummer")]
+	[DisplayName("Telefonnummer")]
 	[DataType(DataType.PhoneNumber)]
-	public string Telefonnummer {
-	    get;// { return telefonnummer; }
-	    set;// { telefonnummer = value; }
-	}
+	public string Telefonnummer { get; set; }
     }
 }

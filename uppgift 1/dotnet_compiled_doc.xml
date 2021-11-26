@@ -41,10 +41,10 @@
             
              En AJAX:anpassad kontrollklass <c>PeopleAjaxController</c> för medlemskartoteket.
              </summary>
-             <remark>
+             <remarks>
              kontroller-klassen knyter ihop affärs-/process-logik (serviceenhten) med UI.
              En kontroller implementeras utgående från serviceenhetens termer
-             </remark>
+             </remarks>
         </member>
         <member name="M:Kartotek.Controllers.PeopleAjaxController.#ctor(Microsoft.Extensions.Logging.ILogger{Kartotek.Controllers.PeopleAjaxController},Microsoft.Extensions.Configuration.IConfiguration,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,Kartotek.Modeller.Interfaces.IPeopleService)">
             <summary>
@@ -61,11 +61,23 @@
         <member name="M:Kartotek.Controllers.PeopleAjaxController.uppdateralistanvissakort">
             <summary>
             ett utdrag av vissa kort från kartoteket
+            används inte, istället används sessionvariabler i uppdateralistanurdatabasen
+            för att begränsa vad som listas
             </summary>
         </member>
         <member name="M:Kartotek.Controllers.PeopleAjaxController.tagframkortet(System.Int32)">
             <summary>
-            tag fram ett specifikt kort
+            tag fram ett specifikt kort för visning enbart
+            </summary>
+        </member>
+        <member name="M:Kartotek.Controllers.PeopleAjaxController.modifieravisstkort(System.Int32)">
+            <summary>
+            modifieringsvy för ett specifikt kort
+            </summary>
+        </member>
+        <member name="M:Kartotek.Controllers.PeopleAjaxController.modifiera(Kartotek.Modeller.Entiteter.Person)">
+            <summary>
+            modifieringsvy för ett specifikt kort
             </summary>
         </member>
         <member name="M:Kartotek.Controllers.PeopleAjaxController.kaserakortet(System.Int32)">
@@ -87,10 +99,10 @@
              Den kontrollklass som enbart är skriven enligt MVC:konceptet och
              där sidan/sidorna i huvudsak formas som partial view - komponentbaserade vyer ?
              </summary>
-             <remark>
+             <remarks>
              kontroller-klassen knyter ihop affärs-/process-logik (serviceenhten) med UI.
              En kontroller implementeras utgående från serviceenhetens termer
-             </remark>
+             </remarks>
         </member>
         <member name="M:Kartotek.Controllers.PeopleController.#ctor(Microsoft.Extensions.Logging.ILogger{Kartotek.Controllers.PeopleController},Microsoft.Extensions.Configuration.IConfiguration,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,Kartotek.Modeller.Interfaces.IPeopleService)">
             <summary>
@@ -109,6 +121,14 @@
               Index körs direkt vid första visning- alltså kommer
               valdterm.{this.sessionsuffix}
             </summary>
+            <remarks>
+            Funktionen är en aktör i .Net därför att den är :
+                 en metod
+                 allmänt tillgänglig (public)
+            <seealso href="https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/routing?view=aspnetcore-3.1#action">
+            Routing to controller actions in ASP.Net Core
+            </seealso>
+            </remarks>
         </member>
         <member name="M:Kartotek.Controllers.PeopleController.Filtrera(Kartotek.Modeller.Vyer.HopslagenmodellVymodell)">
             <summary>
@@ -266,6 +286,9 @@
              följer IPeopleRepo-åtagandet
              </summary>
              <remarks>
+             Används som ett kontrakt mellan olika utvecklare hur de kommer att konstruera något
+            
+             Definitioner av åtagandena finns i http://skaraborgfakir.github.io/lexicon/3. MVC
              </remarks>
              <see href="https://skaraborgfakir.github.io/lexicon/3.%20MVC/MVC%20Data,%20Assignment%203%20-%View Models.pdf">
              Designen måste följa dokumenten MVC Data, View Models</see>
@@ -283,6 +306,8 @@
             <param name="bostadsort">hemort</param>
             <param name="telefonnummer">telefonnummer hem</param>
             <returns>Kopia på det nu tillagda kortobjektet</returns>
+            <seealso href="https://skaraborgfakir.github.io/lexicon/3.%20MVC/MVC%20Data,%20Assignment%203%20-%View Models.pdf">
+            Designen måste följa dokumenten MVC Data, View Models (sidan två)</seealso>
         </member>
         <member name="M:Kartotek.Modeller.Interfaces.IPeopleRepo.Read">
             <summary>
@@ -317,19 +342,21 @@
              medlemskartotek
              </summary>
              <remarks>
-             Används som ett kontrakt mellan olika utvecklare hur de kommer att konstruera
-             något
+             Används som ett kontrakt mellan olika utvecklare hur de kommer att konstruera något
             
-             Moduler som implementerar IPeopleService ska ansvara för
-             affärs-logik/-funktioner
+             Moduler som implementerar IPeopleService ska ansvara för affärs-logik/-funktioner
             
-             En MVC-kontrollant ska exv inte användas för att söka eller få fram exv
-             ordersummor
+             En MVC-kontrollant ska exv inte användas för att söka eller få fram exv ordersummor
              Sådant ska vara i exv OrderService (som ansvarar för åtagandet IOrderService)
+            
+             Definitioner av åtagandena finns i http://skaraborgfakir.github.io/lexicon/3. MVC
              </remarks>
-             <seealso href="https://skaraborgfakir.github.io/lexicon/3.%20MVC/MVC%20Data,%20Assignment%203%20-%View Models.pdf">Designen måste följa dokumenten MVC Data, View Models</seealso>
-             <seealso href="https://skaraborgfakir.github.io/lexicon/3.%20MVC/MVC%20Data,%20Assignment%203%20-%20Partial Views.pdf">och MVC Data, Partial Views</seealso>
-             <seealso href="https://skaraborgfakir.github.io/lexicon/3.%20MVC/MVC%20Data,%20Assignment%203%20-%20AJAX.pdf">och MVC Data, AJAX</seealso>
+             <seealso href="https://skaraborgfakir.github.io/lexicon/3.%20MVC/MVC%20Data,%20Assignment%203%20-%View Models.pdf">
+             Designen måste följa dokumenten MVC Data, View Models</seealso>
+             <seealso href="https://skaraborgfakir.github.io/lexicon/3.%20MVC/MVC%20Data,%20Assignment%203%20-%20Partial Views.pdf">
+             och MVC Data, Partial Views</seealso>
+             <seealso href="https://skaraborgfakir.github.io/lexicon/3.%20MVC/MVC%20Data,%20Assignment%203%20-%20AJAX.pdf">
+             och MVC Data, AJAX</seealso>
         </member>
         <member name="M:Kartotek.Modeller.Interfaces.IPeopleService.Add(Kartotek.Modeller.Vyer.CreatePersonViewModel)">
             <summary>
@@ -339,6 +366,8 @@
             <returns>Inläggning av ett nytt kort med uppgifter om en medlem</returns>
             <see cref="T:Kartotek.Modeller.Interfaces.IPeopleRepo">Create i IPeopleRepo</see>
             <see cref="T:Kartotek.Modeller.Vyer.CreatePersonViewModel">Vymodellen CreatePersonViewModel</see>
+            <seealso href="https://skaraborgfakir.github.io/lexicon/3.%20MVC/MVC%20Data,%20Assignment%203%20-%View Models.pdf">
+            Designen måste följa dokumenten MVC Data, View Models (sidan två)</seealso>
         </member>
         <member name="M:Kartotek.Modeller.Interfaces.IPeopleService.All">
             <summary>
@@ -377,7 +406,9 @@
             borttagning av ett visst kort
             </summary>
             <param name="id">id</param>
-            <returns>flagga som anger om borttangninen fungerade (fanns kortet egentligen ?)</returns>
+            <returns>flagga som anger om kaseringen fungerade (fanns kortet egentligen ?)
+            true = kasering fungerade, false = något fel, fanns det alls ?
+            </returns>
             <see cref="T:Kartotek.Modeller.Interfaces.IPeopleRepo">Delete i IPeopleRepo</see>
         </member>
         <member name="T:Kartotek.Modeller.PeopleService">
@@ -453,11 +484,13 @@
         <member name="P:Kartotek.Modeller.Vyer.CreatePersonViewModel.Namn">
             <summary>
             Namnet på den person som det nya kortet upptar
+            Den validering som används kommer att blockera för korta namn
             </summary>
         </member>
         <member name="P:Kartotek.Modeller.Vyer.CreatePersonViewModel.Bostadsort">
             <summary>
             Personens bostadsort
+            Den validering som används kommer att blockera för korta namn
             </summary>
         </member>
         <member name="P:Kartotek.Modeller.Vyer.CreatePersonViewModel.Telefonnummer">
@@ -484,21 +517,21 @@
              slås isär i kontroller innan delarna lämnas över till Peopleservice
              </summary>
         </member>
-        <member name="P:Kartotek.Modeller.Vyer.HopslagenmodellVymodell.Personlistan">
-            <summary>
-            de personer som ska synas i den vybaserade sidans lista
-            </summary>
-        </member>
         <member name="P:Kartotek.Modeller.Vyer.HopslagenmodellVymodell.Filtertermer">
             <summary>
-            söktermer från filterdialogen
+            söktermer i filtreringsdialogen
             kan innehålla namn eller bostadsort
             </summary>
             <see cref="T:Kartotek.Modeller.PeopleService">PeopleService</see>
         </member>
         <member name="P:Kartotek.Modeller.Vyer.HopslagenmodellVymodell.InskrivningNyttKort">
             <summary>
-            Skriv ut ett nytt kort - nytt-kort delen i fönstret
+            Fyll i ett nytt kort - nytt-kort delen i fönstret
+            </summary>
+        </member>
+        <member name="P:Kartotek.Modeller.Vyer.HopslagenmodellVymodell.Personlistan">
+            <summary>
+            de personer som ska synas i den vybaserade sidans lista
             </summary>
         </member>
         <member name="T:Kartotek.Modeller.Vyer.PeopleViewModel">
@@ -506,21 +539,25 @@
             to be done
             </summary>
         </member>
-        <member name="P:Kartotek.Modeller.Vyer.PeopleViewModel.Utdraget">
-            <summary>
-            innehåller listan på de kort som ska synas i vyn
-            </summary>
-        </member>
         <member name="P:Kartotek.Modeller.Vyer.PeopleViewModel.Namn">
-            <summary>
-            sökkriterier
-            private string namn;
-            </summary>
+             <summary>
+             sökkriterier i sidhuvudet (används av PeopleController)
+             private string namn;
+            
+             används av Shared/Filtrering/Filtreringstermer.cshtml
+             </summary>
         </member>
         <member name="P:Kartotek.Modeller.Vyer.PeopleViewModel.Bostadsort">
             <summary>
-            sökkriterier
+            sökkriterier i sidhuvudet (används av PeopleController)
             string bostadsort;
+            </summary>
+        </member>
+        <member name="P:Kartotek.Modeller.Vyer.PeopleViewModel.Utdraget">
+            <summary>
+            innehåller listan på de kort som ska synas i vyn (från PeopleController)
+            används inte i den AJAX-baserade versionen iom den är ersatt av en partial view
+            som utgår från en lista av personer, för varje person skapas en specfik partial view
             </summary>
         </member>
         <member name="T:Kartotek.Program">

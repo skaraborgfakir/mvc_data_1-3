@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-26 11:07:24 stefan>
+// Time-stamp: <2021-11-26 14:16:49 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -38,10 +38,10 @@ namespace Kartotek.Controllers {
     ///
     /// En AJAX:anpassad kontrollklass <c>PeopleAjaxController</c> för medlemskartoteket.
     /// </summary>
-    /// <remark>
+    /// <remarks>
     /// kontroller-klassen knyter ihop affärs-/process-logik (serviceenhten) med UI.
     /// En kontroller implementeras utgående från serviceenhetens termer
-    /// </remark>
+    /// </remarks>
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class PeopleAjaxController : Controller {

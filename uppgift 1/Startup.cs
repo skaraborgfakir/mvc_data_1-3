@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-24 15:11:20 stefan>
+// Time-stamp: <2021-11-26 13:56:40 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -108,9 +108,7 @@ namespace Kartotek
 		options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase; // Use the default property (Pascal) casing.
 	    } );
 
-	    // services.AddSingleton
-	    // services.AddTransient
-	    services.AddScoped<IPeopleService, PeopleService>();
+	    services.AddScoped<IPeopleService, PeopleService>();      // används av kontrollanterna så länge de finns en igång (de avslutas efter return)
 	    services.AddSingleton<IPeopleRepo, InMemoryPeopleRepo>(); // används av PeopleService - singleton to rot ansvarar för dess levnad
 
 	    services.AddControllersWithViews();
@@ -134,27 +132,30 @@ namespace Kartotek
 	    if (Environment.IsDevelopment() ||
 		Environment.IsEnvironment( "Development"))
 	    {
-		app.UseDeveloperExceptionPage();  // plockar upp händelser (exceptions) i aktiverade moduler (exv en kontrollant) för att ge meddelandestatus till användaren
+		loggdest.LogInformation( "Startup.cs: Utvecklingsmiljö");
+		app.UseDeveloperExceptionPage();  // plockar upp händelser( exceptions) i aktiverade moduler( exv en kontrollant) för att ge meddelandestatus till användaren
 	    }
 	    else
 	    {
-		app.UseExceptionHandler("/Home/Error");
+		app.UseExceptionHandler( "/Home/Error");
 		// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 		app.UseHsts();
 	    }
 
-	    // app.UseHttpsRedirection();  // blockera automatisk uppgradering till https
+	    app.UseHttpsRedirection(); // blockera automatisk uppgradering till https
 	    app.UseStatusCodePages();  // mer förklarande beskrivning av fel (http status 400-599) som saknar en beskrivning
-	    app.UseStaticFiles();              // get av statisk filer exv script/css etc
+	    app.UseStaticFiles();      // get av statisk filer exv script/css etc
 
 	    //
 	    // aktivera vidarebefordran av frågor till olika kontrollanter
 	    // MapControllerRoute är beroende
 	    app.UseRouting();
 
-	    app.UseCors();
+	    app.UseCors(); // CORS-hantering : övergång mellan olika kontrollanter (de har helt olika URL)
 
-	    if (Environment.IsDevelopment())
+	    //
+	    // debug-utskrift - vad är adressen ???
+	    if ( Environment.IsDevelopment())
 		app.Use( next => context =>
 		{
 		    Console.WriteLine($"Found: {context.GetEndpoint()?.DisplayName}");

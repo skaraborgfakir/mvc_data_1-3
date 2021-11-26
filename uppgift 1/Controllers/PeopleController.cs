@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-25 13:15:53 stefan>
+// Time-stamp: <2021-11-26 14:22:21 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -33,13 +33,13 @@ namespace Kartotek.Controllers {
     /// Den kontrollklass som enbart är skriven enligt MVC:konceptet och
     /// där sidan/sidorna i huvudsak formas som partial view - komponentbaserade vyer ?
     /// </summary>
-    /// <remark>
+    /// <remarks>
     /// kontroller-klassen knyter ihop affärs-/process-logik (serviceenhten) med UI.
     /// En kontroller implementeras utgående från serviceenhetens termer
-    /// </remark>
+    /// </remarks>
     public class PeopleController : Controller {
 	private readonly ILogger<PeopleController> loggdest;
-	private readonly IConfiguration configurationsrc;
+	private readonly IConfiguration configuration;
 	private readonly IWebHostEnvironment webHostEnvironment;
 	private readonly IPeopleService serviceenheten;
 	private readonly string sessionsuffix;
@@ -48,19 +48,19 @@ namespace Kartotek.Controllers {
 	/// kreator för PeopleController
 	/// </summary>
 	public PeopleController ( ILogger<PeopleController> loggdest,
-				  IConfiguration configurationsrc,
+				  IConfiguration configuration,
 				  IWebHostEnvironment webHostEnvironment,
 				  IPeopleService serviceenheten ) {
-	    this.configurationsrc   = configurationsrc;
-	    this.loggdest           = loggdest;
+	    this.loggdest = loggdest;
+	    this.configuration   = configuration;
 	    this.webHostEnvironment = webHostEnvironment;
 	    this.serviceenheten     = serviceenheten;
 
-	    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
-					 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
-					 "\n" + "this.configurationsrc: " + this.configurationsrc["session_kakans_namn"]);
+	    this.loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) +
+					  " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) + "\n" +
+					  "this.configuration: " + this.configuration["session_kakans_namn"]);
 
-	    this.sessionsuffix=this.configurationsrc["session_kakans_namn"];
+	    this.sessionsuffix=this.configuration["session_kakans_namn"];
 	}
 
 	/// <summary>
@@ -74,6 +74,14 @@ namespace Kartotek.Controllers {
 	///   Index körs direkt vid första visning- alltså kommer
 	///   valdterm.{this.sessionsuffix}
 	/// </summary>
+	/// <remarks>
+	/// Funktionen är en aktör i .Net därför att den är :
+	///      en metod
+	///      allmänt tillgänglig (public)
+	/// <seealso href="https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/routing?view=aspnetcore-3.1#action">
+	/// Routing to controller actions in ASP.Net Core
+	/// </seealso>
+	/// </remarks>
 	[HttpGet]
 	[ActionName( "Index" )]
 	public IActionResult Index ( HopslagenmodellVymodell vymodell )

@@ -1,4 +1,4 @@
-// Time-stamp: <2021-11-06 18:50:15 stefan>
+// Time-stamp: <2021-11-26 14:33:06 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -18,6 +18,9 @@ namespace Kartotek.Modeller.Interfaces {
     /// följer IPeopleRepo-åtagandet
     /// </summary>
     /// <remarks>
+    /// Används som ett kontrakt mellan olika utvecklare hur de kommer att konstruera något
+    ///
+    /// Definitioner av åtagandena finns i http://skaraborgfakir.github.io/lexicon/3. MVC
     /// </remarks>
     /// <see href="https://skaraborgfakir.github.io/lexicon/3.%20MVC/MVC%20Data,%20Assignment%203%20-%View Models.pdf">
     /// Designen måste följa dokumenten MVC Data, View Models</see>
@@ -34,6 +37,8 @@ namespace Kartotek.Modeller.Interfaces {
 	/// <param name="bostadsort">hemort</param>
 	/// <param name="telefonnummer">telefonnummer hem</param>
 	/// <returns>Kopia på det nu tillagda kortobjektet</returns>
+	/// <seealso href="https://skaraborgfakir.github.io/lexicon/3.%20MVC/MVC%20Data,%20Assignment%203%20-%View Models.pdf">
+	/// Designen måste följa dokumenten MVC Data, View Models (sidan två)</seealso>
 	Person Create ( string namn,
 			string bostadsort,
 			string telefonnummer );

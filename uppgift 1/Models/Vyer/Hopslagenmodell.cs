@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-24 13:15:13 stefan>
+// Time-stamp: <2021-11-26 14:41:07 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -36,28 +36,20 @@ namespace Kartotek.Modeller.Vyer
     public class HopslagenmodellVymodell
     {
 	/// <summary>
-	/// de personer som ska synas i den vybaserade sidans lista
-	/// </summary>
-	public PeopleViewModel Personlistan { get; set; }
-
-	/// <summary>
-	/// söktermer från filterdialogen
+	/// söktermer i filtreringsdialogen
 	/// kan innehålla namn eller bostadsort
 	/// </summary>
 	/// <see cref="PeopleService">PeopleService</see>
 	public PeopleViewModel Filtertermer { get; set; }
 
 	/// <summary>
-	/// Skriv ut ett nytt kort - nytt-kort delen i fönstret
+	/// Fyll i ett nytt kort - nytt-kort delen i fönstret
 	/// </summary>
 	public CreatePersonViewModel InskrivningNyttKort { get; set; }
 
 	/// <summary>
-	/// skrollistan i den ajaxbaserade kort-väljaren
+	/// de personer som ska synas i den vybaserade sidans lista
 	/// </summary>
-	// public  AktionSpecifiktkort specifiktKort
-	// {
-	//     get; set;
-	// }
+	public PeopleViewModel Personlistan { get; set; }
     }
 }
