@@ -1,0 +1,21 @@
+<!-- Time-stamp: <2021-11-26 10:47:37 stefan> -*-web-*- -->
+<!-- nödvändiga fält för modfiering av ett kort -->
+<!-- orienterad mot Personobjekt -->
+
+@using Kartotek.Modeller.Entiteter
+
+@model Kartotek.Modeller.Entiteter.Person
+
+<div class="container">
+    <h4>
+	modifiering av personkort
+    </h4>
+    <form>
+	<fieldset>
+	    <partial name="personkortvy_objektbaserad/modifiering_av_kort" model="@Model" />
+
+	    <button type="submit" formmethod="post" asp-action="kasering"  class="btn btn-danger">Radera</button>
+	    <button type="submit" formmethod="post" asp-action="modifiera" class="btn btn-success">Modifiera !</button>
+	</fieldset>
+    </form>
+</div>

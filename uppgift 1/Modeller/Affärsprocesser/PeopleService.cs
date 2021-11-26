@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-22 01:27:29 stefan>
+// Time-stamp: <2021-11-26 14:27:02 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -65,7 +65,7 @@ namespace Kartotek.Modeller {
 					  (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
 					  "\n kasera kortet med id : " + id.ToString());
 
-	    Person kortet = FindBy( id );
+	    Person kortet = this.FindBy( id );
 
 	    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
 				    (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
@@ -119,8 +119,10 @@ namespace Kartotek.Modeller {
 		(new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
 		(new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
-	    // IPeopleRepo definierar inte någon operator som kan söka på något annat än int eller
-	    // så den här funktionen behöver läsa in och iterera igenom hela listan (relationen)
+	    ///<summary>
+	    /// IPeopleRepo definierar inte någon operator som kan söka på något annat än int eller
+	    /// så den här funktionen behöver läsa in och iterera igenom hela listan (relationen)
+	    ///</summary>
 	    PeopleViewModel vyn = new PeopleViewModel();
 
 	    List<Person> posterna = kartoteket.Read();
@@ -133,7 +135,9 @@ namespace Kartotek.Modeller {
 	    {
 		this.loggdest.LogInformation(
 		    (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
-		    (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
+		    (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString())+
+		    "\n" + "Namn : " + search.Namn +
+		    "\n" + "Bostadsort : " + search.Bostadsort);
 
 		vyn.Utdraget = posterna
 		    .Where( posterna => ( posterna.Namn.ToLower() == search.Namn.ToLower() &&

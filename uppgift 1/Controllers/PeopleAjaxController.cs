@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-22 15:26:49 stefan>
+// Time-stamp: <2021-11-26 14:20:26 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -60,7 +60,7 @@ namespace Kartotek.Controllers {
     [ApiController]
     public class PeopleAjaxController : Controller {
 	private readonly ILogger<PeopleAjaxController> loggdest;
-	private readonly IConfiguration configurationsrc;
+	private readonly IConfiguration configuration;
 	private readonly IWebHostEnvironment webHostEnvironment;
 	private readonly IPeopleService serviceenheten;
 	private readonly string sessionsuffix;
@@ -69,15 +69,15 @@ namespace Kartotek.Controllers {
 	/// kreator för PeopleAjaxController
 	/// </summary>
 	public PeopleAjaxController ( ILogger<PeopleAjaxController> loggdest,
-				      IConfiguration configurationsrc,
+				      IConfiguration configuration,
 				      IWebHostEnvironment webHostEnvironment,
 				      IPeopleService serviceenheten ) {
 	    this.loggdest           = loggdest;
-	    this.configurationsrc   = configurationsrc;
+	    this.configuration   = configuration;
 	    this.webHostEnvironment = webHostEnvironment;
 	    this.serviceenheten     = serviceenheten;
 
-	    this.sessionsuffix=this.configurationsrc["session_kakans_namn"];
+	    this.sessionsuffix=this.configuration["session_kakans_namn"];
 
 	    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
 					 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));

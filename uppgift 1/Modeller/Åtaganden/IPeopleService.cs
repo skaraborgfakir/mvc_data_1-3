@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-22 01:18:37 stefan>
+// Time-stamp: <2021-11-26 14:35:02 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -80,7 +80,7 @@ namespace Kartotek.Modeller.Interfaces {
 	/// borttagning av ett visst kort
 	/// </summary>
 	/// <param name="id">id</param>
-	/// <returns>flagga som anger om borttangninen fungerade (fanns kortet egentligen ?)
+	/// <returns>flagga som anger om kaseringen fungerade (fanns kortet egentligen ?)
 	/// true = kasering fungerade, false = något fel, fanns det alls ?
 	/// </returns>
 	/// <see cref="IPeopleRepo">Delete i IPeopleRepo</see>

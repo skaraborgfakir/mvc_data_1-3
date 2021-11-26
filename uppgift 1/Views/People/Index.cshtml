@@ -1,4 +1,4 @@
-<!-- Time-stamp: <2021-11-22 10:52:27 stefan> -*-web-*- -->
+<!-- Time-stamp: <2021-11-24 17:27:46 stefan> -*-web-*- -->
 <!-- https://www.educba.com/bootstrap-sort-table/
      här använder jag metod 1 för att sortera tabellen
 
@@ -23,11 +23,11 @@
 }
 
 <!-- innehåll uppifrån och nedåt: -->
-<!--   1: funktion för filtrering -->
-<!--   2: inskrivning av nytt kort -->
+<!--   1: funktion för filtrering (filtrering/dialog.cshtml) -->
+<!--   2: inskrivning av nytt kort (inskrivning_av_nytt_kort/dialog.cshtml) -->
 <!--      använder en vy som är specialiserad på att hantera uppgifter från ett kort förutom kortets ID, vilket är fast (kortuppgifter) -->
 <!--      två knappar för att förkasta fälten eller acceptera dvs spara kortet -->
-<!--   3 den ajaxbaserad, som kan visa antingen : -->
+<!--   3 den ajaxbaserade (Shared/ajaxbaserad_kortselektor.cshtml), som kan visa antingen : -->
 <!--      funktion för uppräkning av alla korten eller visning av ett visst kort (en scroll) och knappar för just det valet -->
 <!--      eller om just det kortet ska raderas -->
 <!--        om användaren inte har begärt att titta på ett visst kort -->
@@ -38,10 +38,10 @@
 <!--        som återanvänder kortuppgifter och förutom den har två knappar "bläh" dvs kasta ändringar eller "OK" dvs spara  -->
 
 <!-- partiella i bruk: -->
-<!--    Shared/filtrering/dialog.cshtml -->
+<!--    People/filtrering/dialog.cshtml -->
 <!--       Shared/filtrering/termer.cshtml (fält för de uppgifter i korten som kan användas för filtrering) -->
-<!--    Shared/inskrivning_av_nytt_kort.cshtml -->
-<!--    Shared/ajaxbaserad_kartotekvy.cshtml  -->
+<!--    People/inskrivning_av_nytt_kort/dialog.cshtml -->
+<!--    Shared/ajaxbaserad_kortselektor.cshtml  -->
 <!--       #kartotekvyn (i ajaxbaserad_kartotekvy.cshtml) -->
 <!--         Shared/aktivlistan.cshtml  -->
 <!--             Shared/aktivlistan_specifikt_kort.cshtml (för varje kort i uppräkningen)  -->
@@ -55,13 +55,14 @@
 <div class="text-center">
     <h3 class="display-4">Ett kartotek över aktiva medlemmar</h3>
     <div>
-	<partial name="filtrering/dialog" for="Listfiltrering" />
+	<!-- filtrering av uppräkningen av kort - hanteras av kontrollanten (People) -->
+	<partial name="filtrering/dialog" for="Filtertermer" />
 	<hr>
-	<!-- funktion för inläggning av en person i taget  -->
+	<!-- funktion för inläggning av en person i taget - hanteras av kontrollanten (People) -->
 	<partial name="inskrivning_av_nytt_kort/dialog" for="InskrivningNyttKort" />
 	<hr>
-	<!-- hanteras via ajaxkortfunktioner.js  -->
-	<!-- js/ajaxkortfunktioner.js klistrar in sitt material efte document.load -->
+	<!-- uppräkning av kort - hanteras via ajaxkortfunktioner.js -->
+	<!-- js/ajaxkortfunktioner.js klistrar in sitt material efter document.load -->
 	<partial name="ajaxbaserad_kartotekvy" />
     </div>
 </div>
@@ -72,18 +73,18 @@
     <!-- Därför att asp.net (mer specifikt Razor) fungerar så. -->
 
     <script type="text/javascript" src="~/js/site.js"></script>
-    <script type="text/javascript" src="~/js/sorteratabell.js"></script>
-    <!-- <script type="text/javascript" src="~/lib/jquery-validate/jquery.validate.js"></script> -->
-    <!-- <script type="text/javascript" src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script> -->
+    <script type="text/javascript" src="~/js/delade/sorteratabell.js"></script>
+    <script type="text/javascript" src="~/lib/jquery-validate/jquery.validate.js"></script>
+    <script type="text/javascript" src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
 
     <!-- validering för partial view Shared/nya_aktiva.cshtml -->
-    <!-- <script type="text/javascript" src="~/js/validering_nya_aktiva.js"></script> -->
+    <!--  <script type="text/javascript" src="~/js/validering_nya_aktiva.js"></script> -->
 
     <!-- validering för dialog i partial view Shared/ajaxbaserad_kortselektor.cshtml -->
-    <!-- <script type="text/javascript" src="~/js/validering_ajaxbaserad_kortselektor.js"></script> -->
+    <!-- <script type="text/javascript" src="~/js/validering_ajaxbaserad_kortselektor.js"></script>  -->
 
     <!-- aktörer efter förändringar i vad som ska hämtas mha AJAX och visas -->
     <!-- PeopleAjax ska vara rent webAPI -->
     <!-- funktion i paket hanterar validering av input -->
-    <script type="text/javascript" src="~/js/ajaxkortfunktioner.js"></script>
+    <script type="text/javascript" src="~/js/person/ajaxkortfunktioner.js"></script>
     }

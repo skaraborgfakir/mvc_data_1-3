@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-22 10:15:27 stefan>
+// Time-stamp: <2021-11-26 14:20:25 stefan>
 //
 
 
@@ -37,7 +37,7 @@ namespace Kartotek.Databas {
 	/// <summary>
 	/// https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
 	/// </summary>
-	public IConfiguration Configurationsrc { get; }
+	public IConfiguration Configuration { get; }
 
 	/// <summary>
 	/// databasens relation som objekt-relations mappning
@@ -50,38 +50,38 @@ namespace Kartotek.Databas {
 	/// <param name="options"></param>
 	/// <param name="env"></param>
 	/// <param name="loggdest"></param>
-	/// <param name="configurationsrc"></param>
+	/// <param name="configuration"></param>
 	public DBPeople( DbContextOptions<DBPeople> options,
 			 IHostEnvironment env,
 			 ILogger<DBPeople> loggdest,
-			 IConfiguration configurationsrc ) : base(options)
+			 IConfiguration configuration ) : base(options)
 	{
 	    this.loggdest = loggdest;
 	    Environment = env;
-	    Configurationsrc = configurationsrc;
+	    Configuration = configuration;
 
 	    if ( Environment.IsDevelopment()) {
 		this.loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
-					      "\n" + "Configurationsrc: " + Configurationsrc["DBConnectionStrings:People"] +
-					      "\n" + "Configurationsrc: " + Configurationsrc["DBConnectionStrings:PeopleIdentity"] +
+					      "\n" + "Configuration: " + Configuration["DBConnectionStrings:People"] +
+					      "\n" + "Configuration: " + Configuration["DBConnectionStrings:PeopleIdentity"] +
 					      "\n" + "MS SQL - Environment: Development");
 	    }
 	    else if ( Environment.IsProduction()) {
 		this.loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
-					      "\n" + "Configurationsrc: " + Configurationsrc["DBConnectionStrings:People"] +
-					      "\n" + "Configurationsrc: " + Configurationsrc["DBConnectionStrings:PeopleIdentity"] +
+					      "\n" + "Configuration: " + Configuration["DBConnectionStrings:People"] +
+					      "\n" + "Configuration: " + Configuration["DBConnectionStrings:PeopleIdentity"] +
 					      "\n" + "MS SQL - Environment: Production");
 	    }
 	    else if ( Environment.IsEnvironment( "postgres.Development")) {
 		this.loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
-					      "\n" + "Configurationsrc: " + Configurationsrc["DBConnectionStrings:People"] +
-					      "\n" + "Configurationsrc: " + Configurationsrc["DBConnectionStrings:PeopleIdentity"] +
+					      "\n" + "Configuration: " + Configuration["DBConnectionStrings:People"] +
+					      "\n" + "Configuration: " + Configuration["DBConnectionStrings:PeopleIdentity"] +
 					      "\n" + "Postgres - Environment: Development");
 	    }
 	    else if ( Environment.IsEnvironment( "postgres")) {
 		this.loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
-					      "\n" + "Configurationsrc: " + Configurationsrc["DBConnectionStrings:People"] +
-					      "\n" + "Configurationsrc: " + Configurationsrc["DBConnectionStrings:PeopleIdentity"] +
+					      "\n" + "Configuration: " + Configuration["DBConnectionStrings:People"] +
+					      "\n" + "Configuration: " + Configuration["DBConnectionStrings:PeopleIdentity"] +
 					      "\n" + "Postgres - Environment: Production");
 	    }
 	}
@@ -95,9 +95,9 @@ namespace Kartotek.Databas {
 	    if( Environment.IsEnvironment( "postgres.Development") ||
 		Environment.IsEnvironment( "postgres"))
 	    {
-		optionsBuilder.UseNpgsql(Configurationsrc["DBConnectionStrings:People"]);
+		optionsBuilder.UseNpgsql(Configuration["DBConnectionStrings:People"]);
 	    } else {
-		optionsBuilder.UseSqlServer(Configurationsrc["DBConnectionStrings:People"]);
+		optionsBuilder.UseSqlServer(Configuration["DBConnectionStrings:People"]);
 	    }
 	}
 

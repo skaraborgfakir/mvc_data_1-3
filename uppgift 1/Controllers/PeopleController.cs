@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-22 11:48:11 stefan>
+// Time-stamp: <2021-11-26 14:40:17 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -39,7 +39,7 @@ namespace Kartotek.Controllers {
     /// </remarks>
     public class PeopleController : Controller {
 	private readonly ILogger<PeopleController> loggdest;
-	private readonly IConfiguration configurationsrc;
+	private readonly IConfiguration configuration;
 	private readonly IWebHostEnvironment webHostEnvironment;
 	private readonly IPeopleService serviceenheten;
 	private readonly string sessionsuffix;
@@ -48,19 +48,19 @@ namespace Kartotek.Controllers {
 	/// kreator för PeopleController
 	/// </summary>
 	public PeopleController ( ILogger<PeopleController> loggdest,
-				  IConfiguration configurationsrc,
+				  IConfiguration configuration,
 				  IWebHostEnvironment webHostEnvironment,
 				  IPeopleService serviceenheten ) {
 	    this.loggdest = loggdest;
-	    this.configurationsrc   = configurationsrc;
+	    this.configuration   = configuration;
 	    this.webHostEnvironment = webHostEnvironment;
 	    this.serviceenheten     = serviceenheten;
 
 	    this.loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) +
 					  " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) + "\n" +
-					  "this.configurationsrc: " + this.configurationsrc["session_kakans_namn"]);
+					  "this.configuration: " + this.configuration["session_kakans_namn"]);
 
-	    this.sessionsuffix=this.configurationsrc["session_kakans_namn"];
+	    this.sessionsuffix=this.configuration["session_kakans_namn"];
 	}
 
 	/// <summary>
@@ -86,15 +86,12 @@ namespace Kartotek.Controllers {
 	[ActionName( "Index" )]
 	public IActionResult Index ( HopslagenmodellVymodell vymodell )
 	{
-	    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
-					 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
+	    // this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+	    //				 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
+	    //				 "\n" + "this.configurationsrc: " + this.configurationsrc["app_run_miljö"]);
 
 	    if ( (HttpContext.Session.GetString( $"namn.{this.sessionsuffix}" ) == null) ||
 		 (HttpContext.Session.GetString( $"bostadsort.{this.sessionsuffix}" ) == null)) {
-		this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
-					     (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
-					     "\n" + "ingen sessionvariabel (sorteringsterm) är definierad");
-
 		HttpContext.Session.SetInt32( $"valdterm.{this.sessionsuffix}", 0 );
 		HttpContext.Session.SetString( $"namn.{this.sessionsuffix}", "" );
 		HttpContext.Session.SetString( $"bostadsort.{this.sessionsuffix}", "" );
@@ -111,7 +108,7 @@ namespace Kartotek.Controllers {
 
 		    filter.Namn =       HttpContext.Session.GetString( $"namn.{this.sessionsuffix}" );
 		    filter.Bostadsort = HttpContext.Session.GetString( $"bostadsort.{this.sessionsuffix}" );
-		    nyVymodell.Listfiltrering = filter;
+		    nyVymodell.Filtertermer = filter;
 		    nyVymodell.Personlistan = this.serviceenheten.FindBy( filter );
 
 		    break;
@@ -121,7 +118,7 @@ namespace Kartotek.Controllers {
 						 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
 		    filter.Bostadsort = HttpContext.Session.GetString( $"bostadsort.{this.sessionsuffix}" );
-		    nyVymodell.Listfiltrering = filter;
+		    nyVymodell.Filtertermer = filter;
 		    nyVymodell.Personlistan = this.serviceenheten.FindBy( filter );
 		    break;
 
@@ -130,7 +127,7 @@ namespace Kartotek.Controllers {
 						 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
 		    filter.Namn = HttpContext.Session.GetString( $"namn.{this.sessionsuffix}" );
-		    nyVymodell.Listfiltrering = filter;
+		    nyVymodell.Filtertermer = filter;
 		    nyVymodell.Personlistan = this.serviceenheten.FindBy( filter );
 		    break;
 
@@ -138,7 +135,7 @@ namespace Kartotek.Controllers {
 		    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
 						 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
-		    nyVymodell.Listfiltrering = filter;
+		    nyVymodell.Filtertermer = filter;
 		    nyVymodell.Personlistan = this.serviceenheten.All();
 
 		    break;
@@ -173,51 +170,51 @@ namespace Kartotek.Controllers {
 		    //
 		    // sökkriterier (namn/bostadsort) i session ?
 		    //
-		    if ( vymodell.Listfiltrering != null) {
+		    if ( vymodell.Filtertermer != null) {
 			this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
 						     (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
-						     " namn : " + vymodell.Listfiltrering.Namn +
-						     " bostadsort " + vymodell.Listfiltrering.Bostadsort);
+						     " namn : " + vymodell.Filtertermer.Namn +
+						     " bostadsort " + vymodell.Filtertermer.Bostadsort);
 
 			// båda sökvillkoren satta
-			if ( !String.IsNullOrEmpty( vymodell.Listfiltrering.Namn ) &&
-			     !String.IsNullOrEmpty( vymodell.Listfiltrering.Bostadsort ))
+			if ( !String.IsNullOrEmpty( vymodell.Filtertermer.Namn ) &&
+			     !String.IsNullOrEmpty( vymodell.Filtertermer.Bostadsort ))
 			{
 			    //
 			    // båda sökvillkoren satta
 			    //
 			    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
 							 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
-							 " namn : " + vymodell.Listfiltrering.Namn +
-							 " bostadsort : " + vymodell.Listfiltrering.Bostadsort );
+							 " namn : " + vymodell.Filtertermer.Namn +
+							 " bostadsort : " + vymodell.Filtertermer.Bostadsort );
 
 			    HttpContext.Session.SetInt32( $"valdterm.{this.sessionsuffix}", 3 );
-			    HttpContext.Session.SetString( $"namn.{this.sessionsuffix}",       vymodell.Listfiltrering.Namn );
-			    HttpContext.Session.SetString( $"bostadsort.{this.sessionsuffix}", vymodell.Listfiltrering.Bostadsort );
+			    HttpContext.Session.SetString( $"namn.{this.sessionsuffix}",       vymodell.Filtertermer.Namn );
+			    HttpContext.Session.SetString( $"bostadsort.{this.sessionsuffix}", vymodell.Filtertermer.Bostadsort );
 			}
-			else if ( !String.IsNullOrEmpty( vymodell.Listfiltrering.Namn ))
+			else if ( !String.IsNullOrEmpty( vymodell.Filtertermer.Namn ))
 			{
 			    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
 							 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
-							 " namn : " + vymodell.Listfiltrering.Namn );
+							 " namn : " + vymodell.Filtertermer.Namn );
 
 			    HttpContext.Session.SetInt32( $"valdterm.{this.sessionsuffix}", 1 );
-			    HttpContext.Session.SetString( $"namn.{this.sessionsuffix}", vymodell.Listfiltrering.Namn );
+			    HttpContext.Session.SetString( $"namn.{this.sessionsuffix}", vymodell.Filtertermer.Namn );
 			    HttpContext.Session.SetString( $"bostadsort.{this.sessionsuffix}", "" );
 			}
-			else if (!String.IsNullOrEmpty( vymodell.Listfiltrering.Bostadsort ))
+			else if (!String.IsNullOrEmpty( vymodell.Filtertermer.Bostadsort ))
 			{
 			    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
 							 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
-							 " Bostadsort : " + vymodell.Listfiltrering.Bostadsort );
+							 " Bostadsort : " + vymodell.Filtertermer.Bostadsort );
 
 			    HttpContext.Session.SetInt32( $"valdterm.{this.sessionsuffix}", 2 );
 			    HttpContext.Session.SetString( $"namn.{this.sessionsuffix}", "" );
-			    HttpContext.Session.SetString( $"bostadsort.{this.sessionsuffix}", vymodell.Listfiltrering.Bostadsort );
+			    HttpContext.Session.SetString( $"bostadsort.{this.sessionsuffix}", vymodell.Filtertermer.Bostadsort );
 			}
 
-			if (vymodell.Listfiltrering.Namn == null &&
-			    vymodell.Listfiltrering.Bostadsort == null) {
+			if (vymodell.Filtertermer.Namn == null &&
+			    vymodell.Filtertermer.Bostadsort == null) {
 			    HttpContext.Session.SetInt32( $"valdterm.{this.sessionsuffix}", 0 );
 			    HttpContext.Session.SetString( $"namn.{this.sessionsuffix}", "" );
 			    HttpContext.Session.SetString( $"bostadsort.{this.sessionsuffix}", "" );

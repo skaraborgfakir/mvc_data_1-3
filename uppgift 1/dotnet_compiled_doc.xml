@@ -64,12 +64,13 @@
         </member>
         <member name="M:Kartotek.Controllers.PeopleAjaxController.tagframkortet(System.Int32)">
             <summary>
-            tag fram ett specifikt kort för visning
+            tag fram ett specifikt kort för visning enbart
+            det kan finnas knappar i bilden för att modifiera eller ta bort det
             </summary>
         </member>
         <member name="M:Kartotek.Controllers.PeopleAjaxController.uppdateralistanvissakort(System.Int32)">
             <summary>
-            modifiering av ett visst kort
+            gå direkt till modifiering av ett visst kort
             </summary>
         </member>
         <member name="M:Kartotek.Controllers.PeopleAjaxController.kaserakortet(System.Int32)">
@@ -151,7 +152,7 @@
         </member>
         <member name="T:Kartotek.Controllers.EnvironmentController">
              <summary>
-             anrop (GET) med curl eller postman till https://l....:5009/routes
+             anrop (GET) med curl eller postman till https://l....:5005/routes
             
              varför saknas exv:
                People/Index
@@ -165,7 +166,7 @@
         </member>
         <member name="M:Kartotek.Controllers.EnvironmentController.GetAllRoutes">
             <summary>
-            https://l....:5009/routes
+            https://l....:5005/routes
             </summary>
         </member>
         <member name="T:Kartotek.Controllers.RouteModel">
@@ -288,56 +289,6 @@
                bostadsort
              eller
                båda ?
-            </summary>
-        </member>
-        <member name="T:Kartotek.Modeller.DatabasePeopleRepo">
-             <summary>
-             datalagerklass
-               databasen hanterar en entitet (än så länge)
-            
-               två relationer : stad och land ska in.
-             </summary>
-        </member>
-        <member name="P:Kartotek.Modeller.DatabasePeopleRepo.Kartoteket">
-            <summary>
-            referens till EF:s databaskontext
-            </summary>
-        </member>
-        <member name="F:Kartotek.Modeller.DatabasePeopleRepo.loggdest">
-            <summary>
-            loggdestination
-            </summary>
-        </member>
-        <member name="M:Kartotek.Modeller.DatabasePeopleRepo.#ctor(Microsoft.Extensions.Logging.ILogger{Kartotek.Modeller.DatabasePeopleRepo},Kartotek.Databas.DBPeople)">
-            <summary>
-            Kreator - använd ympning (DI) för att få med ett databaslager
-            databaslagret är registrerat i Startup.cs: ConfigureServices
-            </summary>
-            <param name="loggdest">Loggning (DI) från modulen</param>
-            <param name="kartoteket">Ympning (DI) med en referens till databaskontextet</param>
-        </member>
-        <member name="M:Kartotek.Modeller.DatabasePeopleRepo.Create(System.String,System.String,System.String)">
-            <summary>
-            </summary>
-        </member>
-        <member name="M:Kartotek.Modeller.DatabasePeopleRepo.Read">
-            <summary>
-            returnerar en lista (iterator) för läsning från databasen
-            </summary>
-        </member>
-        <member name="M:Kartotek.Modeller.DatabasePeopleRepo.Read(System.Int32)">
-            <summary>
-            inläsning av ett visst kort
-            </summary>
-        </member>
-        <member name="M:Kartotek.Modeller.DatabasePeopleRepo.Update(Kartotek.Modeller.Entiteter.Person)">
-            <summary>
-            modfiering av ett visst kort
-            </summary>
-        </member>
-        <member name="M:Kartotek.Modeller.DatabasePeopleRepo.Delete(Kartotek.Modeller.Entiteter.Person)">
-            <summary>
-            kasering av uppgifter
             </summary>
         </member>
         <member name="T:Kartotek.Modeller.Data.InMemoryPeopleRepo">
@@ -710,7 +661,8 @@
              inkluderar logging mot konsoll och får webBuilder att aktivera klassen REVELJ
             
              Den här metoden är speciell iom att EF6 (och Identity Server) förväntar sig att just den här
-             metoden finns med just det här namnet, därför vill man inte köra Run() i denna.
+             metoden finns med just det här namnet, därför vill man inte köra Run() i denna iom
+             att EF:verktygen använder CreateHostBuilder för att bland annat uppdatera databasen
              </summary>
              <param name="args">
              argumentvektor ekvivalent med argc/argv i C. CreateHostBuilder exv
@@ -730,17 +682,17 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Kartotek.REVELJ.Configurationsrc">
+        <member name="P:Kartotek.REVELJ.Configuration">
             <summary>
             https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
             </summary>
         </member>
-        <member name="M:Kartotek.REVELJ.#ctor(Microsoft.Extensions.Configuration.IConfiguration,Microsoft.Extensions.Hosting.IHostEnvironment)">
+        <member name="M:Kartotek.REVELJ.#ctor(Microsoft.Extensions.Configuration.IConfiguration,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
             <summary>
             https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
             </summary>
-            <param name="configurationsrc">DI av en instans av IConfiguration</param>
-            <param name="env">DI av en instans av IHostEnvironment</param>
+            <param name="configuration">DI av en instans av IConfiguration</param>
+            <param name="env">DI av en instans av IWebHostEnvironment</param>
         </member>
         <member name="M:Kartotek.REVELJ.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
              <summary>

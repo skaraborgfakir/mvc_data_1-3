@@ -1,0 +1,43 @@
+<!-- Time-stamp: <2021-11-24 15:49:15 stefan> -*-web-*- -->
+<!-- aktörer efter förändringar i vad som ska hämtas mha AJAX och visas -->
+<!-- PeopleAjax ska vara rent webAPI -->
+<!-- funktioner i exv js/person/ajaxkortfunktioner.js kommer att koppla sig på varje knapp via on("click" -->
+
+<!-- funktioner för att: -->
+<!-- 1 uppdatera den visade listan (efter ändringar ?) -->
+<!-- 2 att välja kort efter id, -->
+<!-- 3 välja vad som ska göras med valt kort -->
+<!-- 3.1 visa enbart det -->
+<!-- 3.2 visa -->
+<!-- 3.3 modifiera -->
+<!-- 3.4 radera -->
+
+<!-- de här knapparna kan ha samma ID som andra knappar i vyn, exv de i själva kortuppräkningen -->
+<!-- därför att de finns inuti en form med id:t specifiktKortEfterId -->
+
+
+@using System
+@using System.Collections.Generic
+
+@using Kartotek.Modeller.Vyer
+@using Kartotek.Modeller.Entiteter
+
+<!-- valtkortsid behöver kontrolleras, vad är korrekt värde ? -->
+
+<div class="container">
+    <form id="specifiktKortEfterId" >  <!-- validering! -->
+	<fieldset class="mb-1 text-start">
+	    <button type="button" id="uppdateralistan"  form="specifiktKortEfterId" class="btn btn-primary ignore">Uppdatera listan</button>
+	    <label                                                                  class="col-sm-1 col-form-label">ID</label>
+	    <input  type="number" id="valtkortsid"                                  class="col-sm" />
+	    <button type="button" id="visakortet"       form="specifiktKortEfterId" class="btn btn-primary">Visa kort</button>
+	    <button type="button" id="modifierakortet"  form="specifiktKortEfterId" class="btn btn-primary">Modifiera</button>
+	    <button type="button" id="kaserakortet"     form="specifiktKortEfterId" class="btn btn-danger">Radera valt kort</button>
+	</fieldset>
+    </form>
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+    }

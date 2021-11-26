@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-16 13:30:54 stefan>
+// Time-stamp: <2021-11-26 14:40:16 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -40,7 +40,7 @@ namespace Kartotek.Modeller.Vyer
 	/// kan innehålla namn eller bostadsort
 	/// </summary>
 	/// <see cref="PeopleService">PeopleService</see>
-	public PeopleViewModel Listfiltrering { get; set; }
+	public PeopleViewModel Filtertermer { get; set; }
 
 	/// <summary>
 	/// Fyll i ett nytt kort - nytt-kort delen i fönstret

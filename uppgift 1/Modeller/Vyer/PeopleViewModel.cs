@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-22 01:12:32 stefan>
+// Time-stamp: <2021-11-26 14:42:53 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -27,7 +27,6 @@ namespace Kartotek.Modeller.Vyer {
 	// Nackdel/fördel: PeopleController och PeopleAjaxController har olika URL,
 	// alltså får man slåss med CORS
 	// </summary>
-	// public Filtreringstermer Termer { get; set; }
 
 	/// <summary>
 	/// sökkriterier i sidhuvudet (används av PeopleController)

@@ -1,0 +1,33 @@
+<!-- Time-stamp: <2021-11-24 17:53:42 stefan> -*-web-*- -->
+<!-- ersättning med div för en tabell -->
+<!-- används för uppräkningen av personer -->
+<!-- klistras av in av funktioner i ajaxkortfunktioner.js -->
+<!-- MVC Data Partial Views: -->
+<!-- kodkrav: partial view som arbetar med Person-klassen ska användas, inte en vymodell ! -->
+
+<!-- specifik för person-uppräkningen iom att vad som ska vara med i tabellen -->
+<!-- behövs för itereringen igenom listan -->
+@using System
+@using System.Collections.Generic
+
+@using Kartotek.Modeller.Vyer
+@using Kartotek.Modeller.Entiteter
+
+@model Kartotek.Modeller.Vyer.PeopleViewModel
+
+<!-- dataTable använder INTE något annat än table, så fixa sortering själv via jquery/javaScript är av nöd  -->
+<!-- därav sorteraefternamn() och sorteraefterbostadsort() för namn eller bostadsort -->
+<!-- TODO: onClick i HTML/CSHTML bör elimineras (delegering av ansvar - separation of concern) -->
+<div id="personindex_div" class="table-responsive container">
+    <!-- sorteras av js/ajaxkortfunktioner.js igenom att huvudet för de kolumner som ska användas för sortering -->
+    <!-- får en händelsehanterare angiven -->
+    <partial name="aktivlistan_tabellhuvud.cshtml"/>
+
+    <!-- personobjektorienterad -->
+    <div id="enumreringajax">
+	@foreach (Person item in Model.Utdraget)
+	{
+	<partial name="aktivlistan_specifikt_kort" model="item" />
+	}
+    </div>
+</div>

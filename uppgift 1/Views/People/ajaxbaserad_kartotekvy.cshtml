@@ -1,0 +1,59 @@
+<!-- Time-stamp: <2021-11-24 17:04:11 stefan> -*-web-*- -->
+<!-- https://www.educba.com/bootstrap-sort-table/
+     här använder jag metod 1 för att sortera tabellen
+
+     tabellen sorteras mha funktioner i jQuery
+
+     bootstrap 5.1 används
+-->
+<!-- klistras in via partialanrop i People/Index.cshtml -->
+
+<!-- ajax-funktionerna klistrar in följande:  -->
+<!-- #kartotekvyn  -->
+<!--   aktivlistan.cshtml -->
+<!--       för varje kort: aktivlistan_specifikt_kort.cshtml -->
+<!-- #visning_av_specifikt_kort -->
+<!--   aktivlistan.cshtml -->
+<!--       för det enda kortet i det här fallet: aktivlistan_specifikt_kort.cshtml -->
+<!-- #modifiering_av_specifikt_kort (visas om man klickar på modifiera i uppräkningen -->
+<!--  -->
+
+
+@using System
+@using System.Collections.Generic
+
+@using Kartotek.Modeller.Vyer
+@using Kartotek.Modeller.Entiteter
+
+@model Kartotek.Modeller.Vyer.HopslagenmodellVymodell
+
+<div class="container">
+    <!-- uppdatera kortuppräkningen, välj en av dem efter nummer (id), visa just det specifikt, modifiera eller radera -->
+    <partial name="ajaxbaserad_kortselektor"/>
+
+    <!-- används som märke av de funktioner i ajaxkortfunktioner.js som ska sätta in listan av kort -->
+    <!-- tabell med kort med ett tabellhuvud för sortering (Views/PeopleAjax/aktivlistan.cshtml)  -->
+    <div id="kartotekvyn">
+    </div>
+
+    <!-- används som märke av de funktioner i ajaxkortfunktioner.js som ska visa ett ett specifikt kort -->
+    <!-- visas antingen  : -->
+    <!--     efter tryck på visning (#visakortet, scroll: #valtkortsid) i ajaxbaserad_kortselektor.cshtml -->
+    <!--   eller -->
+    <!--     efter tryck på visa i listan av kort (placerad i #kartotekvyn) -->
+    <div id="visning_av_specifikt_kort">
+    </div>
+
+    <!-- visning, modifiering och radering av ett specifikt kort -->
+    <!-- visas antingen  : -->
+    <!--     efter tryck på modifiering/radering (#visakortet, scroll: #valtkortsid) i ajaxbaserad_kortselektor.cshtml -->
+    <!--   eller -->
+    <!--     efter tryck på modifiering/radering i listan av kort (placerad i #kartotekvyn) -->
+    <div id="modifiering_av_specifikt_kort">
+    </div>
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+    }
