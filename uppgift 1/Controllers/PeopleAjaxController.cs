@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-25 13:15:54 stefan>
+// Time-stamp: <2021-11-26 11:07:24 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -124,6 +124,8 @@ namespace Kartotek.Controllers {
 
 	/// <summary>
 	/// ett utdrag av vissa kort från kartoteket
+	/// används inte, istället används sessionvariabler i uppdateralistanurdatabasen
+	/// för att begränsa vad som listas
 	/// </summary>
 	[ActionName( "uppdateralistanvissakort" )]  // API mot JS !!
 	public ActionResult uppdateralistanvissakort () {
@@ -134,7 +136,7 @@ namespace Kartotek.Controllers {
 	}
 
 	/// <summary>
-	/// tag fram ett specifikt kort
+	/// tag fram ett specifikt kort för visning enbart
 	/// </summary>
 	[HttpGet( "id={id=1}" )]
 	[ActionName( "tagframvisstkort" )]  // API mot JS !!
@@ -151,6 +153,37 @@ namespace Kartotek.Controllers {
 		return NotFound();
 	}
 
+	/// <summary>
+	/// modifieringsvy för ett specifikt kort
+	/// </summary>
+	[HttpPost]
+	[ActionName( "modifieravisstkort")]
+	public ActionResult modifieravisstkort( int id) {
+	    Person personkort = this.serviceenheten.FindBy( id);
+
+	    if ( personkort != null )
+		return PartialView( "modifiering_av_kort/dialog", personkort);
+	    else
+		return NotFound();
+	}
+
+	/// <summary>
+	/// modifieringsvy för ett specifikt kort
+	/// </summary>
+	[HttpPost]
+	[ActionName( "modifiera")]
+	public ActionResult modifiera( Person person) {
+	    this.loggdest.LogInformation( (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
+					  (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
+					  "\n tag fram kortet med id : " + person.Id);
+
+	    // Person personkort = this.serviceenheten.FindBy( id);
+
+	    // if ( personkort != null )
+	    //	return PartialView( "modifiering_av_kort/dialog", personkort);
+	    // else
+		return NotFound();
+	}
 
 	/// <summary>
 	/// kassera ett specifikt kort
