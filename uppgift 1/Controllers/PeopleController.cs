@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-26 14:22:21 stefan>
+// Time-stamp: <2021-11-27 14:31:49 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -47,6 +47,10 @@ namespace Kartotek.Controllers {
 	/// <summary>
 	/// kreator för PeopleController
 	/// </summary>
+	/// <param name="loggdest">Ympning med loggfunktionen</param>
+	/// <param name="configuration">Ympning av IConfiguration</param>
+	/// <param name="webHostEnvironment">Ympning av IWebHostEnvironment</param>
+	/// <param name="serviceenheten">Ympning av (I)PeopleService</param>
 	public PeopleController ( ILogger<PeopleController> loggdest,
 				  IConfiguration configuration,
 				  IWebHostEnvironment webHostEnvironment,
