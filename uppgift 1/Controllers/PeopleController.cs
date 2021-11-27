@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-27 18:06:05 stefan>
+// Time-stamp: <2021-11-27 20:13:43 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -247,12 +247,20 @@ namespace Kartotek.Controllers {
 		    //				 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
 		    //				 "\n" + "alla uppgifter finns med");
 
-		    CreatePersonViewModel nyttKort = new CreatePersonViewModel();
-		    nyttKort = vymodell.InskrivningNyttKort;
+		    // CreatePersonViewModel nyttKort = new CreatePersonViewModel();
+		    // nyttKort = vymodell.InskrivningNyttKort;
 
-		    this.serviceenheten.Add( nyttKort );
+		    this.serviceenheten.Add( vymodell.InskrivningNyttKort );
 		}
-	    } else {
+		else
+		{
+		    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+						 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
+						 "\n" + "Upppgifter sakns");
+		}
+	    }
+	    else
+	    {
 		this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
 					     (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
 					     "\n" + "modell NOT valid");
@@ -261,6 +269,7 @@ namespace Kartotek.Controllers {
 	    nyVymodell.Personlistan = this.serviceenheten.All();
 
 	    return View( "Index", nyVymodell ); // använder Views/People/Index.cshtml
+
 	    // return RedirectToAction( "Index", nyVymodell);
 	    // return RedirectToAction( "Index");
 	}
