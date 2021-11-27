@@ -1,9 +1,19 @@
 //
-// Time-stamp: <2021-11-26 15:10:11 stefan>
+// Time-stamp: <2021-11-27 17:39:41 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/recommended-tags#seealso
+//
+// olika metoder som kan anropas från ett formulär i javascript
+//   1 uppräkning av korten med personernas namn, telefonnummer och hemort
+//   2 visning av ett specifikt kort enbart, med möjlighet att kasera det eller begära att få ändra i det
+//       olika vyer:
+//         visningsvy
+//         modifieringsvy
+//         vy för radering ?
+//     visningsvyn kommer man åt igenom att välja kortets nummer i dialog ovanför
+//     eller igenom att klicka 'visa kort' i uppräkningen
 //
 
 using System;
@@ -42,6 +52,10 @@ namespace Kartotek.Controllers {
     /// kontroller-klassen knyter ihop affärs-/process-logik (serviceenhten) med UI.
     /// En kontroller implementeras utgående från serviceenhetens termer
     /// </remarks>
+    /// <remarks>
+    /// Route:attributet på klassen innebär att all interaktion mellan front och metoder i klassen
+    /// i klassen istället för route-reglerna i Startup, istället kommer gå på uppmärkningen i koden (attributen)
+    /// </remarks>
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class PeopleAjaxController : Controller {
@@ -70,6 +84,7 @@ namespace Kartotek.Controllers {
 	/// komplett kartotek, utan någon filtrering
 	/// API mot JS !!
 	/// använder de sessionsvariabler som kontrolleras av PeopleController
+	/// anropas från js/person/ajaxkortfunktioner.js för visning av listan
 	/// </summary>
 	[ActionName( "uppdateralistan" )]
 	public IActionResult uppdateralistanurdatabasen () {
@@ -135,6 +150,7 @@ namespace Kartotek.Controllers {
 
 	/// <summary>
 	/// tag fram ett specifikt kort för visning enbart
+	/// det kan finnas knappar i bilden för att modifiera eller ta bort det
 	/// </summary>
 	[HttpGet( "id={id=1}" )]
 	[ActionName( "tagframvisstkort" )]  // API mot JS !!
@@ -180,7 +196,7 @@ namespace Kartotek.Controllers {
 	    // if ( personkort != null )
 	    //	return PartialView( "modifiering_av_kort/dialog", personkort);
 	    // else
-		return NotFound();
+	    return NotFound();
 	}
 
 	/// <summary>
