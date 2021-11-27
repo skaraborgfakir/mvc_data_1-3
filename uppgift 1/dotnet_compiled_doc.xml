@@ -193,7 +193,7 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Kartotek.Databas.DBPeople.Configurationsrc">
+        <member name="P:Kartotek.Databas.DBPeople.Configuration">
             <summary>
             https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
             </summary>
@@ -210,7 +210,7 @@
             <param name="options"></param>
             <param name="env"></param>
             <param name="loggdest"></param>
-            <param name="configurationsrc"></param>
+            <param name="configuration"></param>
         </member>
         <member name="M:Kartotek.Databas.DBPeople.OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder)">
             <summary>
@@ -457,7 +457,7 @@
              slås isär i kontroller innan delarna lämnas över till Peopleservice
              </summary>
         </member>
-        <member name="P:Kartotek.Modeller.Vyer.HopslagenmodellVymodell.Listfiltrering">
+        <member name="P:Kartotek.Modeller.Vyer.HopslagenmodellVymodell.Filtertermer">
             <summary>
             söktermer i filtreringsdialogen
             kan innehålla namn eller bostadsort
@@ -629,7 +629,7 @@
             borttagning av ett visst kort
             </summary>
             <param name="id">id</param>
-            <returns>flagga som anger om borttangninen fungerade (fanns kortet egentligen ?)
+            <returns>flagga som anger om kaseringen fungerade (fanns kortet egentligen ?)
             true = kasering fungerade, false = något fel, fanns det alls ?
             </returns>
             <see cref="T:Kartotek.Modeller.Interfaces.IPeopleRepo">Delete i IPeopleRepo</see>
