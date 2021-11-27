@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-27 14:31:49 stefan>
+// Time-stamp: <2021-11-27 18:06:05 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -126,11 +126,6 @@ namespace Kartotek.Controllers {
 		    break;
 	    }
 
-	    // foreach (Person person in nyVymodell.Personlistan.Utdraget) {
-	    //	this.loggdest.LogInformation(
-	    //	    "\n" + "Namn : " + person.Namn + " Bostadsort : " + person.Bostadsort);
-	    // }
-
 	    return View( nyVymodell );
 	}
 
@@ -150,35 +145,45 @@ namespace Kartotek.Controllers {
 
 		    //
 		    // hur kommer man hit ? tanken är att man skulle ha sökning efter data på
-		    // enbart ett ställe och filtrering då enbart ska ändra kriterierna
+		    // enbart ett ställe och att filtrering då enbart ska ändra kriterierna
 		    //
 		    // sökkriterier (namn/bostadsort) i session ?
 		    //
-		    if (vymodell.Filtertermer != null) {
+		    if ( vymodell.Filtertermer != null) {
 			this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
 						     (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
 						     " namn : " + vymodell.Filtertermer.Namn +
 						     " bostadsort " + vymodell.Filtertermer.Bostadsort);
 
-			// nyVymodell.Filtertermer = new PeopleViewModel();
-
 			if ( !String.IsNullOrEmpty( vymodell.Filtertermer.Namn ) &&
-			     !String.IsNullOrEmpty( vymodell.Filtertermer.Bostadsort )) {
-			    // båda termerna satta
+			     !String.IsNullOrEmpty( vymodell.Filtertermer.Bostadsort ))
+			{
+			    // båda sökvillkoren satta
+			    // this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+			    //				 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
+			    //				 " namn : " + vymodell.Filtertermer.Namn +
+			    //				 " bostadsort : " + vymodell.Filtertermer.Bostadsort );
 
 			    HttpContext.Session.SetInt32( $"valdterm.{this.sessionsuffix}", 3 );
-			    HttpContext.Session.SetString( $"namn.{this.sessionsuffix}", vymodell.Filtertermer.Namn );
+			    HttpContext.Session.SetString( $"namn.{this.sessionsuffix}",       vymodell.Filtertermer.Namn );
 			    HttpContext.Session.SetString( $"bostadsort.{this.sessionsuffix}", vymodell.Filtertermer.Bostadsort );
 			}
-			else if (!String.IsNullOrEmpty( vymodell.Filtertermer.Namn )) {
+			else if ( !String.IsNullOrEmpty( vymodell.Filtertermer.Namn ))
+			{
 			    // filtrera enbart på namn
+			    // this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+			    //				 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
+			    //				 " namn : " + vymodell.Filtertermer.Namn );
 
 			    HttpContext.Session.SetInt32( $"valdterm.{this.sessionsuffix}", 1 );
 			    HttpContext.Session.SetString( $"namn.{this.sessionsuffix}", vymodell.Filtertermer.Namn );
 			    HttpContext.Session.SetString( $"bostadsort.{this.sessionsuffix}", "" );
 			}
-			else if (!String.IsNullOrEmpty( vymodell.Filtertermer.Bostadsort )) {
-			    // filtrera enbart på bostadsort
+			else if (!String.IsNullOrEmpty( vymodell.Filtertermer.Bostadsort ))
+			{
+			    // this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+			    //				 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
+			    //				 " Bostadsort : " + vymodell.Filtertermer.Bostadsort );
 
 			    HttpContext.Session.SetInt32( $"valdterm.{this.sessionsuffix}", 2 );
 			    HttpContext.Session.SetString( $"namn.{this.sessionsuffix}", "" );
@@ -209,6 +214,9 @@ namespace Kartotek.Controllers {
 	[HttpPost]
 	[ActionName( "ingenfiltrering" )]
 	public IActionResult IngenFiltrering ( HopslagenmodellVymodell vymodell ) {
+	    // this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+	    //					 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
+
 	    HttpContext.Session.SetInt32( $"valdterm.{this.sessionsuffix}", 0 );
 	    HttpContext.Session.SetString( $"namn.{this.sessionsuffix}", "" );
 	    HttpContext.Session.SetString( $"bostadsort.{this.sessionsuffix}", "" );
@@ -222,6 +230,9 @@ namespace Kartotek.Controllers {
 	[HttpPost]
 	[ActionName( "nyttkort" )]
 	public IActionResult SkapaNyttKort ( HopslagenmodellVymodell vymodell ) {
+	    // this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+	    //				    (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
+
 	    HopslagenmodellVymodell nyVymodell = new HopslagenmodellVymodell();
 
 	    if (ModelState.IsValid) {

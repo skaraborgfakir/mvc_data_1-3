@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-27 17:39:41 stefan>
+// Time-stamp: <2021-11-27 17:43:54 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -171,7 +171,7 @@ namespace Kartotek.Controllers {
 	/// modifieringsvy för ett specifikt kort
 	/// </summary>
 	[HttpPost]
-	[ActionName( "modifieravisstkort")]
+	[ActionName( "modifieravisstkort")]  // API mot JS !!
 	public ActionResult modifieravisstkort( int id) {
 	    Person personkort = this.serviceenheten.FindBy( id);
 
