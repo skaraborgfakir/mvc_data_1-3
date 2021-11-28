@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-27 14:23:53 stefan>
+// Time-stamp: <2021-11-28 19:06:28 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -76,9 +76,9 @@ namespace Kartotek
 				    .AllowAnyHeader()
 				    .AllowAnyMethod()
 				    // .WithExposedHeaders( "WWW-Authenticate")
-				    .WithOrigins( "http://localhost:5004/People",
-						  "https://localhost:5005/People",
-						  "https://localhost:5005/api/PeopleAjax" )
+				    .WithOrigins( "http://localhost:5006/People",
+						  "https://localhost:5007/People",
+						  "https://localhost:5007/api/PeopleAjax" )
 				    .AllowCredentials();
 			});
 	    });

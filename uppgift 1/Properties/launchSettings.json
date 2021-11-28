@@ -16,7 +16,7 @@
       }
     },
     "Kartotek": {
-      "applicationUrl": "http://localhost:5004;https://localhost:5005",
+      "applicationUrl": "http://localhost:5006;https://localhost:5007",
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "environmentVariables": {
@@ -25,11 +25,29 @@
       "launchBrowser": false
     },
     "Kartotek-dev": {
-      "applicationUrl": "http://localhost:5004;https://localhost:5005",
+      "applicationUrl": "http://localhost:5006;https://localhost:5007",
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "environmentVariables": {
 	"ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "launchBrowser": false
+    },
+    "Kartotek-postgres": {
+      "applicationUrl": "http://localhost:5006;https://localhost:5007",
+      "commandName": "Project",
+      "dotnetRunMessages": "true",
+      "environmentVariables": {
+	"ASPNETCORE_ENVIRONMENT": "postgres"
+      },
+      "launchBrowser": false
+    },
+    "Kartotek-postgres-dev": {
+      "applicationUrl": "http://localhost:5006;https://localhost:5007",
+      "commandName": "Project",
+      "dotnetRunMessages": "true",
+      "environmentVariables": {
+	"ASPNETCORE_ENVIRONMENT": "postgres.Development"
       },
       "launchBrowser": false
     }
