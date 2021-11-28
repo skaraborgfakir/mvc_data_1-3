@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-27 20:13:43 stefan>
+// Time-stamp: <2021-11-28 13:28:36 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -235,28 +235,43 @@ namespace Kartotek.Controllers {
 
 	    HopslagenmodellVymodell nyVymodell = new HopslagenmodellVymodell();
 
-	    if (ModelState.IsValid) {
+	    // if ( ( vymodell.InskrivningNyttKort != null) &&
+	    //	 ( vymodell.InskrivningNyttKort.Namn != null))
+	    //	this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+	    //				     (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
+	    //				     "\n" + " namn " + vymodell.InskrivningNyttKort.Namn +
+	    //				     "\n" + " Bostadsort " + vymodell.InskrivningNyttKort.Bostadsort  +
+	    //				     "\n" + " Telefonnummer " + vymodell.InskrivningNyttKort.Telefonnummer);
+
+	    if (ModelState.IsValid)
+	    {
 		// this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
 		//			     (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
 		//			     "\n" + " model is valid");
-		if (!String.IsNullOrEmpty( vymodell.InskrivningNyttKort.Namn ) &&
-		    !String.IsNullOrEmpty( vymodell.InskrivningNyttKort.Bostadsort ) &&
-		    !String.IsNullOrEmpty( vymodell.InskrivningNyttKort.Telefonnummer )) {
+		if (vymodell.InskrivningNyttKort != null)
+		{
+		    if ( !String.IsNullOrEmpty( vymodell.InskrivningNyttKort.Namn ) &&
+			 !String.IsNullOrEmpty( vymodell.InskrivningNyttKort.Bostadsort ) &&
+			 !String.IsNullOrEmpty( vymodell.InskrivningNyttKort.Telefonnummer ))
+		    {
+			// this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+			//				 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
+			//				 "\n" + "alla uppgifter finns med");
 
-		    // this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
-		    //				 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
-		    //				 "\n" + "alla uppgifter finns med");
-
-		    // CreatePersonViewModel nyttKort = new CreatePersonViewModel();
-		    // nyttKort = vymodell.InskrivningNyttKort;
-
-		    this.serviceenheten.Add( vymodell.InskrivningNyttKort );
+			this.serviceenheten.Add( vymodell.InskrivningNyttKort );
+		    }
+		    else
+		    {
+			this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+						     (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
+						     "\n" + "Upppgifter sakns");
+		    }
 		}
 		else
 		{
 		    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
 						 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
-						 "\n" + "Upppgifter sakns");
+						 "\n" + "vymodell.InskrivningNyttKort == null");
 		}
 	    }
 	    else
@@ -268,10 +283,9 @@ namespace Kartotek.Controllers {
 
 	    nyVymodell.Personlistan = this.serviceenheten.All();
 
-	    return View( "Index", nyVymodell ); // använder Views/People/Index.cshtml
-
+	    // return View( "Index", nyVymodell ); // använder Views/People/Index.cshtml
 	    // return RedirectToAction( "Index", nyVymodell);
-	    // return RedirectToAction( "Index");
+	    return RedirectToAction( "Index");
 	}
 
 	/// <summary>
