@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-26 14:29:35 stefan>
+// Time-stamp: <2021-11-27 14:35:40 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -43,13 +43,14 @@ namespace Kartotek.Modeller.Data {
 	    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
 					 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
-	    this.Create( namn: "Ulf Smedbo", bostadsort: "Göteborg", telefonnummer: "031" );
-	    this.Create( namn: "Ulf Smedbo", bostadsort: "Växjö", telefonnummer: "0444" );
+	    this.Create( namn: "Ulf Bengtsson", bostadsort: "Växjö", telefonnummer: "044" );    // tre personer olika namn men samma bostadsort
 	    this.Create( namn: "Bengt Ulfsson", bostadsort: "Växjö", telefonnummer: "044" );
-	    this.Create( namn: "Micke Carlsson", bostadsort: "Solberga", telefonnummer: "0321" );
-	    this.Create( namn: "Ulf Bengtsson", bostadsort: "Växjö", telefonnummer: "044" );
-	    this.Create( namn: "Simon Heinonen", bostadsort: "Skövde", telefonnummer: "0500" );
+	    this.Create( namn: "Ulf Smedbo", bostadsort: "Växjö", telefonnummer: "0444" );      // två personer med samma namn men olika bostadsort
+	    this.Create( namn: "Ulf Smedbo", bostadsort: "Göteborg", telefonnummer: "031" );    // två personer olika namn men samma bostadsort
 	    this.Create( namn: "Wei C", bostadsort: "Göteborg", telefonnummer: "031" );
+
+	    this.Create( namn: "Micke Carlsson", bostadsort: "Solberga", telefonnummer: "0321" );
+	    this.Create( namn: "Simon Heinonen", bostadsort: "Skövde", telefonnummer: "0500" );
 	    this.Create( namn: "Jonathan Krall", bostadsort: "Stenstorp", telefonnummer: "0500" );
 	}
 
@@ -59,10 +60,10 @@ namespace Kartotek.Modeller.Data {
 	public Person Create ( string namn,
 			       string bostadsort,
 			       string telefonnummer ) {
-	    Person person = new Person( id : idCounter++,
-					namn : namn,
-					bostadsort : bostadsort,
-					telefonnummer : telefonnummer);
+	    Person person = new Person( id: idCounter++,
+					namn: namn,
+					bostadsort: bostadsort,
+					telefonnummer: telefonnummer );
 	    kartoteket.Add( person );
 
 	    return person;
