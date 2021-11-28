@@ -59,7 +59,8 @@
             <summary>
             komplett kartotek, utan någon filtrering
             API mot JS !!
-            anropas från js/ajaxkortfunktioner.js för visning av listan
+            använder de sessionsvariabler som kontrolleras av PeopleController
+            anropas från js/person/ajaxkortfunktioner.js för visning av listan
             </summary>
         </member>
         <member name="M:Kartotek.Controllers.PeopleAjaxController.tagframkortet(System.Int32)">
@@ -70,7 +71,12 @@
         </member>
         <member name="M:Kartotek.Controllers.PeopleAjaxController.uppdateralistanvissakort(System.Int32)">
             <summary>
-            gå direkt till modifiering av ett visst kort
+            modifieringsvy för ett specifikt kort
+            </summary>
+        </member>
+        <member name="M:Kartotek.Controllers.PeopleAjaxController.modifiera(Kartotek.Modeller.Entiteter.Person)">
+            <summary>
+            modifieringsvy för ett specifikt kort
             </summary>
         </member>
         <member name="M:Kartotek.Controllers.PeopleAjaxController.kaserakortet(System.Int32)">
@@ -101,6 +107,10 @@
             <summary>
             kreator för PeopleController
             </summary>
+            <param name="loggdest">Ympning med loggfunktionen</param>
+            <param name="configuration">Ympning av IConfiguration</param>
+            <param name="webHostEnvironment">Ympning av IWebHostEnvironment</param>
+            <param name="serviceenheten">Ympning av (I)PeopleService</param>
         </member>
         <member name="M:Kartotek.Controllers.PeopleController.Index(Kartotek.Modeller.Vyer.HopslagenmodellVymodell)">
             <summary>
@@ -130,7 +140,8 @@
         </member>
         <member name="M:Kartotek.Controllers.PeopleController.IngenFiltrering(Kartotek.Modeller.Vyer.HopslagenmodellVymodell)">
             <summary>
-            återställ sökning, måste ange mot serviceenheten förändringen
+            återställ sökning, inställningen exporteras mot andra kontrollanter
+            via sessionsvariablerna
             </summary>
         </member>
         <member name="M:Kartotek.Controllers.PeopleController.SkapaNyttKort(Kartotek.Modeller.Vyer.HopslagenmodellVymodell)">
