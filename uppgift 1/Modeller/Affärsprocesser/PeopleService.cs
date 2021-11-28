@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-26 14:27:02 stefan>
+// Time-stamp: <2021-11-28 17:51:02 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -119,10 +119,10 @@ namespace Kartotek.Modeller {
 		(new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
 		(new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
-	    ///<summary>
-	    /// IPeopleRepo definierar inte någon operator som kan söka på något annat än int eller
-	    /// så den här funktionen behöver läsa in och iterera igenom hela listan (relationen)
-	    ///</summary>
+	    //<summary>
+	    // IPeopleRepo definierar inte någon operator som kan söka på något annat än int eller
+	    // så den här funktionen behöver läsa in och iterera igenom hela listan (relationen)
+	    //</summary>
 	    PeopleViewModel vyn = new PeopleViewModel();
 
 	    List<Person> posterna = kartoteket.Read();

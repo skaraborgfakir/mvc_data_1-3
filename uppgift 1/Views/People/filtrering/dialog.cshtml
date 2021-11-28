@@ -1,16 +1,18 @@
-<!-- Time-stamp: <2021-11-28 15:14:25 stefan> -*-web-*- -->
-<!-- filtrering via People-kontrollanten -->
-<!-- beroende av Controllers/PeopleController.cs -->
+<!-- Time-stamp: <2021-11-28 17:00:03 stefan> -*-web-*- -->
 
-<!-- inkluderas av People/Index.cshtml -->
+<!-- partial för: -->
+<!--    Views/People/Index.cshtml -->
+
+<!-- partial i bruk: -->
+<!--    Views/Shared/personkortvy_modellbaserad/filtreringstermer.cshtml -->
+
+<!-- filtrering via People:kontrollanten -->
+<!-- beroende mot och av Controllers/PeopleController.cs -->
 
 <!-- fälten definieras i Views/Shared/personkortvy_modellbaserad/filtreringstermer.cshtml -->
 
 <!-- termerna sänds till PeopleController som i sin tur sätter filtreringsreglerna via session  -->
 <!-- PeopleAjaxController använder session-variablerna när kartoteket ska visa -->
-
-<!-- partiella i bruk: -->
-<!--    Views/Shared/personkortvy_modellbaserad/filtreringstermer.cshtml -->
 
 @using Kartotek.Modeller.Vyer
 

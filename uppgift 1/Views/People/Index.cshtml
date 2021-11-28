@@ -1,4 +1,25 @@
-<!-- Time-stamp: <2021-11-24 17:27:46 stefan> -*-web-*- -->
+<!-- Time-stamp: <2021-11-28 17:44:45 stefan> -*-web-*- -->
+
+<!-- renderas av -->
+<!--    Views/Shared/Mallen.cshtml -->
+
+<!-- partial i bruk: -->
+<!--    Views/People/filtrering/dialog.cshtml -->
+<!--       Views/Shared/filtrering/termer.cshtml (fält för de uppgifter i korten som kan användas för filtrering) -->
+<!--          Views/Shared/_ValidationScriptsPartial.cshtml -->
+<!--    Views/People/inskrivning_av_nytt_kort/dialog.cshtml -->
+<!--       Views/Shared/personkortvy_modellbaserad/inskrivning_av_nytt_kort.cshtml -->
+<!--          Views/Shared/_ValidationScriptsPartial.cshtml -->
+<!--    Views/Shared/ajaxbaserad_kortselektor.cshtml  -->
+<!--       #kartotekvyn (i ajaxbaserad_kartotekvy.cshtml) -->
+<!--         Views/Shared/aktivlistan.cshtml  -->
+<!--             Shared/aktivlistan_specifikt_kort.cshtml (för varje kort i uppräkningen)  -->
+<!--       #visning_av_specifikt_kort  (i ajaxbaserad_kartotekvy.cshtml) -->
+<!--          Views/Shared/aktivlistan.cshtml  -->
+<!--             Views/Shared/aktivlistan_specifikt_kort.cshtml (i det här fallet endast ett)  -->
+<!--       #modifiering_av_specifikt_kort (i ajaxbaserad_kartotekvy.cshtml) -->
+<!--          -->
+
 <!-- https://www.educba.com/bootstrap-sort-table/
      här använder jag metod 1 för att sortera tabellen
 
@@ -36,21 +57,6 @@
 <!--      eller -->
 <!--        dialog för modifiering av ett visst kort -->
 <!--        som återanvänder kortuppgifter och förutom den har två knappar "bläh" dvs kasta ändringar eller "OK" dvs spara  -->
-
-<!-- partiella i bruk: -->
-<!--    People/filtrering/dialog.cshtml -->
-<!--       Shared/filtrering/termer.cshtml (fält för de uppgifter i korten som kan användas för filtrering) -->
-<!--    People/inskrivning_av_nytt_kort/dialog.cshtml -->
-<!--    Shared/ajaxbaserad_kortselektor.cshtml  -->
-<!--       #kartotekvyn (i ajaxbaserad_kartotekvy.cshtml) -->
-<!--         Shared/aktivlistan.cshtml  -->
-<!--             Shared/aktivlistan_specifikt_kort.cshtml (för varje kort i uppräkningen)  -->
-<!--       #visning_av_specifikt_kort  (i ajaxbaserad_kartotekvy.cshtml) -->
-<!--          Shared/aktivlistan.cshtml  -->
-<!--             Shared/aktivlistan_specifikt_kort.cshtml (i det här fallet endast ett)  -->
-<!--       #modifiering_av_specifikt_kort (i ajaxbaserad_kartotekvy.cshtml) -->
-<!--          -->
-<!--      _ValidationScriptsPartial -->
 
 <div class="text-center">
     <h3 class="display-4">Ett kartotek över aktiva medlemmar</h3>

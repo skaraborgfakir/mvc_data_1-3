@@ -1,6 +1,11 @@
 //
-// Time-stamp: <2021-11-27 17:45:32 stefan>
+// Time-stamp: <2021-11-28 17:40:05 stefan>
 //
+// partial i bruk:
+//   Views/PeopleAjax/aktivlistan.cshtml
+//     Views/PeopleAjax/aktivlistan_tabellhuvud.cshtml -->
+//     Views/PeopleAjax/aktivlistan_specifikt_kort.cshtml -->
+//       Views/Shared/personkortvy_objektbaserad/kortvisning.cshtml
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/recommended-tags#seealso
@@ -139,7 +144,7 @@ namespace Kartotek.Controllers {
 	    Person personkort = this.serviceenheten.FindBy( id);
 
 	    if ( personkort != null )
-		return PartialView( "personkortvy_objektbaserad/separat_kortvisning", personkort);
+		return PartialView( "personkortvy_objektbaserad/kortvisning", personkort);
 	    else
 		return NotFound();
 	}

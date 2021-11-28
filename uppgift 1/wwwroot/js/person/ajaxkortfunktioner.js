@@ -1,8 +1,12 @@
 //
-// - Time-stamp: <2021-11-27 14:21:29 stefan>
+// - Time-stamp: <2021-11-28 17:29:37 stefan>
 //
 // AJAX:funktionalitet för personvyn i kartoteket
 //
+// partial i bruk:
+//   Views/PeopleAjax/aktivlistan.cshtml
+//   Views/Shared/personkortvy_objektbaserad/kortvisning.cshtml
+//   Views/Shared/personkortvy_objektbaserad/modifiering_av_kort.cshtml
 
 "use strict";
 

@@ -113,47 +113,56 @@
             <param name="serviceenheten">Ympning av (I)PeopleService</param>
         </member>
         <member name="M:Kartotek.Controllers.PeopleController.Index(Kartotek.Modeller.Vyer.HopslagenmodellVymodell)">
-            <summary>
-            bilden med:
-              sökformulär
-              formulär för att addera en person i registret
-              enbart en platsmarkör för (i AJAX:versionen)
-                  en sökväljare
-                  detaljer för ett visst kort
-                  listan av personer (vymodell.utdraget)
-              Index körs direkt vid första visning- alltså kommer
-              valdterm.{this.sessionsuffix}
-            </summary>
-            <remarks>
-            Funktionen är en aktör i .Net därför att den är :
-                 en metod
-                 allmänt tillgänglig (public)
-            <seealso href="https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/routing?view=aspnetcore-3.1#action">
-            Routing to controller actions in ASP.Net Core
-            </seealso>
-            </remarks>
+             <summary>
+             bilden med:
+               sökformulär
+               formulär för att addera en person i registret
+               enbart en platsmarkör för (i AJAX:versionen)
+                   en sökväljare
+                   detaljer för ett visst kort
+                   listan av personer (vymodell.utdraget)
+               Index körs direkt vid första visning- alltså kommer
+            
+             används inte i AJAX:versionen iom att ajax:versionen av kontrollanten ersätter denna
+             </summary>
+             <remarks>
+             Funktionen är en aktör i .Net därför att den är :
+                  en metod
+                  allmänt tillgänglig (public)
+             <seealso href="https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/routing?view=aspnetcore-3.1#action">
+             Routing to controller actions in ASP.Net Core
+             </seealso>
+             </remarks>
         </member>
         <member name="M:Kartotek.Controllers.PeopleController.Filtrera(Kartotek.Modeller.Vyer.HopslagenmodellVymodell)">
             <summary>
             modifiera aktiv sökterm
+            aktiveras av submit (filtrering) i Views/People/filtrering/dialog.cshtml
             </summary>
         </member>
         <member name="M:Kartotek.Controllers.PeopleController.IngenFiltrering(Kartotek.Modeller.Vyer.HopslagenmodellVymodell)">
             <summary>
             återställ sökning, inställningen exporteras mot andra kontrollanter
             via sessionsvariablerna
+            aktiveras av submit i (ingenfiltrering) Views/People/filtrering/dialog.cshtml
             </summary>
         </member>
         <member name="M:Kartotek.Controllers.PeopleController.SkapaNyttKort(Kartotek.Modeller.Vyer.HopslagenmodellVymodell)">
-            <summary>
-            skicka en CreatePersonViewModel till serviceenheten
-            </summary>
+             <summary>
+             skicka en CreatePersonViewModel till serviceenheten
+            
+             aktiveras av submit i Views/People/inskrivning_av_nytt_kort/dialog.cshtml
+             </summary>
         </member>
         <member name="M:Kartotek.Controllers.PeopleController.ModifieraKort(Kartotek.Modeller.Vyer.HopslagenmodellVymodell)">
-            <summary>
-            modifiering av ett specifikt kort
-            använder modifieringsfunktionen i kortlistan
-            </summary>
+             <summary>
+             modifiering av ett specifikt kort
+             använder modifieringsfunktionen i kortlistan
+            
+             använder modellbaserad modifiering via icke-ajax baserad modifiering av korten
+            
+             används inte
+             </summary>
         </member>
         <member name="M:Kartotek.Controllers.PeopleController.TagBortKort(System.Int32)">
             <summary>
