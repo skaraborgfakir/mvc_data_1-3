@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-27 14:23:53 stefan>
+// Time-stamp: <2021-11-28 19:11:47 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -45,17 +45,17 @@ namespace Kartotek
 	/// <summary>
 	/// https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
 	/// </summary>
-	public IConfiguration Configuration { get; }
+	public IConfiguration Configurationsrc { get; }
 
 	/// <summary>
 	/// https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
 	/// </summary>
 	/// <param name="configuration">DI av en instans av IConfiguration</param>
 	/// <param name="env">DI av en instans av IWebHostEnvironment</param>
-	public REVELJ(IConfiguration configuration,
+	public REVELJ(IConfiguration configurationsrc,
 		      IWebHostEnvironment env)
 	{
-	    Configuration = configuration;
+	    Configurationsrc = configurationsrc;
 	    Environment = env;
 	}
 
@@ -96,7 +96,7 @@ namespace Kartotek
 	    // https://andrewlock.net/session-state-gdpr-and-non-essential-cookies/
 	    //
 	    services.AddSession( options => {
-		options.Cookie.Name = Configuration["session_kakans_namn"];
+		options.Cookie.Name = Configurationsrc["session_kakans_namn"];
 		options.IdleTimeout = TimeSpan.FromSeconds( 40 );
 		options.Cookie.HttpOnly = true;
 		options.Cookie.IsEssential = true;
