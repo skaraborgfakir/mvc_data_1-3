@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-22 12:46:25 stefan>
+// Time-stamp: <2021-11-28 20:17:49 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -51,15 +51,16 @@ namespace Kartotek.Modeller {
 	    this.loggdest = loggdest;
 	    Kartoteket = kartoteket;
 
-	    this.loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
+	    // this.loggdest.LogInformation( "metod : " + (new System.Diagnostics.StackFrame(0, true).GetMethod()) +
+	    //				  " rad : " + (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 	}
 
 	/// <summary>
 	/// </summary>
 	public Person Create( string namn,
 			      string bostadsort,
-			      string telefonnummer) {
-
+			      string telefonnummer)
+	{
 	    Person ny = new Person( id: 0,
 				    namn: namn,
 				    bostadsort: bostadsort,
@@ -74,10 +75,11 @@ namespace Kartotek.Modeller {
 	/// <summary>
 	/// returnerar en lista (iterator) för läsning från databasen
 	/// </summary>
-	public List<Person> Read() {
-	    this.loggdest.LogInformation(
-		(new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
-		(new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
+	public List<Person> Read()
+	{
+	    // this.loggdest.LogInformation(
+	    //	(new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
+	    //	(new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
 	    return Kartoteket.Person
 		.Where ( p => p.Id != 0)
@@ -88,10 +90,10 @@ namespace Kartotek.Modeller {
 	/// inläsning av ett visst kort
 	/// </summary>
 	public Person Read ( int id ) {
-	    this.loggdest.LogInformation(
-		(new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
-		(new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
-		"\n sök efter kortet med id : " + id.ToString() );
+	    // this.loggdest.LogInformation(
+	    //	(new System.Diagnostics.StackFrame(0, true).GetMethod()) + " programrad : " +
+	    //	(new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()) +
+	    //	"\n sök efter kortet med id : " + id.ToString() );
 
 	    // LINQ metod syntax
 	    // return Kartoteket.Person
