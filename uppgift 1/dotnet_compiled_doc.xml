@@ -45,6 +45,10 @@
              kontroller-klassen knyter ihop affärs-/process-logik (serviceenhten) med UI.
              En kontroller implementeras utgående från serviceenhetens termer
              </remarks>
+             <remarks>
+             Route:attributet på klassen innebär att all interaktion mellan front och metoder i klassen
+             i klassen istället för route-reglerna i Startup, istället kommer gå på uppmärkningen i koden (attributen)
+             </remarks>
         </member>
         <member name="M:Kartotek.Controllers.PeopleAjaxController.#ctor(Microsoft.Extensions.Logging.ILogger{Kartotek.Controllers.PeopleAjaxController},Microsoft.Extensions.Configuration.IConfiguration,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,Kartotek.Modeller.Interfaces.IPeopleService)">
             <summary>
@@ -56,6 +60,7 @@
             komplett kartotek, utan någon filtrering
             API mot JS !!
             använder de sessionsvariabler som kontrolleras av PeopleController
+            anropas från js/person/ajaxkortfunktioner.js för visning av listan
             </summary>
         </member>
         <member name="M:Kartotek.Controllers.PeopleAjaxController.uppdateralistanvissakort">
@@ -68,6 +73,7 @@
         <member name="M:Kartotek.Controllers.PeopleAjaxController.tagframkortet(System.Int32)">
             <summary>
             tag fram ett specifikt kort för visning enbart
+            det kan finnas knappar i bilden för att modifiera eller ta bort det
             </summary>
         </member>
         <member name="M:Kartotek.Controllers.PeopleAjaxController.modifieravisstkort(System.Int32)">
@@ -108,6 +114,10 @@
             <summary>
             kreator för PeopleController
             </summary>
+            <param name="loggdest">Ympning med loggfunktionen</param>
+            <param name="configuration">Ympning av IConfiguration</param>
+            <param name="webHostEnvironment">Ympning av IWebHostEnvironment</param>
+            <param name="serviceenheten">Ympning av (I)PeopleService</param>
         </member>
         <member name="M:Kartotek.Controllers.PeopleController.Index(Kartotek.Modeller.Vyer.HopslagenmodellVymodell)">
             <summary>
