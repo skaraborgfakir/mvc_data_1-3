@@ -1,13 +1,16 @@
-<!-- Time-stamp: <2021-11-24 22:41:19 stefan> -*-web-*- -->
+<!-- Time-stamp: <2021-11-28 15:14:25 stefan> -*-web-*- -->
 <!-- filtrering via People-kontrollanten -->
 <!-- beroende av Controllers/PeopleController.cs -->
 
 <!-- inkluderas av People/Index.cshtml -->
 
-<!-- fälten definieras i Shared/personkortvy_modellbaserad/filtreringstermer.cshtml -->
+<!-- fälten definieras i Views/Shared/personkortvy_modellbaserad/filtreringstermer.cshtml -->
 
 <!-- termerna sänds till PeopleController som i sin tur sätter filtreringsreglerna via session  -->
-<!-- PeopleAjaxController använder session-variablerna när uppgifter hämtas -->
+<!-- PeopleAjaxController använder session-variablerna när kartoteket ska visa -->
+
+<!-- partiella i bruk: -->
+<!--    Views/Shared/personkortvy_modellbaserad/filtreringstermer.cshtml -->
 
 @using Kartotek.Modeller.Vyer
 
@@ -21,8 +24,8 @@
 	<fieldset class="mb-1 text-center">
 	    <partial name="personkortvy_modellbaserad/filtreringstermer" for="@Model"/>
 	    <button type="reset"                               class="btn btn-secondary">Töm fälten</button>
-	    <button type="submit" asp-action="filtrering"      class="btn btn-success">Filtrera</button>
-	    <button type="submit" asp-action="ingenfiltrering" class="btn btn-success">Återställ filtrering</button>
+	    <button type="submit" asp-action="filtrering"      class="btn btn-success">Filtrera</button> <!-- Filtrera i PeopleController.cs -->
+	    <button type="submit" asp-action="ingenfiltrering" class="btn btn-success">Återställ filtrering</button> <!-- IngenFiltrering i PeopleController.cs -->
 	</fieldset>
     </form>
 </div>

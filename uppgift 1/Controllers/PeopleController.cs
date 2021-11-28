@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-28 13:25:35 stefan>
+// Time-stamp: <2021-11-28 15:02:29 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -76,7 +76,8 @@ namespace Kartotek.Controllers {
 	///       detaljer för ett visst kort
 	///       listan av personer (vymodell.utdraget)
 	///   Index körs direkt vid första visning- alltså kommer
-	///   valdterm.{this.sessionsuffix}
+	///
+	/// används inte i AJAX:versionen iom att ajax:versionen av kontrollanten ersätter denna
 	/// </summary>
 	/// <remarks>
 	/// Funktionen är en aktör i .Net därför att den är :
@@ -131,6 +132,7 @@ namespace Kartotek.Controllers {
 
 	/// <summary>
 	/// modifiera aktiv sökterm
+	/// aktiveras av submit (filtrering) i Views/People/filtrering/dialog.cshtml
 	/// </summary>
 	[HttpPost]
 	[ActionName("filtrering")]
@@ -210,6 +212,7 @@ namespace Kartotek.Controllers {
 	/// <summary>
 	/// återställ sökning, inställningen exporteras mot andra kontrollanter
 	/// via sessionsvariablerna
+	/// aktiveras av submit i (ingenfiltrering) Views/People/filtrering/dialog.cshtml
 	/// </summary>
 	[HttpPost]
 	[ActionName( "ingenfiltrering" )]
@@ -226,6 +229,8 @@ namespace Kartotek.Controllers {
 
 	/// <summary>
 	/// skicka en CreatePersonViewModel till serviceenheten
+	///
+	/// aktiveras av submit i Views/People/inskrivning_av_nytt_kort/dialog.cshtml
 	/// </summary>
 	[HttpPost]
 	[ActionName( "nyttkort" )]
@@ -295,6 +300,10 @@ namespace Kartotek.Controllers {
 	/// <summary>
 	/// modifiering av ett specifikt kort
 	/// använder modifieringsfunktionen i kortlistan
+	///
+	/// använder modellbaserad modifiering via icke-ajax baserad modifiering av korten
+	///
+	/// används inte
 	/// </summary>
 	[HttpPost]
 	[ActionName( "modifiering" )]
@@ -315,20 +324,19 @@ namespace Kartotek.Controllers {
 	[HttpGet]
 	[ActionName( "radering" )]
 	public IActionResult TagBortKort ( int id ) {
-	    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
-					 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
+	    // this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+	    //				 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
 	    HopslagenmodellVymodell nyVymodell = new HopslagenmodellVymodell();
 
 	    this.serviceenheten.Remove( id );
 
-	    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
-					 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
+	    // this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+	    //				 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 	    nyVymodell.Personlistan = serviceenheten.All();
-	    this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
-					 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
+	    // this.loggdest.LogInformation((new System.Diagnostics.StackFrame(0, true).GetMethod()) + " rad : " +
+	    //				 (new System.Diagnostics.StackFrame(0, true).GetFileLineNumber().ToString()));
 
-	    // throw new NotImplementedException( "public IActionResult TagBortKort( int id)");
 	    return View( "Index", nyVymodell ); // använder Views/People/Index.cshtml
 	}
     }

@@ -1,4 +1,4 @@
-<!-- Time-stamp: <2021-11-24 17:04:11 stefan> -*-web-*- -->
+<!-- Time-stamp: <2021-11-28 15:12:56 stefan> -*-web-*- -->
 <!-- https://www.educba.com/bootstrap-sort-table/
      här använder jag metod 1 för att sortera tabellen
 
@@ -6,9 +6,10 @@
 
      bootstrap 5.1 används
 -->
-<!-- klistras in via partialanrop i People/Index.cshtml -->
 
-<!-- ajax-funktionerna klistrar in följande:  -->
+<!-- inkluderas via partialanrop i Views/People/Index.cshtml -->
+
+<!-- ajax-funktionerna förväntar sig följande märken som API:  -->
 <!-- #kartotekvyn  -->
 <!--   aktivlistan.cshtml -->
 <!--       för varje kort: aktivlistan_specifikt_kort.cshtml -->
@@ -18,6 +19,8 @@
 <!-- #modifiering_av_specifikt_kort (visas om man klickar på modifiera i uppräkningen -->
 <!--  -->
 
+<!-- partiella i bruk: -->
+<!--    Views/Shared/ajaxbaserad_kortselektor.cshtml -->
 
 @using System
 @using System.Collections.Generic
