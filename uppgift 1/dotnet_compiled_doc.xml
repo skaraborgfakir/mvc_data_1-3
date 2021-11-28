@@ -213,14 +213,14 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Kartotek.Databas.DBPeople.Configuration">
+        <member name="P:Kartotek.Databas.DBPeople.Configurationsrc">
             <summary>
             https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
             </summary>
         </member>
         <member name="P:Kartotek.Databas.DBPeople.Person">
             <summary>
-            databasens relation som objekt-relations mappning
+            databasens relationer som objekt-relations mappning
             </summary>
         </member>
         <member name="M:Kartotek.Databas.DBPeople.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{Kartotek.Databas.DBPeople},Microsoft.Extensions.Hosting.IHostEnvironment,Microsoft.Extensions.Logging.ILogger{Kartotek.Databas.DBPeople},Microsoft.Extensions.Configuration.IConfiguration)">
@@ -230,7 +230,7 @@
             <param name="options"></param>
             <param name="env"></param>
             <param name="loggdest"></param>
-            <param name="configuration"></param>
+            <param name="configurationsrc"></param>
         </member>
         <member name="M:Kartotek.Databas.DBPeople.OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder)">
             <summary>
@@ -238,23 +238,25 @@
             Istället för att via appsettings*.json sätta anslutningssträngarna kan man göra så här istället
             </summary>
         </member>
-        <member name="T:Kartotek.Databas.DBPeople.PersonEntityTypeConfiguration">
+        <member name="M:Kartotek.Databas.DBPeople.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <summary>
-            flyttar ut funktionen specifikt för Person till separat klass/funktion
+            OnModelCreating: klumpmetod som ansvarar för configure för varje entitet
+            som behöver hanteras separat (entiteter som refereras indirekt kan konfigureras som beroenden)
             </summary>
             <see href="https://docs.microsoft.com/en-us/ef/core/modeling/">Databasscheman i EF</see>
             <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore.metadata.builders.entitytypebuilder?view=efcore-5.0">EntityTypeBuilder</see>
         </member>
-        <member name="M:Kartotek.Databas.DBPeople.PersonEntityTypeConfiguration.Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder{Kartotek.Modeller.Entiteter.Person})">
+        <member name="T:Kartotek.Databas.PersonEntityTypeConfiguration">
+            <summary>
+            flyttar ut funktionen specifikt för Person till separat klass/metod
+            </summary>
+            <see href="https://docs.microsoft.com/en-us/ef/core/modeling/">Databasscheman i EF</see>
+            <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore.metadata.builders.entitytypebuilder?view=efcore-5.0">EntityTypeBuilder</see>
+        </member>
+        <member name="M:Kartotek.Databas.PersonEntityTypeConfiguration.Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder{Kartotek.Modeller.Entiteter.Person})">
             <summary>
             beskrivning av relationen i mot EF
             </summary>
-        </member>
-        <member name="M:Kartotek.Databas.DBPeople.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <summary>
-            </summary>
-            <see href="https://docs.microsoft.com/en-us/ef/core/modeling/">Databasscheman i EF</see>
-            <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore.metadata.builders.entitytypebuilder?view=efcore-5.0">EntityTypeBuilder</see>
         </member>
         <member name="T:Kartotek.Modeller.PeopleService">
             <summary>
@@ -309,6 +311,56 @@
                bostadsort
              eller
                båda ?
+            </summary>
+        </member>
+        <member name="T:Kartotek.Modeller.DatabasePeopleRepo">
+             <summary>
+             datalagerklass
+               databasen hanterar en entitet (än så länge)
+            
+               två relationer : stad och land ska in.
+             </summary>
+        </member>
+        <member name="P:Kartotek.Modeller.DatabasePeopleRepo.Kartoteket">
+            <summary>
+            referens till EF:s databaskontext
+            </summary>
+        </member>
+        <member name="F:Kartotek.Modeller.DatabasePeopleRepo.loggdest">
+            <summary>
+            loggdestination
+            </summary>
+        </member>
+        <member name="M:Kartotek.Modeller.DatabasePeopleRepo.#ctor(Microsoft.Extensions.Logging.ILogger{Kartotek.Modeller.DatabasePeopleRepo},Kartotek.Databas.DBPeople)">
+            <summary>
+            Kreator - använd ympning (DI) för att få med ett databaslager
+            databaslagret är registrerat i Startup.cs: ConfigureServices
+            </summary>
+            <param name="loggdest">Loggning (DI) från modulen</param>
+            <param name="kartoteket">Ympning (DI) med en referens till databaskontextet</param>
+        </member>
+        <member name="M:Kartotek.Modeller.DatabasePeopleRepo.Create(System.String,System.String,System.String)">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Kartotek.Modeller.DatabasePeopleRepo.Read">
+            <summary>
+            returnerar en lista (iterator) för läsning från databasen
+            </summary>
+        </member>
+        <member name="M:Kartotek.Modeller.DatabasePeopleRepo.Read(System.Int32)">
+            <summary>
+            inläsning av ett visst kort
+            </summary>
+        </member>
+        <member name="M:Kartotek.Modeller.DatabasePeopleRepo.Update(Kartotek.Modeller.Entiteter.Person)">
+            <summary>
+            modfiering av ett visst kort
+            </summary>
+        </member>
+        <member name="M:Kartotek.Modeller.DatabasePeopleRepo.Delete(Kartotek.Modeller.Entiteter.Person)">
+            <summary>
+            kasering av uppgifter
             </summary>
         </member>
         <member name="T:Kartotek.Modeller.Data.InMemoryPeopleRepo">
@@ -702,17 +754,17 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Kartotek.REVELJ.Configuration">
+        <member name="P:Kartotek.REVELJ.Configurationsrc">
             <summary>
             https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
             </summary>
         </member>
-        <member name="M:Kartotek.REVELJ.#ctor(Microsoft.Extensions.Configuration.IConfiguration,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+        <member name="M:Kartotek.REVELJ.#ctor(Microsoft.Extensions.Configuration.IConfiguration,Microsoft.Extensions.Hosting.IHostEnvironment)">
             <summary>
             https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
             </summary>
-            <param name="configuration">DI av en instans av IConfiguration</param>
-            <param name="env">DI av en instans av IWebHostEnvironment</param>
+            <param name="configurationsrc">DI av en instans av IConfiguration</param>
+            <param name="env">DI av en instans av IHostEnvironment</param>
         </member>
         <member name="M:Kartotek.REVELJ.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
              <summary>

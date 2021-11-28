@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-28 19:06:28 stefan>
+// Time-stamp: <2021-11-28 19:40:49 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -23,10 +23,16 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
+// EF6
+using Microsoft.EntityFrameworkCore;
+
+// Identity här
+
 // egen kod
 using Kartotek.Modeller;
 using Kartotek.Modeller.Data;
 using Kartotek.Modeller.Interfaces;
+using Kartotek.Databas;
 
 namespace Kartotek
 {
@@ -45,17 +51,17 @@ namespace Kartotek
 	/// <summary>
 	/// https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
 	/// </summary>
-	public IConfiguration Configuration { get; }
+	public IConfiguration Configurationsrc { get; }
 
 	/// <summary>
 	/// https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-3.1
 	/// </summary>
-	/// <param name="configuration">DI av en instans av IConfiguration</param>
-	/// <param name="env">DI av en instans av IWebHostEnvironment</param>
-	public REVELJ(IConfiguration configuration,
-		      IWebHostEnvironment env)
+	/// <param name="configurationsrc">DI av en instans av IConfiguration</param>
+	/// <param name="env">DI av en instans av IHostEnvironment</param>
+	public REVELJ( IConfiguration configurationsrc,
+		       IHostEnvironment env)
 	{
-	    Configuration = configuration;
+	    Configurationsrc = configurationsrc;
 	    Environment = env;
 	}
 
@@ -96,19 +102,37 @@ namespace Kartotek
 	    // https://andrewlock.net/session-state-gdpr-and-non-essential-cookies/
 	    //
 	    services.AddSession( options => {
-		options.Cookie.Name = Configuration["session_kakans_namn"];
+		options.Cookie.Name = Configurationsrc["session_kakans_namn"];
 		options.IdleTimeout = TimeSpan.FromSeconds( 40 );
 		options.Cookie.HttpOnly = true;
 		options.Cookie.IsEssential = true;
 	    }
 	    );
 
+	    //
+	    // registrering för DI av dbcontext mot DatabasePeopleRepo
+	    if( Environment.IsEnvironment( "postgres.Development") ||
+		Environment.IsEnvironment( "postgres"))
+	    {
+		// Console.WriteLine( "services.AddDbContext<DBPeople: PostgreSQL:version");
+
+		services.AddDbContext<DBPeople>( options =>
+						 options.UseNpgsql( Configurationsrc["DBConnectionStrings:People"]));
+	    }
+	    else
+	    {
+		// Console.WriteLine( "services.AddDbContext<DBPeople: MS SQL:version");
+
+		services.AddDbContext<DBPeople>( options =>
+						 options.UseSqlServer( Configurationsrc["DBConnectionStrings:People"]));
+	    }
+
 	    services.AddControllers().AddJsonOptions( options => {                               // Convert JSON from Camel Case to Pascal Case
 		options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase; // Use the default property( Pascal) casing.
 	    } );
 
-	    services.AddScoped< IPeopleService, PeopleService>();     // används av kontrollanterna så länge de finns en igång (de avslutas efter return)
-	    services.AddSingleton<IPeopleRepo, InMemoryPeopleRepo>(); // används av PeopleService - singleton to rot ansvarar för dess levnad
+	    services.AddScoped< IPeopleService, PeopleService>();   // används av kontrollanterna så länge de finns en igång (de avslutas efter return)
+	    services.AddScoped< IPeopleRepo, DatabasePeopleRepo>(); // används av PeopleService - scoped, så den kastas efter att PeopleService avslutas
 
 	    services.AddControllersWithViews();
 	    services.AddHttpContextAccessor();
@@ -127,11 +151,23 @@ namespace Kartotek
 	{
 	    //
 	    // gaffling i flödet beroende på programmets startmiljö
+	    // och vilken databas som ska användas
 	    //
-	    if( Environment.IsDevelopment() ||
-		Environment.IsEnvironment( "Development"))
-	    {
+	    if( Environment.IsEnvironment( "postgres.Development") ||
+		Environment.IsEnvironment( "postgres"))
+		loggdest.LogInformation( "Startup.cs: PostgreSQL:version");
+	    else
+		loggdest.LogInformation( "Startup.cs: MS SQL:version");
+
+	    if( Environment.IsEnvironment( "Development") ||
+		Environment.IsEnvironment( "postgres.Development"))
 		loggdest.LogInformation( "Startup.cs: Utvecklingsmiljö");
+	    else
+		loggdest.LogInformation( "Startup.cs: Production");
+
+	    if( Environment.IsDevelopment() ||
+		Environment.IsEnvironment( "Development_postgres"))
+	    {
 		app.UseDeveloperExceptionPage();  // plockar upp händelser( exceptions) i aktiverade moduler( exv en kontrollant) för att ge meddelandestatus till användaren
 	    }
 	    else
@@ -154,7 +190,8 @@ namespace Kartotek
 
 	    //
 	    // debug-utskrift - vad är adressen ???
-	    if ( Environment.IsDevelopment())
+	    if ( Environment.IsDevelopment() ||
+		 Environment.IsEnvironment( "postgres.Development"))
 		app.Use( next => context =>
 		{
 		    Console.WriteLine( $"Found: {context.GetEndpoint()?.DisplayName}");
