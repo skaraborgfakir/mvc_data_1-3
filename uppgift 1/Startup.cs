@@ -1,5 +1,5 @@
 //
-// Time-stamp: <2021-11-26 13:55:48 stefan>
+// Time-stamp: <2021-11-27 14:23:53 stefan>
 //
 // dokumentationstaggning
 //   https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/
@@ -106,7 +106,6 @@ namespace Kartotek
 	    services.AddControllers().AddJsonOptions( options => {                               // Convert JSON from Camel Case to Pascal Case
 		options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase; // Use the default property( Pascal) casing.
 	    } );
-
 
 	    services.AddScoped< IPeopleService, PeopleService>();     // används av kontrollanterna så länge de finns en igång (de avslutas efter return)
 	    services.AddSingleton<IPeopleRepo, InMemoryPeopleRepo>(); // används av PeopleService - singleton to rot ansvarar för dess levnad
